@@ -6,17 +6,18 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/09/26 13:12:19 by psmolin          ###   ########.fr        #
+#    Updated: 2025/09/26 13:33:59 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Directories
 OBJ_DIR := obj/
 SRC_DIR := src/
+INCLUDES := includes
 
 # Compiler and flags
 CC := @cc
-CFLAGS := -Wall -Wextra -Werror -Iinclude
+CFLAGS := -Wall -Wextra -Werror -I$(INCLUDES)
 
 NAME := cub3D
 
@@ -29,7 +30,7 @@ SRC_FILES	= $(SRC_DIR)main.c
 OBJ_FILES	= $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
 # Headers
-HEADERS = include/cub3d.h
+HEADERS = $(INCLUDES)/cub3d.h
 
 all: $(NAME)
 
