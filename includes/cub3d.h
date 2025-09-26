@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/26 13:37:06 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/26 14:05:41 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "structs.h"
+# include "libft_mini.h"
 
 # define COLOR_R "\033[31m"
 # define COLOR_G "\033[32m"
@@ -72,6 +73,11 @@
 # define C_EN 'X'
 # define C_C 'C'
 # define C_EX 'E'
+
+void	ft_checkinput(int argc, char **argv);
+t_gs	*ft_game(void); // Returns a pointer to the global game state
+void	ft_exit_error(char *str);
+void	ft_exit(char *str);
 
 // void	ft_exit_error(char *str, t_gs *game);
 // void	ft_exit(char *str, t_gs *game);

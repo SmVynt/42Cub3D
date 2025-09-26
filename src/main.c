@@ -6,20 +6,15 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:52:39 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/09/26 13:02:06 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/26 14:04:00 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 int	main(int argc, char **argv)
 {
-	t_gs	game;
-
-	(void)argc;
-	(void)argv;
-	(void)game;
-	// ft_checkinput (argc, argv, &game);
+	ft_checkinput (argc, argv);
 	// ft_initialize (&game, argv);
 	// game.mlx = mlx_init();
 	// if (!game.mlx)
