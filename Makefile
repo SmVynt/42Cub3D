@@ -3,19 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/09/26 11:32:00 by nmikuka           #+#    #+#              #
-#    Updated: 2025/09/26 11:50:33 by nmikuka          ###   ########.fr        #
+#    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
+#    Updated: 2025/09/26 13:12:19 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Directories
-OBJ_DIR := obj
+OBJ_DIR := obj/
+SRC_DIR := src/
 
 # Compiler and flags
 CC := @cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -Iinclude
 
 NAME := cub3D
 
@@ -23,15 +24,19 @@ MLX42_DIR = MLX42
 MLX42_REPO = https://github.com/codam-coding-college/MLX42.git
 
 # Source and object files
-SRC_FILES := main.c
-OBJ_FILES := $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
+SRC_FILES	= $(SRC_DIR)main.c
+#OBJ_FILES := $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
+OBJ_FILES	= $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
+
+# Headers
+HEADERS = include/cub3d.h
 
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(MLX42_DIR)
 	$(CC) $(CFLAGS) $(OBJ_FILES) -o $@
 
-$(OBJ_DIR)/%.o : %.c
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADERS)
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
