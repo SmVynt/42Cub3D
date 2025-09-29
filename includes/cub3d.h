@@ -6,14 +6,14 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/26 14:05:41 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/26 17:06:50 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-// # include "mlx/mlx.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 // # include "lbs/gnl/get_next_line.h"
 // # include "lbs/printf/ft_printf.h"
 # include <stdio.h>
