@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/09/26 17:12:46 by psmolin          ###   ########.fr        #
+#    Updated: 2025/09/30 00:01:08 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,10 @@ SRC_DIR = src/
 INCLUDES = includes
 
 # Compiler and flags
-CC = @cc
+CC = cc
 RM = rm -f
 RMD = rm -rf
+MK = make -C
 CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES)
 
 NAME = cub3D
@@ -37,7 +38,10 @@ COL_C		= \033[1;36m
 # Source and object files
 SRC_FILES	= \
 				$(SRC_DIR)init_check.c \
+				$(SRC_DIR)init_data.c \
+				$(SRC_DIR)init_fillmap.c \
 				$(SRC_DIR)main.c \
+				$(SRC_DIR)sys_clean.c \
 				$(SRC_DIR)sys_errors.c \
 				$(SRC_DIR)sys_gamestate.c \
 				$(SRC_DIR)sys_lib.c
@@ -46,10 +50,19 @@ OBJ_FILES	= $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 # Headers
 HEADERS = $(INCLUDES)/cub3d.h
 
-all: checkMLX $(NAME)
+# Extra libs
+GNL_DIR = lbs/gnl/
+GNL_LIB = $(GNL_DIR)libgnl.a
+GNL_FLAGS = -L$(GNL_DIR) -lgnl
+
+#
+all: checkMLX makeextra $(NAME)
+
+makeextra:
+	$(MK) $(GNL_DIR) all
 
 $(NAME): $(OBJ_FILES)
-	$(CC) $(CFLAGS) $(OBJ_FILES) -o $@
+	$(CC) $(CFLAGS) $(OBJ_FILES) $(GNL_FLAGS) -o $@
 	@echo "$(COL_G)Project complied successfully!$(COL_X)"
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADERS)
@@ -74,10 +87,12 @@ checkMLX:
 
 clean:
 	@$(RM) $(OBJ_FILES)
+	@$(MK) $(GNL_DIR) clean
 
 fclean: clean
 	@$(RM) $(NAME)
 	@$(RMD) $(MLX42_DIR)
+	@$(MK) $(GNL_DIR) fclean
 
 re: fclean all
 

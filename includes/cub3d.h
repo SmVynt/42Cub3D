@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/26 17:06:50 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 00:15:57 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "../MLX42/include/MLX42/MLX42.h"
+# include "../lbs/gnl/get_next_line.h"
 // # include "lbs/gnl/get_next_line.h"
 // # include "lbs/printf/ft_printf.h"
 # include <stdio.h>
@@ -74,8 +75,17 @@
 # define C_C 'C'
 # define C_EX 'E'
 
+void	ft_initialize(void);
+
+int		ft_initial_map_read(const char *src);
+void	ft_second_map_read(const char *src, int map_start);
+
 void	ft_checkinput(int argc, char **argv);
 t_gs	*ft_game(void); // Returns a pointer to the global game state
+
+void	ft_free_and_null(void *ptr);
+void	ft_clean(void);
+
 void	ft_exit_error(char *str);
 void	ft_exit(char *str);
 

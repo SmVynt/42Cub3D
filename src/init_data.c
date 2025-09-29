@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/26 11:52:39 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/09/30 00:15:21 by psmolin          ###   ########.fr       */
+/*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
+/*   Updated: 2025/09/30 00:14:11 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+static void	ft_initmap(void)
 {
-	ft_initialize();
-	ft_checkinput (argc, argv);
-	ft_clean();
-	return (0);
+	t_map	*map;
+
+	map = &ft_game()->map;
+	map->no = NULL;
+	map->so = NULL;
+	map->we = NULL;
+	map->ea = NULL;
+	map->f = NULL;
+	map->c = NULL;
+}
+
+void	ft_initialize(void)
+{
+	ft_initmap();
 }
