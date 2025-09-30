@@ -6,11 +6,11 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 00:15:12 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:33:38 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 static void	ft_setpath(char **line, const char *src)
 {
@@ -59,17 +59,17 @@ int	ft_initial_map_read(const char *src)
 	fd = open (src, O_RDONLY);
 	if (fd < 0)
 		ft_exit_error("Could not open the map file\n");
-	map_start[0] = -1;
+	map_start[0] = 0;
 	map_start[1] = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
+		if (!map_start[1] && ft_checkline(line))
+			map_start[1] = 1;
 		if (map_start[1] == 0)
 			map_start[0]++;
 		else
 			ft_game()->map.h++;
-		if (!map_start[1] && ft_checkline(line))
-			map_start[1] = 1;
 		if (map_start[1] && (int)ft_strlen(line) > ft_game()->map.w)
 			ft_game()->map.w = (int)ft_strlen(line);
 		free(line);

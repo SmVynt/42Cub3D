@@ -6,11 +6,11 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 00:14:34 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:33:28 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 static void	ft_check_map_complete(void)
 {
@@ -47,7 +47,7 @@ static void	ft_checkarguments(int argc, char **argv)
 	}
 }
 
-static void	ft_printmap(t_map *map)
+void	ft_printmap(t_map *map)
 {
 	int	i;
 
@@ -69,4 +69,5 @@ void	ft_checkinput(int argc, char **argv)
 	ft_checkarguments(argc, argv);
 	ft_checkfile(argv[1]);
 	ft_printmap(&ft_game()->map);
+	ft_checkmap();
 }
