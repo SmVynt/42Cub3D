@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:01:54 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 15:41:32 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,15 @@ typedef struct s_map
 	char	*ea;
 	char	*f;
 	char	*c;
-	t_vec	start;
+	t_vec2	start;
 }	t_map;
+
+typedef struct s_player
+{
+	t_vec2 pos;
+	t_vec3 lookdir;
+}	t_player;
+
 
 // typedef struct s_texture
 // {

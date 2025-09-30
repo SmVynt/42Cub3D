@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/09/30 15:12:07 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/09/30 19:16:57 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,15 @@ void	draw(t_gs *game)
 {
 	mlx_image_t	*image;
 	uint32_t*	pixels;
-	char *map[] = {
-		"1111111111",
-		"1000000N01",
-		"1000000001",
-		"1000000001",
-		"1000000111",
-		"1000000001",
-		"1000111001",
-		"1000000001",
-		"1000000001",
-		"1111111111"
-	};
+	t_map		*map;
+
+	map = &ft_game()->map;
 	image = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if (!image)
 		return ;
 	pixels = (uint32_t*)image->pixels;
-	draw_map(pixels, map, 10, 10);
-	init_player(map, 10, 10);
+	draw_map(pixels, map->tile, map->w, map->h);
+	init_player(map->tile, map->w, map->h);
 	mlx_image_to_window(game->mlx, image, 0, 0);
 }
 
@@ -74,10 +65,10 @@ void	draw_map(uint32_t* pixels, char **map, int w, int h)
 
 	i = 0;
 	offset = 10;
-	while (i < w)
+	while (i < h)
 	{
 		j = 0;
-		while  (j < h)
+		while  (j < w)
 		{
 			if (map[i][j] == '1')
 				draw_square(pixels, (t_vec2){j * 10 + offset, i * 10 + offset}, COLOR_RED);
@@ -119,10 +110,10 @@ void init_player(char **map, int w, int h)
 
 	player = malloc(sizeof(player));
 	i = 0;
-	while (i < w)
+	while (i < h)
 	{
 		j = 0;
-		while  (j < h)
+		while  (j < w)
 		{
 			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' || map[i][j] == 'W')
 			{

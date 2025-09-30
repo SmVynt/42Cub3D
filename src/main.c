@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:52:39 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/09/30 14:33:43 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 18:59:27 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	main(int argc, char **argv)
 {
 	t_gs	*game;
 
-	ft_checkinput (argc, argv);
+	ft_initialize();
+	ft_checkinput(argc, argv);
 	game = ft_game();
-	// ft_initialize (game, argv);
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", 1);
 	if (!game->mlx)
 		ft_exit_error("Could not initialize MiniLibX\n");
@@ -29,8 +29,6 @@ int	main(int argc, char **argv)
 	// ft_update_count(&game);
 	mlx_loop(game->mlx);
 	// ft_exit_error("MiniLibX looping error.\n", &game);
-	ft_initialize();
-	ft_checkinput (argc, argv);
 	ft_clean();
 	return (0);
 }
