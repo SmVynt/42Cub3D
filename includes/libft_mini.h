@@ -6,16 +6,17 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/26 14:01:16 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 00:16:11 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTMINI_H
-# define LIBFTMINI_H
+#ifndef LIBFT_MINI_H
+# define LIBFT_MINI_H
 
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t		ft_strlen(const char *str);
+char		*ft_strdup(const char *s1);
 int			ft_print(const char *str);
 // int		ft_strncmp(const char *s1, const char *s2, size_t n);
 // size_t	ft_strlcpy(char *dst, const char *src, size_t size);
