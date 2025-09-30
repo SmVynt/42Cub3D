@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.c                                          :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/26 13:36:41 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 13:23:38 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_vec
+typedef struct s_vec2
 {
 	int	x;
 	int	y;
-}	t_vec;
+}	t_vec2;
+
+typedef struct s_vec3
+{
+	float	x;
+	float	y;
+	float	z;
+}	t_vec3;
+
+typedef struct s_mat4
+{
+	float	m[4][4];
+}	t_mat4;
 
 typedef struct s_map
 {
@@ -26,6 +38,12 @@ typedef struct s_map
 	char	**tile;
 	int		checked;
 }	t_map;
+
+typedef struct s_player
+{
+	t_vec2 pos;
+	t_vec3 lookdir;
+}	t_player;
 
 typedef struct s_texture
 {
