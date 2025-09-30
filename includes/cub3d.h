@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 00:15:57 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 13:36:04 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,10 @@ void	ft_initialize(void);
 
 int		ft_initial_map_read(const char *src);
 void	ft_second_map_read(const char *src, int map_start);
-
 void	ft_checkinput(int argc, char **argv);
+void	ft_checkmap(void);
+void	ft_printmap(t_map *map);
+
 t_gs	*ft_game(void); // Returns a pointer to the global game state
 
 void	ft_free_and_null(void *ptr);

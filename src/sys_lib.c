@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 00:13:53 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:10:59 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,16 @@ char	*ft_strdup(const char *s1)
 	return (copy);
 }
 
-int	ft_print(const char *str)
+char	*ft_strchar(const char *s, int c)
 {
-	return (write(1, str, ft_strlen(str)));
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
+	}
+	return (NULL);
 }

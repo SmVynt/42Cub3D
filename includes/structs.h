@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/29 16:56:11 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:01:54 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_map
 	char	*ea;
 	char	*f;
 	char	*c;
+	t_vec	start;
 }	t_map;
 
 // typedef struct s_texture

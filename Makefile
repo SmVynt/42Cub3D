@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/09/30 00:01:08 by psmolin          ###   ########.fr        #
+#    Updated: 2025/09/30 12:02:47 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ COL_C		= \033[1;36m
 # Source and object files
 SRC_FILES	= \
 				$(SRC_DIR)init_check.c \
+				$(SRC_DIR)init_checkmap.c \
 				$(SRC_DIR)init_data.c \
 				$(SRC_DIR)init_fillmap.c \
 				$(SRC_DIR)main.c \
