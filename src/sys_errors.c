@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/29 11:13:19 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:33:59 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,17 @@ static void	ft_clean(t_gs *game)
 
 void	ft_exit_error(char *str)
 {
-	t_gs	*game;
-
-	game = ft_game();
-	ft_print(COLOR_R "Error\n" COLOR_Y);
+	printf(COLOR_R "Error\n" COLOR_Y);
 	perror(str);
-	ft_print("" COLOR_X);
-	ft_clean(game);
+	printf("" COLOR_X);
+	ft_clean();
 	exit(EXIT_FAILURE);
 }
 
 void	ft_exit(char *str)
 {
-	t_gs	*game;
-
-	game = ft_game();
-	ft_print(COLOR_R "Error\n" COLOR_Y);
-	ft_print(str);
-	ft_print("" COLOR_X);
-	ft_clean(game);
+	printf(COLOR_R "Error\n" COLOR_Y);
+	printf("%s"COLOR_X, str);
+	ft_clean();
 	exit(EXIT_FAILURE);
 }

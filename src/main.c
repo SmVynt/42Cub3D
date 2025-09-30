@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:52:39 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/09/30 10:29:54 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:33:43 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,8 @@ int	main(int argc, char **argv)
 	// ft_update_count(&game);
 	mlx_loop(game->mlx);
 	// ft_exit_error("MiniLibX looping error.\n", &game);
+	ft_initialize();
+	ft_checkinput (argc, argv);
+	ft_clean();
 	return (0);
 }

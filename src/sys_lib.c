@@ -6,11 +6,11 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/26 14:01:25 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:34:11 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
@@ -61,30 +61,36 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-int	ft_print(const char *str)
+char	*ft_strdup(const char *s1)
 {
-	return (write(1, str, ft_strlen(str)));
-}
-// char	*ft_strip_from_n(char *str)
-// {
-// 	char	*new_str;
-// 	int		len;
+	size_t	len;
+	size_t	i;
+	char	*copy;
 
-// 	len = 0;
-// 	if (!str)
-// 		return (NULL);
-// 	if (str[0] == '\n')
-// 	{
-// 		free(str);
-// 		return (NULL);
-// 	}
-// 	while (str[len] && str[len] != '\n')
-// 		len++;
-// 	new_str = malloc(sizeof(char) * (len + 1));
-// 	if (!new_str)
-// 		return (NULL);
-// 	ft_strlcpy(new_str, str, (len + 1));
-// 	new_str[len] = '\0';
-// 	free(str);
-// 	return (new_str);
-// }
+	len = ft_strlen(s1);
+	copy = (char *)malloc(sizeof(char) * (len + 1));
+	if (!copy)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		copy[i] = s1[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
+}
+
+char	*ft_strchar(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
+	}
+	return (NULL);
+}

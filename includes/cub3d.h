@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 13:46:50 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:40:50 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 #include "MLX42/MLX42.h"
+# include "../lbs/gnl/get_next_line.h"
 // # include "lbs/gnl/get_next_line.h"
 // # include "lbs/printf/ft_printf.h"
 # include <stdio.h>
@@ -85,8 +86,23 @@
 # define C_C 'C'
 # define C_EX 'E'
 
+# define MAP_ALLOWED_CHARS		"0123456789NSEW "
+# define MAP_WALL_CHARS			"123456789"
+# define MAP_PLAYER_CHARS		"NSEW"
+
+void	ft_initialize(void);
+
+int		ft_initial_map_read(const char *src);
+void	ft_second_map_read(const char *src, int map_start);
 void	ft_checkinput(int argc, char **argv);
+void	ft_checkmap(void);
+void	ft_printmap(t_map *map);
+
 t_gs	*ft_game(void); // Returns a pointer to the global game state
+
+void	ft_free_and_null(void *ptr);
+void	ft_clean(void);
+
 void	ft_exit_error(char *str);
 void	ft_exit(char *str);
 

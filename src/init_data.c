@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sys_gamestate.c                                    :+:      :+:    :+:   */
+/*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/26 13:40:12 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:34:13 by psmolin          ###   ########.fr       */
+/*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
+/*   Updated: 2025/09/30 14:33:34 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_gs	*ft_game(void)
+static void	ft_initmap(void)
 {
-	static t_gs	game;
+	t_map	*map;
 
-	return (&game);
+	map = &ft_game()->map;
+	map->no = NULL;
+	map->so = NULL;
+	map->we = NULL;
+	map->ea = NULL;
+	map->f = NULL;
+	map->c = NULL;
+	map->start.x = -1;
+	map->start.y = -1;
+	map->w = 0;
+	map->h = 0;
+}
+
+void	ft_initialize(void)
+{
+	ft_initmap();
 }
