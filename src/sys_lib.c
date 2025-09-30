@@ -6,11 +6,11 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:10:59 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:34:11 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {

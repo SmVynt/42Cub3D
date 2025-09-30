@@ -6,11 +6,11 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:11:31 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:41:04 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 static void	ft_checkdigits(void)
 {
@@ -23,11 +23,11 @@ static void	ft_checkdigits(void)
 		j = 0;
 		while (ft_game()->map.tile[i][j])
 		{
-			if (ft_strchar("0123456789NSEW ", ft_game()->map.tile[i][j])
+			if (ft_strchar(MAP_ALLOWED_CHARS, ft_game()->map.tile[i][j])
 					== NULL)
 				ft_exit("Map contains invalid characters\n");
 			j++;
-			if (ft_strchar("NSEW", ft_game()->map.tile[i][j]) != NULL)
+			if (ft_strchar(MAP_PLAYER_CHARS, ft_game()->map.tile[i][j]) != NULL)
 			{
 				if (ft_game()->map.start.x != -1
 					|| ft_game()->map.start.y != -1)
@@ -83,7 +83,7 @@ static void	ft_checkwalls(void)
 	int		w;
 
 	map = &ft_game()->map;
-	ft_check_neighbours(map, map->start.y, map->start.x, "123456789");
+	ft_check_neighbours(map, map->start.y, map->start.x, MAP_WALL_CHARS);
 	h = -1;
 	while (++h < map->h)
 	{

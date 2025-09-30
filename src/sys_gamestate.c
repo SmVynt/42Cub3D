@@ -6,11 +6,11 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:40:12 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/26 13:41:21 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:34:13 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 t_gs	*ft_game(void)
 {

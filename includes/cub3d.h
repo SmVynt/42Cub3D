@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 13:36:04 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 14:40:50 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@
 # define C_EN 'X'
 # define C_C 'C'
 # define C_EX 'E'
+
+# define MAP_ALLOWED_CHARS		"0123456789NSEW "
+# define MAP_WALL_CHARS			"123456789"
+# define MAP_PLAYER_CHARS		"NSEW"
 
 void	ft_initialize(void);
 
