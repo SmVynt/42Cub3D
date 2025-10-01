@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/09/30 18:52:03 by nmikuka          ###   ########.fr        #
+#    Updated: 2025/10/01 15:44:11 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,10 +44,13 @@ COL_C		= \033[1;36m
 
 # Source and object files
 SRC_FILES	= \
+				game_loop.c \
 				init_check.c \
-     			init_checkmap.c \
+				init_checkmap.c \
 				init_data.c \
 				init_fillmap.c \
+				init_game.c \
+				init_hooks.c \
 				main.c \
 				sys_clean.c \
 				sys_errors.c \
@@ -58,7 +61,9 @@ SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 # Headers
-HEADERS = $(INCLUDES)/cub3d.h
+HEADERS = $(INCLUDES)/cub3d.h \
+			$(INCLUDES)/structs.h \
+			$(INCLUDES)/libft_mini.h
 
 # Extra libs
 GNL_DIR = lbs/gnl/
@@ -72,7 +77,7 @@ makeextra:
 	@make -C $(GNL_DIR) all
 
 $(NAME): $(OBJS) $(MLX42_DIR)/libmlx42.a makeextra
-	$(CC) $(CFLAGS) $(OBJS) $(GNL_FLAGS) $(MLXFLAGS) -o $@ 
+	$(CC) $(CFLAGS) $(OBJS) $(GNL_FLAGS) $(MLXFLAGS) -o $@
 	@echo "$(COL_G)Project complied successfully!$(COL_X)"
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADERS)

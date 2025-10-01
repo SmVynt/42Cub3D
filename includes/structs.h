@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 15:41:32 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/01 18:29:31 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ typedef struct s_vec2
 	int	x;
 	int	y;
 }	t_vec2;
+
+typedef struct s_vec2f
+{
+	float	x;
+	float	y;
+}	t_vec2f;
 
 typedef struct s_vec3
 {
@@ -48,10 +54,22 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	t_vec2 pos;
-	t_vec3 lookdir;
+	t_vec2f	pos;
+	t_vec3	lookdir;
+	t_vec2	move;
 }	t_player;
 
+typedef struct s_gs
+{
+	t_player	*player;
+	void		*mlx;
+	void		*window;
+	mlx_image_t	*minimap;
+	mlx_image_t	*miniplayer;
+	t_map		map;
+	int			state;
+	int			collected;
+}	t_gs;
 
 // typedef struct s_texture
 // {
@@ -191,21 +209,5 @@ typedef struct s_player
 // 	t_texture	render;
 // }	t_render;
 
-typedef struct s_gs
-{
-	void		*mlx;
-	void		*window;
-	// t_render	img;
-	t_map		map;
-	int			state;
-	// t_exit		exit;
-	// t_enemy		*enemies;
-	// t_collect	*collects;
-	int			collected;
-	// t_hero		hero;
-	// t_count		c;
-	// t_alloc		alloc;
-	// t_textures	textures;
-}	t_gs;
 
 #endif

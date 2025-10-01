@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:40:50 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/01 18:27:08 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,69 +26,35 @@
 # include "libft_mini.h"
 
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH		1280
+# define HEIGHT		720
 
-# define COLOR_WHITE 0xFFFFFFFF
-# define COLOR_RED   0xFF0000FF
-# define COLOR_GREEN 0xFF00FF00
-# define COLOR_BLUE 0xFFFF0000
-# define COLOR_YELLOW 0xFF00FFFF
+# define COLOR_WHITE	0xFFFFFFFF
+# define COLOR_RED		0xFF0000FF
+# define COLOR_GREEN	0xFF00FF00
+# define COLOR_BLUE		0xFFFF0000
+# define COLOR_YELLOW	0xFF00FFFF
 
-# define COLOR_R "\033[31m"
-# define COLOR_G "\033[32m"
-# define COLOR_Y "\033[33m"
-# define COLOR_B "\033[34m"
-# define COLOR_M "\033[35m"
-# define COLOR_C "\033[36m"
-# define COLOR_W "\033[37m"
-# define COLOR_BOLD "\033[1m"
-# define COLOR_X "\033[0m"
-
-# define TS 32
-# define SCALE 3
-# define FRAME_TIME 4
-# define MOVE_SPEED 0.2f
-# define GAME_LERP 0.45f
-
-# define STATE_IDLE 0
-# define STATE_MOVE 1
-# define STATE_DEATH 2
-# define STATE_HERO 3
-# define STATE_ENEMIES 4
-# define STATE_FINAL 5
-# define STATE_WON 6
-# define STATE_LOST 7
-# define STATE_CALC 8
-# define STATE_CALC2 9
-
-# define PATH_TILES "./textures/bg_tileset_02.xpm"
-# define PATH_HERO_IDLE "./textures/hero_idle.xpm"
-# define PATH_HERO_MOVE "./textures/hero_run.xpm"
-# define PATH_ENEMY_IDLE "./textures/enemy_idle.xpm"
-# define PATH_ENEMY_MOVE "./textures/enemy_move.xpm"
-# define PATH_ERASOR "./textures/erasor.xpm"
-# define PATH_DECOR_8 "./textures/decor_8.xpm"
-# define PATH_DECOR_16 "./textures/decor_16.xpm"
-# define PATH_EXIT_O "./textures/exit_opened.xpm"
-# define PATH_EXIT_C "./textures/exit_closed.xpm"
-# define PATH_EXIT_OP "./textures/exit_open.xpm"
-# define PATH_CRYSTAL "./textures/crystal.xpm"
-# define PATH_CRYSTAL_TAKE "./textures/crystal_take.xpm"
-# define PATH_DIGITS "./textures/t_digits_x2.xpm"
-# define PATH_SCREEN_WON "./textures/screen_won.xpm"
-# define PATH_SCREEN_LOST "./textures/screen_lost.xpm"
-
-# define C_W '1'
-# define C_E '0'
-# define C_P 'P'
-# define C_EN 'X'
-# define C_C 'C'
-# define C_EX 'E'
+# define COLOR_R		"\033[31m"
+# define COLOR_G		"\033[32m"
+# define COLOR_Y		"\033[33m"
+# define COLOR_B		"\033[34m"
+# define COLOR_M		"\033[35m"
+# define COLOR_C		"\033[36m"
+# define COLOR_W		"\033[37m"
+# define COLOR_BOLD		"\033[1m"
+# define COLOR_X		"\033[0m"
 
 # define MAP_ALLOWED_CHARS		"0123456789NSEW "
 # define MAP_WALL_CHARS			"123456789"
 # define MAP_PLAYER_CHARS		"NSEW"
+
+# define MAP_SCALE				10
+# define PI						3.14159265358
+# define TWO_PI					6.28318530718
+# define DEG_TO_RAD				0.01745329251
+# define RAD_TO_DEG				57.2957795131
+# define FOV					60.0f
 
 void	ft_initialize(void);
 
@@ -98,21 +64,29 @@ void	ft_checkinput(int argc, char **argv);
 void	ft_checkmap(void);
 void	ft_printmap(t_map *map);
 
-t_gs	*ft_game(void); // Returns a pointer to the global game state
+void	ft_setgame(void);
+
+t_gs	*ft_game(void);
 
 void	ft_free_and_null(void *ptr);
 void	ft_clean(void);
 
+void	ft_exit_perror(char *str);
 void	ft_exit_error(char *str);
-void	ft_exit(char *str);
+void	ft_exit(void);
 
-
-void init_player(char **map, int w, int h);
+// void	init_player(void);
 
 void	draw(t_gs *game);
-void	draw_map(uint32_t* pixels, char **map, int w, int h);
+void	draw_map(uint32_t* pixels, t_map *map);
+void	draw_player(uint32_t *pixels);
 void	draw_square(uint32_t* pixels, t_vec2 pos, uint32_t color);
 void	draw_circle(uint32_t *pixels, t_vec2 center, int radius, uint32_t color);
+void	draw_line(uint32_t *pixels, t_vec2 start, t_vec2 end, uint32_t color);
+
+void	ft_createhooks(void);
+void	ft_update(void *param);
+
 
 // void	ft_exit_error(char *str, t_gs *game);
 // void	ft_exit(char *str, t_gs *game);
