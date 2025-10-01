@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sys_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:33:59 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/09/30 15:36:27 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
