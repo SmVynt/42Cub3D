@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/09/30 19:16:57 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/02 19:41:05 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	draw(t_gs *game)
 	mlx_image_t	*image;
 	uint32_t*	pixels;
 	t_map		*map;
+	t_player	*player;
 
 	map = &ft_game()->map;
 	image = mlx_new_image(game->mlx, WIDTH, HEIGHT);
@@ -24,7 +25,14 @@ void	draw(t_gs *game)
 		return ;
 	pixels = (uint32_t*)image->pixels;
 	draw_map(pixels, map->tile, map->w, map->h);
-	init_player(map->tile, map->w, map->h);
+	player = init_player(map->tile, map->w, map->h);
+	draw_line(pixels, player->pos, player->lookdir, map->tile);
+	float angle = -M_PI/3;
+	while (angle <= M_PI/3)
+	{
+		draw_line(pixels, player->pos, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map->tile);
+		angle += M_PI / 100;
+	}
 	mlx_image_to_window(game->mlx, image, 0, 0);
 }
 
@@ -102,33 +110,34 @@ void draw_circle(uint32_t *pixels, t_vec2 center, int radius, uint32_t color)
 	}
 }
 
-void init_player(char **map, int w, int h)
+t_player *init_player(char **map, int w, int h)
 {
 	t_player *player;
-	int i;
-	int j;
+	int row;
+	int col;
 
 	player = malloc(sizeof(player));
-	i = 0;
-	while (i < h)
+	row = 0;
+	while (row < h)
 	{
-		j = 0;
-		while  (j < w)
+		col = 0;
+		while  (col < w)
 		{
-			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' || map[i][j] == 'W')
+			if (map[row][col] == 'N' || map[row][col] == 'E' || map[row][col] == 'S' || map[row][col] == 'W')
 			{
-				player->pos = (t_vec2){j, i};
-				if (map[i][j] == 'N')
-					player->lookdir = (t_vec3){0.0f, 1.0f, 0.0f};
-				if (map[i][j] == 'E')
-					player->lookdir = (t_vec3){1.0f, 0.0f, 0.0f};
-				if (map[i][j] == 'S')
+				player->pos = (t_vec2){col, row};
+				if (map[row][col] == 'N')
 					player->lookdir = (t_vec3){0.0f, -1.0f, 0.0f};
-				if (map[i][j] == 'W')
+				if (map[row][col] == 'E')
+					player->lookdir = (t_vec3){1.0f, 0.0f, 0.0f};
+				if (map[row][col] == 'S')
+					player->lookdir = (t_vec3){0.0f, 1.0f, 0.0f};
+				if (map[row][col] == 'W')
 					player->lookdir = (t_vec3){-1.0f, 0.0f, 0.0f};
 			}
-			j++;	
+			col++;	
 		}
-		i++;
+		row++;
 	}
+	return (player);
 }

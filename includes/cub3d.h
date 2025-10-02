@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:40:50 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/02 19:30:11 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 #include "MLX42/MLX42.h"
 # include "../lbs/gnl/get_next_line.h"
-// # include "lbs/gnl/get_next_line.h"
-// # include "lbs/printf/ft_printf.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -24,10 +22,12 @@
 # include <math.h>
 # include "structs.h"
 # include "libft_mini.h"
+# include "ft_mat4.h"
 
 
 # define WIDTH 1280
 # define HEIGHT 720
+# define BLOCK 64
 
 # define COLOR_WHITE 0xFFFFFFFF
 # define COLOR_RED   0xFF0000FF
@@ -107,10 +107,12 @@ void	ft_exit_error(char *str);
 void	ft_exit(char *str);
 
 
-void init_player(char **map, int w, int h);
+t_player *init_player(char **map, int w, int h);
 
 void	draw(t_gs *game);
 void	draw_map(uint32_t* pixels, char **map, int w, int h);
+void 	put_pixel(uint32_t *pixels, t_vec2 pos, uint32_t color);
+void	draw_line(uint32_t *pixels, t_vec2 p0, t_vec3 dir, char **map);
 void	draw_square(uint32_t* pixels, t_vec2 pos, uint32_t color);
 void	draw_circle(uint32_t *pixels, t_vec2 center, int radius, uint32_t color);
 
