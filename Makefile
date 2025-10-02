@@ -6,7 +6,7 @@
 #    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/09/30 18:52:03 by nmikuka          ###   ########.fr        #
+#    Updated: 2025/10/02 19:28:09 by nmikuka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,10 @@ SRC_FILES	= \
 				sys_errors.c \
 				sys_gamestate.c \
 				sys_lib.c \
-				draw.c
+				draw.c \
+				ft_mat4.c \
+				ft_mat4_transform.c \
+				raycast.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
