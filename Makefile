@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/10/01 15:44:11 by psmolin          ###   ########.fr        #
+#    Updated: 2025/10/02 17:15:49 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INCLUDES = includes
 NAME := cub3D
 
 MLX42_DIR := MLX42
-MLX42_LIB := $(MLX_DIR)/libmlx42.a
+MLX42_LIB := $(MLX42_DIR)/libmlx42.a
 MLX42_REPO := https://github.com/codam-coding-college/MLX42.git
 
 # Compiler and flags
@@ -66,7 +66,7 @@ HEADERS = $(INCLUDES)/cub3d.h \
 			$(INCLUDES)/libft_mini.h
 
 # Extra libs
-GNL_DIR = lbs/gnl/
+GNL_DIR = lib/gnl/
 GNL_LIB = $(GNL_DIR)libgnl.a
 GNL_FLAGS = -L$(GNL_DIR) -lgnl
 
@@ -74,17 +74,17 @@ GNL_FLAGS = -L$(GNL_DIR) -lgnl
 all: $(NAME)
 
 makeextra:
-	@make -C $(GNL_DIR) all
+	@make -s -C $(GNL_DIR) all
 
-$(NAME): $(OBJS) $(MLX42_DIR)/libmlx42.a makeextra
+$(NAME): $(OBJS) $(MLX42_LIB) makeextra
 	$(CC) $(CFLAGS) $(OBJS) $(GNL_FLAGS) $(MLXFLAGS) -o $@
 	@echo "$(COL_G)Project complied successfully!$(COL_X)"
 
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADERS)
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADERS) $(MLX42_LIB)
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(MLX42_DIR)/libmlx42.a:
+$(MLX42_LIB):
 	@echo "Checking for MLX42..."
 	@if [ ! -d "$(MLX42_DIR)" ]; then \
 		echo "Cloning MLX42 into $(MLX42_DIR)..."; \
@@ -92,7 +92,7 @@ $(MLX42_DIR)/libmlx42.a:
 	else \
 		echo "MLX42 already exists in $(MLX42_DIR). Skipping clone."; \
 	fi
-	@if [ ! -f "$(MLX42_DIR)/libmlx42.a" ]; then \
+	@if [ ! -f "$(MLX42_LIB)" ]; then \
 		echo "Building MLX42 library..."; \
 		cmake -S $(MLX42_DIR) -B $(MLX42_DIR)/build; \
 		cmake --build $(MLX42_DIR)/build; \
@@ -102,12 +102,12 @@ $(MLX42_DIR)/libmlx42.a:
 	fi
 
 clean:
-	@rm -f $(OBJ_FILES)
-	@make -C $(GNL_DIR) clean
+	@rm -f $(OBJS)
+	@make -s -C $(GNL_DIR) clean
 
 fclean: clean
 	@rm -f $(NAME)
-	@make -C $(GNL_DIR) fclean
+	@make -s -C $(GNL_DIR) fclean
 
 re: fclean all
 

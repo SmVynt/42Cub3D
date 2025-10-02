@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/01 18:28:52 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/02 17:21:03 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	draw_map(uint32_t* pixels, t_map *map)
 		while  (j < map->w)
 		{
 			if (map->tile[i][j] == '1')
-				draw_square(pixels, (t_vec2){j * offset + offset, i * offset + offset}, COLOR_RED);
+				draw_square(pixels, (t_vec2){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
 			j++;
 		}
 		i++;

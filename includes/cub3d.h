@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/01 18:27:08 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/02 17:12:56 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define CUB3D_H
 
 #include "MLX42/MLX42.h"
-# include "../lbs/gnl/get_next_line.h"
-// # include "lbs/gnl/get_next_line.h"
-// # include "lbs/printf/ft_printf.h"
+# include "../lib/gnl/get_next_line.h"
+// # include "lib/gnl/get_next_line.h"
+// # include "lib/printf/ft_printf.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
