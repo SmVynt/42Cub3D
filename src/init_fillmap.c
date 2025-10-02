@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:33:38 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/01 13:44:31 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_setpath(char **line, const char *src)
 		*line = NULL;
 	*line = ft_strdup(src);
 	if (!*line)
-		ft_exit_error("Could not allocate memory for a texture path\n");
+		ft_exit_perror("Could not allocate memory for a texture path\n");
 	(*line)[ft_strlen(src) - 1] = '\0';
 }
 
@@ -58,7 +58,7 @@ int	ft_initial_map_read(const char *src)
 
 	fd = open (src, O_RDONLY);
 	if (fd < 0)
-		ft_exit_error("Could not open the map file\n");
+		ft_exit_perror("Could not open the map file\n");
 	map_start[0] = 0;
 	map_start[1] = 0;
 	line = get_next_line(fd);
@@ -91,7 +91,7 @@ static void	ft_second_map_read_sub(int fd)
 		line = get_next_line(fd);
 		ft_game()->map.tile[i] = malloc(ft_game()->map.w + 1);
 		if (!ft_game()->map.tile[i])
-			ft_exit_error("Could not allocate memory for the map tile\n");
+			ft_exit_perror("Could not allocate memory for the map tile\n");
 		j = -1;
 		while (line && line[++j] && j < ft_game()->map.w && line[j] != '\n')
 			ft_game()->map.tile[i][j] = line[j];
@@ -112,10 +112,10 @@ void	ft_second_map_read(const char *src, int map_start)
 
 	fd = open (src, O_RDONLY);
 	if (fd < 0)
-		ft_exit_error("Could not open the map file\n");
+		ft_exit_perror("Could not open the map file\n");
 	ft_game()->map.tile = malloc(sizeof(char *) * (ft_game()->map.h + 1));
 	if (!ft_game()->map.tile)
-		ft_exit_error("Could not allocate memory for the map\n");
+		ft_exit_perror("Could not allocate memory for the map\n");
 	line = get_next_line(fd);
 	i = 0;
 	while (line && i < map_start - 1)

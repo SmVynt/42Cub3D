@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:33:52 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/01 15:35:40 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void	ft_clean(void)
 
 	game = ft_game();
 	printf(COLOR_C"Cleaning up resources...\n"COLOR_X);
-	ft_free_and_null(game->mlx);
-	ft_free_and_null(game->window);
+	ft_free_and_null(game->player);
+	if (game->mlx)
+		mlx_terminate(game->mlx);
+	// ft_free_and_null(game->mlx);
+	// ft_free_and_null(game->window);
 	ft_freemap();
 }
