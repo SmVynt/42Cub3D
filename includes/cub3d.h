@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/02 19:30:11 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/02 21:50:37 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,8 @@ void	ft_exit(void);
 t_player *init_player(char **map, int w, int h);
 
 void	draw(t_gs *game);
-void	draw_map(uint32_t* pixels, char **map, int w, int h);
 void 	put_pixel(uint32_t *pixels, t_vec2 pos, uint32_t color);
-void	draw_line(uint32_t *pixels, t_vec2 p0, t_vec3 dir, char **map);
+void	draw_line_ray(uint32_t *pixels, t_vec2f p0, t_vec3 dir, char **map);
 // void	init_player(void);
 
 void	draw(t_gs *game);

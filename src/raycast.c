@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/02 19:23:58 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/02 21:53:19 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,16 @@ bool touch(t_vec2 p, char **map)
 }
 
 // Bresenham's line algorithm 
-void	draw_line(uint32_t *pixels, t_vec2 p0, t_vec3 lookdir, char **map)
+void	draw_line_ray(uint32_t *pixels, t_vec2f p, t_vec3 lookdir, char **map)
 {
 	t_vec2		diff;
 	t_vec2		dir;
 	int			slope_err;
 	t_vec2		p1;
+	t_vec2		p0;
 
-	p0.x = p0.x * 10 + 10;
-	p0.y = p0.y * 10 + 10;
+	p0.x = (int)p.x * 10 + 10;
+	p0.y = (int)p.y * 10 + 10;
 	p1.x = p0.x + lookdir.x * 100;
 	p1.y = p0.y + lookdir.y * 100;
 	diff.x = abs(p1.x - p0.x);
