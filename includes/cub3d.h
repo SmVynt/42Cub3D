@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/02 21:50:37 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/02 23:22:41 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 # define MAP_WALL_CHARS			"123456789"
 # define MAP_PLAYER_CHARS		"NSEW"
 
-# define MAP_SCALE				10
+# define MAP_SCALE				30
 # define PI						3.14159265358
 # define TWO_PI					6.28318530718
 # define DEG_TO_RAD				0.01745329251
@@ -81,7 +81,7 @@ t_player *init_player(char **map, int w, int h);
 
 void	draw(t_gs *game);
 void 	put_pixel(uint32_t *pixels, t_vec2 pos, uint32_t color);
-void	draw_line_ray(uint32_t *pixels, t_vec2f p0, t_vec3 dir, char **map);
+void	draw_line_ray(uint32_t *pixels, t_vec2 p0, t_vec3 dir, char **map);
 // void	init_player(void);
 
 void	draw(t_gs *game);

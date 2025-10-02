@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/02 22:08:26 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/02 23:22:08 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	draw_square(uint32_t* pixels, t_vec2 pos, uint32_t color)
 	int i;
 
 	(void) color;
-	size = 10;
+	size = MAP_SCALE;
 	i = -size / 2;
 	while (i < size / 2)
 	{
@@ -185,7 +185,7 @@ void	draw_player(uint32_t *pixels)
 	float angle = -M_PI/3;
 	while (angle <= M_PI/3)
 	{
-		draw_line_ray(pixels, player->pos, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map.tile);
+		draw_line_ray(pixels, center, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map.tile);
 		angle += M_PI / 100;
 	}
 	draw_line(pixels, center,
