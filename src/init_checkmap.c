@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:41:04 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/01 13:45:33 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,21 @@ static void	ft_checkdigits(void)
 	int	j;
 
 	i = 0;
-	while (ft_game()->map.tile[i])
+	while (i < ft_game()->map.h)
 	{
 		j = 0;
-		while (ft_game()->map.tile[i][j])
+		while (j < ft_game()->map.w)
 		{
 			if (ft_strchar(MAP_ALLOWED_CHARS, ft_game()->map.tile[i][j])
 					== NULL)
-				ft_exit("Map contains invalid characters\n");
+				ft_exit_error(COLOR_R"Map contains invalid characters\n"COLOR_X);
 			j++;
 			if (ft_strchar(MAP_PLAYER_CHARS, ft_game()->map.tile[i][j]) != NULL)
 			{
+				printf("Found player start at %d,%d\n", j, i);
 				if (ft_game()->map.start.x != -1
 					|| ft_game()->map.start.y != -1)
-					ft_exit("Map contains multiple starting positions\n");
+					ft_exit_error("Map contains multiple starting positions\n");
 				ft_game()->map.start.x = j;
 				ft_game()->map.start.y = i;
 			}
@@ -88,13 +89,13 @@ static void	ft_checkwalls(void)
 	while (++h < map->h)
 	{
 		if (map->tile[h][0] < 0 || map->tile[h][map->w - 1] < 0)
-			ft_exit("Map is not closed\n");
+			ft_exit_error("Map is not closed\n");
 	}
 	w = -1;
 	while (++w < map->w)
 	{
 		if (map->tile[0][w] < 0 || map->tile[map->h - 1][w] < 0)
-			ft_exit("Map is not closed\n");
+			ft_exit_error("Map is not closed\n");
 	}
 	ft_restoremap(map);
 }
@@ -102,6 +103,8 @@ static void	ft_checkwalls(void)
 void	ft_checkmap(void)
 {
 	ft_checkdigits();
+	printf(COLOR_G"Map digits check passed!\n"COLOR_X);
 	ft_checkwalls();
+	printf(COLOR_G"Map walls check passed!\n"COLOR_X);
 	ft_printmap(&ft_game()->map);
 }

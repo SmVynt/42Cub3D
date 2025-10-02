@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/09/30 19:16:57 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/01 18:28:52 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,58 @@
 
 void	draw(t_gs *game)
 {
-	mlx_image_t	*image;
-	uint32_t*	pixels;
+	// mlx_image_t	*image;
+	// uint32_t*	pixels;
 	t_map		*map;
 
 	map = &ft_game()->map;
-	image = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	if (!image)
+	game->minimap = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game->miniplayer = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	if (!game->minimap || !game->miniplayer)
 		return ;
-	pixels = (uint32_t*)image->pixels;
-	draw_map(pixels, map->tile, map->w, map->h);
-	init_player(map->tile, map->w, map->h);
-	mlx_image_to_window(game->mlx, image, 0, 0);
+	draw_map((uint32_t*)game->minimap->pixels, map);
+	// printf("Map drawn\n");
+	// init_player();
+	mlx_image_to_window(game->mlx, game->minimap, 0, 0);
+	mlx_image_to_window(game->mlx, game->miniplayer, 0, 0);
 }
 
 void put_pixel(uint32_t *pixels, t_vec2 pos, uint32_t color)
 {
 	if (pos.x >= 0 && pos.x < WIDTH && pos.y >= 0 && pos.y < HEIGHT)
 		pixels[pos.y * WIDTH + pos.x] = color;
+}
+
+void	draw_line(uint32_t *pixels, t_vec2 start, t_vec2 end, uint32_t color)
+{
+	t_vec2	delta;
+	t_vec2	sign;
+	t_vec2	err;
+	int	t;
+
+	delta.x = abs(end.x - start.x);
+	delta.y = abs(end.y - start.y);
+	sign.x = (end.x - start.x < 0) * -1 + (end.x - start.x > 0) * 1;
+	sign.y = (end.y - start.y < 0) * -1 + (end.y - start.y > 0) * 1;
+	err.x = delta.x - delta.y;
+	t = 0;
+	while (t++ < 10000)
+	{
+		put_pixel(pixels, start, color);
+		if (start.x == end.x && start.y == end.y)
+			break ;
+		err.y = err.x * 2;
+		if (err.y > -delta.y)
+		{
+			err.x -= delta.y;
+			start.x += sign.x;
+		}
+		if (err.y < delta.x)
+		{
+			err.x += delta.x;
+			start.y += sign.y;
+		}
+	}
 }
 
 t_vec2	center_point(t_vec2 point, int w, int h)
@@ -57,24 +91,22 @@ void	draw_square(uint32_t* pixels, t_vec2 pos, uint32_t color)
 	}
 }
 
-void	draw_map(uint32_t* pixels, char **map, int w, int h)
+void	draw_map(uint32_t* pixels, t_map *map)
 {
 	int i;
 	int j;
 	int offset;
 
 	i = 0;
-	offset = 10;
-	while (i < h)
+	offset = MAP_SCALE;
+	while (i < map->h)
 	{
 		j = 0;
-		while  (j < w)
+		while  (j < map->w)
 		{
-			if (map[i][j] == '1')
-				draw_square(pixels, (t_vec2){j * 10 + offset, i * 10 + offset}, COLOR_RED);
-			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' || map[i][j] == 'W')
-				draw_circle(pixels, (t_vec2){j * 10 + offset, i * 10 + offset}, 5, COLOR_GREEN);
-			j++;	
+			if (map->tile[i][j] == '1')
+				draw_square(pixels, (t_vec2){j * offset + offset, i * offset + offset}, COLOR_RED);
+			j++;
 		}
 		i++;
 	}
@@ -85,7 +117,7 @@ void draw_circle(uint32_t *pixels, t_vec2 center, int radius, uint32_t color)
 	int x;
 	int y;
 	int r_squared;
-	
+
 	r_squared = radius * radius;
 	for (y = -radius; y <= radius; y++)
 	{
@@ -102,33 +134,19 @@ void draw_circle(uint32_t *pixels, t_vec2 center, int radius, uint32_t color)
 	}
 }
 
-void init_player(char **map, int w, int h)
+void	draw_player(uint32_t *pixels)
 {
-	t_player *player;
-	int i;
-	int j;
+	t_vec2 center;
+	int radius;
+	t_player	*player;
 
-	player = malloc(sizeof(player));
-	i = 0;
-	while (i < h)
-	{
-		j = 0;
-		while  (j < w)
-		{
-			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' || map[i][j] == 'W')
-			{
-				player->pos = (t_vec2){j, i};
-				if (map[i][j] == 'N')
-					player->lookdir = (t_vec3){0.0f, 1.0f, 0.0f};
-				if (map[i][j] == 'E')
-					player->lookdir = (t_vec3){1.0f, 0.0f, 0.0f};
-				if (map[i][j] == 'S')
-					player->lookdir = (t_vec3){0.0f, -1.0f, 0.0f};
-				if (map[i][j] == 'W')
-					player->lookdir = (t_vec3){-1.0f, 0.0f, 0.0f};
-			}
-			j++;	
-		}
-		i++;
-	}
+
+	player = ft_game()->player;
+	center = (t_vec2){(int)(player->pos.x * MAP_SCALE + MAP_SCALE),
+		(int)(player->pos.y * MAP_SCALE + MAP_SCALE)};
+	radius = 3;
+	draw_circle(pixels, center, radius, COLOR_BLUE);
+	draw_line(pixels, center,
+		(t_vec2){(int)(center.x + player->lookdir.x * 20),
+		(int)(center.y - player->lookdir.y * 20)}, COLOR_YELLOW);
 }
