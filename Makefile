@@ -56,7 +56,10 @@ SRC_FILES	= \
 				sys_errors.c \
 				sys_gamestate.c \
 				sys_lib.c \
-				draw.c
+				draw.c \
+				ft_mat4.c \
+				ft_mat4_transform.c \
+				raycast.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 

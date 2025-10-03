@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/02 17:21:03 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/02 23:22:08 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	draw(t_gs *game)
 	game->miniplayer = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if (!game->minimap || !game->miniplayer)
 		return ;
+	// player = init_player(map->tile, map->w, map->h);
+	// draw_line(pixels, player->pos, player->lookdir, map->tile);
 	draw_map((uint32_t*)game->minimap->pixels, map);
 	// printf("Map drawn\n");
 	// init_player();
@@ -79,7 +81,7 @@ void	draw_square(uint32_t* pixels, t_vec2 pos, uint32_t color)
 	int i;
 
 	(void) color;
-	size = 10;
+	size = MAP_SCALE;
 	i = -size / 2;
 	while (i < size / 2)
 	{
@@ -134,19 +136,59 @@ void draw_circle(uint32_t *pixels, t_vec2 center, int radius, uint32_t color)
 	}
 }
 
+t_player *init_player(char **map, int w, int h)
+{
+	t_player *player;
+	int row;
+	int col;
+
+	player = malloc(sizeof(player));
+	row = 0;
+	while (row < h)
+	{
+		col = 0;
+		while  (col < w)
+		{
+			if (map[row][col] == 'N' || map[row][col] == 'E' || map[row][col] == 'S' || map[row][col] == 'W')
+			{
+				player->pos = (t_vec2f){col, row};
+				if (map[row][col] == 'N')
+					player->lookdir = (t_vec3){0.0f, -1.0f, 0.0f};
+				if (map[row][col] == 'E')
+					player->lookdir = (t_vec3){1.0f, 0.0f, 0.0f};
+				if (map[row][col] == 'S')
+					player->lookdir = (t_vec3){0.0f, 1.0f, 0.0f};
+				if (map[row][col] == 'W')
+					player->lookdir = (t_vec3){-1.0f, 0.0f, 0.0f};
+			}
+			col++;	
+		}
+		row++;
+	}
+	return (player);
+}
+
 void	draw_player(uint32_t *pixels)
 {
 	t_vec2 center;
 	int radius;
 	t_player	*player;
+	t_map	map;
 
 
 	player = ft_game()->player;
+	map = ft_game()->map;
 	center = (t_vec2){(int)(player->pos.x * MAP_SCALE + MAP_SCALE),
 		(int)(player->pos.y * MAP_SCALE + MAP_SCALE)};
 	radius = 3;
 	draw_circle(pixels, center, radius, COLOR_BLUE);
+	float angle = -M_PI/3;
+	while (angle <= M_PI/3)
+	{
+		draw_line_ray(pixels, center, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map.tile);
+		angle += M_PI / 100;
+	}
 	draw_line(pixels, center,
 		(t_vec2){(int)(center.x + player->lookdir.x * 20),
-		(int)(center.y - player->lookdir.y * 20)}, COLOR_YELLOW);
+		(int)(center.y + player->lookdir.y * 20)}, COLOR_YELLOW);
 }
