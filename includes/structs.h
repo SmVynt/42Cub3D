@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/02 21:51:44 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/03 18:52:10 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 
 # include "MLX42/MLX42.h"
 
-typedef struct s_vec2
+typedef struct s_point
 {
-	int	x;
-	int	y;
-}	t_vec2;
+	int	u;
+	int	v;
+}	t_point;
 
-typedef struct s_vec2f
+typedef struct s_vec2
 {
 	float	x;
 	float	y;
-}	t_vec2f;
+}	t_vec2;
 
 typedef struct s_vec3
 {
@@ -51,14 +51,17 @@ typedef struct s_map
 	char	*ea;
 	char	*f;
 	char	*c;
-	t_vec2	start;
+	t_point	start;
 }	t_map;
 
 typedef struct s_player
 {
-	t_vec2f	pos;
+	t_vec2	pos;
 	t_vec3	lookdir;
-	t_vec2	move;
+	t_point	mov_control;
+	float	mouse_x;
+	float	mouse_dx;
+	int	rot_control;
 }	t_player;
 
 typedef struct s_gs
