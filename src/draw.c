@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/02 23:22:08 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/04 20:31:07 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ void put_pixel(uint32_t *pixels, t_vec2 pos, uint32_t color)
 {
 	if (pos.x >= 0 && pos.x < WIDTH && pos.y >= 0 && pos.y < HEIGHT)
 		pixels[pos.y * WIDTH + pos.x] = color;
+}
+
+uint32_t get_pixel(uint32_t *pixels, t_vec2 pos)
+{
+	if (pos.x >= 0 && pos.x < WIDTH && pos.y >= 0 && pos.y < HEIGHT)
+		return (pixels[pos.y * WIDTH + pos.x]);
+	return (0);
 }
 
 void	draw_line(uint32_t *pixels, t_vec2 start, t_vec2 end, uint32_t color)
@@ -107,7 +114,8 @@ void	draw_map(uint32_t* pixels, t_map *map)
 		while  (j < map->w)
 		{
 			if (map->tile[i][j] == '1')
-				draw_square(pixels, (t_vec2){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
+				if (true)
+					draw_square(pixels, (t_vec2){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
 			j++;
 		}
 		i++;
@@ -171,22 +179,22 @@ t_player *init_player(char **map, int w, int h)
 void	draw_player(uint32_t *pixels)
 {
 	t_vec2 center;
-	int radius;
 	t_player	*player;
 	t_map	map;
-
 
 	player = ft_game()->player;
 	map = ft_game()->map;
 	center = (t_vec2){(int)(player->pos.x * MAP_SCALE + MAP_SCALE),
 		(int)(player->pos.y * MAP_SCALE + MAP_SCALE)};
-	radius = 3;
-	draw_circle(pixels, center, radius, COLOR_BLUE);
-	float angle = -M_PI/3;
-	while (angle <= M_PI/3)
+	draw_circle(pixels, center, 3, COLOR_BLUE);
+	float angle = - FOV_RAD / 2;
+	float dangle = FOV_RAD / WIDTH;
+	int x = 0;
+	while (x < WIDTH)
 	{
-		draw_line_ray(pixels, center, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map.tile);
-		angle += M_PI / 100;
+		draw_line_ray(pixels, center, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map, x);
+		angle += dangle;
+		x++;
 	}
 	draw_line(pixels, center,
 		(t_vec2){(int)(center.x + player->lookdir.x * 20),

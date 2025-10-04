@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/02 21:51:44 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/03 18:30:12 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_player
 	t_vec2f	pos;
 	t_vec3	lookdir;
 	t_vec2	move;
+	double	mouse_x;
 }	t_player;
 
 typedef struct s_gs
