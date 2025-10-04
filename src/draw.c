@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/04 00:23:17 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/05 00:05:23 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	draw_map(uint32_t* pixels, t_map *map)
 		{
 			if (map->tile[i][j] == '1')
 				if (true)
-					draw_square(pixels, (t_vec2){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
+					draw_square(pixels, (t_point){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
 			j++;
 		}
 		i++;
@@ -171,14 +171,14 @@ void draw_circle(uint32_t *pixels, t_point center, int radius, uint32_t color)
 
 void	draw_player(uint32_t *pixels)
 {
-	t_vec2 center;
+	t_point center;
 	t_player	*player;
-	t_map		*map;
+	t_map		map;
 
 	player = ft_game()->player;
 	map = ft_game()->map;
-	center = (t_vec2){(int)(player->pos.x * MAP_SCALE + MAP_SCALE),
-		(int)(player->pos.y * MAP_SCALE + MAP_SCALE)};
+	center = (t_point){(int)(player->pos.x * MAP_SCALE/* + MAP_SCALE*/),
+		(int)(player->pos.y * MAP_SCALE/* + MAP_SCALE*/)};
 	draw_circle(pixels, center, 3, COLOR_BLUE);
 	float angle = - FOV_RAD / 2;
 	float dangle = FOV_RAD / WIDTH;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/03 17:28:55 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/04 21:45:18 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_player *init_player(char **map, int w, int h);
 
 void	draw(t_gs *game);
 void 	put_pixel(uint32_t *pixels, t_point pos, uint32_t color);
-void	draw_line_ray(uint32_t *pixels, t_point p0, t_vec3 dir, char **map);
+void	draw_line_ray(uint32_t *pixels, t_point p0, t_vec3 lookdir, t_map map, int x);
 // void	init_player(void);
 
 void	draw(t_gs *game);
