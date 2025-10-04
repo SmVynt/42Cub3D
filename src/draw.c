@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/04 20:31:07 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/04 00:23:17 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,57 +32,50 @@ void	draw(t_gs *game)
 	mlx_image_to_window(game->mlx, game->miniplayer, 0, 0);
 }
 
-void put_pixel(uint32_t *pixels, t_vec2 pos, uint32_t color)
+void put_pixel(uint32_t *pixels, t_point pos, uint32_t color)
 {
-	if (pos.x >= 0 && pos.x < WIDTH && pos.y >= 0 && pos.y < HEIGHT)
-		pixels[pos.y * WIDTH + pos.x] = color;
+	if (pos.u >= 0 && pos.u < WIDTH && pos.v >= 0 && pos.v < HEIGHT)
+		pixels[pos.v * WIDTH + pos.u] = color;
 }
 
-uint32_t get_pixel(uint32_t *pixels, t_vec2 pos)
+void	draw_line(uint32_t *pixels, t_point start, t_point end, uint32_t color)
 {
-	if (pos.x >= 0 && pos.x < WIDTH && pos.y >= 0 && pos.y < HEIGHT)
-		return (pixels[pos.y * WIDTH + pos.x]);
-	return (0);
-}
-
-void	draw_line(uint32_t *pixels, t_vec2 start, t_vec2 end, uint32_t color)
-{
-	t_vec2	delta;
-	t_vec2	sign;
-	t_vec2	err;
+	t_point	delta;
+	t_point	sign;
+	t_point	err;
 	int	t;
 
-	delta.x = abs(end.x - start.x);
-	delta.y = abs(end.y - start.y);
-	sign.x = (end.x - start.x < 0) * -1 + (end.x - start.x > 0) * 1;
-	sign.y = (end.y - start.y < 0) * -1 + (end.y - start.y > 0) * 1;
-	err.x = delta.x - delta.y;
+	delta.u = abs(end.u - start.u);
+	delta.v = abs(end.v - start.v);
+	sign.u = (end.u - start.u < 0) * -1 + (end.u - start.u > 0) * 1;
+	sign.v = (end.v - start.v < 0) * -1 + (end.v - start.v > 0) * 1;
+	err.u = delta.u - delta.v;
 	t = 0;
 	while (t++ < 10000)
 	{
 		put_pixel(pixels, start, color);
-		if (start.x == end.x && start.y == end.y)
+		if (start.u == end.u && start.v == end.v)
 			break ;
-		err.y = err.x * 2;
-		if (err.y > -delta.y)
+		err.v = err.u * 2;
+		if (err.v > -delta.v)
 		{
-			err.x -= delta.y;
-			start.x += sign.x;
+			err.u -= delta.v;
+			start.u += sign.u;
 		}
-		if (err.y < delta.x)
+		if (err.v < delta.u)
 		{
-			err.x += delta.x;
-			start.y += sign.y;
+			err.u += delta.u;
+			start.v += sign.v;
 		}
 	}
 }
 
-t_vec2	center_point(t_vec2 point, int w, int h)
+t_point	center_point(t_point point, int w, int h)
 {
-	return ((t_vec2){point.x + w / 2, point.y + h / 2});
+	return ((t_point){point.u + w / 2, point.v + h / 2});
 }
 
-void	draw_square(uint32_t* pixels, t_vec2 pos, uint32_t color)
+void	draw_square(uint32_t* pixels, t_point pos, uint32_t color)
 {
 	int size;
 	int i;
@@ -92,10 +85,10 @@ void	draw_square(uint32_t* pixels, t_vec2 pos, uint32_t color)
 	i = -size / 2;
 	while (i < size / 2)
 	{
-		put_pixel(pixels, (t_vec2){pos.x + i, pos.y - size / 2}, COLOR_RED);
-		put_pixel(pixels, (t_vec2){pos.x + i, pos.y + size / 2}, COLOR_GREEN);
-		put_pixel(pixels, (t_vec2){pos.x - size / 2, pos.y + i}, COLOR_YELLOW);
-		put_pixel(pixels, (t_vec2){pos.x + size / 2, pos.y + i}, COLOR_BLUE);
+		put_pixel(pixels, (t_point){pos.u + i, pos.v - size / 2}, COLOR_RED);
+		put_pixel(pixels, (t_point){pos.u + i, pos.v + size / 2}, COLOR_GREEN);
+		put_pixel(pixels, (t_point){pos.u - size / 2, pos.v + i}, COLOR_YELLOW);
+		put_pixel(pixels, (t_point){pos.u + size / 2, pos.v + i}, COLOR_BLUE);
 		i++;
 	}
 }
@@ -122,7 +115,7 @@ void	draw_map(uint32_t* pixels, t_map *map)
 	}
 }
 
-void draw_circle(uint32_t *pixels, t_vec2 center, int radius, uint32_t color)
+void draw_circle(uint32_t *pixels, t_point center, int radius, uint32_t color)
 {
 	int x;
 	int y;
@@ -135,8 +128,8 @@ void draw_circle(uint32_t *pixels, t_vec2 center, int radius, uint32_t color)
 		{
 			if (x * x + y * y <= r_squared)
 			{
-				int px = center.x + x;
-				int py = center.y + y;
+				int px = center.u + x;
+				int py = center.v + y;
 				if (px >= 0 && px < WIDTH && py >= 0 && py < HEIGHT)
 					pixels[py * WIDTH + px] = color;
 			}
@@ -144,43 +137,43 @@ void draw_circle(uint32_t *pixels, t_vec2 center, int radius, uint32_t color)
 	}
 }
 
-t_player *init_player(char **map, int w, int h)
-{
-	t_player *player;
-	int row;
-	int col;
+// t_player *init_player(char **map, int w, int h)
+// {
+// 	t_player *player;
+// 	int row;
+// 	int col;
 
-	player = malloc(sizeof(player));
-	row = 0;
-	while (row < h)
-	{
-		col = 0;
-		while  (col < w)
-		{
-			if (map[row][col] == 'N' || map[row][col] == 'E' || map[row][col] == 'S' || map[row][col] == 'W')
-			{
-				player->pos = (t_vec2f){col, row};
-				if (map[row][col] == 'N')
-					player->lookdir = (t_vec3){0.0f, -1.0f, 0.0f};
-				if (map[row][col] == 'E')
-					player->lookdir = (t_vec3){1.0f, 0.0f, 0.0f};
-				if (map[row][col] == 'S')
-					player->lookdir = (t_vec3){0.0f, 1.0f, 0.0f};
-				if (map[row][col] == 'W')
-					player->lookdir = (t_vec3){-1.0f, 0.0f, 0.0f};
-			}
-			col++;	
-		}
-		row++;
-	}
-	return (player);
-}
+// 	player = malloc(sizeof(player));
+// 	row = 0;
+// 	while (row < h)
+// 	{
+// 		col = 0;
+// 		while  (col < w)
+// 		{
+// 			if (map[row][col] == 'N' || map[row][col] == 'E' || map[row][col] == 'S' || map[row][col] == 'W')
+// 			{
+// 				player->pos = (t_vec2){col, row};
+// 				if (map[row][col] == 'N')
+// 					player->lookdir = (t_vec3){0.0f, -1.0f, 0.0f};
+// 				if (map[row][col] == 'E')
+// 					player->lookdir = (t_vec3){1.0f, 0.0f, 0.0f};
+// 				if (map[row][col] == 'S')
+// 					player->lookdir = (t_vec3){0.0f, 1.0f, 0.0f};
+// 				if (map[row][col] == 'W')
+// 					player->lookdir = (t_vec3){-1.0f, 0.0f, 0.0f};
+// 			}
+// 			col++;
+// 		}
+// 		row++;
+// 	}
+// 	return (player);
+// }
 
 void	draw_player(uint32_t *pixels)
 {
 	t_vec2 center;
 	t_player	*player;
-	t_map	map;
+	t_map		*map;
 
 	player = ft_game()->player;
 	map = ft_game()->map;
@@ -197,6 +190,6 @@ void	draw_player(uint32_t *pixels)
 		x++;
 	}
 	draw_line(pixels, center,
-		(t_vec2){(int)(center.x + player->lookdir.x * 20),
-		(int)(center.y + player->lookdir.y * 20)}, COLOR_YELLOW);
+		(t_point){(int)(center.u + player->lookdir.x * 20),
+		(int)(center.v + player->lookdir.y * 20)}, COLOR_YELLOW);
 }

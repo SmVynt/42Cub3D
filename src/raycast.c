@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
 /*   Updated: 2025/10/04 20:36:38 by nmikuka          ###   ########.fr       */
@@ -13,8 +13,8 @@
 #include "cub3d.h"
 
 
-static void	get_next_point_to_draw(t_vec2 *p, int *slope_err,
-		t_vec2 diff, t_vec2 dir);
+static void	get_next_point_to_draw(t_point *p, int *slope_err,
+		t_point diff, t_point dir);
 
 bool hit_wall(t_vec2 p, t_map map)
 {
@@ -70,8 +70,8 @@ u_int32_t get_wall_dir(t_vec2 draw_point, t_vec2 prev_point, t_map map)
 // Bresenham's line algorithm 
 void	draw_line_ray(uint32_t *pixels, t_vec2 p0, t_vec3 lookdir, t_map map, int x)
 {
-	t_vec2		diff;
-	t_vec2		dir;
+	t_point		diff;
+	t_point		dir;
 	int			slope_err;
 	t_vec2		draw_point;
 	t_vec2		prev_point;
@@ -114,20 +114,20 @@ void	draw_line_ray(uint32_t *pixels, t_vec2 p0, t_vec3 lookdir, t_map map, int x
 	}
 }
 
-static void	get_next_point_to_draw(t_vec2 *p, int *slope_err,
-		t_vec2 diff, t_vec2 dir)
+static void	get_next_point_to_draw(t_point *p, int *slope_err,
+		t_point diff, t_point dir)
 {
 	int	err2;
 
 	err2 = 2 * (*slope_err);
-	if (err2 >= -diff.y)
+	if (err2 >= -diff.v)
 	{
-		*slope_err -= diff.y;
-		p->x += dir.x;
+		*slope_err -= diff.v;
+		p->u += dir.u;
 	}
-	if (err2 <= diff.x)
+	if (err2 <= diff.u)
 	{
-		*slope_err += diff.x;
-		p->y += dir.y;
+		*slope_err += diff.u;
+		p->v += dir.v;
 	}
 }

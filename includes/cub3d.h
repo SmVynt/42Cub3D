@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/04 20:31:21 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/03 17:28:55 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@
 # define MAP_WALL_CHARS			"123456789"
 # define MAP_PLAYER_CHARS		"NSEW"
 
-# define MAP_SCALE				20
+# define MAP_SCALE				30
+# ifndef M_PI
+#  define M_PI					3.14159265358979323846
+# endif
 # define PI						3.14159265358
 # define TWO_PI					6.28318530718
 # define DEG_TO_RAD				0.01745329251
@@ -81,16 +84,16 @@ void	ft_exit(void);
 t_player *init_player(char **map, int w, int h);
 
 void	draw(t_gs *game);
-void 	put_pixel(uint32_t *pixels, t_vec2 pos, uint32_t color);
-void	draw_line_ray(uint32_t *pixels, t_vec2 p0, t_vec3 dir, t_map map, int x);
+void 	put_pixel(uint32_t *pixels, t_point pos, uint32_t color);
+void	draw_line_ray(uint32_t *pixels, t_point p0, t_vec3 dir, char **map);
 // void	init_player(void);
 
 void	draw(t_gs *game);
 void	draw_map(uint32_t* pixels, t_map *map);
 void	draw_player(uint32_t *pixels);
-void	draw_square(uint32_t* pixels, t_vec2 pos, uint32_t color);
-void	draw_circle(uint32_t *pixels, t_vec2 center, int radius, uint32_t color);
-void	draw_line(uint32_t *pixels, t_vec2 start, t_vec2 end, uint32_t color);
+void	draw_square(uint32_t* pixels, t_point pos, uint32_t color);
+void	draw_circle(uint32_t *pixels, t_point center, int radius, uint32_t color);
+void	draw_line(uint32_t *pixels, t_point start, t_point end, uint32_t color);
 
 void	ft_createhooks(void);
 void	ft_update(void *param);

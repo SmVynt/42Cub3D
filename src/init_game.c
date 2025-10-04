@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/01 18:13:01 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/03 16:58:31 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	ft_set_player(void)
 
 	game = ft_game();
 	player = game->player;
-	player->pos = (t_vec2f){(float)game->map.start.x, (float)game->map.start.y};
-	start_char = game->map.tile[game->map.start.y][game->map.start.x];
+	player->pos = (t_vec2){(float)game->map.start.u, (float)game->map.start.v};
+	start_char = game->map.tile[game->map.start.v][game->map.start.u];
 	if (start_char == 'N')
 		player->lookdir = (t_vec3){0.0f, 1.0f, 0.0f};
 	if (start_char == 'E')

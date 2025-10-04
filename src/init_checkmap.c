@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/01 13:45:33 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/03 17:25:31 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static void	ft_checkdigits(void)
 			if (ft_strchar(MAP_PLAYER_CHARS, ft_game()->map.tile[i][j]) != NULL)
 			{
 				printf("Found player start at %d,%d\n", j, i);
-				if (ft_game()->map.start.x != -1
-					|| ft_game()->map.start.y != -1)
+				if (ft_game()->map.start.u != -1
+					|| ft_game()->map.start.v != -1)
 					ft_exit_error("Map contains multiple starting positions\n");
-				ft_game()->map.start.x = j;
-				ft_game()->map.start.y = i;
+				ft_game()->map.start.u = j;
+				ft_game()->map.start.v = i;
 			}
 		}
 		i++;
@@ -44,6 +44,7 @@ static void	ft_checkdigits(void)
 static void	ft_check_neighbours(t_map *map, int h, int w, const char *walls)
 {
 	map->tile[h][w] -= 128;
+	printf("Checking neighbours of %d,%d\n", w, h);
 	if (w <= 1 || w >= map->w - 1 || h <= 1 || h >= map->h - 1)
 		return ;
 	if (ft_strchar(walls, map->tile[h + 1][w]) == NULL
@@ -84,7 +85,8 @@ static void	ft_checkwalls(void)
 	int		w;
 
 	map = &ft_game()->map;
-	ft_check_neighbours(map, map->start.y, map->start.x, MAP_WALL_CHARS);
+	printf("Checking walls...\n");
+	ft_check_neighbours(map, map->start.v, map->start.u, MAP_WALL_CHARS);
 	h = -1;
 	while (++h < map->h)
 	{
