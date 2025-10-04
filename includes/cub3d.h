@@ -59,6 +59,7 @@
 # define DEG_TO_RAD				0.01745329251
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
+# define FOV_RAD				M_PI / 3
 
 void	ft_initialize(void);
 
