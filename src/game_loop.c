@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/05 11:36:34 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/05 17:44:39 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,15 @@ void	ft_update_player(void)
 
 void	ft_update_graphics(void)
 {
+	int width;
+	int height;
+
+	width = ft_game()->miniplayer->width;
+	height = ft_game()->miniplayer->height;
+	printf("%i %i\n", width, height);
 	mlx_delete_image(ft_game()->mlx, ft_game()->miniplayer);
-	ft_game()->miniplayer = mlx_new_image(ft_game()->mlx, WIDTH, HEIGHT);
-	draw_player((uint32_t *)ft_game()->miniplayer->pixels);
+	ft_game()->miniplayer = mlx_new_image(ft_game()->mlx, width, height);
+	draw_player(ft_game()->miniplayer);
 	mlx_image_to_window(ft_game()->mlx, ft_game()->miniplayer, 0, 0);
 }
 

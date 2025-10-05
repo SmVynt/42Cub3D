@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/05 00:09:14 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/05 12:34:33 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	ft_createhooks(void)
 
 	game = ft_game();
 	printf(COLOR_G"Creating hooks...\n"COLOR_X);
+	mlx_resize_hook(game->mlx, draw, game);
 	mlx_loop_hook(game->mlx, ft_key_press_hook, game);
 	mlx_cursor_hook(game->mlx, ft_mouse_move, game);
 	mlx_loop_hook(game->mlx, ft_update, game);

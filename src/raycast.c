@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/05 11:39:40 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/05 17:55:57 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
 		t_point diff, t_point dir);
 
-bool hit_wall(t_point p, t_map map)
+bool hit_wall(t_point p, t_map map, mlx_image_t* image)
 {
 	int x;
 	int y;
 
-	if (p.u < 0 || p.u >= WIDTH || p.v < 0 || p.v >= HEIGHT)
+	if (p.u < 0 || (unsigned int)p.u >= image->width || p.v < 0 || (unsigned int)p.v >= image->height)
 		return (true);
     x = (p.u - MAP_SCALE / 2) / MAP_SCALE;
 	y = (p.v - MAP_SCALE / 2) / MAP_SCALE;
@@ -32,7 +32,7 @@ bool hit_wall(t_point p, t_map map)
     return (false);
 }
 
-u_int32_t get_wall_dir(t_point draw_point, t_point prev_point, t_map map)
+u_int32_t get_wall_dir(t_point draw_point, t_point prev_point, t_map map, mlx_image_t *image)
 {
 	uint32_t color;
 
@@ -46,7 +46,7 @@ u_int32_t get_wall_dir(t_point draw_point, t_point prev_point, t_map map)
 		color = COLOR_GREEN;
 	if (draw_point.u - prev_point.u)
 	{
-		if (hit_wall((t_point){draw_point.u, prev_point.v}, map))
+		if (hit_wall((t_point){draw_point.u, prev_point.v}, map, image))
 		{
 			if (draw_point.u - prev_point.u > 0)
 				color = COLOR_YELLOW;
@@ -56,7 +56,7 @@ u_int32_t get_wall_dir(t_point draw_point, t_point prev_point, t_map map)
 	}
 	if (draw_point.v - prev_point.v)
 	{
-		if (hit_wall((t_point){prev_point.u, draw_point.v}, map))
+		if (hit_wall((t_point){prev_point.u, draw_point.v}, map, image))
 		{
 			if (draw_point.v - prev_point.v > 0)
 				color = COLOR_RED;
@@ -68,7 +68,7 @@ u_int32_t get_wall_dir(t_point draw_point, t_point prev_point, t_map map)
 }
 
 // Bresenham's line algorithm 
-void	draw_line_ray(uint32_t *pixels, t_point p0, t_vec3 lookdir, t_map map, int x)
+void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x)
 {
 	t_point		diff;
 	t_point		dir;
@@ -88,28 +88,28 @@ void	draw_line_ray(uint32_t *pixels, t_point p0, t_vec3 lookdir, t_map map, int 
 	int i = 0;
 	while (i < max_iter)
 	{
-		if (hit_wall(draw_point, map))
+		if (hit_wall(draw_point, map, image))
 		{
-			color = get_wall_dir(draw_point, prev_point, map);
+			color = get_wall_dir(draw_point, prev_point, map, image);
 			break ;
 		}
-		put_pixel(pixels, draw_point, COLOR_RED);
+		put_pixel(image, draw_point, COLOR_RED);
 		prev_point = draw_point;
 		get_next_point_to_draw(&draw_point, &slope_err, diff, dir);
 		i++;
 	}
-	double angle = - FOV_RAD / 2 + x * (FOV_RAD / (double) WIDTH);
+	double angle = - FOV_RAD / 2 + x * (FOV_RAD / (double) image->width);
 	double dist = sqrt((draw_point.u - p0.u) * (draw_point.u - p0.u) + (draw_point.v - p0.v) * (draw_point.v - p0.v)) * cos(angle);
 	if (dist <= 0)
 		return ;
-	double projection_plane_dist = (WIDTH / 2.0) / tan(FOV_RAD / 2.0);
+	double projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
 	double height = (MAP_SCALE / dist) * projection_plane_dist;
-	int start = (HEIGHT - height) / 2.0;
+	int start = (image->height - height) / 2.0;
 	int delta = 0;
 	while (delta < height)
 	{
 		// if (delta == 0|| delta + 1 > height || x % 64 == 0 )
-			put_pixel(pixels, (t_point){x, start + delta}, color);
+			put_pixel(image, (t_point){x, start + delta}, color);
 		delta ++;
 	}
 }
