@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/04 21:48:58 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/05 11:34:52 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	draw_line_ray(uint32_t *pixels, t_point p0, t_vec3 lookdir, t_map map, int 
 	diff.u = fabsf(lookdir.x * 1000000);
 	diff.v = fabsf(lookdir.y * 1000000);
 	dir.u = (lookdir.x > 0.0) - (lookdir.x < 0.0);
-	dir.v = (lookdir.y > 0.0) - (lookdir.y < 0.0);
+	dir.v = (lookdir.y > 0.0) - (.y < 0.0);
 	slope_err = diff.u - diff.v;
 	uint32_t color = COLOR_WHITE;
 	int max_iter = 1000;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/04 00:33:26 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/05 11:36:34 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_update_player(void)
 		player->pos.x += new_pos.x;
 		player->pos.y += new_pos.y;
 	}
-	mlx_set_mouse_pos(ft_game()->mlx, WIDTH / 2, HEIGHT / 2);
+	// mlx_set_mouse_pos(ft_game()->mlx, WIDTH / 2, HEIGHT / 2);
 }
 
 void	ft_update_graphics(void)
