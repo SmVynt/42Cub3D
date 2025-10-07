@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/10/02 17:15:49 by psmolin          ###   ########.fr        #
+#    Updated: 2025/10/05 00:12:39 by nmikuka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ MLX42_REPO := https://github.com/codam-coding-college/MLX42.git
 
 # Compiler and flags
 CC := @cc
-CFLAGS := -Wall -Wextra -Werror -I$(INCLUDES)  -I$(MLX42_DIR)/include
+CFLAGS := -Wall -Wextra -Werror -I$(INCLUDES)  -I$(MLX42_DIR)/include  -I/opt/homebrew/include 
 
 UNAME_S := $(shell uname -s)
 
@@ -31,7 +31,7 @@ ifeq ($(UNAME_S),Linux)
 	MLXFLAGS := -L$(MLX42_DIR) -lmlx42 -lglfw -ldl -lGL -lm -pthread
 endif
 ifeq ($(UNAME_S),Darwin)
-	MLXFLAGS := -L$(MLX42_DIR) -lmlx42 -lglfw -framework OpenGL -framework AppKit
+	MLXFLAGS := -L$(MLX42_DIR) -lmlx42 -L/opt/homebrew/lib -lglfw -framework OpenGL -framework AppKit
 endif
 
 # Colors
