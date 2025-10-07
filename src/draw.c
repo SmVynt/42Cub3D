@@ -6,39 +6,47 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/05 00:05:23 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/05 17:52:56 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw(t_gs *game)
+void	draw(int32_t width, int32_t height, void *param)
 {
-	// mlx_image_t	*image;
-	// uint32_t*	pixels;
-	t_map		*map;
+	t_gs	*game;
+	t_map	*map;
+	
 
-	map = &ft_game()->map;
-	game->minimap = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	game->miniplayer = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game = (t_gs *) param;
+	map = &game->map;
+	if (game->minimap)
+		mlx_delete_image(game->mlx, game->minimap);
+	if (game->miniplayer)
+		mlx_delete_image(game->mlx, game->miniplayer);
+	game->minimap = mlx_new_image(game->mlx, width, height);
+	game->miniplayer = mlx_new_image(game->mlx, width, height);
 	if (!game->minimap || !game->miniplayer)
 		return ;
 	// player = init_player(map->tile, map->w, map->h);
 	// draw_line(pixels, player->pos, player->lookdir, map->tile);
-	draw_map((uint32_t*)game->minimap->pixels, map);
+	draw_map(game->minimap, map);
 	// printf("Map drawn\n");
 	// init_player();
 	mlx_image_to_window(game->mlx, game->minimap, 0, 0);
 	mlx_image_to_window(game->mlx, game->miniplayer, 0, 0);
 }
 
-void put_pixel(uint32_t *pixels, t_point pos, uint32_t color)
+void put_pixel(mlx_image_t *image, t_point pos, uint32_t color)
 {
-	if (pos.u >= 0 && pos.u < WIDTH && pos.v >= 0 && pos.v < HEIGHT)
-		pixels[pos.v * WIDTH + pos.u] = color;
+	uint32_t *pixels;
+
+	pixels = (uint32_t *)image->pixels;
+	if (pos.u >= 0 &&  (unsigned int)pos.u < image->width && pos.v >= 0 &&  (unsigned int)pos.v < image->height)
+		pixels[pos.v * image->width + pos.u] = color;
 }
 
-void	draw_line(uint32_t *pixels, t_point start, t_point end, uint32_t color)
+void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color)
 {
 	t_point	delta;
 	t_point	sign;
@@ -53,7 +61,7 @@ void	draw_line(uint32_t *pixels, t_point start, t_point end, uint32_t color)
 	t = 0;
 	while (t++ < 10000)
 	{
-		put_pixel(pixels, start, color);
+		put_pixel(image, start, color);
 		if (start.u == end.u && start.v == end.v)
 			break ;
 		err.v = err.u * 2;
@@ -75,7 +83,7 @@ t_point	center_point(t_point point, int w, int h)
 	return ((t_point){point.u + w / 2, point.v + h / 2});
 }
 
-void	draw_square(uint32_t* pixels, t_point pos, uint32_t color)
+void	draw_square(mlx_image_t *image, t_point pos, uint32_t color)
 {
 	int size;
 	int i;
@@ -85,15 +93,15 @@ void	draw_square(uint32_t* pixels, t_point pos, uint32_t color)
 	i = -size / 2;
 	while (i < size / 2)
 	{
-		put_pixel(pixels, (t_point){pos.u + i, pos.v - size / 2}, COLOR_RED);
-		put_pixel(pixels, (t_point){pos.u + i, pos.v + size / 2}, COLOR_GREEN);
-		put_pixel(pixels, (t_point){pos.u - size / 2, pos.v + i}, COLOR_YELLOW);
-		put_pixel(pixels, (t_point){pos.u + size / 2, pos.v + i}, COLOR_BLUE);
+		put_pixel(image, (t_point){pos.u + i, pos.v - size / 2}, COLOR_RED);
+		put_pixel(image, (t_point){pos.u + i, pos.v + size / 2}, COLOR_GREEN);
+		put_pixel(image, (t_point){pos.u - size / 2, pos.v + i}, COLOR_YELLOW);
+		put_pixel(image, (t_point){pos.u + size / 2, pos.v + i}, COLOR_BLUE);
 		i++;
 	}
 }
 
-void	draw_map(uint32_t* pixels, t_map *map)
+void	draw_map(mlx_image_t *image, t_map *map)
 {
 	int i;
 	int j;
@@ -108,14 +116,14 @@ void	draw_map(uint32_t* pixels, t_map *map)
 		{
 			if (map->tile[i][j] == '1')
 				if (true)
-					draw_square(pixels, (t_point){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
+					draw_square(image, (t_point){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
 			j++;
 		}
 		i++;
 	}
 }
 
-void draw_circle(uint32_t *pixels, t_point center, int radius, uint32_t color)
+void draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color)
 {
 	int x;
 	int y;
@@ -130,8 +138,9 @@ void draw_circle(uint32_t *pixels, t_point center, int radius, uint32_t color)
 			{
 				int px = center.u + x;
 				int py = center.v + y;
-				if (px >= 0 && px < WIDTH && py >= 0 && py < HEIGHT)
-					pixels[py * WIDTH + px] = color;
+				put_pixel(image, (t_point){px, py}, color);
+				// if (px >= 0 && px < WIDTH && py >= 0 && py < HEIGHT)
+				// 	pixels[py * WIDTH + px] = color;
 			}
 		}
 	}
@@ -169,7 +178,7 @@ void draw_circle(uint32_t *pixels, t_point center, int radius, uint32_t color)
 // 	return (player);
 // }
 
-void	draw_player(uint32_t *pixels)
+void	draw_player(mlx_image_t *image)
 {
 	t_point center;
 	t_player	*player;
@@ -179,17 +188,17 @@ void	draw_player(uint32_t *pixels)
 	map = ft_game()->map;
 	center = (t_point){(int)(player->pos.x * MAP_SCALE/* + MAP_SCALE*/),
 		(int)(player->pos.y * MAP_SCALE/* + MAP_SCALE*/)};
-	draw_circle(pixels, center, 3, COLOR_BLUE);
+	draw_circle(image, center, 3, COLOR_BLUE);
 	float angle = - FOV_RAD / 2;
-	float dangle = FOV_RAD / WIDTH;
+	float dangle = FOV_RAD / image->width;
 	int x = 0;
-	while (x < WIDTH)
+	while ((unsigned int)x < image->width)
 	{
-		draw_line_ray(pixels, center, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map, x);
+		draw_line_ray(image, center, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map, x);
 		angle += dangle;
 		x++;
 	}
-	draw_line(pixels, center,
+	draw_line(image, center,
 		(t_point){(int)(center.u + player->lookdir.x * 20),
 		(int)(center.v + player->lookdir.y * 20)}, COLOR_YELLOW);
 }

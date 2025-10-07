@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/04 21:45:18 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/05 16:58:21 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,16 @@ void	ft_exit(void);
 
 t_player *init_player(char **map, int w, int h);
 
-void	draw(t_gs *game);
-void 	put_pixel(uint32_t *pixels, t_point pos, uint32_t color);
-void	draw_line_ray(uint32_t *pixels, t_point p0, t_vec3 lookdir, t_map map, int x);
+void 	put_pixel(mlx_image_t *image, t_point pos, uint32_t color);
+void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x);
 // void	init_player(void);
 
-void	draw(t_gs *game);
-void	draw_map(uint32_t* pixels, t_map *map);
-void	draw_player(uint32_t *pixels);
-void	draw_square(uint32_t* pixels, t_point pos, uint32_t color);
-void	draw_circle(uint32_t *pixels, t_point center, int radius, uint32_t color);
-void	draw_line(uint32_t *pixels, t_point start, t_point end, uint32_t color);
+void	draw(int32_t width, int32_t height, void *param);
+void	draw_map(mlx_image_t *image, t_map *map);
+void	draw_player(mlx_image_t *image);
+void	draw_square(mlx_image_t *image, t_point pos, uint32_t color);
+void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
+void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
 
 void	ft_createhooks(void);
 void	ft_update(void *param);
