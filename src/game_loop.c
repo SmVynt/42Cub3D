@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/07 18:02:13 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/07 18:20:08 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ static int ft_is_wall(t_vec2 p)
 
 	game = ft_game();
 	map = &game->map;
-	x = (int)(p.x - 0.5f);
-	y = (int)(p.y - 0.5f);
+	// x = (int)(p.x - 0.5f);
+	// y = (int)(p.y - 0.5f);
+	x = (int)roundf(p.x);
+	y = (int)roundf(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
 		return (1);
 	if (ft_strchar(MAP_WALL_CHARS, map->tile[y][x]) != NULL)
