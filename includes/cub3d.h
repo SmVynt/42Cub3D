@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/05 16:58:21 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/08 21:34:37 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
+# include <string.h>
 # include "structs.h"
 # include "libft_mini.h"
 # include "ft_mat4.h"
@@ -31,6 +32,7 @@
 # define HEIGHT		720
 
 # define COLOR_WHITE	0xFFFFFFFF
+# define COLOR_BLACK	0xFF000000
 # define COLOR_RED		0xFF0000FF
 # define COLOR_GREEN	0xFF00FF00
 # define COLOR_BLUE		0xFFFF0000
@@ -50,7 +52,7 @@
 # define MAP_WALL_CHARS			"123456789"
 # define MAP_PLAYER_CHARS		"NSEW"
 
-# define MAP_SCALE				30
+# define MAP_SCALE				10
 # ifndef M_PI
 #  define M_PI					3.14159265358979323846
 # endif
@@ -85,18 +87,23 @@ t_player *init_player(char **map, int w, int h);
 
 void 	put_pixel(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x);
+void	draw_wall(mlx_image_t *image, t_vec2 p0, t_vec3 lookdir, int x);
+int		ft_is_wall(t_vec2 p);
 // void	init_player(void);
 
 void	draw(int32_t width, int32_t height, void *param);
 void	draw_map(mlx_image_t *image, t_map *map);
 void	draw_player(mlx_image_t *image);
+void	draw_walls(mlx_image_t *image);
 void	draw_square(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
 
 void	ft_createhooks(void);
 void	ft_update(void *param);
-
+void	ft_update_minimap(void *param);
+void	ft_update_view3d(void *param);
+void	ft_update_player(void);
 
 // void	ft_exit_error(char *str, t_gs *game);
 // void	ft_exit(char *str, t_gs *game);

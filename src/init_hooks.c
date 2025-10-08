@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/05 12:34:33 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/08 23:57:48 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,18 @@ static void	ft_key_press_hook(void *param)
 		ft_exit();
 	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
 		player->mov_control.u = -1;
-	else if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
 		player->mov_control.u = 1;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
 		player->mov_control.v = 1;
-	else if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
 		player->mov_control.v = -1;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
 		player->rot_control = -1;
-	else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		player->rot_control = 1;
+	if (player->mov_control.u != 0 || player->mov_control.v != 0 || player->rot_control != 0)
+		ft_update(game);
 }
 
 static void ft_mouse_move(double x, double y, void *param)
@@ -47,7 +49,8 @@ static void ft_mouse_move(double x, double y, void *param)
 	player = game->player;
 	player->mouse_dx = player->mouse_x - x;
 	player->mouse_x = x;
-	(void)y;
+	ft_update(game);
+	(void) y;
 }
 
 
@@ -60,6 +63,7 @@ void	ft_createhooks(void)
 	mlx_resize_hook(game->mlx, draw, game);
 	mlx_loop_hook(game->mlx, ft_key_press_hook, game);
 	mlx_cursor_hook(game->mlx, ft_mouse_move, game);
-	mlx_loop_hook(game->mlx, ft_update, game);
+	// mlx_loop_hook(game->mlx, ft_update_minimap, game->miniplayer);
+	// mlx_loop_hook(game->mlx, ft_update_view3d, game->view3d);
 	printf(COLOR_G"Hooks created successfully.\n"COLOR_X);
 }
