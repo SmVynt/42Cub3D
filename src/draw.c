@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/05 17:52:56 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/07 18:12:03 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	draw(int32_t width, int32_t height, void *param)
 {
 	t_gs	*game;
 	t_map	*map;
-	
+
 
 	game = (t_gs *) param;
 	map = &game->map;
@@ -186,8 +186,10 @@ void	draw_player(mlx_image_t *image)
 
 	player = ft_game()->player;
 	map = ft_game()->map;
-	center = (t_point){(int)(player->pos.x * MAP_SCALE/* + MAP_SCALE*/),
-		(int)(player->pos.y * MAP_SCALE/* + MAP_SCALE*/)};
+	// center = (t_point){(int)(player->pos.x * MAP_SCALE/* + MAP_SCALE*/),
+	// 	(int)(player->pos.y * MAP_SCALE/* + MAP_SCALE*/)};
+	center = (t_point){(int)(player->pos.x * MAP_SCALE + MAP_SCALE),
+    (int)(player->pos.y * MAP_SCALE + MAP_SCALE)};
 	draw_circle(image, center, 3, COLOR_BLUE);
 	float angle = - FOV_RAD / 2;
 	float dangle = FOV_RAD / image->width;
