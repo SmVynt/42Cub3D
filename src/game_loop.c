@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/08 21:30:51 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/09 13:21:33 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,7 @@ static void	ft_clamp_new_position(t_vec2 *player_pos,t_vec2 new_pos_delta)
 		closest_tile_border.y = (float)((int)(player_pos->y)) + 0.5f + border_width;
 	else
 		closest_tile_border.y = (float)((int)(player_pos->y + 1.0f)) - 0.5f - border_width;
-	border_offset = (t_vec2){border_width, border_width};
-	if (new_pos_delta.x < 0.0f)
-		border_offset.x = -border_width;
-	if (new_pos_delta.y < 0.0f)
-		border_offset.y = -border_width;
+	border_offset = (t_vec2){ft_signf(new_pos_delta.x) * border_width, ft_signf(new_pos_delta.y) * border_width};
 	if (ft_is_wall((t_vec2){player_pos->x + new_pos_delta.x + border_offset.x, player_pos->y}))
 		new_pos_delta.x = closest_tile_border.x - player_pos->x;
 	if (ft_is_wall((t_vec2){player_pos->x, player_pos->y + new_pos_delta.y + border_offset.y}))

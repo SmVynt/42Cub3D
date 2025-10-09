@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/08 21:34:37 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/09 16:58:11 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	ft_exit_error(char *str);
 void	ft_exit(void);
 
 
-t_player *init_player(char **map, int w, int h);
+// t_player	*init_player(char **map, int w, int h);
+void	ft_load_texture(const char *path, mlx_texture_t **texture);
 
 void 	put_pixel(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x);
@@ -98,6 +99,8 @@ void	draw_walls(mlx_image_t *image);
 void	draw_square(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
+
+uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
 
 void	ft_createhooks(void);
 void	ft_update(void *param);

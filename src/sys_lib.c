@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 14:34:11 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/07 18:32:31 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,18 @@ char	*ft_strchar(const char *s, int c)
 		i++;
 	}
 	return (NULL);
+}
+
+int	ft_sign(int n)
+{
+	if (n < 0)
+		return (-1);
+	return (1);
+}
+
+int	ft_signf(float n)
+{
+	if (n < 0.0f)
+		return (-1);
+	return (1);
 }

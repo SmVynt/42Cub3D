@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/10/05 00:12:39 by nmikuka          ###   ########.fr        #
+#    Updated: 2025/10/09 17:04:31 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ MLX42_REPO := https://github.com/codam-coding-college/MLX42.git
 
 # Compiler and flags
 CC := @cc
-CFLAGS := -Wall -Wextra -Werror -I$(INCLUDES)  -I$(MLX42_DIR)/include  -I/opt/homebrew/include 
+CFLAGS := -Wall -Wextra -Werror -I$(INCLUDES)  -I$(MLX42_DIR)/include  -I/opt/homebrew/include
 
 UNAME_S := $(shell uname -s)
 
@@ -51,15 +51,17 @@ SRC_FILES	= \
 				init_fillmap.c \
 				init_game.c \
 				init_hooks.c \
+				init_textures.c \
 				main.c \
+				render_draw.c \
+				render_images.c \
+				render_raycast.c \
 				sys_clean.c \
 				sys_errors.c \
 				sys_gamestate.c \
 				sys_lib.c \
-				draw.c \
 				ft_mat4.c \
-				ft_mat4_transform.c \
-				raycast.c
+				ft_mat4_transform.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 

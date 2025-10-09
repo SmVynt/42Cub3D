@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/06 20:40:15 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/09 16:55:38 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ typedef struct s_map
 	t_point	start;
 }	t_map;
 
+typedef struct s_textures
+{
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*we;
+	mlx_texture_t	*ea;
+}	t_textures;
+
 typedef struct s_player
 {
 	t_vec2	pos;
@@ -73,6 +81,7 @@ typedef struct s_gs
 	mlx_image_t	*miniplayer;
 	mlx_image_t	*view3d;
 	t_map		map;
+	t_textures	textures;
 	int			state;
 	int			collected;
 }	t_gs;

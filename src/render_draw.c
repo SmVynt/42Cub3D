@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/07 18:12:03 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/09 17:03:34 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color)
 
 	delta.u = abs(end.u - start.u);
 	delta.v = abs(end.v - start.v);
-	sign.u = (end.u - start.u < 0) * -1 + (end.u - start.u > 0) * 1;
-	sign.v = (end.v - start.v < 0) * -1 + (end.v - start.v > 0) * 1;
+	sign.u = ft_sign(end.u - start.u);
+	sign.v = ft_sign(end.v - start.v);
 	err.u = delta.u - delta.v;
 	t = 0;
 	while (t++ < 10000)
@@ -106,7 +106,7 @@ void fill_background(mlx_image_t *image, uint32_t color)
 {
 	uint32_t *pixels = (uint32_t *)image->pixels;
 	int total = image->width * image->height;
-	
+
 	for (int i = 0; i < total; i++)
 		pixels[i] = color;
 }

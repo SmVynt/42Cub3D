@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
+/*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/09 00:15:57 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/09 17:03:38 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
 		t_point diff, t_point dir);
@@ -25,18 +24,18 @@ bool hit_wall(t_point p, t_map map, mlx_image_t* image)
 
 	if (p.u < 0 || (unsigned int)p.u >= image->width || p.v < 0 || (unsigned int)p.v >= image->height)
 		return (true);
-    x = (p.u - MAP_SCALE / 2) / MAP_SCALE;
+	x = (p.u - MAP_SCALE / 2) / MAP_SCALE;
 	y = (p.v - MAP_SCALE / 2) / MAP_SCALE;
 	if (x < 0 || x >= map.w || y < 0 || y >= map.h)
 		return (true);
 	if (ft_strchar(MAP_WALL_CHARS, map.tile[y][x]) != NULL)
-        return (true);
-    return (false);
+		return (true);
+	return (false);
 }
 
-u_int32_t get_wall_dir(t_point draw_point, t_point prev_point, t_map map, mlx_image_t *image)
+u_int32_t	get_wall_dir(t_point draw_point, t_point prev_point, t_map map, mlx_image_t *image)
 {
-	uint32_t color;
+	uint32_t	color;
 
 	if (draw_point.u - prev_point.u > 0)
 		color = COLOR_YELLOW;
@@ -69,7 +68,7 @@ u_int32_t get_wall_dir(t_point draw_point, t_point prev_point, t_map map, mlx_im
 	return (color);
 }
 
-// Bresenham's line algorithm 
+// Bresenham's line algorithm
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x)
 {
 	t_point		diff;
@@ -80,7 +79,7 @@ void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, in
 
 	(void) x;
 	draw_point = (t_point){p0.u, p0.v};
-	// prev_point = draw_point; 
+	// prev_point = draw_point;
 	diff.u = fabsf(lookdir.x * 1000000);
 	diff.v = fabsf(lookdir.y * 1000000);
 	dir.u = (lookdir.x > 0.0) - (lookdir.x < 0.0);
@@ -117,6 +116,75 @@ void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, in
 	// }
 }
 
+void ft_draw_wall_part(t_vec2 loc, uint32_t color, double height, int x)
+{
+	mlx_image_t		*image;
+	mlx_texture_t	*texture;
+	t_point			pixel;
+	int				start;
+	int				delta;
+
+	image = ft_game()->view3d;
+	if (color == COLOR_RED)
+	{
+		texture = ft_game()->textures.so;
+		pixel.u = (int)((loc.x - (int)loc.x) * (texture->width));
+	}
+	else if (color == COLOR_GREEN)
+	{
+		texture = ft_game()->textures.no;
+		pixel.u = (int)((1.0f -loc.x + (int)loc.x) * (texture->width));
+	}
+	else if (color == COLOR_YELLOW)
+	{
+		texture = ft_game()->textures.ea;
+		pixel.u = (int)((loc.y - (int)loc.y) * (texture->width));
+	}
+	else
+	{
+		texture = ft_game()->textures.ea;
+		pixel.u = (int)((1.0f - loc.y + (int)loc.y) * (texture->width));
+	}
+	start = (image->height - height) / 2.0;
+	delta = 0;
+	while (delta < height)
+	{
+		pixel.v = (int)(delta / height * texture->height);
+		color = ft_get_pixel_color(texture, pixel);
+		put_pixel(image, (t_point){x, start + delta}, color);
+		delta++;
+	}
+}
+
+static void ft_draw_floor_part(t_vec2 p0, t_vec3 lookdir, double wall_height, int x)
+{
+	mlx_image_t *image;
+	mlx_texture_t *texture;
+	t_point		pixel;
+	int			start;
+	int			delta;
+	uint32_t	color;
+
+	image = ft_game()->view3d;
+	texture = ft_game()->textures.no; // Using north texture for floor
+	start = (image->height + wall_height) / 2.0;
+	delta = 0;
+	while (start + delta < (int)image->height)
+	{
+		double current_dist = (MAP_SCALE * (image->height / 2.0)) / (start + delta - image->height / 2.0);
+		double weight = current_dist / (MAP_SCALE / 2.0);
+		double floor_x = p0.x + weight * lookdir.x;
+		double floor_y = p0.y + weight * lookdir.y;
+		//
+
+		pixel.u = (int)((floor_x - (int)floor_x) * texture->width);
+		pixel.v = (int)((floor_y - (int)floor_y) * texture->height);
+		color = ft_get_pixel_color(texture, pixel);
+		put_pixel(image, (t_point){x, start + delta}, color);
+		delta++;
+	}
+}
+
 void	draw_wall(mlx_image_t *image, t_vec2 p0, t_vec3 lookdir, int x)
 {
 	t_vec2		draw_point;
@@ -134,15 +202,8 @@ void	draw_wall(mlx_image_t *image, t_vec2 p0, t_vec3 lookdir, int x)
 		return ;
 	double projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
 	double height = (1.0 / dist) * projection_plane_dist;
-	int start = (image->height - height) / 2.0;
-	int delta = 0;
-	// printf("%i %f\n", image->width , height);
-	while (delta < height)
-	{
-		// if (delta == 0|| delta + 1 > height || x % 64 == 0 )
-			put_pixel(image, (t_point){x, start + delta}, color);
-		delta++;
-	}
+	ft_draw_wall_part(draw_point, color, height, x);
+	ft_draw_floor_part(p0, lookdir, height, x);
 }
 
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
@@ -168,7 +229,7 @@ static t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec3 dir, int *tile_x, in
 	t_vec2	hit_point;
 	t_vec2	next_wall;
 	t_vec2	dist;
-	
+
 	int step_x = (dir.x >= 0) - (dir.x <= 0);
 	int step_y = (dir.y >= 0) - (dir.y <= 0);
 	if (dir.x > 0)
@@ -220,13 +281,13 @@ static t_vec2 get_ray_end(t_vec2 start, t_vec3 dir, int max_iter, uint32_t *colo
 	t_point	tile;
 	int		i;
 	int		side;
-	
+
 	curr = start;
 	i = 0;
 	while (i < max_iter)
 	{
 		curr = get_next_wall_intersection(curr, dir, &tile.u, &tile.v, &side);
-		// printf("Hit wall at (%.2f, %.2f), tile[%d][%d], side=%d\n", 
+		// printf("Hit wall at (%.2f, %.2f), tile[%d][%d], side=%d\n",
 		//        hit_point.x, hit_point.y, tile_y, tile_x, side);
 		if (ft_is_wall((t_vec2){tile.u, tile.v}))
 		{
