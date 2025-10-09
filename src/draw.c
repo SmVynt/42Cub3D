@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/08 23:23:47 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/07 18:12:03 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	draw(int32_t width, int32_t height, void *param)
 {
 	t_gs	*game;
 	t_map	*map;
-	
+
+
 	game = (t_gs *) param;
 	map = &game->map;
 	if (game->minimap)
