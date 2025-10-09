@@ -72,19 +72,7 @@ t_vec3	ft_mat4_transform_vec3(t_mat4 m, t_vec3 v)
 	return (res);
 }
 
-t_mat4	ft_mat4_proj_iso(void)
+float	ft_vec2_length(t_vec2 v)
 {
-	return (ft_mat4_mul(ft_mat4_rotation_x(M_PI / 2.0 - atanf(1 / sqrtf(2.0f))),
-			ft_mat4_rotation_z(M_PI / 4)));
-}
-
-t_mat4	ft_mat4_proj_cab(void)
-{
-	t_mat4	res;
-
-	res = ft_mat4_identity();
-	res.m[0][2] = -cos(M_PI / 4) / 2;
-	res.m[1][2] = sin(M_PI / 4) / 2;
-	res = ft_mat4_mul(res, ft_mat4_rotation_x(M_PI / 2));
-	return (res);
+	return (sqrtf(v.x * v.x + v.y * v.y));
 }

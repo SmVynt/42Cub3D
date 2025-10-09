@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/03 18:52:10 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/06 20:40:15 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_gs
 	void		*window;
 	mlx_image_t	*minimap;
 	mlx_image_t	*miniplayer;
+	mlx_image_t	*view3d;
 	t_map		map;
 	int			state;
 	int			collected;

@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/05 17:55:57 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/09 00:15:57 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
 		t_point diff, t_point dir);
+
+static t_vec2 get_ray_end(t_vec2 start, t_vec3 dir, int max_steps, uint32_t *color);
 
 bool hit_wall(t_point p, t_map map, mlx_image_t* image)
 {
@@ -27,7 +29,7 @@ bool hit_wall(t_point p, t_map map, mlx_image_t* image)
 	y = (p.v - MAP_SCALE / 2) / MAP_SCALE;
 	if (x < 0 || x >= map.w || y < 0 || y >= map.h)
 		return (true);
-    if(map.tile[y][x] == '1')
+	if (ft_strchar(MAP_WALL_CHARS, map.tile[y][x]) != NULL)
         return (true);
     return (false);
 }
@@ -74,43 +76,72 @@ void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, in
 	t_point		dir;
 	int			slope_err;
 	t_point		draw_point;
-	t_point		prev_point;
+	// t_point		prev_point;
 
+	(void) x;
 	draw_point = (t_point){p0.u, p0.v};
-	prev_point = draw_point; 
+	// prev_point = draw_point; 
 	diff.u = fabsf(lookdir.x * 1000000);
 	diff.v = fabsf(lookdir.y * 1000000);
 	dir.u = (lookdir.x > 0.0) - (lookdir.x < 0.0);
 	dir.v = (lookdir.y > 0.0) - (lookdir.y < 0.0);
 	slope_err = diff.u - diff.v;
-	uint32_t color = COLOR_WHITE;
+	// uint32_t color = COLOR_WHITE;
 	int max_iter = 1000;
 	int i = 0;
 	while (i < max_iter)
 	{
 		if (hit_wall(draw_point, map, image))
 		{
-			color = get_wall_dir(draw_point, prev_point, map, image);
+			// color = get_wall_dir(draw_point, prev_point, map, image);
 			break ;
 		}
 		put_pixel(image, draw_point, COLOR_RED);
-		prev_point = draw_point;
+		// prev_point = draw_point;
 		get_next_point_to_draw(&draw_point, &slope_err, diff, dir);
 		i++;
 	}
-	double angle = - FOV_RAD / 2 + x * (FOV_RAD / (double) image->width);
-	double dist = sqrt((draw_point.u - p0.u) * (draw_point.u - p0.u) + (draw_point.v - p0.v) * (draw_point.v - p0.v)) * cos(angle);
+	// double angle = - FOV_RAD / 2 + x * (FOV_RAD / (double) image->width);
+	// double dist = sqrt((draw_point.u - p0.u) * (draw_point.u - p0.u) + (draw_point.v - p0.v) * (draw_point.v - p0.v)) * cos(angle);
+	// if (dist <= 0)
+	// 	return ;
+	// double projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
+	// double height = (MAP_SCALE / dist) * projection_plane_dist;
+	// int start = (image->height - height) / 2.0;
+	// int delta = 0;
+	// while (delta < height)
+	// {
+	// 	// if (delta == 0|| delta + 1 > height || x % 64 == 0 )
+	// 		put_pixel(image, (t_point){x, start + delta}, color);
+	// 	delta++;
+	// }
+}
+
+void	draw_wall(mlx_image_t *image, t_vec2 p0, t_vec3 lookdir, int x)
+{
+	t_vec2		draw_point;
+
+	p0.x += 0.5f;
+	p0.y += 0.5f;
+	draw_point = (t_vec2){p0.x, p0.y};
+	uint32_t color = COLOR_GREEN;
+	int max_iter = 1000;
+	draw_point = get_ray_end(draw_point, lookdir, max_iter, &color);
+	double angle = - FOV_RAD / 2 + x * (FOV_RAD / (double) (image->width - 1));
+	double dist = ft_vec2_length((t_vec2){draw_point.x - p0.x, draw_point.y - p0.y})* cos(angle);
+	// printf("%f %f\n", draw_point.x, draw_point.y);
 	if (dist <= 0)
 		return ;
 	double projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
-	double height = (MAP_SCALE / dist) * projection_plane_dist;
+	double height = (1.0 / dist) * projection_plane_dist;
 	int start = (image->height - height) / 2.0;
 	int delta = 0;
+	// printf("%i %f\n", image->width , height);
 	while (delta < height)
 	{
 		// if (delta == 0|| delta + 1 > height || x % 64 == 0 )
 			put_pixel(image, (t_point){x, start + delta}, color);
-		delta ++;
+		delta++;
 	}
 }
 
@@ -130,4 +161,85 @@ static void	get_next_point_to_draw(t_point *p, int *slope_err,
 		*slope_err += diff.u;
 		p->v += dir.v;
 	}
+}
+
+static t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec3 dir, int *tile_x, int *tile_y, int *side)
+{
+	t_vec2	hit_point;
+	t_vec2	next_wall;
+	t_vec2	dist;
+	
+	int step_x = (dir.x >= 0) - (dir.x <= 0);
+	int step_y = (dir.y >= 0) - (dir.y <= 0);
+	if (dir.x > 0)
+		next_wall.x = ceil(pos.x);
+	else
+		next_wall.x = floor(pos.x);
+	if (fabs(next_wall.x - pos.x) < 1e-9)
+		next_wall.x += step_x;
+	if (dir.y > 0)
+		next_wall.y = ceil(pos.y);
+	else
+		next_wall.y = floor(pos.y);
+	if (fabs(next_wall.y - pos.y) < 1e-9)
+		next_wall.y += step_y;
+	if (fabs(dir.x) > 1e-9)
+		dist.x = (next_wall.x - pos.x) / dir.x;
+	else
+		dist.x = INFINITY;
+	if (fabs(dir.y) > 1e-9)
+		dist.y = (next_wall.y - pos.y) / dir.y;
+	else
+		dist.y = INFINITY;
+	if (dist.x < dist.y)
+	{
+		hit_point.x = next_wall.x;
+		hit_point.y = pos.y + dist.x * dir.y;
+		*tile_x = (int)next_wall.x;
+		if (step_x < 0)
+			*tile_x -= 1;
+		*tile_y = (int)floor(hit_point.y);
+		*side = 0;
+	}
+	else
+	{
+		hit_point.x = pos.x + dist.y * dir.x;
+		hit_point.y = next_wall.y;
+		*tile_x = (int)floor(hit_point.x);
+		*tile_y = (int)next_wall.y;
+		if (step_y < 0)
+			*tile_y -= 1;
+		*side = 1;
+	}
+	return hit_point;
+}
+
+static t_vec2 get_ray_end(t_vec2 start, t_vec3 dir, int max_iter, uint32_t *color)
+{
+	t_vec2	curr;
+	t_point	tile;
+	int		i;
+	int		side;
+	
+	curr = start;
+	i = 0;
+	while (i < max_iter)
+	{
+		curr = get_next_wall_intersection(curr, dir, &tile.u, &tile.v, &side);
+		// printf("Hit wall at (%.2f, %.2f), tile[%d][%d], side=%d\n", 
+		//        hit_point.x, hit_point.y, tile_y, tile_x, side);
+		if (ft_is_wall((t_vec2){tile.u, tile.v}))
+		{
+			if (side && dir.y > 0)
+				*color = COLOR_RED;
+			else if (side)
+				*color = COLOR_GREEN;
+			else if (dir.x > 0)
+				*color = COLOR_YELLOW;
+			else
+				*color = COLOR_BLUE;
+			return (curr);
+		}
+	}
+	return (t_vec2){0.0, 0.0};
 }

@@ -6,15 +6,13 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/07 18:20:08 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/08 21:30:51 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-
-static int ft_is_wall(t_vec2 p)
+int ft_is_wall(t_vec2 p)
 {
 	t_gs	*game;
 	t_map	*map;
@@ -23,8 +21,6 @@ static int ft_is_wall(t_vec2 p)
 
 	game = ft_game();
 	map = &game->map;
-	// x = (int)(p.x - 0.5f);
-	// y = (int)(p.y - 0.5f);
 	x = (int)roundf(p.x);
 	y = (int)roundf(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
@@ -98,16 +94,30 @@ void	ft_update_player(void)
 
 void	ft_update_graphics(void)
 {
-	int width;
-	int height;
+	ft_update_view3d(ft_game()->view3d);
+	ft_update_minimap(ft_game()->miniplayer);
+}
 
-	width = ft_game()->miniplayer->width;
-	height = ft_game()->miniplayer->height;
-	printf("%i %i\n", width, height);
-	mlx_delete_image(ft_game()->mlx, ft_game()->miniplayer);
-	ft_game()->miniplayer = mlx_new_image(ft_game()->mlx, width, height);
-	draw_player(ft_game()->miniplayer);
-	mlx_image_to_window(ft_game()->mlx, ft_game()->miniplayer, 0, 0);
+void	ft_update_view3d(void *param)
+{
+	mlx_image_t	*image;
+
+	if (!param)
+		return ;
+	image = (mlx_image_t *)param;
+	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
+	draw_walls(ft_game()->view3d);
+}
+
+void	ft_update_minimap(void *param)
+{
+	mlx_image_t	*image;
+
+	if (!param)
+		return ;
+	image = (mlx_image_t *)param;
+	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
+	draw_player(image);
 }
 
 void	ft_update(void *param)

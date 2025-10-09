@@ -24,15 +24,16 @@ void	draw(int32_t width, int32_t height, void *param)
 		mlx_delete_image(game->mlx, game->minimap);
 	if (game->miniplayer)
 		mlx_delete_image(game->mlx, game->miniplayer);
-	game->minimap = mlx_new_image(game->mlx, width, height);
-	game->miniplayer = mlx_new_image(game->mlx, width, height);
-	if (!game->minimap || !game->miniplayer)
+	if (game->view3d)
+		mlx_delete_image(game->mlx, game->view3d);
+	game->view3d = mlx_new_image(game->mlx, width, height);
+	game->minimap = mlx_new_image(game->mlx, width / 3, height / 3);
+	game->miniplayer = mlx_new_image(game->mlx, width / 3, height / 3);
+	if (!game->minimap || !game->miniplayer || !game->view3d)
 		return ;
-	// player = init_player(map->tile, map->w, map->h);
-	// draw_line(pixels, player->pos, player->lookdir, map->tile);
 	draw_map(game->minimap, map);
-	// printf("Map drawn\n");
-	// init_player();
+	ft_update(game);
+	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
 	mlx_image_to_window(game->mlx, game->minimap, 0, 0);
 	mlx_image_to_window(game->mlx, game->miniplayer, 0, 0);
 }
@@ -101,12 +102,23 @@ void	draw_square(mlx_image_t *image, t_point pos, uint32_t color)
 	}
 }
 
+void fill_background(mlx_image_t *image, uint32_t color)
+{
+	uint32_t *pixels = (uint32_t *)image->pixels;
+	int total = image->width * image->height;
+	
+	for (int i = 0; i < total; i++)
+		pixels[i] = color;
+}
+
 void	draw_map(mlx_image_t *image, t_map *map)
 {
 	int i;
 	int j;
 	int offset;
 
+
+	fill_background(image, COLOR_BLACK);
 	i = 0;
 	offset = MAP_SCALE;
 	while (i < map->h)
@@ -186,15 +198,13 @@ void	draw_player(mlx_image_t *image)
 
 	player = ft_game()->player;
 	map = ft_game()->map;
-	// center = (t_point){(int)(player->pos.x * MAP_SCALE/* + MAP_SCALE*/),
-	// 	(int)(player->pos.y * MAP_SCALE/* + MAP_SCALE*/)};
 	center = (t_point){(int)(player->pos.x * MAP_SCALE + MAP_SCALE),
-    (int)(player->pos.y * MAP_SCALE + MAP_SCALE)};
+		(int)(player->pos.y * MAP_SCALE + MAP_SCALE)};
 	draw_circle(image, center, 3, COLOR_BLUE);
 	float angle = - FOV_RAD / 2;
-	float dangle = FOV_RAD / image->width;
+	float dangle = FOV_RAD / (ft_game()->view3d->width - 1);
 	int x = 0;
-	while ((unsigned int)x < image->width)
+	while ((unsigned int)x < ft_game()->view3d->width)
 	{
 		draw_line_ray(image, center, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map, x);
 		angle += dangle;
@@ -203,4 +213,20 @@ void	draw_player(mlx_image_t *image)
 	draw_line(image, center,
 		(t_point){(int)(center.u + player->lookdir.x * 20),
 		(int)(center.v + player->lookdir.y * 20)}, COLOR_YELLOW);
+}
+
+void	draw_walls(mlx_image_t *image)
+{
+	t_player	*player;
+
+	player = ft_game()->player;
+	float angle = - FOV_RAD / 2;
+	float dangle = FOV_RAD / (ft_game()->view3d->width - 1);
+	int x = 0;
+	while ((unsigned int)x < ft_game()->view3d->width)
+	{
+		draw_wall(image, (t_vec2){player->pos.x, player->pos.y} , ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), x);
+		angle += dangle;
+		x++;
+	}
 }
