@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/07 18:32:31 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/09 23:24:57 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,14 @@ int	ft_signf(float n)
 	if (n < 0.0f)
 		return (-1);
 	return (1);
+}
+
+t_vec2	ft_normalize_vec2(t_vec2 v)
+{
+	float length;
+
+	length = ft_vec2_length(v);
+	if (length < 1e-7)
+		return (t_vec2){0.0f, 0.0f};
+	return (t_vec2){v.x / length, v.y / length};
 }

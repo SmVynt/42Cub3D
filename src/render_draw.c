@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/09 17:03:34 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/10 00:39:05 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ void	draw(int32_t width, int32_t height, void *param)
 
 void put_pixel(mlx_image_t *image, t_point pos, uint32_t color)
 {
-	uint32_t *pixels;
+	// uint32_t *pixels;
 
-	pixels = (uint32_t *)image->pixels;
-	if (pos.u >= 0 &&  (unsigned int)pos.u < image->width && pos.v >= 0 &&  (unsigned int)pos.v < image->height)
-		pixels[pos.v * image->width + pos.u] = color;
+	// pixels = (uint32_t *)image->pixels;
+	// if (pos.u >= 0 &&  (unsigned int)pos.u < image->width && pos.v >= 0 &&  (unsigned int)pos.v < image->height)
+	// 	pixels[pos.v * image->width + pos.u] = color;
+	if ((unsigned int)pos.u < image->width && (unsigned int)pos.v < image->height)
+		((uint32_t *)image->pixels)[pos.v * image->width + pos.u] = color;
 }
 
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color)
@@ -84,7 +86,7 @@ t_point	center_point(t_point point, int w, int h)
 	return ((t_point){point.u + w / 2, point.v + h / 2});
 }
 
-void	draw_square(mlx_image_t *image, t_point pos, uint32_t color)
+void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color)
 {
 	int size;
 	int i;
@@ -98,6 +100,25 @@ void	draw_square(mlx_image_t *image, t_point pos, uint32_t color)
 		put_pixel(image, (t_point){pos.u + i, pos.v + size / 2}, COLOR_GREEN);
 		put_pixel(image, (t_point){pos.u - size / 2, pos.v + i}, COLOR_YELLOW);
 		put_pixel(image, (t_point){pos.u + size / 2, pos.v + i}, COLOR_BLUE);
+		i++;
+	}
+}
+
+void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color)
+{
+	int i;
+	int j;
+
+	i = -size / 2;
+	while (i <= size / 2)
+	{
+		j = -size / 2;
+		while (j <= size / 2)
+		{
+			// put_pixel(image, (t_point){pos.u + i, pos.v + j}, color);
+			PUT_PIXEL_FAST(image, pos.u + i, pos.v + j, color);
+			j++;
+		}
 		i++;
 	}
 }
@@ -128,7 +149,7 @@ void	draw_map(mlx_image_t *image, t_map *map)
 		{
 			if (map->tile[i][j] == '1')
 				if (true)
-					draw_square(image, (t_point){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
+					draw_map_square(image, (t_point){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
 			j++;
 		}
 		i++;
@@ -221,12 +242,16 @@ void	draw_walls(mlx_image_t *image)
 
 	player = ft_game()->player;
 	float angle = - FOV_RAD / 2;
-	float dangle = FOV_RAD / (ft_game()->view3d->width - 1);
+	float dangle = FOV_RAD / (ft_game()->view3d->width - 1) * PIXEL_SIZE;
 	int x = 0;
+	ft_game()->render.projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
+	x += PIXEL_SIZE/2;
+	angle += dangle / 2;
 	while ((unsigned int)x < ft_game()->view3d->width)
 	{
 		draw_wall(image, (t_vec2){player->pos.x, player->pos.y} , ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), x);
 		angle += dangle;
-		x++;
+		// x++;
+		x += PIXEL_SIZE;
 	}
 }

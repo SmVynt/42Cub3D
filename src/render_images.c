@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/09 16:54:28 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/10 01:05:43 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,14 @@ uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel)
 		| (texture->pixels[pixel_index + 1] << 8)
 		| (texture->pixels[pixel_index]);
 	return (color);
+}
+
+int	ft_get_tex_coord(float x, int texture_width)
+{
+	int	tex_coord;
+
+	tex_coord = (int)((x - (int)x) * (float)texture_width);
+	if (tex_coord < 0)
+		tex_coord = 0;
+	return (tex_coord);
 }

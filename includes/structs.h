@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/09 16:55:38 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/10 00:12:45 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,13 @@ typedef struct s_textures
 	mlx_texture_t	*ea;
 }	t_textures;
 
+typedef struct s_render
+{
+	int	fov;
+	int	number_of_rays;
+	int	projection_plane_dist;
+}	t_render;
+
 typedef struct s_player
 {
 	t_vec2	pos;
@@ -71,6 +78,16 @@ typedef struct s_player
 	float	mouse_dx;
 	int	rot_control;
 }	t_player;
+
+typedef struct s_rowrender
+{
+	double		angle;
+	double		dist;
+	t_vec2		draw_point;
+	uint32_t	color;
+	double		height;
+	t_vec2		p0;
+}	t_rowrender;
 
 typedef struct s_gs
 {
@@ -82,8 +99,10 @@ typedef struct s_gs
 	mlx_image_t	*view3d;
 	t_map		map;
 	t_textures	textures;
+	t_render	render;
 	int			state;
 	int			collected;
+	float		dt;
 }	t_gs;
 
 // typedef struct s_texture

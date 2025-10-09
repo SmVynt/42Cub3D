@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/09 17:03:38 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/10 01:14:16 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,52 +68,57 @@ u_int32_t	get_wall_dir(t_point draw_point, t_point prev_point, t_map map, mlx_im
 	return (color);
 }
 
-// Bresenham's line algorithm
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x)
 {
 	t_point		diff;
 	t_point		dir;
 	int			slope_err;
 	t_point		draw_point;
-	// t_point		prev_point;
 
 	(void) x;
 	draw_point = (t_point){p0.u, p0.v};
-	// prev_point = draw_point;
 	diff.u = fabsf(lookdir.x * 1000000);
 	diff.v = fabsf(lookdir.y * 1000000);
 	dir.u = (lookdir.x > 0.0) - (lookdir.x < 0.0);
 	dir.v = (lookdir.y > 0.0) - (lookdir.y < 0.0);
 	slope_err = diff.u - diff.v;
-	// uint32_t color = COLOR_WHITE;
 	int max_iter = 1000;
 	int i = 0;
 	while (i < max_iter)
 	{
 		if (hit_wall(draw_point, map, image))
-		{
-			// color = get_wall_dir(draw_point, prev_point, map, image);
 			break ;
-		}
 		put_pixel(image, draw_point, COLOR_RED);
-		// prev_point = draw_point;
 		get_next_point_to_draw(&draw_point, &slope_err, diff, dir);
 		i++;
 	}
-	// double angle = - FOV_RAD / 2 + x * (FOV_RAD / (double) image->width);
-	// double dist = sqrt((draw_point.u - p0.u) * (draw_point.u - p0.u) + (draw_point.v - p0.v) * (draw_point.v - p0.v)) * cos(angle);
-	// if (dist <= 0)
-	// 	return ;
-	// double projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
-	// double height = (MAP_SCALE / dist) * projection_plane_dist;
-	// int start = (image->height - height) / 2.0;
-	// int delta = 0;
-	// while (delta < height)
-	// {
-	// 	// if (delta == 0|| delta + 1 > height || x % 64 == 0 )
-	// 		put_pixel(image, (t_point){x, start + delta}, color);
-	// 	delta++;
-	// }
+}
+
+static int	ft_find_texture_u(mlx_texture_t **texture, t_vec2 loc, uint32_t color)
+{
+	int	tex_u;
+
+	if (color == COLOR_RED)
+	{
+		*texture = ft_game()->textures.so;
+		tex_u = (int)((loc.x - (int)loc.x) * ((*texture)->width));
+	}
+	else if (color == COLOR_GREEN)
+	{
+		*texture = ft_game()->textures.no;
+		tex_u = (int)((1.0f -loc.x + (int)loc.x) * ((*texture)->width));
+	}
+	else if (color == COLOR_YELLOW)
+	{
+		*texture = ft_game()->textures.ea;
+		tex_u = (int)((loc.y - (int)loc.y) * ((*texture)->width));
+	}
+	else
+	{
+		*texture = ft_game()->textures.ea;
+		tex_u = (int)((1.0f - loc.y + (int)loc.y) * ((*texture)->width));
+	}
+	return (tex_u);
 }
 
 void ft_draw_wall_part(t_vec2 loc, uint32_t color, double height, int x)
@@ -125,85 +130,67 @@ void ft_draw_wall_part(t_vec2 loc, uint32_t color, double height, int x)
 	int				delta;
 
 	image = ft_game()->view3d;
-	if (color == COLOR_RED)
-	{
-		texture = ft_game()->textures.so;
-		pixel.u = (int)((loc.x - (int)loc.x) * (texture->width));
-	}
-	else if (color == COLOR_GREEN)
-	{
-		texture = ft_game()->textures.no;
-		pixel.u = (int)((1.0f -loc.x + (int)loc.x) * (texture->width));
-	}
-	else if (color == COLOR_YELLOW)
-	{
-		texture = ft_game()->textures.ea;
-		pixel.u = (int)((loc.y - (int)loc.y) * (texture->width));
-	}
-	else
-	{
-		texture = ft_game()->textures.ea;
-		pixel.u = (int)((1.0f - loc.y + (int)loc.y) * (texture->width));
-	}
-	start = (image->height - height) / 2.0;
+	pixel.u = ft_find_texture_u(&texture, loc, color);
+	start = (((int)(image->height - height) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
 	delta = 0;
-	while (delta < height)
+	while (delta <= height)
 	{
+		int y = start + delta;
 		pixel.v = (int)(delta / height * texture->height);
-		color = ft_get_pixel_color(texture, pixel);
-		put_pixel(image, (t_point){x, start + delta}, color);
-		delta++;
+		draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(texture, pixel));
+		delta += PIXEL_SIZE;
 	}
 }
 
-static void ft_draw_floor_part(t_vec2 p0, t_vec3 lookdir, double wall_height, int x)
+static void ft_draw_floor_part(t_rowrender row, t_vec3 lookdir, int x)
 {
 	mlx_image_t *image;
-	mlx_texture_t *texture;
+	// mlx_texture_t *texture;
 	t_point		pixel;
-	int			start;
-	int			delta;
-	uint32_t	color;
+	int			y;
+	double		fisheye_correction;
 
 	image = ft_game()->view3d;
-	texture = ft_game()->textures.no; // Using north texture for floor
-	start = (image->height + wall_height) / 2.0;
-	delta = 0;
-	while (start + delta < (int)image->height)
-	{
-		double current_dist = (MAP_SCALE * (image->height / 2.0)) / (start + delta - image->height / 2.0);
-		double weight = current_dist / (MAP_SCALE / 2.0);
-		double floor_x = p0.x + weight * lookdir.x;
-		double floor_y = p0.y + weight * lookdir.y;
-		//
+	// texture = ft_game()->textures.no;
+	// y = (image->height + row.height) / 2.0;
+	y = (((int)(image->height + row.height) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
+	// delta = 0;
+	fisheye_correction = cos(row.angle);
 
-		pixel.u = (int)((floor_x - (int)floor_x) * texture->width);
-		pixel.v = (int)((floor_y - (int)floor_y) * texture->height);
-		color = ft_get_pixel_color(texture, pixel);
-		put_pixel(image, (t_point){x, start + delta}, color);
-		delta++;
+	while (y < (int)image->height)
+	{
+		double screen_y = y - image->height / 2.0;
+		double floor_distance = ft_game()->render.projection_plane_dist / screen_y / fisheye_correction / 2.0;
+		pixel.u = ft_get_tex_coord(row.p0.x + lookdir.x * floor_distance, ft_game()->textures.no->width);
+		pixel.v = ft_get_tex_coord(row.p0.y + lookdir.y * floor_distance, ft_game()->textures.no->height);
+		draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
+		draw_square(image, PIXEL_SIZE, (t_point){x, image->height - y}, ft_get_pixel_color(ft_game()->textures.so, pixel));
+		// delta++;
+		y += PIXEL_SIZE;
 	}
 }
 
 void	draw_wall(mlx_image_t *image, t_vec2 p0, t_vec3 lookdir, int x)
 {
-	t_vec2		draw_point;
+	// t_vec2		draw_point;
+	t_rowrender	row;
 
-	p0.x += 0.5f;
-	p0.y += 0.5f;
-	draw_point = (t_vec2){p0.x, p0.y};
-	uint32_t color = COLOR_GREEN;
+	row.p0.x = p0.x + 0.5f;
+	row.p0.y = p0.y + 0.5f;
+	row.draw_point = (t_vec2){row.p0.x, row.p0.y};
+	row.color = COLOR_GREEN;
 	int max_iter = 1000;
-	draw_point = get_ray_end(draw_point, lookdir, max_iter, &color);
-	double angle = - FOV_RAD / 2 + x * (FOV_RAD / (double) (image->width - 1));
-	double dist = ft_vec2_length((t_vec2){draw_point.x - p0.x, draw_point.y - p0.y})* cos(angle);
-	// printf("%f %f\n", draw_point.x, draw_point.y);
-	if (dist <= 0)
+
+	row.draw_point = get_ray_end(row.draw_point, lookdir, max_iter, &row.color);
+	row.angle = - FOV_RAD / 2 + x * (FOV_RAD / (double) (image->width - 1));
+	row.dist = ft_vec2_length((t_vec2){row.draw_point.x - row.p0.x, row.draw_point.y - row.p0.y})* cos(row.angle);
+	if (row.dist <= 0)
 		return ;
-	double projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
-	double height = (1.0 / dist) * projection_plane_dist;
-	ft_draw_wall_part(draw_point, color, height, x);
-	ft_draw_floor_part(p0, lookdir, height, x);
+	// double projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
+	row.height = (1.0 / row.dist) * ft_game()->render.projection_plane_dist;
+
+	ft_draw_wall_part(row.draw_point, row.color, row.height, x);
+	ft_draw_floor_part(row, lookdir, x);
 }
 
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
