@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/10 00:12:45 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/11 15:40:12 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,10 @@ typedef struct s_rowrender
 	double		angle;
 	double		dist;
 	t_vec2		draw_point;
+	t_vec2		player_point;
 	uint32_t	color;
 	double		height;
-	t_vec2		p0;
+	// t_vec2		p0;
 }	t_rowrender;
 
 typedef struct s_gs

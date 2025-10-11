@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/10 01:14:16 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/11 15:46:31 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void ft_draw_wall_part(t_vec2 loc, uint32_t color, double height, int x)
 	}
 }
 
-static void ft_draw_floor_part(t_rowrender row, t_vec3 lookdir, int x)
+static void ft_draw_floor_ceil_part(t_rowrender row, t_vec3 lookdir, int x)
 {
 	mlx_image_t *image;
 	// mlx_texture_t *texture;
@@ -151,18 +151,15 @@ static void ft_draw_floor_part(t_rowrender row, t_vec3 lookdir, int x)
 	double		fisheye_correction;
 
 	image = ft_game()->view3d;
-	// texture = ft_game()->textures.no;
-	// y = (image->height + row.height) / 2.0;
 	y = (((int)(image->height + row.height) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
-	// delta = 0;
 	fisheye_correction = cos(row.angle);
 
 	while (y < (int)image->height)
 	{
 		double screen_y = y - image->height / 2.0;
 		double floor_distance = ft_game()->render.projection_plane_dist / screen_y / fisheye_correction / 2.0;
-		pixel.u = ft_get_tex_coord(row.p0.x + lookdir.x * floor_distance, ft_game()->textures.no->width);
-		pixel.v = ft_get_tex_coord(row.p0.y + lookdir.y * floor_distance, ft_game()->textures.no->height);
+		pixel.u = ft_get_tex_coord(row.player_point.x + lookdir.x * floor_distance, ft_game()->textures.no->width);
+		pixel.v = ft_get_tex_coord(row.player_point.y + lookdir.y * floor_distance, ft_game()->textures.no->height);
 		draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
 		draw_square(image, PIXEL_SIZE, (t_point){x, image->height - y}, ft_get_pixel_color(ft_game()->textures.so, pixel));
 		// delta++;
@@ -170,27 +167,26 @@ static void ft_draw_floor_part(t_rowrender row, t_vec3 lookdir, int x)
 	}
 }
 
-void	draw_wall(mlx_image_t *image, t_vec2 p0, t_vec3 lookdir, int x)
+void	draw_wall(mlx_image_t *image, t_vec2 point, t_vec3 lookdir, int x)
 {
-	// t_vec2		draw_point;
 	t_rowrender	row;
 
-	row.p0.x = p0.x + 0.5f;
-	row.p0.y = p0.y + 0.5f;
-	row.draw_point = (t_vec2){row.p0.x, row.p0.y};
+	row.player_point.x = point.x + 0.5f;
+	row.player_point.y = point.y + 0.5f;
+	row.draw_point = (t_vec2){row.player_point.x, row.player_point.y};
 	row.color = COLOR_GREEN;
 	int max_iter = 1000;
 
 	row.draw_point = get_ray_end(row.draw_point, lookdir, max_iter, &row.color);
 	row.angle = - FOV_RAD / 2 + x * (FOV_RAD / (double) (image->width - 1));
-	row.dist = ft_vec2_length((t_vec2){row.draw_point.x - row.p0.x, row.draw_point.y - row.p0.y})* cos(row.angle);
+	row.dist = ft_vec2_length((t_vec2){row.draw_point.x - row.player_point.x, row.draw_point.y - row.player_point.y})* cos(row.angle);
 	if (row.dist <= 0)
 		return ;
 	// double projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
 	row.height = (1.0 / row.dist) * ft_game()->render.projection_plane_dist;
 
 	ft_draw_wall_part(row.draw_point, row.color, row.height, x);
-	ft_draw_floor_part(row, lookdir, x);
+	ft_draw_floor_ceil_part(row, lookdir, x);
 }
 
 static void	get_next_point_to_draw(t_point *p, int *slope_err,

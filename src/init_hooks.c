@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/09 23:15:02 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/11 15:50:38 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ static void	ft_key_press_hook(void *param)
 		// ft_update(game);
 }
 
-// static void ft_mouse_move(double x, double y, void *param)
-// {
-// 	t_player	*player;
-// 	t_gs		*game;
+static void ft_mouse_move(double x, double y, void *param)
+{
+	t_player	*player;
+	t_gs		*game;
 
-// 	game = (t_gs *)param;
-// 	player = game->player;
-// 	player->mouse_dx = player->mouse_x - x;
-// 	player->mouse_x = x;
-// 	ft_update(game);
-// 	(void) y;
-// }
+	game = (t_gs *)param;
+	player = game->player;
+	player->mouse_dx = player->mouse_x - x;
+	player->mouse_x = x;
+	ft_update(game);
+	(void) y;
+}
 
 
 void	ft_createhooks(void)
@@ -62,7 +62,7 @@ void	ft_createhooks(void)
 	printf(COLOR_G"Creating hooks...\n"COLOR_X);
 	mlx_resize_hook(game->mlx, draw, game);
 	mlx_loop_hook(game->mlx, ft_key_press_hook, game);
-	// mlx_cursor_hook(game->mlx, ft_mouse_move, game);
+	mlx_cursor_hook(game->mlx, ft_mouse_move, game);
 	// mlx_loop_hook(game->mlx, ft_update_minimap, game->miniplayer);
 	// mlx_loop_hook(game->mlx, ft_update_view3d, game->view3d);
 	mlx_loop_hook(game->mlx, ft_update, game);

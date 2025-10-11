@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/09 23:24:57 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/11 15:31:19 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_vec2	ft_normalize_vec2(t_vec2 v)
 	float length;
 
 	length = ft_vec2_length(v);
-	if (length < 1e-7)
+	if (length < 1e-9)
 		return (t_vec2){0.0f, 0.0f};
 	return (t_vec2){v.x / length, v.y / length};
 }

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/10 01:30:24 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/11 15:52:20 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@
 # define MAX_DT					0.05f
 # define PLAYERSPEED			6.0f
 # define ROTATIONSPEED			2.0f
+# define MOUSE_SENS				0.5f
 
 // Fast inline pixel setting
 #define PUT_PIXEL_FAST(image, x, y, color) \
@@ -99,7 +100,7 @@ void	ft_load_texture(const char *path, mlx_texture_t **texture);
 
 void 	put_pixel(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x);
-void	draw_wall(mlx_image_t *image, t_vec2 p0, t_vec3 lookdir, int x);
+void	draw_wall(mlx_image_t *image, t_vec2 point, t_vec3 lookdir, int x);
 int		ft_is_wall(t_vec2 p);
 // void	init_player(void);
 
@@ -120,6 +121,7 @@ void	ft_update(void *param);
 void	ft_update_minimap(void *param);
 // void	ft_update_view3d(void *param);
 void	ft_update_player(void);
+void	ft_update_graphics(void);
 
 // void	ft_exit_error(char *str, t_gs *game);
 // void	ft_exit(char *str, t_gs *game);

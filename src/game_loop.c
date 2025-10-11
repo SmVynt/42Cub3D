@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/10 01:28:45 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/11 15:51:48 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ void	ft_update_player(void)
 	{
 		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(player->rot_control * ROTATIONSPEED * ft_game()->dt), player->lookdir);
 	}
-	// if (player->mouse_dx != 0.0f)
-	// {
-	// 	player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(-player->mouse_dx * PI / 60.0f), player->lookdir);
-	// 	player->mouse_dx = 0.0f;
-	// }
+	if (player->mouse_dx != 0.0f)
+	{
+		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(-player->mouse_dx * ROTATIONSPEED * ft_game()->dt * MOUSE_SENS), player->lookdir);
+		player->mouse_dx = 0.0f;
+	}
 	if (player->mov_control.v != 0 || player->mov_control.u != 0)
 	{
 		move_step = ft_normalize_vec2((t_vec2){player->mov_control.u, player->mov_control.v});
@@ -141,8 +141,17 @@ static void ft_update_dt(void)
 
 void	ft_update(void *param)
 {
+	t_player	*player;
+
+	player = ft_game()->player;
 	(void)param;
 	ft_update_dt();
-	ft_update_player();
-	ft_update_graphics();
+	if (player->mov_control.u != 0
+		|| player->mov_control.v != 0
+		|| player->rot_control != 0
+		|| player->mouse_dx != 0.0f)
+	{
+		ft_update_player();
+		ft_update_graphics();
+	}
 }
