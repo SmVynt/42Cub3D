@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/08 21:34:37 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/11 15:52:20 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <string.h>
+# include <sys/time.h>
 # include "structs.h"
 # include "libft_mini.h"
 # include "ft_mat4.h"
@@ -62,6 +63,17 @@
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
 # define FOV_RAD				M_PI / 3
+# define PIXEL_SIZE				4
+# define TARGET_FPS				60.0f
+# define MAX_DT					0.05f
+# define PLAYERSPEED			6.0f
+# define ROTATIONSPEED			2.0f
+# define MOUSE_SENS				0.5f
+
+// Fast inline pixel setting
+#define PUT_PIXEL_FAST(image, x, y, color) \
+	if ((unsigned int)(x) < (image)->width && (unsigned int)(y) < (image)->height) \
+		((uint32_t *)(image)->pixels)[(y) * (image)->width + (x)] = (color)
 
 void	ft_initialize(void);
 
@@ -83,11 +95,12 @@ void	ft_exit_error(char *str);
 void	ft_exit(void);
 
 
-t_player *init_player(char **map, int w, int h);
+// t_player	*init_player(char **map, int w, int h);
+void	ft_load_texture(const char *path, mlx_texture_t **texture);
 
 void 	put_pixel(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x);
-void	draw_wall(mlx_image_t *image, t_vec2 p0, t_vec3 lookdir, int x);
+void	draw_wall(mlx_image_t *image, t_vec2 point, t_vec3 lookdir, int x);
 int		ft_is_wall(t_vec2 p);
 // void	init_player(void);
 
@@ -95,15 +108,20 @@ void	draw(int32_t width, int32_t height, void *param);
 void	draw_map(mlx_image_t *image, t_map *map);
 void	draw_player(mlx_image_t *image);
 void	draw_walls(mlx_image_t *image);
-void	draw_square(mlx_image_t *image, t_point pos, uint32_t color);
+void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color);
+void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
+
+uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
+int			ft_get_tex_coord(float x, int texture_width);
 
 void	ft_createhooks(void);
 void	ft_update(void *param);
 void	ft_update_minimap(void *param);
-void	ft_update_view3d(void *param);
+// void	ft_update_view3d(void *param);
 void	ft_update_player(void);
+void	ft_update_graphics(void);
 
 // void	ft_exit_error(char *str, t_gs *game);
 // void	ft_exit(char *str, t_gs *game);

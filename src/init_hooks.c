@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_hooks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/08 23:57:48 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/11 15:50:38 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	ft_key_press_hook(void *param)
 		player->rot_control = -1;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		player->rot_control = 1;
-	if (player->mov_control.u != 0 || player->mov_control.v != 0 || player->rot_control != 0)
-		ft_update(game);
+	// if (player->mov_control.u != 0 || player->mov_control.v != 0 || player->rot_control != 0)
+		// ft_update(game);
 }
 
 static void ft_mouse_move(double x, double y, void *param)
@@ -65,5 +65,6 @@ void	ft_createhooks(void)
 	mlx_cursor_hook(game->mlx, ft_mouse_move, game);
 	// mlx_loop_hook(game->mlx, ft_update_minimap, game->miniplayer);
 	// mlx_loop_hook(game->mlx, ft_update_view3d, game->view3d);
+	mlx_loop_hook(game->mlx, ft_update, game);
 	printf(COLOR_G"Hooks created successfully.\n"COLOR_X);
 }

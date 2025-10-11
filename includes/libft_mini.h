@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/09/30 13:21:21 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/09 23:25:15 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int			ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t		ft_strlen(const char *str);
 char		*ft_strdup(const char *s1);
 char		*ft_strchar(const char *s, int c);
+int			ft_sign(int n);
+int			ft_signf(float n);
+t_vec2		ft_normalize_vec2(t_vec2 v);
 // int		ft_strncmp(const char *s1, const char *s2, size_t n);
 // size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 // int		ft_dir(int a, int b);
