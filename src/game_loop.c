@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 22:22:57 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 23:13:01 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static void	ft_update_view3d(void *param)
 	image = (mlx_image_t *)param;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
 	draw_walls(ft_game()->view3d);
-	// draw_sprites(ft_game()->view3d);
+	draw_sprites(ft_game()->view3d);
 }
 
 void	ft_update_graphics(void)

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 22:29:47 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 23:03:45 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@
 # define FOV_RAD				M_PI / 3
 # define PIXEL_SIZE				2
 # define STANDARD_SPRITE_SIZE	64
+# define JUMP_HEIGHT			150.0f
 # define TARGET_FPS				60.0f
 # define MAX_DT					0.05f
 # define PLAYERSPEED			6.0f

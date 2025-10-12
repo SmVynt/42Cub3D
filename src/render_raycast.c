@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/12 22:43:56 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 23:24:54 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void ft_draw_wall_part(t_vec2 loc, uint32_t color, double height, int x)
 	image = ft_game()->view3d;
 	pixel.u = ft_find_texture_u(&texture, loc, color);
 	// start = (((int)(image->height - height) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->jump_height;
-	start = (((int)(image->height - height * (1 - ft_game()->player->jump_height / 100.0f)) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
+	start = (((int)(image->height - height * (1 - ft_game()->player->jump_height / JUMP_HEIGHT)) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
 	delta = 0;
 	if (start < 0)
 		delta = -start;
@@ -129,16 +129,30 @@ static void ft_draw_floor_ceil_part(t_rowrender row, t_vec3 lookdir, int x)
 	double		fisheye_correction;
 
 	image = ft_game()->view3d;
-	y = (((int)(image->height + row.height) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
+	y = (((int)(image->height + row.height * (1 + ft_game()->player->jump_height / JUMP_HEIGHT)) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
 	fisheye_correction = cos(row.angle);
 
 	while (y < (int)image->height)
 	{
 		double screen_y = y - image->height / 2.0;
-		double floor_distance = ft_game()->render.projection_plane_dist / screen_y / fisheye_correction / 2.0;
+		double floor_distance = (ft_game()->render.projection_plane_dist * (ft_game()->player->jump_height / JUMP_HEIGHT + 1.0f)) / screen_y / fisheye_correction / 2.0;
 		pixel.u = ft_get_tex_coord(row.player_point.x + lookdir.x * floor_distance, ft_game()->textures.no->width);
 		pixel.v = ft_get_tex_coord(row.player_point.y + lookdir.y * floor_distance, ft_game()->textures.no->height);
 		draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
+		// draw_square(image, PIXEL_SIZE, (t_point){x, image->height - y}, ft_get_pixel_color(ft_game()->textures.ea, pixel));
+		// delta++;
+		y += PIXEL_SIZE;
+	}
+	y = (((int)(image->height + row.height * (1 - ft_game()->player->jump_height / JUMP_HEIGHT)) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
+	fisheye_correction = cos(row.angle);
+
+	while (y < (int)image->height)
+	{
+		double screen_y = y - image->height / 2.0;
+		double floor_distance = (ft_game()->render.projection_plane_dist * (- ft_game()->player->jump_height / JUMP_HEIGHT + 1.0f)) / screen_y / fisheye_correction / 2.0;
+		pixel.u = ft_get_tex_coord(row.player_point.x + lookdir.x * floor_distance, ft_game()->textures.no->width);
+		pixel.v = ft_get_tex_coord(row.player_point.y + lookdir.y * floor_distance, ft_game()->textures.no->height);
+		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
 		draw_square(image, PIXEL_SIZE, (t_point){x, image->height - y}, ft_get_pixel_color(ft_game()->textures.ea, pixel));
 		// delta++;
 		y += PIXEL_SIZE;
@@ -164,7 +178,7 @@ void	draw_wall(mlx_image_t *image, t_vec2 point, t_vec3 lookdir, int x)
 	row.height = (1.0 / row.dist) * ft_game()->render.projection_plane_dist;
 	ft_game()->render.depth[x / PIXEL_SIZE] = (float)row.dist;
 	ft_draw_wall_part(row.draw_point, row.color, row.height, x);
-	if (false)
+	// if (false)
 		ft_draw_floor_ceil_part(row, lookdir, x);
 }
 
@@ -296,6 +310,7 @@ void	draw_sprite(mlx_image_t *image, t_sprite sprite)
 	sp.size.v = (int)(sprite.texture->height * sp.max_size / STANDARD_SPRITE_SIZE);
 	sp.start.u = (int)(sp.screen_pos.x) - sp.size.u / 2;
 	sp.start.v = (int)(sp.screen_pos.y) - sp.size.v + sp.max_size * (0.5f - sprite.bottom_offset / 2);
+	sp.start.v += sp.max_size * 0.5f * ft_game()->player->jump_height / JUMP_HEIGHT;
 	x = (PIXEL_SIZE - sp.start.u % PIXEL_SIZE) % PIXEL_SIZE;
 	while (x < sp.size.u)
 	{
