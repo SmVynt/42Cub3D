@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 21:47:15 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 22:29:47 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void	ft_exit(void);
 // t_player	*init_player(char **map, int w, int h);
 void	ft_load_texture(const char *path, mlx_texture_t **texture);
 
+
+float	ft_height_delta(float distance);
 void 	put_pixel(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x);
 void	draw_wall(mlx_image_t *image, t_vec2 point, t_vec3 lookdir, int x);
@@ -119,6 +121,7 @@ void	ft_update(void *param);
 void	ft_update_minimap(void *param);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
+
 
 // math
 int			ft_sign(int n);

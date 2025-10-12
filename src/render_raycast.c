@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/12 21:48:08 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 22:43:56 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+float	ft_height_delta(float distance)
+{
+	float jump_height;
+
+	jump_height = (float)ft_game()->player->jump_height;
+	if (distance < 0.0001f)
+		distance = 0.0001f;
+	return (ft_game()->render.projection_plane_dist / distance) * (jump_height + 1.0f);
+}
 
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
 		t_point diff, t_point dir);
@@ -96,7 +106,8 @@ void ft_draw_wall_part(t_vec2 loc, uint32_t color, double height, int x)
 
 	image = ft_game()->view3d;
 	pixel.u = ft_find_texture_u(&texture, loc, color);
-	start = (((int)(image->height - height) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->jump_height;
+	// start = (((int)(image->height - height) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->jump_height;
+	start = (((int)(image->height - height * (1 - ft_game()->player->jump_height / 100.0f)) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
 	delta = 0;
 	if (start < 0)
 		delta = -start;
