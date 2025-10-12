@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
 /*   Updated: 2025/10/12 21:48:08 by psmolin          ###   ########.fr       */
@@ -96,7 +96,7 @@ void ft_draw_wall_part(t_vec2 loc, uint32_t color, double height, int x)
 
 	image = ft_game()->view3d;
 	pixel.u = ft_find_texture_u(&texture, loc, color);
-	start = (((int)(image->height - height) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
+	start = (((int)(image->height - height) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->jump_height;
 	delta = 0;
 	if (start < 0)
 		delta = -start;
@@ -153,7 +153,8 @@ void	draw_wall(mlx_image_t *image, t_vec2 point, t_vec3 lookdir, int x)
 	row.height = (1.0 / row.dist) * ft_game()->render.projection_plane_dist;
 	ft_game()->render.depth[x / PIXEL_SIZE] = (float)row.dist;
 	ft_draw_wall_part(row.draw_point, row.color, row.height, x);
-	ft_draw_floor_ceil_part(row, lookdir, x);
+	if (false)
+		ft_draw_floor_ceil_part(row, lookdir, x);
 }
 
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
