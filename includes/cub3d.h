@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/11 15:52:20 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 11:33:09 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include "MLX42/MLX42.h"
+# include "MLX42/MLX42.h"
 # include "../lib/gnl/get_next_line.h"
 // # include "lib/gnl/get_next_line.h"
 // # include "lib/printf/ft_printf.h"
@@ -28,7 +28,6 @@
 # include "libft_mini.h"
 # include "ft_mat4.h"
 
-
 # define WIDTH		1280
 # define HEIGHT		720
 
@@ -38,6 +37,7 @@
 # define COLOR_GREEN	0xFF00FF00
 # define COLOR_BLUE		0xFFFF0000
 # define COLOR_YELLOW	0xFF00FFFF
+# define COLOR_GREY		0xFF00FFFF
 
 # define COLOR_R		"\033[31m"
 # define COLOR_G		"\033[32m"
