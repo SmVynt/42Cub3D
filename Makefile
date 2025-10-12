@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/10/09 17:04:31 by psmolin          ###   ########.fr        #
+#    Updated: 2025/10/12 18:53:50 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ SRC_FILES	= \
 				sys_errors.c \
 				sys_gamestate.c \
 				sys_lib.c \
+				sys_math.c \
 				ft_mat4.c \
 				ft_mat4_transform.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

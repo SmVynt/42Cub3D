@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/10 00:39:05 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 21:42:19 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,15 +108,18 @@ void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color)
 {
 	int i;
 	int j;
+	uint8_t alpha;
 
+	alpha = color & 0xFF;
+	if (alpha == 0)
+		return ;
 	i = -size / 2;
 	while (i <= size / 2)
 	{
 		j = -size / 2;
 		while (j <= size / 2)
 		{
-			// put_pixel(image, (t_point){pos.u + i, pos.v + j}, color);
-			PUT_PIXEL_FAST(image, pos.u + i, pos.v + j, color);
+			put_pixel(image, (t_point){pos.u + i, pos.v + j}, color);
 			j++;
 		}
 		i++;
@@ -179,38 +182,6 @@ void draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color)
 	}
 }
 
-// t_player *init_player(char **map, int w, int h)
-// {
-// 	t_player *player;
-// 	int row;
-// 	int col;
-
-// 	player = malloc(sizeof(player));
-// 	row = 0;
-// 	while (row < h)
-// 	{
-// 		col = 0;
-// 		while  (col < w)
-// 		{
-// 			if (map[row][col] == 'N' || map[row][col] == 'E' || map[row][col] == 'S' || map[row][col] == 'W')
-// 			{
-// 				player->pos = (t_vec2){col, row};
-// 				if (map[row][col] == 'N')
-// 					player->lookdir = (t_vec3){0.0f, -1.0f, 0.0f};
-// 				if (map[row][col] == 'E')
-// 					player->lookdir = (t_vec3){1.0f, 0.0f, 0.0f};
-// 				if (map[row][col] == 'S')
-// 					player->lookdir = (t_vec3){0.0f, 1.0f, 0.0f};
-// 				if (map[row][col] == 'W')
-// 					player->lookdir = (t_vec3){-1.0f, 0.0f, 0.0f};
-// 			}
-// 			col++;
-// 		}
-// 		row++;
-// 	}
-// 	return (player);
-// }
-
 void	draw_player(mlx_image_t *image)
 {
 	t_point center;
@@ -244,7 +215,7 @@ void	draw_walls(mlx_image_t *image)
 	float angle = - FOV_RAD / 2;
 	float dangle = FOV_RAD / (ft_game()->view3d->width - 1) * PIXEL_SIZE;
 	int x = 0;
-	ft_game()->render.projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
+	// ft_game()->render.projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
 	x += PIXEL_SIZE/2;
 	angle += dangle / 2;
 	while ((unsigned int)x < ft_game()->view3d->width)
@@ -254,4 +225,18 @@ void	draw_walls(mlx_image_t *image)
 		// x++;
 		x += PIXEL_SIZE;
 	}
+}
+
+void	draw_sprites(mlx_image_t *image)
+{
+	int i;
+
+
+	i = -1;
+	while (++i < ft_game()->item_count)
+		draw_sprite(image, ft_game()->items[i].sprite);
+	i = -1;
+	while (++i < ft_game()->char_count)
+		draw_sprite(image, ft_game()->chars[i].sprite);
+	// printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/11 15:51:48 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 18:26:14 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_update_player(void)
 		// move_step = (t_vec2){player->mov_control.u, player->mov_control.v};
 		move_step.x *= PLAYERSPEED * ft_game()->dt;
 		move_step.y *= PLAYERSPEED * ft_game()->dt;
-		printf("move_step: %.2f, %.2f\n", move_step.x, move_step.y);
+		// printf("move_step: %.2f, %.2f\n", move_step.x, move_step.y);
 		new_pos.x = player->lookdir.x * move_step.y;
 		new_pos.y = player->lookdir.y * move_step.y;
 		new_pos.x -= player->lookdir.y * move_step.x;
@@ -101,6 +101,7 @@ static void	ft_update_view3d(void *param)
 	image = (mlx_image_t *)param;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
 	draw_walls(ft_game()->view3d);
+	draw_sprites(ft_game()->view3d);
 }
 
 void	ft_update_graphics(void)

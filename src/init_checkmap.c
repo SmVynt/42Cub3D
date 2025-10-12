@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/03 17:25:31 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 16:43:33 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static void	ft_checkdigits(void)
 static void	ft_check_neighbours(t_map *map, int h, int w, const char *walls)
 {
 	map->tile[h][w] -= 128;
-	printf("Checking neighbours of %d,%d\n", w, h);
 	if (w <= 1 || w >= map->w - 1 || h <= 1 || h >= map->h - 1)
 		return ;
 	if (ft_strchar(walls, map->tile[h + 1][w]) == NULL

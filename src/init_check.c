@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/09 17:02:59 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 16:54:23 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,12 @@ static	void	ft_assign_textures(void)
 	ft_load_texture(map->ea, &game->textures.ea);
 }
 
+
 void	ft_checkinput(int argc, char **argv)
 {
 	ft_checkarguments(argc, argv);
 	ft_checkfile(argv[1]);
-	ft_printmap(&ft_game()->map);
+	// ft_printmap(&ft_game()->map);
 	ft_assign_textures();
 	printf(COLOR_G"File check passed!\n"COLOR_X);
 	ft_checkmap();
