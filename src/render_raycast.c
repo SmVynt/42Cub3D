@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/12 23:24:54 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:16:30 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,64 +281,39 @@ static t_vec2 get_ray_end(t_vec2 start, t_vec3 dir, int max_iter, uint32_t *colo
 	return (t_vec2){0.0, 0.0};
 }
 
-void	draw_sprite(mlx_image_t *image, t_sprite sprite)
+void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
 {
-	t_player		*player;
-	t_spriterender	sp;
+	// t_player		*player;
+	t_spriterender	*sp;
 	int				x;
 	int				y;
 
-	if (!sprite.texture || !sprite.texture->pixels)
+	if (!sprite->texture || !sprite->texture->pixels)
 		return ;
-	player = ft_game()->player;
-	sp.player_point.x = player->pos.x;
-	sp.player_point.y = player->pos.y;
-	sp.sprite_point.x = sprite.pos.x;
-	sp.sprite_point.y = sprite.pos.y;
-	sp.dist = ft_vec2_length((t_vec2){sprite.pos.x - player->pos.x, sprite.pos.y - player->pos.y});
-	if (sp.dist < 0.2f)
+	sp = &sprite->sp;
+	if (!sp->visible)
 		return ;
-	sp.angle = ft_angle_between_vec2((t_vec2){player->lookdir.x, player->lookdir.y}, (t_vec2){sprite.pos.x - player->pos.x, sprite.pos.y - player->pos.y});
-	if (fabs(sp.angle) > 45.0f)
-		return ;
-	// printf(" %f", sp.angle);
-	sp.dist *= cos(sp.angle * M_PI / 180.0f);
-	sp.screen_pos.x = (float)image->width / 2.0f + (sp.angle / FOV) * (float)image->width;
-	sp.screen_pos.y = (float)image->height / 2.0f;
-	sp.max_size = (1.0f / sp.dist) * ft_game()->render.projection_plane_dist ;
-	sp.size.u = (int)(sprite.texture->width * sp.max_size / STANDARD_SPRITE_SIZE);
-	sp.size.v = (int)(sprite.texture->height * sp.max_size / STANDARD_SPRITE_SIZE);
-	sp.start.u = (int)(sp.screen_pos.x) - sp.size.u / 2;
-	sp.start.v = (int)(sp.screen_pos.y) - sp.size.v + sp.max_size * (0.5f - sprite.bottom_offset / 2);
-	sp.start.v += sp.max_size * 0.5f * ft_game()->player->jump_height / JUMP_HEIGHT;
-	x = (PIXEL_SIZE - sp.start.u % PIXEL_SIZE) % PIXEL_SIZE;
-	while (x < sp.size.u)
+	x = (PIXEL_SIZE - sp->start.u % PIXEL_SIZE) % PIXEL_SIZE;
+	while (x < sp->size.u)
 	{
-		sp.screen.u = sp.start.u + x;
-		if (sp.screen.u >= 0 && sp.screen.u < (int)image->width)
+		sp->screen.u = sp->start.u + x;
+		if (sp->screen.u >= 0 && sp->screen.u < (int)image->width)
 		{
-			if (sp.dist > ft_game()->render.depth[sp.screen.u / PIXEL_SIZE])
+			if (sp->dist > ft_game()->render.depth[sp->screen.u / PIXEL_SIZE])
 			{
-				// y= (PIXEL_SIZE - sp.start.v % PIXEL_SIZE) % PIXEL_SIZE;
-				// while (y < sp.size.v)
-				// {
-				// 	draw_square(image, PIXEL_SIZE, (t_point){sp.screen.u, sp.start.v + y},
-				// 		COLOR_RED);
-				// 	y += PIXEL_SIZE;
-				// }
 				x += PIXEL_SIZE;
 				continue ;
 			}
-			y = (PIXEL_SIZE - sp.start.v % PIXEL_SIZE) % PIXEL_SIZE;
-			while (y < sp.size.v)
+			y = (PIXEL_SIZE - sp->start.v % PIXEL_SIZE) % PIXEL_SIZE;
+			while (y < sp->size.v)
 			{
-				sp.screen.v = sp.start.v + y;
-				if (sp.screen.v >= 0 && sp.screen.v < (int)image->height)
+				sp->screen.v = sp->start.v + y;
+				if (sp->screen.v >= 0 && sp->screen.v < (int)image->height)
 				{
-					draw_square(image, PIXEL_SIZE, (t_point){sp.screen.u, sp.screen.v},
-						ft_get_pixel_color(sprite.texture, (t_point){
-							(int)((float)x / (float)sp.size.u * (float)sprite.texture->width),
-							(int)((float)y / (float)sp.size.v * (float)sprite.texture->height)}));
+					draw_square(image, PIXEL_SIZE, (t_point){sp->screen.u, sp->screen.v},
+						ft_get_pixel_color(sprite->texture, (t_point){
+							(int)((float)x / (float)sp->size.u * (float)sprite->texture->width),
+							(int)((float)y / (float)sp->size.v * (float)sprite->texture->height)}));
 				}
 				y += PIXEL_SIZE;
 			}

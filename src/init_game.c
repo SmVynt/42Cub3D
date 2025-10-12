@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 21:33:23 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:47:24 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ static void	ft_set_player(void)
 		player->lookdir = (t_vec3){0.0f, 1.0f, 0.0f};
 	if (start_char == 'W')
 		player->lookdir = (t_vec3){-1.0f, 0.0f, 0.0f};
+	player->jump_height = 0.0f;
+	player->jump_impuls = 0.0f;
+	player->is_jumping = false;
 }
 
 static void ft_calculate_max_entities(void)
@@ -157,6 +160,11 @@ static void ft_init_sprites(void)
 		ft_load_texture(game->char_prefabs[i].sprite.path, &game->char_prefabs[i].sprite.texture);
 		i++;
 	}
+	game->sh = malloc(sizeof(t_sprite));
+	if (!game->sh)
+		ft_exit_perror("Could not allocate memory for sprite sorting list\n");
+	game->sh->next = NULL;
+	game->sh->texture = NULL;
 }
 
 void	ft_setgame(void)

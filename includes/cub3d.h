@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 23:03:45 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:04:09 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ float	ft_height_delta(float distance);
 void 	put_pixel(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x);
 void	draw_wall(mlx_image_t *image, t_vec2 point, t_vec3 lookdir, int x);
-void	draw_sprite(mlx_image_t *image, t_sprite sprite);
+void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
 int		ft_is_wall(t_vec2 p);
 // void	init_player(void);
 

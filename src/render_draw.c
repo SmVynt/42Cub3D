@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/12 21:42:19 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/13 01:03:45 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,16 +227,77 @@ void	draw_walls(mlx_image_t *image)
 	}
 }
 
+void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite)
+{
+	t_player		*player;
+	t_spriterender	*sp;
+
+	sp = &sprite->sp;
+	if (!sprite->texture || !sprite->texture->pixels)
+		return ;
+	sp->visible = true;
+	sprite->next = NULL;
+	player = ft_game()->player;
+	sp->player_point.x = player->pos.x;
+	sp->player_point.y = player->pos.y;
+	sp->sprite_point.x = sprite->pos.x;
+	sp->sprite_point.y = sprite->pos.y;
+	sp->dist = ft_vec2_length((t_vec2){sprite->pos.x - player->pos.x, sprite->pos.y - player->pos.y});
+	sp->angle = ft_angle_between_vec2((t_vec2){player->lookdir.x, player->lookdir.y}, (t_vec2){sprite->pos.x - player->pos.x, sprite->pos.y - player->pos.y});
+	if (sp->dist < 0.2f || fabs(sp->angle) > 45.0f)
+	{
+		sp->visible = false;
+		return ;
+	}
+	sp->dist *= cos(sp->angle * M_PI / 180.0f);
+	sp->screen_pos.x = (float)image->width / 2.0f + (sp->angle / FOV) * (float)image->width;
+	sp->screen_pos.y = (float)image->height / 2.0f;
+	sp->max_size = (1.0f / sp->dist) * ft_game()->render.projection_plane_dist ;
+	sp->size.u = (int)(sprite->texture->width * sp->max_size / STANDARD_SPRITE_SIZE);
+	sp->size.v = (int)(sprite->texture->height * sp->max_size / STANDARD_SPRITE_SIZE);
+	sp->start.u = (int)(sp->screen_pos.x) - sp->size.u / 2;
+	sp->start.v = (int)(sp->screen_pos.y) - sp->size.v + sp->max_size * (0.5f - sprite->bottom_offset / 2);
+	sp->start.v += sp->max_size * 0.5f * ft_game()->player->jump_height / JUMP_HEIGHT;
+}
+
+void	ft_add_sprite_to_list(t_sprite *head, t_sprite *sprite)
+{
+	t_sprite	*current;
+
+	if (!head || !sprite || !sprite->sp.visible)
+		return ;
+	current = head;
+	while (current->next && current->next->sp.dist > sprite->sp.dist)
+		current = current->next;
+	sprite->next = current->next;
+	current->next = sprite;
+}
+
 void	draw_sprites(mlx_image_t *image)
 {
-	int i;
+	int			i;
+	t_sprite	*temp;
 
-
+	if (!ft_game()->sh)
+		return ;
+	ft_game()->sh->next = NULL;
+	ft_game()->sh->sp.dist = 100000.0f;
 	i = -1;
 	while (++i < ft_game()->item_count)
-		draw_sprite(image, ft_game()->items[i].sprite);
+	{
+		ft_calculate_sprite(image, &ft_game()->items[i].sprite);
+		ft_add_sprite_to_list(ft_game()->sh, &ft_game()->items[i].sprite);
+	}
 	i = -1;
 	while (++i < ft_game()->char_count)
-		draw_sprite(image, ft_game()->chars[i].sprite);
-	// printf("\n");
+	{
+		ft_calculate_sprite(image, &ft_game()->chars[i].sprite);
+		ft_add_sprite_to_list(ft_game()->sh, &ft_game()->chars[i].sprite);
+	}
+	temp = ft_game()->sh->next;
+	while (temp)
+	{
+		draw_sprite(image, temp);
+		temp = temp->next;
+	}
 }

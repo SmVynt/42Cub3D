@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 20:00:54 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:40:35 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,32 @@ typedef enum e_char_type
 }	t_char_type;
 // Don't forget to update CHARS_TYPES_COUNT in structs.h
 
-typedef struct s_sprite
+typedef struct s_sprite t_sprite;
+
+typedef struct s_spriterender
+{
+	double		angle;
+	double		dist;
+	t_vec2		sprite_point;
+	t_vec2		player_point;
+	t_vec2		screen_pos;
+	float		max_size;
+	t_point		half_size;
+	t_point		start;
+	t_point		size;
+	t_point		screen;
+	bool		visible;
+}	t_spriterender;
+
+struct s_sprite
 {
 	mlx_texture_t	*texture;
 	char			*path;
 	float			bottom_offset;
 	t_vec2			pos;
-}	t_sprite;
+	t_spriterender	sp;
+	t_sprite		*next;
+};
 
 typedef struct s_item
 {
@@ -104,15 +123,7 @@ typedef struct s_char
 	bool			alive;
 	int				health;
 	int				max_health;
-	// int				damage;
-	// float			speed;
-	// t_vec2			target_pos;
-	// float			attack_range;
-	// float			sight_range;
-	// int				ai_state;
 }	t_char;
-
-
 
 typedef struct s_textures
 {
@@ -151,42 +162,29 @@ typedef struct s_rowrender
 	double		height;
 }	t_rowrender;
 
-typedef struct s_spriterender
-{
-	double		angle;
-	double		dist;
-	t_vec2		sprite_point;
-	t_vec2		player_point;
-	// float		scale;
-	t_vec2		screen_pos;
-	float		max_size;
-	t_point		half_size;
-	t_point		start;
-	t_point		size;
-	t_point		screen;
-}	t_spriterender;
 
 typedef struct s_gs
 {
-	t_player	*player;
-	void		*mlx;
-	void		*window;
-	mlx_image_t	*minimap;
-	mlx_image_t	*miniplayer;
-	mlx_image_t	*view3d;
-	mlx_image_t	*view3d_bg;
-	t_map		map;
-	t_textures	textures;
-	t_render	render;
-	t_item		item_prefabs[ITEMS_TYPES_COUNT];
-	t_item		*items;
-	int			item_count;
-	int			max_items;
-	t_char		char_prefabs[CHARS_TYPES_COUNT];
-	t_char		*chars;
-	int			char_count;
-	int			max_chars;
-	float		dt;
+	t_player		*player;
+	void			*mlx;
+	void			*window;
+	mlx_image_t		*minimap;
+	mlx_image_t		*miniplayer;
+	mlx_image_t		*view3d;
+	mlx_image_t		*view3d_bg;
+	t_map			map;
+	t_textures		textures;
+	t_render		render;
+	t_sprite		*sh;
+	t_item			item_prefabs[ITEMS_TYPES_COUNT];
+	t_item			*items;
+	int				item_count;
+	int				max_items;
+	t_char			char_prefabs[CHARS_TYPES_COUNT];
+	t_char			*chars;
+	int				char_count;
+	int				max_chars;
+	float			dt;
 }	t_gs;
 
 // typedef struct s_texture

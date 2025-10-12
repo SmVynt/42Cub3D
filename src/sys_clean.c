@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 18:22:01 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:41:34 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ static void	ft_free_render(void)
 	printf(COLOR_C"Freeing render resources...\n"COLOR_X);
 	if (game->render.depth)
 		ft_free_and_null((void**)&game->render.depth);
+	if (game->sh)
+		ft_free_and_null((void**)&game->sh);
 }
 
 void	ft_clean(void)
