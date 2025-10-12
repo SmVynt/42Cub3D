@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/11 15:46:31 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 11:39:17 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,22 +101,22 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_vec2 loc, uint32_t color
 	if (color == COLOR_RED)
 	{
 		*texture = ft_game()->textures.so;
-		tex_u = (int)((loc.x - (int)loc.x) * ((*texture)->width));
+		tex_u = (int)((loc.x - floorf(loc.x)) * ((*texture)->width));
 	}
 	else if (color == COLOR_GREEN)
 	{
 		*texture = ft_game()->textures.no;
-		tex_u = (int)((1.0f -loc.x + (int)loc.x) * ((*texture)->width));
+		tex_u = (int)((1.0f -(loc.x - floorf(loc.x))) * ((*texture)->width));
 	}
 	else if (color == COLOR_YELLOW)
 	{
 		*texture = ft_game()->textures.ea;
-		tex_u = (int)((loc.y - (int)loc.y) * ((*texture)->width));
+		tex_u = (int)((loc.y - floorf(loc.y)) * ((*texture)->width));
 	}
 	else
 	{
-		*texture = ft_game()->textures.ea;
-		tex_u = (int)((1.0f - loc.y + (int)loc.y) * ((*texture)->width));
+		*texture = ft_game()->textures.we;
+		tex_u = (int)((1.0f - (loc.y - floorf(loc.y))) * ((*texture)->width));
 	}
 	return (tex_u);
 }
