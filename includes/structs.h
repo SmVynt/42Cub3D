@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/11 15:40:12 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 21:26:09 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ typedef struct s_player
 	t_point	mov_control;
 	float	mouse_x;
 	float	mouse_dx;
-	int	rot_control;
+	int		rot_control;
+	bool	is_jumping;
+	float	jump_height;
+	float	jump_impuls;
 }	t_player;
 
 typedef struct s_rowrender

@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/11 23:12:05 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/12 21:48:25 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,13 @@ void	ft_update_player(void)
 		new_pos.y += player->lookdir.x * move_step.x;
 		ft_clamp_new_position(&player->pos, new_pos);
 	}
+	if (player->is_jumping)
+	{
+		player->jump_impuls += -9.81f * 100 * ft_game()->dt;
+		player->jump_height += player->jump_impuls * ft_game()->dt;
+		if (player->jump_height < 1e-9)
+			player->is_jumping = false;
+	}
 	// mlx_set_mouse_pos(ft_game()->mlx, WIDTH / 2, HEIGHT / 2);
 }
 
@@ -149,7 +156,8 @@ void	ft_update(void *param)
 	if (player->mov_control.u != 0
 		|| player->mov_control.v != 0
 		|| player->rot_control != 0
-		|| player->mouse_dx != 0.0f)
+		|| player->mouse_dx != 0.0f
+		|| player->is_jumping)
 	{
 		ft_update_player();
 		ft_update_graphics();
