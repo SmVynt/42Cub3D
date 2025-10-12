@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/11 23:16:31 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/12 21:48:22 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ static void	ft_key_press_hook(void *param)
 		player->rot_control = -1;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		player->rot_control = 1;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_SPACE) && !player->is_jumping)
+	{
+		player->jump_impuls = 500.0;
+		player->is_jumping = true;
+	}
 	// if (player->mov_control.u != 0 || player->mov_control.v != 0 || player->rot_control != 0)
 		// ft_update(game);
 }
@@ -52,7 +57,6 @@ static void ft_mouse_move(double x, double y, void *param)
 	// ft_update(game);
 	(void) y;
 }
-
 
 void	ft_createhooks(void)
 {
