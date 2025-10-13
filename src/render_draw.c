@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/13 14:22:29 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 00:10:04 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ void put_pixel(mlx_image_t *image, t_point pos, uint32_t color)
 	// pixels = (uint32_t *)image->pixels;
 	// if (pos.u >= 0 &&  (unsigned int)pos.u < image->width && pos.v >= 0 &&  (unsigned int)pos.v < image->height)
 	// 	pixels[pos.v * image->width + pos.u] = color;
+	// uint32_t mask[4] = {0xFF000000, 0xFFFF0000, 0xFF00FF00, 0xFF0000FF};
+	uint32_t mask[4] = {0xFFAAAAAA, 0xFFFF00FF, 0xFFFFFF00, 0xFF00FFFF};
+	int a = (pos.u / 2 % 4) * (pos.v % 4 != 0);
+	color = color & mask[a];
 	if ((unsigned int)pos.u < image->width && (unsigned int)pos.v < image->height)
 		((uint32_t *)image->pixels)[pos.v * image->width + pos.u] = color;
 }
