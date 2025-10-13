@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 21:26:09 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:40:35 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 # define STRUCTS_H
 
 # include "MLX42/MLX42.h"
+
+# define ITEMS_TYPES_COUNT		4
+# define TEX_HEALTH		"textures/items/health_kit.png"
+# define TEX_KEY		"textures/items/key.png"
+# define TEX_CHANDELIER	"textures/items/chandelier.png"
+# define TEX_BARREL		"textures/items/barrel.png"
+# define CHARS_TYPES_COUNT		2
+# define TEX_ALIEN		"textures/characters/alien.png"
+# define TEX_SLIME		"textures/characters/slime.png"
 
 typedef struct s_point
 {
@@ -54,6 +63,68 @@ typedef struct s_map
 	t_point	start;
 }	t_map;
 
+typedef enum e_item_type
+{
+	IT_HEALTH,
+	IT_KEY,
+	IT_CHANDELIER,
+	IT_BARREL
+}	t_item_type;
+// Don't forget to update ITEMS_TYPES_COUNT in structs.h
+
+typedef enum e_char_type
+{
+	CH_ALIEN,
+	CH_SLIME
+}	t_char_type;
+// Don't forget to update CHARS_TYPES_COUNT in structs.h
+
+typedef struct s_sprite t_sprite;
+
+typedef struct s_spriterender
+{
+	double		angle;
+	double		dist;
+	t_vec2		sprite_point;
+	t_vec2		player_point;
+	t_vec2		screen_pos;
+	float		max_size;
+	t_point		half_size;
+	t_point		start;
+	t_point		size;
+	t_point		screen;
+	bool		visible;
+}	t_spriterender;
+
+struct s_sprite
+{
+	mlx_texture_t	*texture;
+	char			*path;
+	float			bottom_offset;
+	t_vec2			pos;
+	t_spriterender	sp;
+	t_sprite		*next;
+};
+
+typedef struct s_item
+{
+	t_item_type		type;
+	t_sprite		sprite;
+	bool			active;
+	bool			pickupable;
+	int				pickup_value;
+}	t_item;
+
+typedef struct s_char
+{
+	t_char_type		type;
+	t_sprite		sprite;
+	t_vec2			velocity;
+	bool			alive;
+	int				health;
+	int				max_health;
+}	t_char;
+
 typedef struct s_textures
 {
 	mlx_texture_t	*no;
@@ -64,9 +135,8 @@ typedef struct s_textures
 
 typedef struct s_render
 {
-	int	fov;
-	int	number_of_rays;
-	int	projection_plane_dist;
+	int		projection_plane_dist;
+	float	*depth;
 }	t_render;
 
 typedef struct s_player
@@ -90,23 +160,31 @@ typedef struct s_rowrender
 	t_vec2		player_point;
 	uint32_t	color;
 	double		height;
-	// t_vec2		p0;
 }	t_rowrender;
+
 
 typedef struct s_gs
 {
-	t_player	*player;
-	void		*mlx;
-	void		*window;
-	mlx_image_t	*minimap;
-	mlx_image_t	*miniplayer;
-	mlx_image_t	*view3d;
-	t_map		map;
-	t_textures	textures;
-	t_render	render;
-	int			state;
-	int			collected;
-	float		dt;
+	t_player		*player;
+	void			*mlx;
+	void			*window;
+	mlx_image_t		*minimap;
+	mlx_image_t		*miniplayer;
+	mlx_image_t		*view3d;
+	mlx_image_t		*view3d_bg;
+	t_map			map;
+	t_textures		textures;
+	t_render		render;
+	t_sprite		*sh;
+	t_item			item_prefabs[ITEMS_TYPES_COUNT];
+	t_item			*items;
+	int				item_count;
+	int				max_items;
+	t_char			char_prefabs[CHARS_TYPES_COUNT];
+	t_char			*chars;
+	int				char_count;
+	int				max_chars;
+	float			dt;
 }	t_gs;
 
 // typedef struct s_texture

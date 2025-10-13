@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/11 15:31:19 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 19:09:36 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,26 +95,16 @@ char	*ft_strchar(const char *s, int c)
 	return (NULL);
 }
 
-int	ft_sign(int n)
+int	ft_strchar_index(const char *s, int c)
 {
-	if (n < 0)
-		return (-1);
-	return (1);
-}
+	int	i;
 
-int	ft_signf(float n)
-{
-	if (n < 0.0f)
-		return (-1);
-	return (1);
-}
-
-t_vec2	ft_normalize_vec2(t_vec2 v)
-{
-	float length;
-
-	length = ft_vec2_length(v);
-	if (length < 1e-9)
-		return (t_vec2){0.0f, 0.0f};
-	return (t_vec2){v.x / length, v.y / length};
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return (i);
+		i++;
+	}
+	return (-1);
 }

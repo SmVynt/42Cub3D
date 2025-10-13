@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:52:39 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/11 15:49:31 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 16:49:58 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	main(int argc, char **argv)
 
 	ft_initialize();
 	ft_checkinput(argc, argv);
-	ft_setgame();
 	game = ft_game();
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", 1);
 	if (!game->mlx)
 		ft_exit_error("Could not initialize MiniLibX\n");
 	printf(COLOR_G"MiniLibX initialized!\n"COLOR_X);
 	ft_createhooks();
+	ft_setgame();
 	draw(WIDTH, HEIGHT, game);
 	ft_update_graphics();
 	mlx_loop(game->mlx);

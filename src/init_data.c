@@ -6,11 +6,84 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/03 18:52:30 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/12 21:13:11 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void ft_initprefabs(void)
+{
+	t_gs	*game;
+
+	game = ft_game();
+	game->item_prefabs[IT_HEALTH] = (t_item){
+		.type = IT_HEALTH,
+		.pickupable = true,
+		.active = true,
+		.pickup_value = 25,
+		.sprite.texture = NULL,
+		.sprite.path = TEX_HEALTH,
+		.sprite.bottom_offset = 0.0f
+	};
+	game->item_prefabs[IT_CHANDELIER] = (t_item){
+		.type = IT_CHANDELIER,
+		.pickupable = false,
+		.active = true,
+		.pickup_value = 0,
+		.sprite.texture = NULL,
+		.sprite.path = TEX_CHANDELIER,
+		.sprite.bottom_offset = -0.1f
+	};
+	game->item_prefabs[IT_KEY] = (t_item){
+		.type = IT_KEY,
+		.pickupable = true,
+		.active = true,
+		.pickup_value = 1,
+		.sprite.texture = NULL,
+		.sprite.path = TEX_KEY,
+		.sprite.bottom_offset = 0.0f
+	};
+	game->item_prefabs[IT_BARREL] = (t_item){
+		.type = IT_BARREL,
+		.pickupable = false,
+		.active = true,
+		.pickup_value = 1,
+		.sprite.texture = NULL,
+		.sprite.path = TEX_BARREL,
+		.sprite.bottom_offset = 0.0f
+	};
+	game->char_prefabs[CH_ALIEN] = (t_char){
+		.type = CH_ALIEN,
+		.health = 100,
+		.max_health = 100,
+		.alive = true,
+		.sprite.texture = NULL,
+		.sprite.path = TEX_ALIEN,
+		.sprite.bottom_offset = 0.0f
+	};
+	game->char_prefabs[CH_SLIME] = (t_char){
+		.type = CH_SLIME,
+		.health = 50,
+		.max_health = 50,
+		.alive = true,
+		.sprite.texture = NULL,
+		.sprite.path = TEX_SLIME,
+		.sprite.bottom_offset = 0.6f
+	};
+
+}
+
+static void ft_initrender(void)
+{
+	t_gs	*game;
+
+	game = ft_game();
+	game->render.projection_plane_dist = (WIDTH / 2.0) / tan(FOV_RAD / 2.0);
+	game->render.depth = malloc(sizeof(float) * (WIDTH / PIXEL_SIZE + 1));
+	if (!game->render.depth)
+		ft_exit_perror("Could not allocate memory for render depth buffer\n");
+}
 
 static void	ft_initmap(void)
 {
@@ -56,12 +129,15 @@ static void	ft_initgame(void)
 
 	game = ft_game();
 	game->mlx = NULL;
-	game->window = NULL;
+	game->items = NULL;
+	game->chars = NULL;
 }
 
 void	ft_initialize(void)
 {
 	ft_initgame();
+	ft_initprefabs();
 	ft_initmap();
 	ft_initplayer();
+	ft_initrender();
 }
