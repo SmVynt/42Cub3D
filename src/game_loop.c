@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/13 17:08:16 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/13 23:26:15 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,14 @@ void	ft_update_player(void)
 	}
 	if (player->is_jumping)
 	{
-		player->jump_impuls += -9.81f * 100 * ft_game()->dt;
+		// player->jump_impuls += -9.81f * 100 * ft_game()->dt;
+		player->jump_impuls += -9.8f * ft_game()->dt;
 		player->jump_height += player->jump_impuls * ft_game()->dt;
-		if (player->jump_height < 1e-9)
+		if (player->jump_height < 0.1f)
+		{
+			player->jump_height = 0.1f;
 			player->is_jumping = false;
+		}
 	}
 	// mlx_set_mouse_pos(ft_game()->mlx, WIDTH / 2, HEIGHT / 2);
 }
