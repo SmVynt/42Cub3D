@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 19:05:50 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/15 00:29:05 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@
 # define PIXEL_SIZE				2
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
+# define JUMP_IMPULSE			3.2f
+# define GRAVITY				9.8f
 # define TARGET_FPS				60.0f
 # define MAX_DT					0.05f
 # define PLAYERSPEED			6.0f
