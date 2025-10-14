@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/15 00:29:05 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/15 00:48:42 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,18 @@
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
 # define FOV_RAD				M_PI / 3
-# define PIXEL_SIZE				2
+# define PIXEL_SIZE				32
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
 # define JUMP_IMPULSE			3.2f
 # define GRAVITY				9.8f
+# define TILE_BORDER			0.1f
 # define TARGET_FPS				60.0f
 # define MAX_DT					0.05f
 # define PLAYERSPEED			6.0f
 # define ROTATIONSPEED			2.0f
-# define MOUSE_SENS				0.5f
+# define MOUSE_XSENS			0.5f
+# define MOUSE_YSENS			100.0f
 
 void	ft_initialize(void);
 

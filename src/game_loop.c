@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 19:08:12 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/15 00:42:20 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,23 @@ int ft_is_wall(t_vec2 p)
 
 static void	ft_clamp_new_position(t_vec2 *player_pos,t_vec2 new_pos_delta)
 {
-	float	border_width = 0.1f;
+	// float	border_width = 0.1f;
 	t_vec2	border_offset;
 	t_vec2	closest_tile_border;
 
 	if (new_pos_delta.x < 0.0f)
-		closest_tile_border.x = (float)((int)(player_pos->x)) + 0.5f + border_width;
+		closest_tile_border.x = (float)((int)(player_pos->x)) + 0.5f + TILE_BORDER;
 	else
-		closest_tile_border.x = (float)((int)(player_pos->x + 1.0f)) - 0.5f - border_width;
+		closest_tile_border.x = (float)((int)(player_pos->x + 1.0f)) - 0.5f - TILE_BORDER;
 	if (new_pos_delta.x == 0.0f)
 		closest_tile_border.x = player_pos->x;
 	if (new_pos_delta.y < 0.0f)
-		closest_tile_border.y = (float)((int)(player_pos->y)) + 0.5f + border_width;
+		closest_tile_border.y = (float)((int)(player_pos->y)) + 0.5f + TILE_BORDER;
 	else
-		closest_tile_border.y = (float)((int)(player_pos->y + 1.0f)) - 0.5f - border_width;
+		closest_tile_border.y = (float)((int)(player_pos->y + 1.0f)) - 0.5f - TILE_BORDER;
 	if (new_pos_delta.y == 0.0f)
 		closest_tile_border.y = player_pos->y;
-	border_offset = (t_vec2){ft_signf(new_pos_delta.x) * border_width, ft_signf(new_pos_delta.y) * border_width};
+	border_offset = (t_vec2){ft_signf(new_pos_delta.x) * TILE_BORDER, ft_signf(new_pos_delta.y) * TILE_BORDER};
 	if (ft_is_wall((t_vec2){player_pos->x + new_pos_delta.x + border_offset.x, player_pos->y}))
 		new_pos_delta.x = closest_tile_border.x - player_pos->x;
 	if (ft_is_wall((t_vec2){player_pos->x, player_pos->y + new_pos_delta.y + border_offset.y}))
@@ -78,11 +78,12 @@ void	ft_update_player(void)
 	}
 	if (player->mouse_diff.x != 0.0f)
 	{
-		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(-player->mouse_diff.x * ROTATIONSPEED * ft_game()->dt * MOUSE_SENS), player->lookdir);
+		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(-player->mouse_diff.x * ROTATIONSPEED * MOUSE_XSENS * ft_game()->dt), player->lookdir);
 		player->mouse_diff.x = 0.0f;
-	}	if (player->mouse_diff.y != 0.0f)
+	}
+	if (player->mouse_diff.y != 0.0f)
 	{
-		player->lookupdown += player->mouse_diff.y * ROTATIONSPEED * 100 * ft_game()->dt;
+		player->lookupdown += player->mouse_diff.y * ROTATIONSPEED * MOUSE_YSENS * ft_game()->dt;
 		maxlookupdown = ft_game()->view3d->height / 2;
 		if (player->lookupdown > maxlookupdown)
 			player->lookupdown = maxlookupdown;
