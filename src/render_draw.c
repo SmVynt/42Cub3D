@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/14 11:36:02 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 14:49:59 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,20 @@ static void ft_fill_split_bg(mlx_image_t *bg)
 	uint32_t	u;
 	uint32_t	v;
 
-	v = -1;
-	while (++v < bg->height / 2)
+	v = 0;
+	while (v < bg->height / 2)
 	{
 		u = -1;
 		while (++u < bg->width)
 			put_pixel(bg, (t_point){u,v}, ft_game()->render.top_color);
+		v++;
 	}
-	while (++v < bg->height)
+	while (v < bg->height)
 	{
 		u = -1;
 		while (++u < bg->width)
 			put_pixel(bg, (t_point){u,v}, ft_game()->render.bottom_color);
+		v++;
 	}
 }
 

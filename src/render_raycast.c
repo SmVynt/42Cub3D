@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/14 11:31:36 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 15:43:35 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,17 @@ void ft_draw_wall_part(t_vec2 loc, uint32_t color, double height, int x)
 	delta = 0;
 	if (start < 0)
 		delta = -start;
+	float angle = atan2f(ft_game()->player->lookdir.x, ft_game()->player->lookdir.y);
 	while (delta <= height && (start + delta) < (int)image->height)
 	{
 		int y = start + delta;
 		pixel.v = (int)(delta / height * texture->height);
-		draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(texture, pixel));
+		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(texture, pixel));
+		uint32_t color = ft_get_pixel_color(texture, pixel);
+		if (color >> 24 != 0x00 )
+			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
+		else
+			draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.bg, (t_point){((int)(angle * 180.0f / M_PI) + x) % 1280, y + 152}));
 		delta += PIXEL_SIZE;
 	}
 }

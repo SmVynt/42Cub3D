@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 11:43:39 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 15:09:54 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static	void	ft_assign_textures(void)
 	ft_load_texture(map->so, &game->textures.so);
 	ft_load_texture(map->we, &game->textures.we);
 	ft_load_texture(map->ea, &game->textures.ea);
+	ft_load_texture("textures/BG.png", &game->textures.bg);
 }
 
 static uint32_t	ft_read_color(const char *color)
