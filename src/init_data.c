@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 17:17:53 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/15 00:55:58 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,10 @@ static void	ft_initgame(void)
 	game->mlx = NULL;
 	game->items = NULL;
 	game->chars = NULL;
+	game->minimap = NULL;
+	game->miniplayer = NULL;
+	game->view3d = NULL;
+	game->view3d_bg = NULL;
 }
 
 void	ft_initialize(void)

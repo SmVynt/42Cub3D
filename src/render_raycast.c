@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/14 19:00:53 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/15 00:54:24 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ static double get_dist_to_screen_point(int y, t_rayrender ray)
 	double height_from_center;
 	double jump_scale_factor;
 	double dist;
-	
+
 	screen_center_y = ft_game()->view3d->height / 2.0;
 	height_from_center = y - screen_center_y - ft_game()->player->lookupdown;
 	jump_scale_factor = ft_game()->player->jump_height + ft_signf(height_from_center) * 1.0;
-	dist = (ft_game()->render.projection_plane_dist * jump_scale_factor) 
+	dist = (ft_game()->render.projection_plane_dist * jump_scale_factor)
 	                 / (2.0 * fabs(height_from_center) * cos(ray.angle));
 	return (dist);
 }
-	
+
 
 float	ft_height_delta(float distance)
 {
@@ -159,7 +159,7 @@ static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
 	t_point		pixel;
 	int			y;
 	double		dist;
-	
+
 	image = ft_game()->view3d;
 	y = 0;
 	while (y < wall_start)
@@ -197,10 +197,10 @@ static void draw_vertical_slice(int x, t_rayrender ray)
 {
 	mlx_image_t		*image;
 	int	wall_start;
-	
+
 	image = ft_game()->view3d;
 	wall_start = (((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->lookupdown;
-	
+
 	if (true)
 		ft_draw_ceil_part(ray, x, wall_start);
 	if (true)
