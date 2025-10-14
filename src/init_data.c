@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 21:13:11 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 17:17:53 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,10 @@ static void	ft_initplayer(void)
 	player->mov_control.u = 0;
 	player->mov_control.v = 0;
 	player->rot_control = 0;
-	player->mouse_x = 0.0f;
-	player->mouse_dx = 0.0f;
+	player->mouse_pos.x = -1.0f;
+	player->mouse_diff.x = 0.0f;
+	player->mouse_pos.y = -1.0f;
+	player->mouse_diff.y = 0.0f;
 	ft_game()->player = player;
 }
 

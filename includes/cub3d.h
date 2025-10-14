@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/13 23:09:49 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 19:05:50 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@
 # define FOV_RAD				M_PI / 3
 # define PIXEL_SIZE				2
 # define STANDARD_SPRITE_SIZE	64
-// # define JUMP_HEIGHT			150.0f
 # define JUMP_HEIGHT			1.0f
 # define TARGET_FPS				60.0f
 # define MAX_DT					0.05f
@@ -100,7 +99,7 @@ void	ft_load_texture(const char *path, mlx_texture_t **texture);
 float	ft_height_delta(float distance);
 void 	put_pixel(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x);
-void	draw_wall(mlx_image_t *image, t_vec2 point, t_vec3 lookdir, int x);
+void	draw_wall(mlx_image_t *image, int x);
 void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
 int		ft_is_wall(t_vec2 p);
 // void	init_player(void);

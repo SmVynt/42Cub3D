@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/13 00:40:35 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 16:14:55 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,24 +144,25 @@ typedef struct s_player
 	t_vec2	pos;
 	t_vec3	lookdir;
 	t_point	mov_control;
-	float	mouse_x;
-	float	mouse_dx;
+	t_vec2	mouse_pos;
+	t_vec2	mouse_diff;
+	float	lookupdown;
 	int		rot_control;
 	bool	is_jumping;
 	float	jump_height;
 	float	jump_impuls;
 }	t_player;
 
-typedef struct s_rowrender
+typedef struct s_rayrender
 {
+	t_vec2		start;
+	t_vec2		end;
+	t_vec3		dir;
 	double		angle;
 	double		dist;
-	t_vec2		draw_point;
-	t_vec2		player_point;
-	uint32_t	color;
-	double		height;
-}	t_rowrender;
-
+	uint32_t	wall_dir;
+	double		wall_height;
+}	t_rayrender;
 
 typedef struct s_gs
 {

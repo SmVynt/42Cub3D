@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/13 14:22:29 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 18:36:13 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,20 +218,12 @@ void	draw_player(mlx_image_t *image)
 
 void	draw_walls(mlx_image_t *image)
 {
-	t_player	*player;
-
-	player = ft_game()->player;
-	float angle = - FOV_RAD / 2;
-	float dangle = FOV_RAD / (ft_game()->view3d->width - 1) * PIXEL_SIZE;
-	int x = 0;
-	// ft_game()->render.projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
-	x += PIXEL_SIZE/2;
-	angle += dangle / 2;
-	while ((unsigned int)x < ft_game()->view3d->width)
+	uint32_t	x;
+	
+	x = PIXEL_SIZE / 2;
+	while (x < ft_game()->view3d->width)
 	{
-		draw_wall(image, (t_vec2){player->pos.x, player->pos.y} , ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), x);
-		angle += dangle;
-		// x++;
+		draw_wall(image, x);
 		x += PIXEL_SIZE;
 	}
 }
@@ -266,7 +258,7 @@ void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite)
 	sp->size.v = (int)(sprite->texture->height * sp->max_size / STANDARD_SPRITE_SIZE);
 	sp->start.u = (int)(sp->screen_pos.x) - sp->size.u / 2;
 	sp->start.v = (int)(sp->screen_pos.y) - sp->size.v + sp->max_size * (0.5f - sprite->bottom_offset / 2);
-	sp->start.v += sp->max_size * 0.5f * ft_game()->player->jump_height / JUMP_HEIGHT;
+	sp->start.v += sp->max_size * 0.5f * ft_game()->player->jump_height + player->lookupdown;
 }
 
 void	ft_add_sprite_to_list(t_sprite *head, t_sprite *sprite)
