@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/11 23:16:31 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/14 17:34:09 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,16 @@ static void ft_mouse_move(double x, double y, void *param)
 
 	game = (t_gs *)param;
 	player = game->player;
-	player->mouse_dx = player->mouse_x - x;
-	player->mouse_x = x;
-	// ft_update(game);
-	(void) y;
+	if (player->mouse_pos.x == -1)
+		player->mouse_diff.x = 0.0f;
+	else
+		player->mouse_diff.x = player->mouse_pos.x - x;
+	player->mouse_pos.x = x;
+	if (player->mouse_pos.y == -1)
+		player->mouse_diff.y = 0.0f;
+	else
+		player->mouse_diff.y = player->mouse_pos.y - y;
+	player->mouse_pos.y = y;
 }
 
 void	ft_createhooks(void)

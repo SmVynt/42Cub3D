@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 23:13:01 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 17:33:36 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,18 @@ void	ft_update_player(void)
 	{
 		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(player->rot_control * ROTATIONSPEED * ft_game()->dt), player->lookdir);
 	}
-	if (player->mouse_dx != 0.0f)
+	if (player->mouse_diff.x != 0.0f)
 	{
-		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(-player->mouse_dx * ROTATIONSPEED * ft_game()->dt * MOUSE_SENS), player->lookdir);
-		player->mouse_dx = 0.0f;
+		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(-player->mouse_diff.x * ROTATIONSPEED * ft_game()->dt * MOUSE_SENS), player->lookdir);
+		player->mouse_diff.x = 0.0f;
+	}	if (player->mouse_diff.y != 0.0f)
+	{
+		player->lookupdown += player->mouse_diff.y * ROTATIONSPEED * 100 * ft_game()->dt;
+		if (player->lookupdown > MAX_LOOK_UP_DOWN)
+			player->lookupdown = MAX_LOOK_UP_DOWN;
+		if (player->lookupdown < -MAX_LOOK_UP_DOWN)
+			player->lookupdown = -MAX_LOOK_UP_DOWN;
+		player->mouse_diff.y = 0.0f;
 	}
 	if (player->mov_control.v != 0 || player->mov_control.u != 0)
 	{
@@ -94,7 +102,10 @@ void	ft_update_player(void)
 		player->jump_impuls += -9.81f * 100 * ft_game()->dt;
 		player->jump_height += player->jump_impuls * ft_game()->dt;
 		if (player->jump_height < 1e-9)
+		{
 			player->is_jumping = false;
+			player->jump_height = 0.0f;
+		}
 	}
 	// mlx_set_mouse_pos(ft_game()->mlx, WIDTH / 2, HEIGHT / 2);
 }
@@ -157,7 +168,8 @@ void	ft_update(void *param)
 	if (player->mov_control.u != 0
 		|| player->mov_control.v != 0
 		|| player->rot_control != 0
-		|| player->mouse_dx != 0.0f
+		|| player->mouse_diff.x != 0.0f
+		|| player->mouse_diff.y != 0.0f
 		|| player->is_jumping)
 	{
 		ft_update_player();

@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/13 00:16:30 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 17:36:14 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void draw_vertical_slice(int x, t_rayrender ray);
+
+static double get_dist_to_screen_point(int y, t_rayrender ray)
+{
+	double screen_center_y;
+	double height_from_center;
+	double jump_scale_factor;
+	double dist;
+	
+	screen_center_y = ft_game()->view3d->height / 2.0;
+	height_from_center = y - screen_center_y - ft_game()->player->lookupdown;
+	jump_scale_factor = (ft_game()->player->jump_height / MAX_JUMP_HEIGHT) + 1.0;
+	dist = (ft_game()->render.projection_plane_dist * jump_scale_factor) 
+	                 / (2.0 * height_from_center * cos(ray.angle));
+	return (dist);
+}
+	
 
 float	ft_height_delta(float distance)
 {
@@ -96,91 +114,101 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_vec2 loc, uint32_t color
 	return (tex_u);
 }
 
-void ft_draw_wall_part(t_vec2 loc, uint32_t color, double height, int x)
+void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
 {
 	mlx_image_t		*image;
 	mlx_texture_t	*texture;
 	t_point			pixel;
-	int				start;
 	int				delta;
 
 	image = ft_game()->view3d;
-	pixel.u = ft_find_texture_u(&texture, loc, color);
-	// start = (((int)(image->height - height) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->jump_height;
-	start = (((int)(image->height - height * (1 - ft_game()->player->jump_height / JUMP_HEIGHT)) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
+	pixel.u = ft_find_texture_u(&texture, ray.end, ray.wall_dir);
 	delta = 0;
-	if (start < 0)
-		delta = -start;
-	while (delta <= height && (start + delta) < (int)image->height)
+	// if (start < 0)
+	// 	delta = -start;
+	while (delta <= ray.wall_height && (wall_start + delta) < (int)image->height)
 	{
-		int y = start + delta;
-		pixel.v = (int)(delta / height * texture->height);
-		draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(texture, pixel));
+		pixel.v = (int)(delta / ray.wall_height * texture->height);
+		draw_square(image, PIXEL_SIZE, (t_point){x, wall_start + delta}, ft_get_pixel_color(texture, pixel));
 		delta += PIXEL_SIZE;
 	}
 }
 
-static void ft_draw_floor_ceil_part(t_rowrender row, t_vec3 lookdir, int x)
+static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 {
 	mlx_image_t *image;
-	// mlx_texture_t *texture;
 	t_point		pixel;
 	int			y;
-	double		fisheye_correction;
+	double		dist;
 
 	image = ft_game()->view3d;
-	y = (((int)(image->height + row.height * (1 + ft_game()->player->jump_height / JUMP_HEIGHT)) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
-	fisheye_correction = cos(row.angle);
-
+	y = wall_end;
 	while (y < (int)image->height)
 	{
-		double screen_y = y - image->height / 2.0;
-		double floor_distance = (ft_game()->render.projection_plane_dist * (ft_game()->player->jump_height / JUMP_HEIGHT + 1.0f)) / screen_y / fisheye_correction / 2.0;
-		pixel.u = ft_get_tex_coord(row.player_point.x + lookdir.x * floor_distance, ft_game()->textures.no->width);
-		pixel.v = ft_get_tex_coord(row.player_point.y + lookdir.y * floor_distance, ft_game()->textures.no->height);
+		dist = get_dist_to_screen_point(y, ray);
+		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, ft_game()->textures.no->width);
+		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, ft_game()->textures.no->height);
 		draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
-		// draw_square(image, PIXEL_SIZE, (t_point){x, image->height - y}, ft_get_pixel_color(ft_game()->textures.ea, pixel));
-		// delta++;
-		y += PIXEL_SIZE;
-	}
-	y = (((int)(image->height + row.height * (1 - ft_game()->player->jump_height / JUMP_HEIGHT)) / 2) / PIXEL_SIZE) * PIXEL_SIZE;
-	fisheye_correction = cos(row.angle);
-
-	while (y < (int)image->height)
-	{
-		double screen_y = y - image->height / 2.0;
-		double floor_distance = (ft_game()->render.projection_plane_dist * (- ft_game()->player->jump_height / JUMP_HEIGHT + 1.0f)) / screen_y / fisheye_correction / 2.0;
-		pixel.u = ft_get_tex_coord(row.player_point.x + lookdir.x * floor_distance, ft_game()->textures.no->width);
-		pixel.v = ft_get_tex_coord(row.player_point.y + lookdir.y * floor_distance, ft_game()->textures.no->height);
-		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
-		draw_square(image, PIXEL_SIZE, (t_point){x, image->height - y}, ft_get_pixel_color(ft_game()->textures.ea, pixel));
-		// delta++;
 		y += PIXEL_SIZE;
 	}
 }
 
-void	draw_wall(mlx_image_t *image, t_vec2 point, t_vec3 lookdir, int x)
+static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
 {
-	t_rowrender	row;
-
-	row.player_point.x = point.x + 0.5f;
-	row.player_point.y = point.y + 0.5f;
-	row.draw_point = (t_vec2){row.player_point.x, row.player_point.y};
-	row.color = COLOR_GREEN;
-	int max_iter = 1000;
-
-	row.draw_point = get_ray_end(row.draw_point, lookdir, max_iter, &row.color);
-	row.angle = - FOV_RAD / 2 + x * (FOV_RAD / (double) (image->width - 1));
-	row.dist = ft_vec2_length((t_vec2){row.draw_point.x - row.player_point.x, row.draw_point.y - row.player_point.y})* cos(row.angle);
-	if (row.dist <= 0)
-		return ;
-	// double projection_plane_dist = (image->width / 2.0) / tan(FOV_RAD / 2.0);
-	row.height = (1.0 / row.dist) * ft_game()->render.projection_plane_dist;
-	ft_game()->render.depth[x / PIXEL_SIZE] = (float)row.dist;
-	ft_draw_wall_part(row.draw_point, row.color, row.height, x);
-	// if (false)
-		ft_draw_floor_ceil_part(row, lookdir, x);
+	mlx_image_t *image;
+	t_point		pixel;
+	int			y;
+	double		dist;
+	
+	image = ft_game()->view3d;
+	y = 0;
+	while (y < wall_start)
+	{
+		dist = get_dist_to_screen_point(y, ray);
+		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, ft_game()->textures.no->width);
+		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, ft_game()->textures.no->height);
+		draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.ea, pixel));
+		y += PIXEL_SIZE;
+	}
 }
+
+void	draw_wall(mlx_image_t *image, int x)
+{
+	t_rayrender	ray;
+	t_player	*player;
+
+	player = ft_game()->player;
+	ray.angle = - FOV_RAD / 2 + x * (FOV_RAD / (double)(image->width - 1));
+	ray.dir = ft_mat4_transform_vec3(ft_mat4_rotation_z(ray.angle), player->lookdir);
+	ray.start.x = player->pos.x + 0.5f;
+	ray.start.y = player->pos.y + 0.5f;
+	ray.end = (t_vec2){ray.start.x, ray.start.y};
+	ray.wall_dir = COLOR_GREEN;
+	ray.end = get_ray_end(ray.end, ray.dir, 1000, &ray.wall_dir);
+	ray.dist = ft_vec2_length((t_vec2){ray.end.x - ray.start.x, ray.end.y - ray.start.y}) * cos(ray.angle);
+	if (ray.dist < 1e-9)
+		return ;
+	ray.wall_height = ft_game()->render.projection_plane_dist / ray.dist;
+	ft_game()->render.depth[x / PIXEL_SIZE] = (float)ray.dist;
+	draw_vertical_slice(x, ray);
+}
+
+static void draw_vertical_slice(int x, t_rayrender ray)
+{
+	mlx_image_t		*image;
+	int	wall_start;
+	
+	image = ft_game()->view3d;
+	wall_start = (((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height / MAX_JUMP_HEIGHT)) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->lookupdown;
+	
+	if (true)
+		ft_draw_ceil_part(ray, x, wall_start);
+	if (true)
+		ft_draw_wall_part(ray, x, wall_start);
+	if (true)
+		ft_draw_floor_part(ray, x, wall_start + ray.wall_height);
+}
+
 
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
 		t_point diff, t_point dir)
