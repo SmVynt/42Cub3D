@@ -40,10 +40,14 @@ static void	ft_clamp_new_position(t_vec2 *player_pos,t_vec2 new_pos_delta)
 		closest_tile_border.x = (float)((int)(player_pos->x)) + 0.5f + border_width;
 	else
 		closest_tile_border.x = (float)((int)(player_pos->x + 1.0f)) - 0.5f - border_width;
+	if (new_pos_delta.x == 0.0f)
+		closest_tile_border.x = player_pos->x;
 	if (new_pos_delta.y < 0.0f)
 		closest_tile_border.y = (float)((int)(player_pos->y)) + 0.5f + border_width;
 	else
 		closest_tile_border.y = (float)((int)(player_pos->y + 1.0f)) - 0.5f - border_width;
+	if (new_pos_delta.y == 0.0f)
+		closest_tile_border.y = player_pos->y;
 	border_offset = (t_vec2){ft_signf(new_pos_delta.x) * border_width, ft_signf(new_pos_delta.y) * border_width};
 	if (ft_is_wall((t_vec2){player_pos->x + new_pos_delta.x + border_offset.x, player_pos->y}))
 		new_pos_delta.x = closest_tile_border.x - player_pos->x;
@@ -99,12 +103,13 @@ void	ft_update_player(void)
 	}
 	if (player->is_jumping)
 	{
-		player->jump_impuls += -9.81f * 100 * ft_game()->dt;
+		// player->jump_impuls += -9.81f * 100 * ft_game()->dt;
+		player->jump_impuls += -9.8f * ft_game()->dt;
 		player->jump_height += player->jump_impuls * ft_game()->dt;
-		if (player->jump_height < 1e-9)
+		if (player->jump_height < 0.1f)
 		{
+			player->jump_height = 0.1f;
 			player->is_jumping = false;
-			player->jump_height = 0.0f;
 		}
 	}
 	// mlx_set_mouse_pos(ft_game()->mlx, WIDTH / 2, HEIGHT / 2);

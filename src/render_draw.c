@@ -26,6 +26,15 @@ void	draw(int32_t width, int32_t height, void *param)
 		mlx_delete_image(game->mlx, game->miniplayer);
 	if (game->view3d)
 		mlx_delete_image(game->mlx, game->view3d);
+	if (game->render.depth)
+		free(game->render.depth);
+	game->render.depth = malloc(sizeof(float) * (width / PIXEL_SIZE + 1));
+	if (!game->render.depth)
+	{
+		printf("Error: Could not reallocate depth buffer for width %d\n", width);
+		return ;
+	}
+	game->render.projection_plane_dist = (width / 2.0) / tan(FOV_RAD / 2.0);
 	game->view3d = mlx_new_image(game->mlx, width, height);
 	game->minimap = mlx_new_image(game->mlx, width / 3, height / 3);
 	game->miniplayer = mlx_new_image(game->mlx, width / 3, height / 3);

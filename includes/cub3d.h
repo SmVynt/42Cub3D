@@ -65,8 +65,8 @@
 # define FOV_RAD				M_PI / 3
 # define PIXEL_SIZE				2
 # define STANDARD_SPRITE_SIZE	64
-# define MAX_JUMP_HEIGHT		150.0f
 # define MAX_LOOK_UP_DOWN		300.0f
+# define JUMP_HEIGHT			1.0f
 # define TARGET_FPS				60.0f
 # define MAX_DT					0.05f
 # define PLAYERSPEED			6.0f
