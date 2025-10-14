@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/14 18:02:50 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/14 18:36:13 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,7 @@ void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite)
 	sp->size.v = (int)(sprite->texture->height * sp->max_size / STANDARD_SPRITE_SIZE);
 	sp->start.u = (int)(sp->screen_pos.x) - sp->size.u / 2;
 	sp->start.v = (int)(sp->screen_pos.y) - sp->size.v + sp->max_size * (0.5f - sprite->bottom_offset / 2);
-	sp->start.v += sp->max_size * 0.5f * ft_game()->player->jump_height / MAX_JUMP_HEIGHT + player->lookupdown;
+	sp->start.v += sp->max_size * 0.5f * ft_game()->player->jump_height + player->lookupdown;
 }
 
 void	ft_add_sprite_to_list(t_sprite *head, t_sprite *sprite)

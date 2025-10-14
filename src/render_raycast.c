@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/14 17:36:14 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/14 19:00:53 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static double get_dist_to_screen_point(int y, t_rayrender ray)
 	
 	screen_center_y = ft_game()->view3d->height / 2.0;
 	height_from_center = y - screen_center_y - ft_game()->player->lookupdown;
-	jump_scale_factor = (ft_game()->player->jump_height / MAX_JUMP_HEIGHT) + 1.0;
+	jump_scale_factor = ft_game()->player->jump_height + ft_signf(height_from_center) * 1.0;
 	dist = (ft_game()->render.projection_plane_dist * jump_scale_factor) 
-	                 / (2.0 * height_from_center * cos(ray.angle));
+	                 / (2.0 * fabs(height_from_center) * cos(ray.angle));
 	return (dist);
 }
 	
@@ -199,7 +199,7 @@ static void draw_vertical_slice(int x, t_rayrender ray)
 	int	wall_start;
 	
 	image = ft_game()->view3d;
-	wall_start = (((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height / MAX_JUMP_HEIGHT)) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->lookupdown;
+	wall_start = (((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->lookupdown;
 	
 	if (true)
 		ft_draw_ceil_part(ray, x, wall_start);
