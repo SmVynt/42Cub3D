@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 17:33:36 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/14 19:08:12 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	ft_update_player(void)
 	t_player	*player;
 	t_vec2		move_step;
 	t_vec2		new_pos;
+	float		maxlookupdown;
 
 	player = ft_game()->player;
 	if (player->rot_control != 0)
@@ -82,10 +83,11 @@ void	ft_update_player(void)
 	}	if (player->mouse_diff.y != 0.0f)
 	{
 		player->lookupdown += player->mouse_diff.y * ROTATIONSPEED * 100 * ft_game()->dt;
-		if (player->lookupdown > MAX_LOOK_UP_DOWN)
-			player->lookupdown = MAX_LOOK_UP_DOWN;
-		if (player->lookupdown < -MAX_LOOK_UP_DOWN)
-			player->lookupdown = -MAX_LOOK_UP_DOWN;
+		maxlookupdown = ft_game()->view3d->height / 2;
+		if (player->lookupdown > maxlookupdown)
+			player->lookupdown = maxlookupdown;
+		if (player->lookupdown < -maxlookupdown)
+			player->lookupdown = -maxlookupdown;
 		player->mouse_diff.y = 0.0f;
 	}
 	if (player->mov_control.v != 0 || player->mov_control.u != 0)

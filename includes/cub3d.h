@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 18:36:42 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/14 19:05:50 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@
 # define FOV_RAD				M_PI / 3
 # define PIXEL_SIZE				2
 # define STANDARD_SPRITE_SIZE	64
-# define MAX_LOOK_UP_DOWN		300.0f
 # define JUMP_HEIGHT			1.0f
 # define TARGET_FPS				60.0f
 # define MAX_DT					0.05f
