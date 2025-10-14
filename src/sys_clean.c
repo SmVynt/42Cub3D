@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/13 00:41:34 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 11:22:29 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static void	ft_free_mlx(void)
 			mlx_delete_image(game->mlx, game->miniplayer);
 		if (game->view3d)
 			mlx_delete_image(game->mlx, game->view3d);
+		if (game->view3d_bg)
+			mlx_delete_image(game->mlx, game->view3d_bg);
 		mlx_terminate(game->mlx);
 	}
 	i = 0;

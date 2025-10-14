@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 21:13:11 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 11:21:27 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,10 @@ static void	ft_initgame(void)
 	game->mlx = NULL;
 	game->items = NULL;
 	game->chars = NULL;
+	game->minimap = NULL;
+	game->miniplayer = NULL;
+	game->view3d = NULL;
+	game->view3d_bg = NULL;
 }
 
 void	ft_initialize(void)

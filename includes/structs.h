@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/13 00:40:35 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 10:46:11 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,15 @@ typedef struct s_textures
 	mlx_texture_t	*so;
 	mlx_texture_t	*we;
 	mlx_texture_t	*ea;
+	mlx_texture_t	*bg;
 }	t_textures;
 
 typedef struct s_render
 {
-	int		projection_plane_dist;
-	float	*depth;
+	int			projection_plane_dist;
+	float		*depth;
+	uint32_t	top_color;
+	uint32_t	bottom_color;
 }	t_render;
 
 typedef struct s_player

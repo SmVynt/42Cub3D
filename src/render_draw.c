@@ -6,11 +6,31 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/13 14:22:29 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 11:36:02 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void ft_fill_split_bg(mlx_image_t *bg)
+{
+	uint32_t	u;
+	uint32_t	v;
+
+	v = -1;
+	while (++v < bg->height / 2)
+	{
+		u = -1;
+		while (++u < bg->width)
+			put_pixel(bg, (t_point){u,v}, ft_game()->render.top_color);
+	}
+	while (++v < bg->height)
+	{
+		u = -1;
+		while (++u < bg->width)
+			put_pixel(bg, (t_point){u,v}, ft_game()->render.bottom_color);
+	}
+}
 
 void	draw(int32_t width, int32_t height, void *param)
 {
@@ -26,6 +46,8 @@ void	draw(int32_t width, int32_t height, void *param)
 		mlx_delete_image(game->mlx, game->miniplayer);
 	if (game->view3d)
 		mlx_delete_image(game->mlx, game->view3d);
+	if (game->view3d_bg)
+		mlx_delete_image(game->mlx, game->view3d_bg);
 	if (game->render.depth)
 		free(game->render.depth);
 	game->render.depth = malloc(sizeof(float) * (width / PIXEL_SIZE + 1));
@@ -35,6 +57,8 @@ void	draw(int32_t width, int32_t height, void *param)
 		return ;
 	}
 	game->render.projection_plane_dist = (width / 2.0) / tan(FOV_RAD / 2.0);
+	game->view3d_bg = mlx_new_image(game->mlx, width, height);
+	ft_fill_split_bg(game->view3d_bg);
 	game->view3d = mlx_new_image(game->mlx, width, height);
 	game->minimap = mlx_new_image(game->mlx, width / 3, height / 3);
 	game->miniplayer = mlx_new_image(game->mlx, width / 3, height / 3);
@@ -42,6 +66,7 @@ void	draw(int32_t width, int32_t height, void *param)
 		return ;
 	draw_map(game->minimap, map);
 	ft_update(game);
+	mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
 	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
 	mlx_image_to_window(game->mlx, game->minimap, 0, 0);
 	mlx_image_to_window(game->mlx, game->miniplayer, 0, 0);

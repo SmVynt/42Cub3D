@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/13 00:16:30 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/14 11:31:36 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void	draw_wall(mlx_image_t *image, t_vec2 point, t_vec3 lookdir, int x)
 	row.height = (1.0 / row.dist) * ft_game()->render.projection_plane_dist;
 	ft_game()->render.depth[x / PIXEL_SIZE] = (float)row.dist;
 	ft_draw_wall_part(row.draw_point, row.color, row.height, x);
-	// if (false)
+	if (false)
 		ft_draw_floor_ceil_part(row, lookdir, x);
 }
 
