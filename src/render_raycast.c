@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/15 00:54:24 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/15 01:18:16 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
 	delta = 0;
 	// if (start < 0)
 	// 	delta = -start;
+	wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
 	while (delta <= ray.wall_height && (wall_start + delta) < (int)image->height)
 	{
 		pixel.v = (int)(delta / ray.wall_height * texture->height);
@@ -142,7 +143,7 @@ static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 	double		dist;
 
 	image = ft_game()->view3d;
-	y = wall_end;
+	y = wall_end / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
 	while (y < (int)image->height)
 	{
 		dist = get_dist_to_screen_point(y, ray);
@@ -161,7 +162,7 @@ static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
 	double		dist;
 
 	image = ft_game()->view3d;
-	y = 0;
+	y = PIXEL_SIZE / 2;
 	while (y < wall_start)
 	{
 		dist = get_dist_to_screen_point(y, ray);
@@ -311,7 +312,6 @@ static t_vec2 get_ray_end(t_vec2 start, t_vec3 dir, int max_iter, uint32_t *colo
 
 void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
 {
-	// t_player		*player;
 	t_spriterender	*sp;
 	int				x;
 	int				y;
@@ -321,7 +321,7 @@ void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
 	sp = &sprite->sp;
 	if (!sp->visible)
 		return ;
-	x = (PIXEL_SIZE - sp->start.u % PIXEL_SIZE) % PIXEL_SIZE;
+	x = (PIXEL_SIZE - sp->start.u % PIXEL_SIZE) % PIXEL_SIZE + PIXEL_SIZE / 2;
 	while (x < sp->size.u)
 	{
 		sp->screen.u = sp->start.u + x;
@@ -332,7 +332,7 @@ void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
 				x += PIXEL_SIZE;
 				continue ;
 			}
-			y = (PIXEL_SIZE - sp->start.v % PIXEL_SIZE) % PIXEL_SIZE;
+			y = (PIXEL_SIZE - sp->start.v % PIXEL_SIZE) % PIXEL_SIZE + PIXEL_SIZE / 2;
 			while (y < sp->size.v)
 			{
 				sp->screen.v = sp->start.v + y;

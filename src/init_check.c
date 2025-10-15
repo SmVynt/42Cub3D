@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 15:09:54 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/15 02:09:46 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,31 +85,30 @@ static uint32_t	ft_read_color(const char *color)
 {
 	int			i;
 	int			j;
-	int			num;
+	uint32_t	num;
 	uint32_t	res;
 
 	i = 0;
 	j = 0;
-	res = 0xFF;
+	res = 0xFF000000;;
 	while (i++ < 3)
 	{
 		num = 0;
-		while(color[j] >= '0' && color[j] <= '9' && num <= 225)
+		while(color[j] >= '0' && color[j] <= '9' && num <= 255)
 		{
 			num = num * 10 + color[j] - '0';
 			j++;
 		}
-		if (num > 225)
+		if (num > 255)
 			ft_exit_error("Wrong format of color\n");
-		printf("Color %d: %d\n", i, num);
-		res = res * 255 + num;
-		// res = res << 8;
-		// res = res | num;
+		num <<= ((i - 1) * 8);
+		res |= num;
 		if (color[j] == ',' && i != 3)
 			j++;
 	}
 	if (color[j])
 		ft_exit_error("Wrong format of color\n");
+	printf("ABGR: 0x%08X\n", res);
 	return (res);
 }
 
@@ -120,10 +119,8 @@ static void	ft_assign_colors(void)
 
 	game = ft_game();
 	map = &game->map;
-	printf(COLOR_C"%s + %s\n"COLOR_X, map->f, map->c);
-	game->render.top_color = ft_read_color(map->f);
-	game->render.bottom_color = ft_read_color(map->c);
-	printf(COLOR_C"%u + %u\n"COLOR_X, game->render.top_color, game->render.bottom_color);
+	game->render.top_color = ft_read_color(map->c);
+	game->render.bottom_color = ft_read_color(map->f);
 }
 
 void	ft_checkinput(int argc, char **argv)

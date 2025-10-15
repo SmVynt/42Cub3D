@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/15 00:55:01 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/15 01:52:55 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ static void ft_fill_split_bg(mlx_image_t *bg)
 {
 	uint32_t	u;
 	uint32_t	v;
+	uint32_t	center;
 
+	center = bg->height / 2 / PIXEL_SIZE * PIXEL_SIZE;
 	v = 0;
-	while (v < bg->height / 2)
+	while (v < center)
 	{
 		u = -1;
 		while (++u < bg->width)
@@ -76,11 +78,6 @@ void	draw(int32_t width, int32_t height, void *param)
 
 void put_pixel(mlx_image_t *image, t_point pos, uint32_t color)
 {
-	// uint32_t *pixels;
-
-	// pixels = (uint32_t *)image->pixels;
-	// if (pos.u >= 0 &&  (unsigned int)pos.u < image->width && pos.v >= 0 &&  (unsigned int)pos.v < image->height)
-	// 	pixels[pos.v * image->width + pos.u] = color;
 	if ((unsigned int)pos.u < image->width && (unsigned int)pos.v < image->height)
 		((uint32_t *)image->pixels)[pos.v * image->width + pos.u] = color;
 }
