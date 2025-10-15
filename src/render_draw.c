@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/14 18:36:13 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/15 11:49:57 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void ft_fill_split_bg(mlx_image_t *bg)
+{
+	uint32_t	u;
+	uint32_t	v;
+	uint32_t	center;
+
+	center = bg->height / 2 / PIXEL_SIZE * PIXEL_SIZE;
+	v = 0;
+	while (v < center)
+	{
+		u = -1;
+		while (++u < bg->width)
+			put_pixel(bg, (t_point){u,v}, ft_game()->render.top_color);
+		v++;
+	}
+	while (v < bg->height)
+	{
+		u = -1;
+		while (++u < bg->width)
+			put_pixel(bg, (t_point){u,v}, ft_game()->render.bottom_color);
+		v++;
+	}
+}
 
 void	draw(int32_t width, int32_t height, void *param)
 {
@@ -26,6 +50,8 @@ void	draw(int32_t width, int32_t height, void *param)
 		mlx_delete_image(game->mlx, game->miniplayer);
 	if (game->view3d)
 		mlx_delete_image(game->mlx, game->view3d);
+	if (game->view3d_bg)
+		mlx_delete_image(game->mlx, game->view3d_bg);
 	if (game->render.depth)
 		free(game->render.depth);
 	game->render.depth = malloc(sizeof(float) * (width / PIXEL_SIZE + 1));
@@ -35,6 +61,8 @@ void	draw(int32_t width, int32_t height, void *param)
 		return ;
 	}
 	game->render.projection_plane_dist = (width / 2.0) / tan(FOV_RAD / 2.0);
+	game->view3d_bg = mlx_new_image(game->mlx, width, height);
+	ft_fill_split_bg(game->view3d_bg);
 	game->view3d = mlx_new_image(game->mlx, width, height);
 	game->minimap = mlx_new_image(game->mlx, width / 3, height / 3);
 	game->miniplayer = mlx_new_image(game->mlx, width / 3, height / 3);
@@ -42,6 +70,7 @@ void	draw(int32_t width, int32_t height, void *param)
 		return ;
 	draw_map(game->minimap, map);
 	ft_update(game);
+	mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
 	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
 	mlx_image_to_window(game->mlx, game->minimap, 0, 0);
 	mlx_image_to_window(game->mlx, game->miniplayer, 0, 0);
@@ -49,11 +78,6 @@ void	draw(int32_t width, int32_t height, void *param)
 
 void put_pixel(mlx_image_t *image, t_point pos, uint32_t color)
 {
-	// uint32_t *pixels;
-
-	// pixels = (uint32_t *)image->pixels;
-	// if (pos.u >= 0 &&  (unsigned int)pos.u < image->width && pos.v >= 0 &&  (unsigned int)pos.v < image->height)
-	// 	pixels[pos.v * image->width + pos.u] = color;
 	if ((unsigned int)pos.u < image->width && (unsigned int)pos.v < image->height)
 		((uint32_t *)image->pixels)[pos.v * image->width + pos.u] = color;
 }
@@ -117,10 +141,8 @@ void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color)
 {
 	int i;
 	int j;
-	uint8_t alpha;
 
-	alpha = color & 0xFF;
-	if (alpha == 0)
+	if ((color & 0xFF000000) == 0)
 		return ;
 	i = -size / 2;
 	while (i <= size / 2)
@@ -219,7 +241,7 @@ void	draw_player(mlx_image_t *image)
 void	draw_walls(mlx_image_t *image)
 {
 	uint32_t	x;
-	
+
 	x = PIXEL_SIZE / 2;
 	while (x < ft_game()->view3d->width)
 	{

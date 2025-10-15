@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 21:45:21 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/15 12:45:05 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,15 @@ typedef struct s_textures
 	mlx_texture_t	*so;
 	mlx_texture_t	*we;
 	mlx_texture_t	*ea;
+	mlx_texture_t	*bg;
 }	t_textures;
 
 typedef struct s_render
 {
-	int		projection_plane_dist;
-	float	*depth;
+	int			projection_plane_dist;
+	float		*depth;
+	uint32_t	top_color;
+	uint32_t	bottom_color;
 }	t_render;
 
 typedef struct s_player
@@ -158,6 +161,7 @@ typedef struct s_rayrender
 	t_vec2		start;
 	t_vec2		end;
 	t_vec3		dir;
+	int			bgx;
 	double		angle;
 	double		dist;
 	uint32_t	wall_dir;

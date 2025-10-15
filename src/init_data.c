@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 21:47:25 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/15 17:28:34 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,11 @@ static void	ft_initplayer(void)
 	player->lookdir.x = 1.0f;
 	player->lookdir.y = 0.0f;
 	player->lookdir.z = 0.0f;
-	player->mov_control.u = 0;
-	player->mov_control.v = 0;
-	player->rot_control.u = 0;
-	player->rot_control.v = 0;
-	player->mouse_pos.x = -1.0f;
-	player->mouse_diff.x = 0.0f;
-	player->mouse_pos.y = -1.0f;
-	player->mouse_diff.y = 0.0f;
+	player->rot_control = (t_point){0, 0};
+	player->mouse_pos = (t_vec2){-1.0f, -1.0f};
+	player->mouse_diff = (t_vec2){0.0f, 0.0f};
+	player->lookupdown = 0.0f;
+	player->is_jumping = false;
 	ft_game()->player = player;
 }
 
@@ -134,6 +131,10 @@ static void	ft_initgame(void)
 	game->mlx = NULL;
 	game->items = NULL;
 	game->chars = NULL;
+	game->minimap = NULL;
+	game->miniplayer = NULL;
+	game->view3d = NULL;
+	game->view3d_bg = NULL;
 }
 
 void	ft_initialize(void)

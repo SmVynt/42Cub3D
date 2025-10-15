@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/01 13:44:31 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/15 11:17:25 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 static void	ft_setpath(char **line, const char *src)
 {
+	if (*line)
+	{
+		free(*line);
+		*line = NULL;
+	}
 	while (*src == ' ')
 		src++;
 	if (*src == '\0')
