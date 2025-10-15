@@ -72,9 +72,19 @@ void	ft_update_player(void)
 	float		maxlookupdown;
 
 	player = ft_game()->player;
-	if (player->rot_control != 0)
+	maxlookupdown = ft_game()->view3d->height / 2;
+	if (player->rot_control.u != 0)
 	{
-		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(player->rot_control * ROTATIONSPEED * ft_game()->dt), player->lookdir);
+		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(player->rot_control.u * ROTATIONSPEED * ft_game()->dt), player->lookdir);
+	}
+	if (player->rot_control.v != 0)
+	{
+		player->lookupdown += player->rot_control.v * ROTATIONSPEED * 500 * ft_game()->dt;
+		if (player->lookupdown > maxlookupdown)
+			player->lookupdown = maxlookupdown;
+		if (player->lookupdown < -maxlookupdown)
+			player->lookupdown = -maxlookupdown;
+		player->rot_control.v = 0.0f;
 	}
 	if (player->mouse_diff.x != 0.0f)
 	{
@@ -175,7 +185,8 @@ void	ft_update(void *param)
 	ft_update_dt();
 	if (player->mov_control.u != 0
 		|| player->mov_control.v != 0
-		|| player->rot_control != 0
+		|| player->rot_control.u != 0
+		|| player->rot_control.v != 0
 		|| player->mouse_diff.x != 0.0f
 		|| player->mouse_diff.y != 0.0f
 		|| player->is_jumping)

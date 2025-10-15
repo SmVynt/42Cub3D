@@ -150,7 +150,7 @@ typedef struct s_player
 	t_vec2	mouse_pos;
 	t_vec2	mouse_diff;
 	float	lookupdown;
-	int		rot_control;
+	t_point	rot_control;
 	bool	is_jumping;
 	float	jump_height;
 	float	jump_impuls;
