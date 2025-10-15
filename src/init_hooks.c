@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_hooks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 17:34:09 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/14 21:47:51 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void	ft_key_press_hook(void *param)
 	game = (t_gs *)param;
 	player = game->player;
 	player->mov_control = (t_point){0, 0};
-	player->rot_control = 0;
+	player->rot_control.u = 0;
+	player->rot_control.v = 0;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 		ft_exit();
 	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
@@ -33,9 +34,13 @@ static void	ft_key_press_hook(void *param)
 	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
 		player->mov_control.v = -1;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		player->rot_control = -1;
+		player->rot_control.u = -1;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		player->rot_control = 1;
+		player->rot_control.u = 1;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
+		player->rot_control.v = -1;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_UP))
+		player->rot_control.v = 1;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_SPACE) && !player->is_jumping)
 	{
 		// player->jump_impuls = 500.0;

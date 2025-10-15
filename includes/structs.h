@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 16:14:55 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/14 21:45:21 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ typedef struct s_player
 	t_vec2	mouse_pos;
 	t_vec2	mouse_diff;
 	float	lookupdown;
-	int		rot_control;
+	t_point	rot_control;
 	bool	is_jumping;
 	float	jump_height;
 	float	jump_impuls;
