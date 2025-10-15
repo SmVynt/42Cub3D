@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/15 00:55:23 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/15 12:45:05 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ typedef struct s_rayrender
 	t_vec2		start;
 	t_vec2		end;
 	t_vec3		dir;
+	int			bgx;
 	double		angle;
 	double		dist;
 	uint32_t	wall_dir;

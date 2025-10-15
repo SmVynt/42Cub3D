@@ -6,13 +6,36 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/15 01:18:16 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/15 17:07:43 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 static void draw_vertical_slice(int x, t_rayrender ray);
+
+static void ft_draw_cubemap(mlx_image_t *image, t_rayrender *ray, t_point screen_coords)
+{
+	mlx_texture_t	*bg;
+	t_point			pixel;
+	float			angle;
+	float			scale_correction;
+	float			new_y;
+
+	bg = ft_game()->textures.bg;
+	if (ray->bgx == -1)
+	{
+		angle = atan2(ray->dir.y, ray->dir.x);
+		if (angle < 0)
+			angle += 2.0 * M_PI;
+		ray->bgx = (int)((angle / (2.0 * M_PI)) * (float)bg->width);
+	}
+	pixel.u = ray->bgx;
+	scale_correction = 0.5f * (float)bg->height / (float)image->height;
+	new_y = ((float)screen_coords.v - (float)image->height / 2) * scale_correction + (float)bg->height / 2;
+	pixel.v = (int)new_y - (int)(ft_game()->player->lookupdown * scale_correction);
+	draw_square(image, PIXEL_SIZE, screen_coords, ft_get_pixel_color(bg, pixel));
+}
 
 static double get_dist_to_screen_point(int y, t_rayrender ray)
 {
@@ -120,17 +143,20 @@ void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
 	mlx_texture_t	*texture;
 	t_point			pixel;
 	int				delta;
+	uint32_t		color;
 
 	image = ft_game()->view3d;
 	pixel.u = ft_find_texture_u(&texture, ray.end, ray.wall_dir);
 	delta = 0;
-	// if (start < 0)
-	// 	delta = -start;
 	wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
 	while (delta <= ray.wall_height && (wall_start + delta) < (int)image->height)
 	{
 		pixel.v = (int)(delta / ray.wall_height * texture->height);
-		draw_square(image, PIXEL_SIZE, (t_point){x, wall_start + delta}, ft_get_pixel_color(texture, pixel));
+		color = ft_get_pixel_color(texture, pixel);
+		if (color != 0)
+			draw_square(image, PIXEL_SIZE, (t_point){x, wall_start + delta}, color);
+		else
+			ft_draw_cubemap(image, &ray, (t_point){x, wall_start + delta});
 		delta += PIXEL_SIZE;
 	}
 }
@@ -141,6 +167,7 @@ static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 	t_point		pixel;
 	int			y;
 	double		dist;
+	uint32_t	color;
 
 	image = ft_game()->view3d;
 	y = wall_end / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
@@ -149,7 +176,12 @@ static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 		dist = get_dist_to_screen_point(y, ray);
 		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, ft_game()->textures.no->width);
 		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, ft_game()->textures.no->height);
-		draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
+		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
+		color = ft_get_pixel_color(ft_game()->textures.we, pixel);
+		if (color != 0)
+			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
+		else
+			ft_draw_cubemap(image, &ray, (t_point){x, y});
 		y += PIXEL_SIZE;
 	}
 }
@@ -160,6 +192,7 @@ static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
 	t_point		pixel;
 	int			y;
 	double		dist;
+	uint32_t	color;
 
 	image = ft_game()->view3d;
 	y = PIXEL_SIZE / 2;
@@ -168,7 +201,13 @@ static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
 		dist = get_dist_to_screen_point(y, ray);
 		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, ft_game()->textures.no->width);
 		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, ft_game()->textures.no->height);
-		draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.ea, pixel));
+		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.ea, pixel));
+		// y += PIXEL_SIZE;
+		color = ft_get_pixel_color(ft_game()->textures.no, pixel);
+		if (color != 0)
+			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
+		else
+			ft_draw_cubemap(image, &ray, (t_point){x, y});
 		y += PIXEL_SIZE;
 	}
 }
@@ -181,6 +220,7 @@ void	draw_wall(mlx_image_t *image, int x)
 	player = ft_game()->player;
 	ray.angle = - FOV_RAD / 2 + x * (FOV_RAD / (double)(image->width - 1));
 	ray.dir = ft_mat4_transform_vec3(ft_mat4_rotation_z(ray.angle), player->lookdir);
+	ray.bgx = -1;
 	ray.start.x = player->pos.x + 0.5f;
 	ray.start.y = player->pos.y + 0.5f;
 	ray.end = (t_vec2){ray.start.x, ray.start.y};

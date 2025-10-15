@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/15 01:52:55 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/15 11:49:57 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,8 @@ void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color)
 {
 	int i;
 	int j;
-	uint8_t alpha;
 
-	alpha = color & 0xFF;
-	if (alpha == 0)
+	if ((color & 0xFF000000) == 0)
 		return ;
 	i = -size / 2;
 	while (i <= size / 2)

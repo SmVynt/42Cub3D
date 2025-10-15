@@ -3,8 +3,9 @@ SO ./textures/SO.png
 WE ./textures/WE.png
 EA ./textures/EA.png
 
-C 255,255,0
+F 10,9,18
 F 128,0,128
+C 128,0,128
 
         1111111111111111111111111
         1a        11     .  .   1

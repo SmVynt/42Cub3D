@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/15 02:09:46 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/15 02:12:40 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,7 @@ static uint32_t	ft_read_color(const char *color)
 	{
 		num = 0;
 		while(color[j] >= '0' && color[j] <= '9' && num <= 255)
-		{
-			num = num * 10 + color[j] - '0';
-			j++;
-		}
+			num = num * 10 + color[j++] - '0';
 		if (num > 255)
 			ft_exit_error("Wrong format of color\n");
 		num <<= ((i - 1) * 8);
@@ -108,7 +105,6 @@ static uint32_t	ft_read_color(const char *color)
 	}
 	if (color[j])
 		ft_exit_error("Wrong format of color\n");
-	printf("ABGR: 0x%08X\n", res);
 	return (res);
 }
 
