@@ -3,16 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/15 00:42:20 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/21 22:55:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int ft_is_wall(t_vec2 p)
+t_door	*ft_get_door(int x, int y)
+{
+	t_gs	*game;
+	int	i;
+
+	game = ft_game();
+	i = 0;
+	while (i < game->max_doors)
+	{
+		if (game->doors[i].idx.u == y && game->doors[i].idx.v == x)
+			return (&game->doors[i]);
+		i++;
+	}
+	return (NULL);
+}
+
+bool ft_is_wall(t_vec2 p)
 {
 	t_gs	*game;
 	t_map	*map;
@@ -24,10 +40,30 @@ int ft_is_wall(t_vec2 p)
 	x = (int)roundf(p.x);
 	y = (int)roundf(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
-		return (1);
+		return (true);
 	if (ft_strchar(MAP_WALL_CHARS, map->tile[y][x]) != NULL)
-		return (1);
-	return (0);
+		return (true);
+	if (ft_strchar(MAP_DOOR_CHARS, map->tile[y][x]) != NULL && ft_get_door(y,x)->closed)
+		return (true);
+	return (false);
+}
+
+bool ft_is_door(t_vec2 p)
+{
+	t_gs	*game;
+	t_map	*map;
+	int		x;
+	int		y;
+
+	game = ft_game();
+	map = &game->map;
+	x = (int)roundf(p.x);
+	y = (int)roundf(p.y);
+	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
+		return (true);
+	if (ft_strchar(MAP_DOOR_CHARS, map->tile[y][x]) != NULL) //&& ft_get_door(y,x)->closed)
+		return (true);
+	return (false);
 }
 
 static void	ft_clamp_new_position(t_vec2 *player_pos,t_vec2 new_pos_delta)
@@ -137,6 +173,7 @@ static void	ft_update_view3d(void *param)
 	image = (mlx_image_t *)param;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
 	draw_walls(ft_game()->view3d);
+	// draw_doors(ft_game()->view3d);
 	draw_sprites(ft_game()->view3d);
 }
 
@@ -178,18 +215,34 @@ static void ft_update_dt(void)
 
 void	ft_update(void *param)
 {
+	t_gs		*game;
 	t_player	*player;
+	int			i;
+	bool		upd_doors;
 
-	player = ft_game()->player;
+	game = ft_game();
+	player = game->player;
 	(void)param;
 	ft_update_dt();
+	i = 0;
+	upd_doors = false;
+	while(i < game->door_count)
+	{
+		if (ft_game()->doors[i].is_opening)
+		{
+			open_door(i);
+			upd_doors = true;
+		}
+		i++;
+	}
 	if (player->mov_control.u != 0
 		|| player->mov_control.v != 0
 		|| player->rot_control.u != 0
 		|| player->rot_control.v != 0
 		|| player->mouse_diff.x != 0.0f
 		|| player->mouse_diff.y != 0.0f
-		|| player->is_jumping)
+		|| player->is_jumping
+		|| upd_doors)
 	{
 		ft_update_player();
 		ft_update_graphics();

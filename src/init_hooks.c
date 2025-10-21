@@ -6,12 +6,12 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/15 00:37:34 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/22 00:00:41 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <GLFW/glfw3.h>
+// #include <GLFW/glfw3.h>
 
 static void	ft_key_press_hook(void *param)
 {
@@ -46,6 +46,23 @@ static void	ft_key_press_hook(void *param)
 		// player->jump_impuls = 500.0;
 		player->jump_impuls = JUMP_IMPULSE;
 		player->is_jumping = true;
+	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_E))
+	{
+		int	i;
+
+		i = 0;
+		while (i < game->door_count)
+		{
+			t_vec2 vec = (t_vec2){game->doors[i].pos.x - player->pos.x, game->doors[i].pos.y - player->pos.y};
+			if (ft_vec2_length(vec) <= DOOR_OPEN_DIST && fabsf(ft_angle_between_vec2(vec, (t_vec2){player->lookdir.x, player->lookdir.y})) < DOOR_OPEN_ANGLE)
+			{
+				if (!game->doors[i].is_opening)
+					game->doors[i].is_opening = 1;
+			}
+			i++;
+		}
+		// ft_update_graphics();
 	}
 	// if (player->mov_control.u != 0 || player->mov_control.v != 0 || player->rot_control != 0)
 		// ft_update(game);

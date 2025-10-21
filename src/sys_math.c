@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sys_math.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/12 21:38:47 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/21 23:46:44 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,20 @@ float ft_angle_between_vec2(t_vec2 a, t_vec2 b)
 		angle += 2.0f * M_PI;
 	if (angle > M_PI)
 		angle -= 2.0f * M_PI;
-	return (angle * (180.0f / M_PI));
+	// return (angle * 180.0f / M_PI);
+	return (angle);
 }
 
 float	ft_clampf(float value, float min, float max)
+{
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
+}
+
+int	ft_clamp(int value, int min, int max)
 {
 	if (value < min)
 		return (min);

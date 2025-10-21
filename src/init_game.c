@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/13 23:26:22 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/21 18:14:55 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,56 @@ static void ft_calculate_max_entities(void)
 				game->max_items++;
 			if (ft_strchar(MAP_CHAR_CHARS, game->map.tile[i][j]) != NULL)
 				game->max_chars++;
+			if (ft_strchar(MAP_DOOR_CHARS, game->map.tile[i][j]) != NULL)
+				game->max_doors++;
 			j++;
 		}
 		i++;
 	}
-	printf("Max items: %d, max chars: %d\n", game->max_items, game->max_chars);
+	printf("Max items: %d, max chars: %d, max doors: %d\n", game->max_items, game->max_chars, game->max_doors);
+}
+
+static void	ft_set_doors(void)
+{
+	t_gs	*game;
+	int		i;
+	int		j;
+	int		door_index;
+	int		door_num;
+
+	game = ft_game();
+	if (game->max_doors == 0)
+		return ;
+	game->doors = malloc(sizeof(t_door) * game->max_doors);
+	if (!game->doors)
+		ft_exit_perror("Could not allocate memory for doors\n");
+	door_index = 0;
+	i = 0;
+	while (i < game->map.h)
+	{
+		j = 0;
+		while (j < game->map.w)
+		{
+			door_num = ft_strchar_index(MAP_DOOR_CHARS, game->map.tile[i][j]);
+			if (door_num != -1 && door_num < DOORS_TYPES_COUNT)
+			{
+				if (door_index >= game->max_doors)
+					ft_exit_error("Item index out of bounds\n");
+				game->doors[door_index] = game->door_prefabs[door_num];
+				game->doors[door_index].idx.u = j;
+				game->doors[door_index].idx.v = i;
+				game->doors[door_index].closed = true;
+				game->doors[door_index].is_opening = false;
+				game->doors[door_index].dt = 0.0f;
+				game->doors[door_index].pos = (t_vec2){(float)j, (float)i};
+				door_index++;
+			}
+			j++;
+		}
+		i++;
+	}
+	game->door_count = door_index;
+	printf("Initialized %d doors\n", game->door_count);
 }
 
 static void	ft_set_items(void)
@@ -160,6 +205,14 @@ static void ft_init_sprites(void)
 		ft_load_texture(game->char_prefabs[i].sprite.path, &game->char_prefabs[i].sprite.texture);
 		i++;
 	}
+	i = 0;
+	while (i < DOORS_TYPES_COUNT)
+	{
+		if (game->door_prefabs[i].sprite.path == NULL)
+			ft_exit_error("Door prefab texture path is NULL\n");
+		ft_load_texture(game->door_prefabs[i].sprite.path, &game->door_prefabs[i].sprite.texture);
+		i++;
+	}
 	game->sh = malloc(sizeof(t_sprite));
 	if (!game->sh)
 		ft_exit_perror("Could not allocate memory for sprite sorting list\n");
@@ -172,6 +225,7 @@ void	ft_setgame(void)
 	ft_set_player();
 	ft_init_sprites();
 	ft_calculate_max_entities();
+	ft_set_doors();
 	ft_set_items();
 	ft_set_chars();
 }

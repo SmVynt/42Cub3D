@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/15 17:28:34 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/20 00:10:04 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,11 @@ static void ft_initprefabs(void)
 		.sprite.texture = NULL,
 		.sprite.path = TEX_SLIME,
 		.sprite.bottom_offset = 0.6f
+	};
+	game->door_prefabs[0] = (t_door){
+		.sprite.texture = NULL,
+		.sprite.path = TEX_DOOR,
+		.sprite.bottom_offset = 0.0f
 	};
 
 }
