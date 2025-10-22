@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/15 17:07:43 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/22 00:00:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ float	ft_height_delta(float distance)
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
 		t_point diff, t_point dir);
 
-static t_vec2 get_ray_end(t_vec2 start, t_vec3 dir, int max_steps, uint32_t *color);
+static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec3 dir, int max_steps, uint32_t *color);
 
 bool hit_wall(t_point p, t_map map, mlx_image_t* image)
 {
@@ -104,34 +104,47 @@ void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, in
 	{
 		if (hit_wall(draw_point, map, image))
 			break ;
-		put_pixel(image, draw_point, COLOR_RED);
+		put_pixel(image, draw_point.u, draw_point.v, COLOR_RED);
 		get_next_point_to_draw(&draw_point, &slope_err, diff, dir);
 		i++;
 	}
 }
 
-static int	ft_find_texture_u(mlx_texture_t **texture, t_vec2 loc, uint32_t color)
+static int	ft_find_texture_u(mlx_texture_t **texture, t_vec2 loc, uint32_t color, t_rayrender ray)
 {
 	int	tex_u;
 
+	if (ray.is_door)
+	{
+		*texture = ray.door->sprite.texture;
+		if (ray.door->is_opening)
+		{
+			loc.x -= (DOOR_OPEN_TIME - ray.door->dt)/DOOR_OPEN_TIME;
+			loc.y += (DOOR_OPEN_TIME - ray.door->dt)/DOOR_OPEN_TIME;
+		}
+	}
 	if (color == COLOR_RED)
 	{
-		*texture = ft_game()->textures.so;
+		if (!ray.is_door)
+			*texture = ft_game()->textures.so;
 		tex_u = (int)((loc.x - floorf(loc.x)) * ((*texture)->width));
 	}
 	else if (color == COLOR_GREEN)
 	{
-		*texture = ft_game()->textures.no;
+		if (!ray.is_door)
+			*texture = ft_game()->textures.no;
 		tex_u = (int)((1.0f -(loc.x - floorf(loc.x))) * ((*texture)->width));
 	}
 	else if (color == COLOR_YELLOW)
 	{
-		*texture = ft_game()->textures.ea;
+		if (!ray.is_door)
+			*texture = ft_game()->textures.ea;
 		tex_u = (int)((loc.y - floorf(loc.y)) * ((*texture)->width));
 	}
 	else
 	{
-		*texture = ft_game()->textures.we;
+		if (!ray.is_door)
+			*texture = ft_game()->textures.we;
 		tex_u = (int)((1.0f - (loc.y - floorf(loc.y))) * ((*texture)->width));
 	}
 	return (tex_u);
@@ -146,13 +159,18 @@ void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
 	uint32_t		color;
 
 	image = ft_game()->view3d;
-	pixel.u = ft_find_texture_u(&texture, ray.end, ray.wall_dir);
+	pixel.u = ft_find_texture_u(&texture, ray.end, ray.wall_dir, ray);
 	delta = 0;
 	wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
-	while (delta <= ray.wall_height && (wall_start + delta) < (int)image->height)
+	while (delta <= ray.wall_height)
 	{
+		if ((wall_start + delta) >= (int)image->height)
+			break ;
 		pixel.v = (int)(delta / ray.wall_height * texture->height);
-		color = ft_get_pixel_color(texture, pixel);
+		// if (ray.is_door)
+		// 	color = 0xFF00001A;
+		// else
+			color = ft_get_pixel_color(texture, pixel);
 		if (color != 0)
 			draw_square(image, PIXEL_SIZE, (t_point){x, wall_start + delta}, color);
 		else
@@ -225,7 +243,7 @@ void	draw_wall(mlx_image_t *image, int x)
 	ray.start.y = player->pos.y + 0.5f;
 	ray.end = (t_vec2){ray.start.x, ray.start.y};
 	ray.wall_dir = COLOR_GREEN;
-	ray.end = get_ray_end(ray.end, ray.dir, 1000, &ray.wall_dir);
+	ray.end = get_ray_end(&ray, ray.end, ray.dir, 1000, &ray.wall_dir);
 	ray.dist = ft_vec2_length((t_vec2){ray.end.x - ray.start.x, ray.end.y - ray.start.y}) * cos(ray.angle);
 	if (ray.dist < 1e-9)
 		return ;
@@ -320,7 +338,7 @@ static t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec3 dir, int *tile_x, in
 	return hit_point;
 }
 
-static t_vec2 get_ray_end(t_vec2 start, t_vec3 dir, int max_iter, uint32_t *color)
+static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec3 dir, int max_iter, uint32_t *color)
 {
 	t_vec2	curr;
 	t_point	tile;
@@ -334,8 +352,52 @@ static t_vec2 get_ray_end(t_vec2 start, t_vec3 dir, int max_iter, uint32_t *colo
 		curr = get_next_wall_intersection(curr, dir, &tile.u, &tile.v, &side);
 		// printf("Hit wall at (%.2f, %.2f), tile[%d][%d], side=%d\n",
 		//        hit_point.x, hit_point.y, tile_y, tile_x, side);
-		if (ft_is_wall((t_vec2){tile.u, tile.v}))
+		ray->is_door = ft_is_door((t_vec2){tile.u, tile.v});
+		if (ft_is_wall((t_vec2){tile.u, tile.v}) || ray->is_door)
 		{
+			if (ray->is_door)
+			{
+				ray->door = ft_get_door(tile.v, tile.u);
+				int new_side;
+				t_point tile_check;
+				t_vec2 check = get_next_wall_intersection(curr, dir, &tile_check.u, &tile_check.v, &new_side);
+				if (new_side == side)
+				{
+					curr = check;
+				}
+				else if ((side && ((dir.y < 0 && fabsf(check.y - floorf(curr.y)) >= 0.5)
+					|| (dir.y > 0 && fabsf(- check.y + floorf(curr.y)) >= 0.5)))
+					|| (!side && ((dir.x < 0 && fabsf(check.x - floorf(curr.x)) >= 0.5)
+					|| (dir.x > 0 && fabsf(- check.x + floorf(curr.x)) >= 0.5))))
+				{
+					curr = get_next_wall_intersection(check, dir, &tile_check.u, &tile_check.v, &side);
+				}
+				else
+				{
+					ray->is_door = false;
+					ray->door = NULL;
+					side = new_side;
+					curr = check;
+				}
+			}
+			if (ray->is_door)
+			{
+				float coeff = 1.0f;
+				if (!side)
+					coeff = 0.5f / fabsf(ray->dir.x);
+				else
+					coeff = 0.5f / fabsf(ray->dir.y);
+				curr.x -= coeff * ray->dir.x;
+				curr.y -= coeff * ray->dir.y;
+				if (ray->door->is_opening)
+				{
+					// printf("%f\n",ft_get_door(tile.v, tile.u)->dt/DOOR_OPEN_TIME);
+					if (side && curr.x - floorf(curr.x) > (DOOR_OPEN_TIME - ray->door->dt)/DOOR_OPEN_TIME)
+						continue;
+					if (!side && ceilf(curr.y) - curr.y > (DOOR_OPEN_TIME - ray->door->dt)/DOOR_OPEN_TIME)
+						continue;
+				}
+			}
 			if (side && dir.y > 0)
 				*color = COLOR_RED;
 			else if (side)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/15 12:45:05 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/21 21:27:27 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,7 @@
 # define STRUCTS_H
 
 # include "MLX42/MLX42.h"
-
-# define ITEMS_TYPES_COUNT		4
-# define TEX_HEALTH		"textures/items/health_kit.png"
-# define TEX_KEY		"textures/items/key.png"
-# define TEX_CHANDELIER	"textures/items/chandelier.png"
-# define TEX_BARREL		"textures/items/barrel.png"
-# define CHARS_TYPES_COUNT		2
-# define TEX_ALIEN		"textures/characters/alien.png"
-# define TEX_SLIME		"textures/characters/slime.png"
+# include "bonus_setup.h"
 
 typedef struct s_point
 {
@@ -85,8 +77,6 @@ typedef struct s_spriterender
 {
 	double		angle;
 	double		dist;
-	t_vec2		sprite_point;
-	t_vec2		player_point;
 	t_vec2		screen_pos;
 	float		max_size;
 	t_point		half_size;
@@ -124,6 +114,17 @@ typedef struct s_char
 	int				health;
 	int				max_health;
 }	t_char;
+
+typedef struct s_door
+{
+	t_point idx;
+	t_vec2	pos;
+	int		is_opening;
+	float	dt;
+	t_sprite	sprite;
+	bool	closed;
+	bool	key_needed;
+}	t_door;
 
 typedef struct s_textures
 {
@@ -166,6 +167,8 @@ typedef struct s_rayrender
 	double		dist;
 	uint32_t	wall_dir;
 	double		wall_height;
+	bool		is_door;
+	t_door		*door;
 }	t_rayrender;
 
 typedef struct s_gs
@@ -189,6 +192,10 @@ typedef struct s_gs
 	t_char			*chars;
 	int				char_count;
 	int				max_chars;
+	t_door			door_prefabs[DOORS_TYPES_COUNT];
+	t_door			*doors;
+	int				door_count;
+	int				max_doors;
 	float			dt;
 }	t_gs;
 

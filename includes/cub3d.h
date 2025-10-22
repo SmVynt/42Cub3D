@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/15 17:08:49 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/21 23:58:43 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define COLOR_BLUE		0xFFFF0000
 # define COLOR_YELLOW	0xFF00FFFF
 # define COLOR_GREY		0xFF00FFFF
+# define COLOR_RED_TRANSP	0xFF00001A
 
 # define COLOR_R		"\033[31m"
 # define COLOR_G		"\033[32m"
@@ -47,11 +48,9 @@
 # define COLOR_BOLD		"\033[1m"
 # define COLOR_X		"\033[0m"
 
-# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#as"
+# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asd"
 # define MAP_WALL_CHARS			"123456789"
 # define MAP_PLAYER_CHARS		"NSEW"
-# define MAP_ITEM_CHARS			"+K.#"
-# define MAP_CHAR_CHARS			"as"
 
 # define MAP_SCALE				10
 # ifndef M_PI
@@ -62,8 +61,8 @@
 # define DEG_TO_RAD				0.01745329251
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
-# define FOV_RAD				M_PI / 3
-# define PIXEL_SIZE				4
+# define FOV_RAD				(M_PI / 3.0)
+# define PIXEL_SIZE				2
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
 # define JUMP_IMPULSE			3.2f
@@ -71,6 +70,9 @@
 # define TILE_BORDER			0.1f
 # define TARGET_FPS				60.0f
 # define MAX_DT					0.05f
+# define DOOR_OPEN_TIME			1.0f
+# define DOOR_OPEN_DIST			2.0f
+# define DOOR_OPEN_ANGLE		(M_PI / 18.0f)
 # define PLAYERSPEED			6.0f
 # define ROTATIONSPEED			2.0f
 # define MOUSE_XSENS			0.5f
@@ -95,17 +97,23 @@ void	ft_exit_perror(char *str);
 void	ft_exit_error(char *str);
 void	ft_exit(void);
 
-
 // t_player	*init_player(char **map, int w, int h);
 void	ft_load_texture(const char *path, mlx_texture_t **texture);
 
 
 float	ft_height_delta(float distance);
-void 	put_pixel(mlx_image_t *image, t_point pos, uint32_t color);
+static inline void put_pixel(mlx_image_t *image, u_int32_t x, u_int32_t y, uint32_t color)
+{
+	if (x < image->width && y < image->height)
+		((uint32_t *)image->pixels)[y * image->width + x] = color;
+}
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x);
 void	draw_wall(mlx_image_t *image, int x);
 void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
-int		ft_is_wall(t_vec2 p);
+bool	ft_is_wall(t_vec2 p);
+bool	ft_is_door(t_vec2 p);
+t_door	*ft_get_door(int x, int y);
+void	open_door(int i);
 // void	init_player(void);
 
 void	draw(int32_t width, int32_t height, void *param);
@@ -113,6 +121,7 @@ void	draw_map(mlx_image_t *image, t_map *map);
 void	draw_player(mlx_image_t *image);
 void	draw_walls(mlx_image_t *image);
 void	draw_sprites(mlx_image_t *image);
+void	draw_doors(mlx_image_t *image);
 void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color);
 void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
@@ -127,12 +136,12 @@ void	ft_update_minimap(void *param);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
 
-
 // math
 int			ft_sign(int n);
 int			ft_signf(float n);
 t_vec2		ft_normalize_vec2(t_vec2 v);
 float		ft_angle_between_vec2(t_vec2 a, t_vec2 b);
+int			ft_clamp(int value, int min, int max);
 float		ft_clampf(float value, float min, float max);
 
 #endif
