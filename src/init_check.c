@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/15 02:12:40 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/26 23:40:53 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ static	void	ft_assign_textures(void)
 
 	game = ft_game();
 	map = &game->map;
-	ft_load_texture(map->no, &game->textures.no);
-	ft_load_texture(map->so, &game->textures.so);
-	ft_load_texture(map->we, &game->textures.we);
-	ft_load_texture(map->ea, &game->textures.ea);
+	ft_load_texture(map->no, &game->textures.wall.tex[DIR_NO]);
+	ft_load_texture(map->so, &game->textures.wall.tex[DIR_SO]);
+	ft_load_texture(map->we, &game->textures.wall.tex[DIR_WE]);
+	ft_load_texture(map->ea, &game->textures.wall.tex[DIR_EA]);
 	ft_load_texture("textures/BG.png", &game->textures.bg);
 }
 

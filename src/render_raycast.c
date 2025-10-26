@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/22 00:00:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/27 00:04:19 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ float	ft_height_delta(float distance)
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
 		t_point diff, t_point dir);
 
-static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec3 dir, int max_steps, uint32_t *color);
+static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec3 dir, int max_steps, t_direction *wall_dir);
 
 bool hit_wall(t_point p, t_map map, mlx_image_t* image)
 {
@@ -110,10 +110,14 @@ void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, in
 	}
 }
 
-static int	ft_find_texture_u(mlx_texture_t **texture, t_vec2 loc, uint32_t color, t_rayrender ray)
+static int	ft_find_texture_u(mlx_texture_t **texture, t_rayrender ray)
 {
 	int	tex_u;
+	t_vec2 loc;
+	t_direction dir;
 
+	dir = ray.wall_dir;
+	loc = ray.end;
 	if (ray.is_door)
 	{
 		*texture = ray.door->sprite.texture;
@@ -123,28 +127,28 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_vec2 loc, uint32_t color
 			loc.y += (DOOR_OPEN_TIME - ray.door->dt)/DOOR_OPEN_TIME;
 		}
 	}
-	if (color == COLOR_RED)
+	if (dir == DIR_SO)
 	{
 		if (!ray.is_door)
-			*texture = ft_game()->textures.so;
+			*texture = ft_game()->textures.wall.tex[DIR_SO];
 		tex_u = (int)((loc.x - floorf(loc.x)) * ((*texture)->width));
 	}
-	else if (color == COLOR_GREEN)
+	else if (dir == DIR_NO)
 	{
 		if (!ray.is_door)
-			*texture = ft_game()->textures.no;
+			*texture = ft_game()->textures.wall.tex[DIR_NO];
 		tex_u = (int)((1.0f -(loc.x - floorf(loc.x))) * ((*texture)->width));
 	}
-	else if (color == COLOR_YELLOW)
+	else if (dir == DIR_EA)
 	{
 		if (!ray.is_door)
-			*texture = ft_game()->textures.ea;
+			*texture = ft_game()->textures.wall.tex[DIR_EA];
 		tex_u = (int)((loc.y - floorf(loc.y)) * ((*texture)->width));
 	}
 	else
 	{
 		if (!ray.is_door)
-			*texture = ft_game()->textures.we;
+			*texture = ft_game()->textures.wall.tex[DIR_WE];
 		tex_u = (int)((1.0f - (loc.y - floorf(loc.y))) * ((*texture)->width));
 	}
 	return (tex_u);
@@ -159,7 +163,7 @@ void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
 	uint32_t		color;
 
 	image = ft_game()->view3d;
-	pixel.u = ft_find_texture_u(&texture, ray.end, ray.wall_dir, ray);
+	pixel.u = ft_find_texture_u(&texture, ray);
 	delta = 0;
 	wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
 	while (delta <= ray.wall_height)
@@ -192,10 +196,10 @@ static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 	while (y < (int)image->height)
 	{
 		dist = get_dist_to_screen_point(y, ray);
-		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, ft_game()->textures.no->width);
-		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, ft_game()->textures.no->height);
+		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, ft_game()->textures.wall.tex[DIR_WE]->width);
+		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, ft_game()->textures.wall.tex[DIR_NO]->height);
 		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
-		color = ft_get_pixel_color(ft_game()->textures.we, pixel);
+		color = ft_get_pixel_color(ft_game()->textures.wall.tex[DIR_WE], pixel);
 		if (color != 0)
 			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
 		else
@@ -217,11 +221,11 @@ static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
 	while (y < wall_start)
 	{
 		dist = get_dist_to_screen_point(y, ray);
-		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, ft_game()->textures.no->width);
-		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, ft_game()->textures.no->height);
+		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, ft_game()->textures.wall.tex[DIR_NO]->width);
+		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, ft_game()->textures.wall.tex[DIR_NO]->height);
 		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.ea, pixel));
 		// y += PIXEL_SIZE;
-		color = ft_get_pixel_color(ft_game()->textures.no, pixel);
+		color = ft_get_pixel_color(ft_game()->textures.wall.tex[DIR_NO], pixel);
 		if (color != 0)
 			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
 		else
@@ -242,7 +246,8 @@ void	draw_wall(mlx_image_t *image, int x)
 	ray.start.x = player->pos.x + 0.5f;
 	ray.start.y = player->pos.y + 0.5f;
 	ray.end = (t_vec2){ray.start.x, ray.start.y};
-	ray.wall_dir = COLOR_GREEN;
+	// ray.wall_dir = COLOR_GREEN;
+	ray.wall_dir = DIR_NO;
 	ray.end = get_ray_end(&ray, ray.end, ray.dir, 1000, &ray.wall_dir);
 	ray.dist = ft_vec2_length((t_vec2){ray.end.x - ray.start.x, ray.end.y - ray.start.y}) * cos(ray.angle);
 	if (ray.dist < 1e-9)
@@ -338,7 +343,7 @@ static t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec3 dir, int *tile_x, in
 	return hit_point;
 }
 
-static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec3 dir, int max_iter, uint32_t *color)
+static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec3 dir, int max_iter, t_direction *wall_dir)
 {
 	t_vec2	curr;
 	t_point	tile;
@@ -398,14 +403,22 @@ static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec3 dir, int max_it
 						continue;
 				}
 			}
+			// if (side && dir.y > 0)
+			// 	*color = COLOR_RED;
+			// else if (side)
+			// 	*color = COLOR_GREEN;
+			// else if (dir.x > 0)
+			// 	*color = COLOR_YELLOW;
+			// else
+			// 	*color = COLOR_BLUE;
 			if (side && dir.y > 0)
-				*color = COLOR_RED;
+				*wall_dir = DIR_SO;
 			else if (side)
-				*color = COLOR_GREEN;
+				*wall_dir = DIR_NO;
 			else if (dir.x > 0)
-				*color = COLOR_YELLOW;
+				*wall_dir = DIR_EA;
 			else
-				*color = COLOR_BLUE;
+				*wall_dir = DIR_WE;
 			return (curr);
 		}
 	}
