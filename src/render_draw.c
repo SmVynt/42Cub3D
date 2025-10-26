@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/22 00:02:20 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/26 13:12:36 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	draw(int32_t width, int32_t height, void *param)
 
 	game = (t_gs *) param;
 	map = &game->map;
+	if (game->hud)
+		mlx_delete_image(game->mlx, game->hud);
 	if (game->minimap)
 		mlx_delete_image(game->mlx, game->minimap);
 	if (game->miniplayer)
@@ -64,6 +66,7 @@ void	draw(int32_t width, int32_t height, void *param)
 	game->view3d_bg = mlx_new_image(game->mlx, width, height);
 	ft_fill_split_bg(game->view3d_bg);
 	game->view3d = mlx_new_image(game->mlx, width, height);
+	game->hud = mlx_new_image(game->mlx, 64, height);
 	game->minimap = mlx_new_image(game->mlx, width / 3, height / 3);
 	game->miniplayer = mlx_new_image(game->mlx, width / 3, height / 3);
 	if (!game->minimap || !game->miniplayer || !game->view3d)
@@ -74,6 +77,7 @@ void	draw(int32_t width, int32_t height, void *param)
 	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
 	mlx_image_to_window(game->mlx, game->minimap, 0, 0);
 	mlx_image_to_window(game->mlx, game->miniplayer, 0, 0);
+	mlx_image_to_window(game->mlx, game->hud, width - 64, 0);
 }
 
 // static inline void put_pixel(mlx_image_t *image, u_int32_t x, u_int32_t y, uint32_t color)
@@ -133,6 +137,25 @@ void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color)
 		put_pixel(image, pos.u + i, pos.v + size / 2, COLOR_GREEN);
 		put_pixel(image, pos.u - size / 2, pos.v + i, COLOR_YELLOW);
 		put_pixel(image, pos.u + size / 2, pos.v + i, COLOR_BLUE);
+		i++;
+	}
+}
+
+void	draw_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture)
+{
+	size_t i;
+	size_t j;
+
+	i = 0;
+	(void )size;
+	while (i < texture->width)
+	{
+		j = 0;
+		while (j < texture->height)
+		{
+			draw_square(image, 2, (t_point){pos.u + 2 * i + size / 2, pos.v + 2 * j + size / 2}, ft_get_pixel_color(texture, (t_point){i, j}));
+			j++;
+		}
 		i++;
 	}
 }
@@ -294,6 +317,15 @@ void	ft_add_sprite_to_list(t_sprite *head, t_sprite *sprite)
 	current->next = sprite;
 }
 
+void pick_up(t_item *item)
+{   
+	if (!item->active)
+        return;
+	item->active = false;
+	printf("add item %i\n", item->sprite.texture->width);
+	ft_lstadd_back(&ft_game()->player->pocket, ft_lstnew(item));
+}
+
 void	draw_sprites(mlx_image_t *image)
 {
 	int			i;
@@ -307,7 +339,10 @@ void	draw_sprites(mlx_image_t *image)
 	while (++i < ft_game()->item_count)
 	{
 		ft_calculate_sprite(image, &ft_game()->items[i].sprite);
-		ft_add_sprite_to_list(ft_game()->sh, &ft_game()->items[i].sprite);
+		if(ft_game()->items[i].active && ft_game()->items[i].pickupable && ft_game()->items[i].sprite.sp.dist < 1.0)
+			pick_up(&ft_game()->items[i]);
+		if (ft_game()->items[i].active)
+			ft_add_sprite_to_list(ft_game()->sh, &ft_game()->items[i].sprite);
 	}
 	i = -1;
 	while (++i < ft_game()->char_count)
@@ -321,18 +356,6 @@ void	draw_sprites(mlx_image_t *image)
 		draw_sprite(image, temp);
 		temp = temp->next;
 	}
-}
-
-void	draw_doors(mlx_image_t *image)
-{
-	t_door door;
-
-	door = ft_game()->doors[0];
-	door.sprite.pos = door.pos;
-	door.closed = true;
-	door.key_needed = false;
-	ft_calculate_sprite(image, &door.sprite);
-	// draw_sprite(image, &(door.sprite));
 }
 
 void open_door(int i)

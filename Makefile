@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/10/12 18:53:50 by psmolin          ###   ########.fr        #
+#    Updated: 2025/10/25 17:52:55 by nmikuka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,8 @@ SRC_FILES	= \
 				sys_lib.c \
 				sys_math.c \
 				ft_mat4.c \
-				ft_mat4_transform.c
+				ft_mat4_transform.c \
+				ft_list.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 

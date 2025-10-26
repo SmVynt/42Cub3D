@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/21 18:14:55 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/25 17:51:53 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	ft_set_player(void)
 	player->jump_height = 0.1f;
 	player->jump_impuls = 0.0f;
 	player->is_jumping = false;
+	player->pocket = NULL;
 }
 
 static void ft_calculate_max_entities(void)

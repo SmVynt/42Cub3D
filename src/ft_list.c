@@ -6,12 +6,11 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:27:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/19 21:52:24 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/25 21:17:54 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_mini.h"
-#include <stdlib.h>
 
 t_list	*ft_lstnew(void *content)
 {
@@ -34,6 +33,21 @@ t_list	*ft_lstlast(t_list *lst)
 		lst = lst->next;
 	}
 	return (lst);
+}
+
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*last;
+
+	if (!lst)
+		return ;
+	last = ft_lstlast(*lst);
+	if (!last)
+	{
+		*lst = new;
+		return ;
+	}
+	last->next = new;
 }
 
 t_list	*ft_lstinsert_sorted(t_list **head, void *content,
