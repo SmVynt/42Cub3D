@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/21 22:55:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/26 11:31:39 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,29 @@ static void	ft_update_view3d(void *param)
 void	ft_update_graphics(void)
 {
 	ft_update_view3d(ft_game()->view3d);
+	ft_update_hud(ft_game()->hud);
 	ft_update_minimap(ft_game()->miniplayer);
+}
+
+void	ft_update_hud(void *param)
+{
+	mlx_image_t	*image;
+	t_list		*pocket_items;
+	t_item		*item;
+
+	pocket_items = ft_game()->player->pocket;
+	if (!param || !pocket_items)
+		return ;
+	image = (mlx_image_t *)param;
+	// memset(image->pixels, COLOR_RED_TRANSP, image->width * image->height * sizeof(int32_t));
+	int i = 0;
+	while (pocket_items)
+	{
+		item = (t_item *)pocket_items->content;
+		draw_item(image, 64, (t_point){0, i * 64}, item->sprite.texture);
+		pocket_items = pocket_items->next;
+		i++;
+	}
 }
 
 void	ft_update_minimap(void *param)

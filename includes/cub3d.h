@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/21 23:58:43 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/26 13:36:52 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <string.h>
 # include <sys/time.h>
 # include "structs.h"
-# include "libft_mini.h"
 # include "ft_mat4.h"
 
 # define WIDTH		1280
@@ -48,7 +47,7 @@
 # define COLOR_BOLD		"\033[1m"
 # define COLOR_X		"\033[0m"
 
-# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asd"
+# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asdD"
 # define MAP_WALL_CHARS			"123456789"
 # define MAP_PLAYER_CHARS		"NSEW"
 
@@ -123,6 +122,7 @@ void	draw_walls(mlx_image_t *image);
 void	draw_sprites(mlx_image_t *image);
 void	draw_doors(mlx_image_t *image);
 void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color);
+void	draw_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture);
 void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
@@ -132,6 +132,7 @@ int			ft_get_tex_coord(float x, int texture_width);
 
 void	ft_createhooks(void);
 void	ft_update(void *param);
+void	ft_update_hud(void *param);
 void	ft_update_minimap(void *param);
 void	ft_update_player(void);
 void	ft_update_graphics(void);

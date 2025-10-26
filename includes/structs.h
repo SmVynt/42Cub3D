@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/21 21:27:27 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/26 10:15:20 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCTS_H
 
 # include "MLX42/MLX42.h"
+# include "libft_mini.h"
 # include "bonus_setup.h"
 
 typedef struct s_point
@@ -155,6 +156,7 @@ typedef struct s_player
 	bool	is_jumping;
 	float	jump_height;
 	float	jump_impuls;
+	t_list	*pocket;
 }	t_player;
 
 typedef struct s_rayrender
@@ -177,6 +179,7 @@ typedef struct s_gs
 	void			*mlx;
 	void			*window;
 	mlx_image_t		*minimap;
+	mlx_image_t		*hud;
 	mlx_image_t		*miniplayer;
 	mlx_image_t		*view3d;
 	mlx_image_t		*view3d_bg;

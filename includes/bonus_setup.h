@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/20 00:16:42 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/26 13:16:55 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define TEX_ALIEN			"textures/characters/alien.png"
 # define TEX_SLIME			"textures/characters/slime.png"
 
-# define DOORS_TYPES_COUNT	1
-# define MAP_DOOR_CHARS		"d"
+# define DOORS_TYPES_COUNT	2
+# define MAP_DOOR_CHARS		"dD"
 # define TEX_DOOR			"textures/red_door.png"
 
 #endif

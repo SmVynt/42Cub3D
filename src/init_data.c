@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/20 00:10:04 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/26 13:16:11 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,14 @@ static void ft_initprefabs(void)
 	game->door_prefabs[0] = (t_door){
 		.sprite.texture = NULL,
 		.sprite.path = TEX_DOOR,
-		.sprite.bottom_offset = 0.0f
+		.sprite.bottom_offset = 0.0f,
+		.key_needed = false
+	};
+	game->door_prefabs[1] = (t_door){
+		.sprite.texture = NULL,
+		.sprite.path = TEX_DOOR,
+		.sprite.bottom_offset = 0.0f,
+		.key_needed = true
 	};
 
 }
@@ -137,6 +144,7 @@ static void	ft_initgame(void)
 	game->items = NULL;
 	game->chars = NULL;
 	game->minimap = NULL;
+	game->hud = NULL;
 	game->miniplayer = NULL;
 	game->view3d = NULL;
 	game->view3d_bg = NULL;
