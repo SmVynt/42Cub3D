@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/27 00:04:19 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/27 01:44:23 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,6 +358,7 @@ static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec3 dir, int max_it
 		// printf("Hit wall at (%.2f, %.2f), tile[%d][%d], side=%d\n",
 		//        hit_point.x, hit_point.y, tile_y, tile_x, side);
 		ray->is_door = ft_is_door((t_vec2){tile.u, tile.v});
+		ray->wall_type = ft_game()->map.tile[tile.v][tile.u];
 		if (ft_is_wall((t_vec2){tile.u, tile.v}) || ray->is_door)
 		{
 			if (ray->is_door)

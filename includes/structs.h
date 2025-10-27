@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/26 23:46:49 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/27 02:10:18 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ typedef struct s_textures
 	// mlx_texture_t	*we;
 	// mlx_texture_t	*ea;
 	t_walltexture	wall;
+	mlx_texture_t	*wall_atlas;
+	t_walltexture	walls[WALLS_TYPES_COUNT];
 	mlx_texture_t	*bg;
 }	t_textures;
 
@@ -183,6 +185,7 @@ typedef struct s_rayrender
 	double		dist;
 	// uint32_t	wall_dir;
 	t_direction	wall_dir;
+	char		wall_type;
 	double		wall_height;
 	bool		is_door;
 	t_door		*door;

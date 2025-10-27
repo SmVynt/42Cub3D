@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/26 13:36:52 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/27 02:12:12 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	ft_exit(void);
 
 // t_player	*init_player(char **map, int w, int h);
 void	ft_load_texture(const char *path, mlx_texture_t **texture);
+void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture);
 
 
 float	ft_height_delta(float distance);

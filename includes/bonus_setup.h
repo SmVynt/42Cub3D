@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_setup.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/26 13:16:55 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/27 02:21:26 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,9 @@
 # define DOORS_TYPES_COUNT	2
 # define MAP_DOOR_CHARS		"dD"
 # define TEX_DOOR			"textures/red_door.png"
+
+# define WALLS_TYPES_COUNT	9
+# define TEX_WALL_ATLAS		"textures/walls.png"
+# define TEX_WALL_PLCHLDR	"textures/wall_placeholder.png"
 
 #endif
