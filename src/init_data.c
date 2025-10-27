@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/26 13:16:11 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/27 10:47:08 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ static void	ft_initgame(void)
 	game->miniplayer = NULL;
 	game->view3d = NULL;
 	game->view3d_bg = NULL;
+	game->playing = true;
 }
 
 void	ft_initialize(void)

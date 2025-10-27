@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/26 13:36:52 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/27 23:33:58 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
 int			ft_get_tex_coord(float x, int texture_width);
 
 void	ft_createhooks(void);
+void	ft_key_press_hook(void *param);
+void	try_open_doors(t_gs *game);
 void	ft_update(void *param);
 void	ft_update_hud(void *param);
 void	ft_update_minimap(void *param);
