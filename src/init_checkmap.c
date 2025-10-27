@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 10:51:46 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/27 15:22:14 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,27 @@ static void	ft_checkdigits(void)
 	}
 }
 
-static void	ft_check_neighbours(t_map *map, int h, int w, const char *walls)
+static void	ft_check_neighbours(t_map *map, int h, int w)
 {
 	map->tile[h][w] -= 128;
-	if (w <= 1 || w >= map->w - 1 || h <= 1 || h >= map->h - 1)
+	if (w <= 0 || w >= map->w || h <= 0|| h >= map->h)
 		return ;
-	if (ft_strchar(walls, map->tile[h + 1][w]) == NULL
+	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h + 1][w]) == NULL
+			|| ft_strchar(MAP_DOOR_CHARS, map->tile[h + 1][w]) != NULL)
 			&& map->tile[h + 1][w] >= 0)
-		ft_check_neighbours(map, h + 1, w, walls);
-	if (ft_strchar(walls, map->tile[h - 1][w]) == NULL
+		ft_check_neighbours(map, h + 1, w);
+	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h - 1][w]) == NULL
+			|| ft_strchar(MAP_DOOR_CHARS, map->tile[h - 1][w]) != NULL)
 			&& map->tile[h - 1][w] >= 0)
-		ft_check_neighbours(map, h - 1, w, walls);
-	if (ft_strchar(walls, map->tile[h][w + 1]) == NULL
+		ft_check_neighbours(map, h - 1, w);
+	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h][w + 1]) == NULL
+			|| ft_strchar(MAP_DOOR_CHARS, map->tile[h][w + 1]) != NULL)
 			&& map->tile[h][w + 1] >= 0)
-		ft_check_neighbours(map, h, w + 1, walls);
-	if (ft_strchar(walls, map->tile[h][w - 1]) == NULL
+		ft_check_neighbours(map, h, w + 1);
+	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h][w - 1]) == NULL
+			|| ft_strchar(MAP_DOOR_CHARS, map->tile[h][w - 1]) != NULL)
 			&& map->tile[h][w - 1] >= 0)
-		ft_check_neighbours(map, h, w - 1, walls);
+		ft_check_neighbours(map, h, w - 1);
 }
 
 static void	ft_restoremap(t_map *map)
@@ -85,7 +89,8 @@ static void	ft_checkwalls(void)
 
 	map = &ft_game()->map;
 	printf("Checking walls...\n");
-	ft_check_neighbours(map, map->start.v, map->start.u, MAP_WALL_CHARS);
+	ft_check_neighbours(map, map->start.v, map->start.u);
+	ft_printmap(map);
 	h = -1;
 	while (++h < map->h)
 	{

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 02:12:12 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/27 15:34:39 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@
 # define MAX_DT					0.05f
 # define DOOR_OPEN_TIME			1.0f
 # define DOOR_OPEN_DIST			2.0f
-# define DOOR_OPEN_ANGLE		(M_PI / 18.0f)
+# define DOOR_OPEN_ANGLE		(M_PI / 3.0f)
 # define PLAYERSPEED			6.0f
 # define ROTATIONSPEED			2.0f
 # define MOUSE_XSENS			0.5f
