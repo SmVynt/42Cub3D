@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
 /*   Updated: 2025/10/27 10:39:48 by nmikuka          ###   ########.fr       */
@@ -40,6 +40,14 @@ typedef struct s_mat4
 {
 	float	m[4][4];
 }	t_mat4;
+
+typedef enum e_direction
+{
+	DIR_NO,
+	DIR_EA,
+	DIR_SO,
+	DIR_WE
+}	t_direction;
 
 typedef struct s_map
 {
@@ -127,12 +135,19 @@ typedef struct s_door
 	bool	key_needed;
 }	t_door;
 
+typedef struct s_walltexture
+{
+	mlx_texture_t	*tex[4];
+}	t_walltexture;
+
 typedef struct s_textures
 {
-	mlx_texture_t	*no;
-	mlx_texture_t	*so;
-	mlx_texture_t	*we;
-	mlx_texture_t	*ea;
+	// mlx_texture_t	*no;
+	// mlx_texture_t	*so;
+	// mlx_texture_t	*we;
+	// mlx_texture_t	*ea;
+	mlx_texture_t	*wall_atlas;
+	t_walltexture	walls[WALLS_TYPES_COUNT];
 	mlx_texture_t	*bg;
 }	t_textures;
 
@@ -167,7 +182,9 @@ typedef struct s_rayrender
 	int			bgx;
 	double		angle;
 	double		dist;
-	uint32_t	wall_dir;
+	// uint32_t	wall_dir;
+	t_direction	wall_dir;
+	char		wall_type;
 	double		wall_height;
 	bool		is_door;
 	t_door		*door;
