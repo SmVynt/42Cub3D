@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/27 01:44:23 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/27 03:03:53 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,13 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_rayrender ray)
 	int	tex_u;
 	t_vec2 loc;
 	t_direction dir;
+	int	wall_type;
 
 	dir = ray.wall_dir;
 	loc = ray.end;
+	wall_type = ray.wall_type - '1';
+	wall_type = ft_clamp(wall_type, 0, WALLS_TYPES_COUNT - 1);
+	// wall_type = 1;
 	if (ray.is_door)
 	{
 		*texture = ray.door->sprite.texture;
@@ -127,28 +131,28 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_rayrender ray)
 			loc.y += (DOOR_OPEN_TIME - ray.door->dt)/DOOR_OPEN_TIME;
 		}
 	}
-	if (dir == DIR_SO)
+	if (dir == DIR_NO)
 	{
 		if (!ray.is_door)
-			*texture = ft_game()->textures.wall.tex[DIR_SO];
+			*texture = ft_game()->textures.walls[wall_type].tex[DIR_NO];
 		tex_u = (int)((loc.x - floorf(loc.x)) * ((*texture)->width));
 	}
-	else if (dir == DIR_NO)
+	else if (dir == DIR_SO)
 	{
 		if (!ray.is_door)
-			*texture = ft_game()->textures.wall.tex[DIR_NO];
+			*texture = ft_game()->textures.walls[wall_type].tex[DIR_SO];
 		tex_u = (int)((1.0f -(loc.x - floorf(loc.x))) * ((*texture)->width));
 	}
 	else if (dir == DIR_EA)
 	{
 		if (!ray.is_door)
-			*texture = ft_game()->textures.wall.tex[DIR_EA];
+			*texture = ft_game()->textures.walls[wall_type].tex[DIR_EA];
 		tex_u = (int)((loc.y - floorf(loc.y)) * ((*texture)->width));
 	}
 	else
 	{
 		if (!ray.is_door)
-			*texture = ft_game()->textures.wall.tex[DIR_WE];
+			*texture = ft_game()->textures.walls[wall_type].tex[DIR_WE];
 		tex_u = (int)((1.0f - (loc.y - floorf(loc.y))) * ((*texture)->width));
 	}
 	return (tex_u);
@@ -196,10 +200,10 @@ static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 	while (y < (int)image->height)
 	{
 		dist = get_dist_to_screen_point(y, ray);
-		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, ft_game()->textures.wall.tex[DIR_WE]->width);
-		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, ft_game()->textures.wall.tex[DIR_NO]->height);
+		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, ft_game()->textures.walls[0].tex[DIR_WE]->width);
+		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, ft_game()->textures.walls[0].tex[DIR_NO]->height);
 		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
-		color = ft_get_pixel_color(ft_game()->textures.wall.tex[DIR_WE], pixel);
+		color = ft_get_pixel_color(ft_game()->textures.walls[0].tex[DIR_WE], pixel);
 		if (color != 0)
 			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
 		else
@@ -221,11 +225,11 @@ static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
 	while (y < wall_start)
 	{
 		dist = get_dist_to_screen_point(y, ray);
-		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, ft_game()->textures.wall.tex[DIR_NO]->width);
-		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, ft_game()->textures.wall.tex[DIR_NO]->height);
+		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, ft_game()->textures.walls[0].tex[DIR_NO]->width);
+		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, ft_game()->textures.walls[0].tex[DIR_NO]->height);
 		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.ea, pixel));
 		// y += PIXEL_SIZE;
-		color = ft_get_pixel_color(ft_game()->textures.wall.tex[DIR_NO], pixel);
+		color = ft_get_pixel_color(ft_game()->textures.walls[0].tex[DIR_NO], pixel);
 		if (color != 0)
 			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
 		else

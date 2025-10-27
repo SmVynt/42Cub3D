@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 02:16:04 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/27 02:51:22 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ static void ft_init_walls_textures(void)
 	while (i < WALLS_TYPES_COUNT)
 	{
 		dir = DIR_NO;
-		while (dir < DIR_WE)
+		while (dir <= DIR_WE)
 		{
 			ft_load_wall_texture(i, dir, &game->textures.walls[i].tex[dir]);
+			printf("Loaded wall texture %d dir %d\n", i, dir);
 			dir++;
 		}
 		i++;

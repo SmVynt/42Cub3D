@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 02:18:43 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/27 02:51:33 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,11 @@ static void	ft_free_mlx(void)
 
 	game = ft_game();
 	printf(COLOR_C"Freeing MLX resources...\n"COLOR_X);
-	dir = DIR_NO;
-	while (dir < DIR_WE)
-	{
-		if (game->textures.wall.tex[dir])
-			mlx_delete_texture(game->textures.wall.tex[dir]);
-		dir++;
-	}
 	i = 0;
 	while (i < WALLS_TYPES_COUNT)
 	{
 		dir = DIR_NO;
-		while (dir < DIR_WE)
+		while (dir <= DIR_WE)
 		{
 			if (game->textures.walls[i].tex[dir])
 				mlx_delete_texture(game->textures.walls[i].tex[dir]);

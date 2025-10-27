@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 02:21:14 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/27 02:57:26 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture)
 		x = 0;
 		while (x < (*texture)->width)
 		{
-			((uint32_t *)(*texture)->pixels)[(y * (*texture)->width) + x] = ((uint32_t *)atlas->pixels)[(y_start * (*texture)->width) + (x_start + x)];
+			((uint32_t *)(*texture)->pixels)[(y * (*texture)->width) + x] = ((uint32_t *)atlas->pixels)[((y_start + y) * atlas->width) + (x_start + x)];
 			x++;
 		}
 		y++;
