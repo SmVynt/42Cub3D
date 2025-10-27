@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/25 17:51:53 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/27 02:51:22 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,30 @@ static void	ft_set_player(void)
 	player->jump_impuls = 0.0f;
 	player->is_jumping = false;
 	player->pocket = NULL;
+}
+
+static void ft_init_walls_textures(void)
+{
+	t_gs		*game;
+	int			i;
+	t_direction	dir;
+
+	game = ft_game();
+	//load wall texture atlas
+	ft_load_texture(TEX_WALL_ATLAS, &game->textures.wall_atlas);
+	//initialize wall textures from atlas
+	i = 1;
+	while (i < WALLS_TYPES_COUNT)
+	{
+		dir = DIR_NO;
+		while (dir <= DIR_WE)
+		{
+			ft_load_wall_texture(i, dir, &game->textures.walls[i].tex[dir]);
+			printf("Loaded wall texture %d dir %d\n", i, dir);
+			dir++;
+		}
+		i++;
+	}
 }
 
 static void ft_calculate_max_entities(void)
@@ -224,6 +248,7 @@ static void ft_init_sprites(void)
 void	ft_setgame(void)
 {
 	ft_set_player();
+	ft_init_walls_textures();
 	ft_init_sprites();
 	ft_calculate_max_entities();
 	ft_set_doors();

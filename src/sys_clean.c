@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/14 15:10:20 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/27 02:51:33 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,26 @@ static void	ft_freemap(void)
 
 static void	ft_free_mlx(void)
 {
-	t_gs	*game;
-	int		i;
+	t_gs		*game;
+	int			i;
+	t_direction	dir;
 
 	game = ft_game();
 	printf(COLOR_C"Freeing MLX resources...\n"COLOR_X);
-	if (game->textures.no)
-		mlx_delete_texture(game->textures.no);
-	if (game->textures.so)
-		mlx_delete_texture(game->textures.so);
-	if (game->textures.we)
-		mlx_delete_texture(game->textures.we);
-	if (game->textures.ea)
-		mlx_delete_texture(game->textures.ea);
+	i = 0;
+	while (i < WALLS_TYPES_COUNT)
+	{
+		dir = DIR_NO;
+		while (dir <= DIR_WE)
+		{
+			if (game->textures.walls[i].tex[dir])
+				mlx_delete_texture(game->textures.walls[i].tex[dir]);
+			dir++;
+		}
+		i++;
+	}
+	if (game->textures.wall_atlas)
+		mlx_delete_texture(game->textures.wall_atlas);
 	if (game->textures.bg)
 		mlx_delete_texture(game->textures.bg);
 	if (game->mlx)
