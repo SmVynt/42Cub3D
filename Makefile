@@ -6,7 +6,7 @@
 #    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/10/25 17:52:55 by nmikuka          ###   ########.fr        #
+#    Updated: 2025/10/27 23:33:24 by nmikuka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC_FILES	= \
 				init_fillmap.c \
 				init_game.c \
 				init_hooks.c \
+				init_key_hooks.c \
 				init_textures.c \
 				main.c \
 				render_draw.c \

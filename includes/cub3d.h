@@ -132,6 +132,8 @@ uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
 int			ft_get_tex_coord(float x, int texture_width);
 
 void	ft_createhooks(void);
+void	ft_key_press_hook(void *param);
+void	try_open_doors(t_gs *game);
 void	ft_update(void *param);
 void	ft_update_hud(void *param);
 void	ft_update_minimap(void *param);

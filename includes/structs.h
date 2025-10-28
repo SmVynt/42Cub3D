@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 02:43:54 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/27 10:39:48 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ typedef struct s_gs
 	t_map			map;
 	t_textures		textures;
 	t_render		render;
+	bool			playing;
 	t_sprite		*sh;
 	t_item			item_prefabs[ITEMS_TYPES_COUNT];
 	t_item			*items;
