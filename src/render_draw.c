@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/26 13:12:36 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/28 20:16:24 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,28 +355,5 @@ void	draw_sprites(mlx_image_t *image)
 	{
 		draw_sprite(image, temp);
 		temp = temp->next;
-	}
-}
-
-void open_door(int i)
-{
-	t_door *door;
-
-	door = &ft_game()->doors[i];
-	if (!door->is_opening)
-		return ;
-	door->dt += door->is_opening * ft_game()->dt;
-	if (door->closed && door->dt >= DOOR_OPEN_TIME)
-	{
-		door->closed = false;
-	}
-	if (door->dt >= 2 * DOOR_OPEN_TIME)
-		door->is_opening = -1;
-	if (door->is_opening == -1 && door->dt <= DOOR_OPEN_TIME)
-		door->closed = true;
-	if (door->dt <= 0.0f)
-	{
-		door->is_opening = 0;
-		door->dt = 0.0f;
 	}
 }
