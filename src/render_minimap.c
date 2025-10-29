@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/29 15:56:42 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/29 16:03:52 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,22 +89,26 @@ void	draw_map(mlx_image_t *image, t_map *map)
 	int		halfy;
 	t_vec3	coords;
 	t_player	*player;
+	float		zoom;
 
 	(void)map;
 	player = ft_game()->player;
 	halfx = (int)image->width / 2;
 	halfy = (int)image->height / 2;
+	zoom = MM_SCALE * (float)ft_game()->view3d->height / HEIGHT;
 	x = - halfx;
 	while (x < halfx)
 	{
 		y = - halfy;
 		while (y < (int)image->height / 2)
 		{
-			coords = (t_vec3){(float)x / MM_SCALE, (float)y / MM_SCALE ,0.f};
+			coords = (t_vec3){(float)x / zoom, (float)y / zoom ,0.f};
 			coords = ft_mat4_transform_vec3(ft_mat4_rotation_z(atan2(player->lookdir.y, player->lookdir.x) + HALF_PI), coords);
 			coords.x += player->pos.x;
 			coords.y += player->pos.y;
-			if (ft_is_wall((t_vec2){coords.x, coords.y}))
+			if (ft_is_door((t_vec2){coords.x, coords.y}))
+				draw_square(image, PIXEL_SIZE, (t_point){x + halfx, y + halfy}, MM_COLOR_DOORS);
+			else if (ft_is_wall((t_vec2){coords.x, coords.y}))
 				draw_square(image, PIXEL_SIZE, (t_point){x + halfx, y + halfy}, MM_COLOR_WALLS);
 		y += PIXEL_SIZE;
 		}

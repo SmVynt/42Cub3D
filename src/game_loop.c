@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/29 15:37:58 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/29 16:01:53 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool ft_is_door(t_vec2 p)
 	x = (int)roundf(p.x);
 	y = (int)roundf(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
-		return (true);
+		return (false);
 	if (ft_strchar(MAP_DOOR_CHARS, map->tile[y][x]) != NULL) //&& ft_get_door(y,x)->closed)
 		return (true);
 	return (false);
