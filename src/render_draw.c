@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/29 00:48:38 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/29 15:54:31 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,20 @@ void	draw(int32_t width, int32_t height, void *param)
 	ft_fill_split_bg(game->view3d_bg);
 	game->view3d = mlx_new_image(game->mlx, width, height);
 	game->hud = mlx_new_image(game->mlx, 64, height);
-	game->minimap = mlx_new_image(game->mlx, width / 4, height / 2);
-	game->miniplayer = mlx_new_image(game->mlx, height / 4, height / 4);
+	game->minimap = mlx_new_image(game->mlx, height * 2 / 5, height / 2);
+	game->miniplayer = mlx_new_image(game->mlx,height / 5, height / 5);
 	if (!game->minimap || !game->miniplayer || !game->view3d)
 		return ;
 	draw_ui();
-	//draw_map(game->minimap, map);
-	ft_update(game);
 	mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
 	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
 	mlx_image_to_window(game->mlx, game->minimap, width / 16, height / 2);
-	mlx_image_to_window(game->mlx, game->miniplayer, width / 8, height / 2);
+	mlx_image_to_window(game->mlx, game->miniplayer,
+			(width / 16 + (int)((float)height * 0.122f) / PIXEL_SIZE * PIXEL_SIZE),
+			height / 2 + (int)((float)height * 0.035f) / PIXEL_SIZE * PIXEL_SIZE);
 	mlx_image_to_window(game->mlx, game->hud, width - 64, 0);
+	// ft_update(game); We maybe'll need this later
+	ft_update_graphics();
 }
 
 // static inline void put_pixel(mlx_image_t *image, u_int32_t x, u_int32_t y, uint32_t color)

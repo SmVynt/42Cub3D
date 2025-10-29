@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/29 01:30:19 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/29 15:56:42 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,18 @@ void	draw_minimap_bg(void)
 	uint32_t x_tex;
 	uint32_t y_tex;
 	mlx_texture_t *bg;
+	float win_scale;
 
+	win_scale = (float)ft_game()->view3d->height / HEIGHT * (float)UI_SCALE;
 	bg = ft_game()->textures.ui_minimap;
 	x = PIXEL_SIZE / 2;
-	while (x < bg->width * UI_SCALE)
+	while (x < bg->width * win_scale)
 	{
 		y = PIXEL_SIZE / 2;
-		x_tex = x / UI_SCALE;
-		while (y < bg->height * UI_SCALE)
+		x_tex = x / win_scale;
+		while (y < bg->height * win_scale)
 		{
-			y_tex = y / UI_SCALE;
+			y_tex = y / win_scale;
 			draw_square(ft_game()->minimap, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(bg, (t_point){x_tex, y_tex}));
 			y += PIXEL_SIZE;
 		}
@@ -87,24 +89,8 @@ void	draw_map(mlx_image_t *image, t_map *map)
 	int		halfy;
 	t_vec3	coords;
 	t_player	*player;
-	(void)map;
-	// int offset;
 
-	// fill_background(image, COLOR_BLACK);
-	// i = 0;
-	// offset = MAP_SCALE;
-	// while (i < map->h)
-	// {
-	// 	j = 0;
-	// 	while  (j < map->w)
-	// 	{
-	// 		if (map->tile[i][j] == '1')
-	// 			if (true)
-	// 				draw_map_square(image, (t_point){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
+	(void)map;
 	player = ft_game()->player;
 	halfx = (int)image->width / 2;
 	halfy = (int)image->height / 2;
