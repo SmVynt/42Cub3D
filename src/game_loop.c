@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 14:09:56 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/29 00:46:09 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,8 @@ void	ft_update_minimap(void *param)
 		return ;
 	image = (mlx_image_t *)param;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
-	draw_player(image);
+	//draw_player(image);
+	draw_map(image, &ft_game()->map);
 }
 
 static void ft_update_dt(void)

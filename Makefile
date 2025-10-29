@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/10/27 23:33:24 by nmikuka          ###   ########.fr        #
+#    Updated: 2025/10/29 00:02:48 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,9 @@ SRC_FILES	= \
 				main.c \
 				render_draw.c \
 				render_images.c \
+				render_minimap.c \
 				render_raycast.c \
+				render_ui.c \
 				sys_clean.c \
 				sys_errors.c \
 				sys_gamestate.c \

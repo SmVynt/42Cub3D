@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 02:51:22 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/29 00:15:01 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ static void ft_init_walls_textures(void)
 	t_direction	dir;
 
 	game = ft_game();
-	//load wall texture atlas
 	ft_load_texture(TEX_WALL_ATLAS, &game->textures.wall_atlas);
-	//initialize wall textures from atlas
 	i = 1;
 	while (i < WALLS_TYPES_COUNT)
 	{
@@ -58,6 +56,15 @@ static void ft_init_walls_textures(void)
 		}
 		i++;
 	}
+}
+
+static void ft_init_ui_textures(void)
+{
+	t_gs		*game;
+
+	game = ft_game();
+	ft_load_texture(TEX_UI_MM, &game->textures.ui_minimap);
+	printf("Loaded UI minimap texture\n");
 }
 
 static void ft_calculate_max_entities(void)
@@ -249,6 +256,7 @@ void	ft_setgame(void)
 {
 	ft_set_player();
 	ft_init_walls_textures();
+	ft_init_ui_textures();
 	ft_init_sprites();
 	ft_calculate_max_entities();
 	ft_set_doors();

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 15:34:39 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/29 01:27:17 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@
 # endif
 # define PI						3.14159265358
 # define TWO_PI					6.28318530718
+# define HALF_PI				1.57079632679
 # define DEG_TO_RAD				0.01745329251
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
 # define FOV_RAD				(M_PI / 3.0)
-# define PIXEL_SIZE				2
+# define PIXEL_SIZE				4
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
 # define JUMP_IMPULSE			3.2f
@@ -114,10 +115,13 @@ bool	ft_is_wall(t_vec2 p);
 bool	ft_is_door(t_vec2 p);
 t_door	*ft_get_door(int x, int y);
 void	open_door(int i);
+void	fill_background(mlx_image_t *image, uint32_t color);
 // void	init_player(void);
 
 void	draw(int32_t width, int32_t height, void *param);
+void	draw_ui(void);
 void	draw_map(mlx_image_t *image, t_map *map);
+void	draw_minimap_bg(void);
 void	draw_player(mlx_image_t *image);
 void	draw_walls(mlx_image_t *image);
 void	draw_sprites(mlx_image_t *image);
