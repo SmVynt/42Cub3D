@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/30 15:03:25 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/30 16:30:10 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,6 @@ float		ft_angle_between_vec2(t_vec2 a, t_vec2 b);
 int			ft_clamp(int value, int min, int max);
 float		ft_clampf(float value, float min, float max);
 
-void	print_debug(const char *str);
+void		print_debug(const char *str);
 
 #endif

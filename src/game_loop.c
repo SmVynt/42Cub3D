@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/30 12:53:50 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/30 15:34:43 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,6 @@ static void ft_update_dt(void)
 	if (elapsed > MAX_DT)
 		elapsed = MAX_DT;
 	ft_game()->dt = elapsed;
-	// printf("fps: %.1f\n", 1.0f / ft_game()->dt);
 	last_time = current_time;
 }
 
@@ -259,10 +258,7 @@ void	ft_update(void *param)
 		|| player->is_jumping
 		|| upd_doors)
 	{
-		print_debug("Updating...");
 		ft_update_player();
-		print_debug("Player updated");
 		ft_update_graphics();
-		print_debug("Graphics updated");
 	}
 }

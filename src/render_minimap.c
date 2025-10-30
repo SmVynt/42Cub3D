@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/30 14:56:01 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/30 16:30:40 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,25 +81,76 @@ void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color)
 	}
 }
 
+static void draw_characters_on_minimap(mlx_image_t *image, float zoom, t_point half)
+{
+	t_vec3		coords;
+	t_player	*player;
+	int			i;
+
+	player = ft_game()->player;
+	i = -1;
+	while (++i < ft_game()->char_count)
+	{
+		coords = (t_vec3){(ft_game()->chars[i].sprite.pos.x - player->pos.x) * zoom,
+			(ft_game()->chars[i].sprite.pos.y - player->pos.y) * zoom, 0.f};
+		if (ft_game()->chars[i].alive == false)
+			continue ;
+		if ((int)coords.x < -half.u || (int)coords.x > half.u
+			|| (int)coords.y < -half.v || (int)coords.y > half.v)
+			continue ;
+		coords = ft_mat4_transform_vec3(ft_mat4_rotation_z(- atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
+		draw_circle(image, (t_point){(int)(coords.x) + half.u, (int)(coords.y) + half.v}, 3, MM_COLOR_ENEMIES);
+	}
+}
+
+static void draw_items_on_minimap(mlx_image_t *image, float zoom, t_point half)
+{
+	t_vec3		coords;
+	t_player	*player;
+	int			i;
+	uint32_t	color;
+
+	player = ft_game()->player;
+	i = -1;
+	while (++i < ft_game()->item_count)
+	{
+		if (!(ft_game()->items[i].type ==  IT_HEALTH
+				|| ft_game()->items[i].type == IT_KEY))
+			continue ;
+		if (ft_game()->items[i].active == false)
+			continue ;
+		coords = (t_vec3){(ft_game()->items[i].sprite.pos.x - player->pos.x) * zoom,
+			(ft_game()->items[i].sprite.pos.y - player->pos.y) * zoom, 0.f};
+		if ((int)coords.x < -half.u || (int)coords.x > half.u
+			|| (int)coords.y < -half.v || (int)coords.y > half.v)
+			continue ;
+		coords = ft_mat4_transform_vec3(ft_mat4_rotation_z(- atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
+		if (ft_game()->items[i].type == IT_HEALTH)
+			color = MM_COLOR_HEALTH;
+		if (ft_game()->items[i].type == IT_KEY)
+			color = MM_COLOR_KEY;
+		draw_circle(image, (t_point){(int)(coords.x) + half.u, (int)(coords.y) + half.v}, 3, color);
+	}
+}
+
 void	draw_map(mlx_image_t *image, t_map *map)
 {
 	int		x;
 	int		y;
-	int		halfx;
-	int		halfy;
+	t_point	half;
 	t_vec3	coords;
 	t_player	*player;
 	float		zoom;
 
 	(void)map;
 	player = ft_game()->player;
-	halfx = (int)image->width / 2;
-	halfy = (int)image->height / 2;
+	half.u = (int)image->width / 2;
+	half.v = (int)image->height / 2;
 	zoom = MM_SCALE * (float)ft_game()->view3d->height / HEIGHT;
-	x = - halfx;
-	while (x < halfx)
+	x = - half.u;
+	while (x < half.u)
 	{
-		y = - halfy;
+		y = - half.v;
 		while (y < (int)image->height / 2)
 		{
 			coords = (t_vec3){(float)x / zoom, (float)y / zoom ,0.f};
@@ -107,15 +158,17 @@ void	draw_map(mlx_image_t *image, t_map *map)
 			coords.x += player->pos.x;
 			coords.y += player->pos.y;
 			if (ft_is_door((t_vec2){coords.x, coords.y}))
-				draw_square(image, PIXEL_SIZE, (t_point){x + halfx, y + halfy}, MM_COLOR_DOORS);
+				draw_square(image, PIXEL_SIZE, (t_point){x + half.u, y + half.v}, MM_COLOR_DOORS);
 			else if (ft_is_wall((t_vec2){coords.x, coords.y}))
-				draw_square(image, PIXEL_SIZE, (t_point){x + halfx, y + halfy}, MM_COLOR_WALLS);
+				draw_square(image, PIXEL_SIZE, (t_point){x + half.u, y + half.v}, MM_COLOR_WALLS);
 			else
-				draw_square(image, PIXEL_SIZE, (t_point){x + halfx, y + halfy}, MM_COLOR_EMPTY);
+				draw_square(image, PIXEL_SIZE, (t_point){x + half.u, y + half.v}, MM_COLOR_EMPTY);
 		y += PIXEL_SIZE;
 		}
 	x += PIXEL_SIZE;
 	}
+	draw_characters_on_minimap(image, zoom, half);
+	draw_items_on_minimap(image, zoom, half);
 }
 
 void draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color)
