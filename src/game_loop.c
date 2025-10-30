@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 14:09:56 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/28 20:15:51 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-t_door	*ft_get_door(int x, int y)
-{
-	t_gs	*game;
-	int	i;
-
-	game = ft_game();
-	i = 0;
-	while (i < game->max_doors)
-	{
-		if (game->doors[i].idx.u == y && game->doors[i].idx.v == x)
-			return (&game->doors[i]);
-		i++;
-	}
-	return (NULL);
-}
 
 bool ft_is_wall(t_vec2 p)
 {

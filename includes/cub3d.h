@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 15:34:39 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/28 20:44:57 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,17 +111,18 @@ void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, in
 void	draw_wall(mlx_image_t *image, int x);
 void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
 bool	ft_is_wall(t_vec2 p);
+void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
+
 bool	ft_is_door(t_vec2 p);
 t_door	*ft_get_door(int x, int y);
+void	try_open_doors(t_gs *game);
 void	open_door(int i);
-// void	init_player(void);
 
 void	draw(int32_t width, int32_t height, void *param);
 void	draw_map(mlx_image_t *image, t_map *map);
 void	draw_player(mlx_image_t *image);
 void	draw_walls(mlx_image_t *image);
 void	draw_sprites(mlx_image_t *image);
-void	draw_doors(mlx_image_t *image);
 void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color);
 void	draw_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture);
 void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
@@ -133,7 +134,6 @@ int			ft_get_tex_coord(float x, int texture_width);
 
 void	ft_createhooks(void);
 void	ft_key_press_hook(void *param);
-void	try_open_doors(t_gs *game);
 void	ft_update(void *param);
 void	ft_update_hud(void *param);
 void	ft_update_minimap(void *param);
