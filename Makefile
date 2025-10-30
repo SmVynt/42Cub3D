@@ -45,6 +45,7 @@ COL_C		= \033[1;36m
 # Source and object files
 SRC_FILES	= \
 				game_loop.c \
+				game_doors.c \
 				init_check.c \
 				init_checkmap.c \
 				init_data.c \

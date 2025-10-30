@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
 /*   Updated: 2025/10/29 00:15:01 by psmolin          ###   ########.fr       */
@@ -127,7 +127,7 @@ static void	ft_set_doors(void)
 				game->doors[door_index].closed = true;
 				game->doors[door_index].is_opening = false;
 				game->doors[door_index].dt = 0.0f;
-				game->doors[door_index].pos = (t_vec2){(float)j, (float)i};
+				game->doors[door_index].sprite.pos = (t_vec2){(float)j, (float)i};
 				door_index++;
 			}
 			j++;

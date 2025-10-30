@@ -272,26 +272,3 @@ void	draw_sprites(mlx_image_t *image)
 		temp = temp->next;
 	}
 }
-
-void open_door(int i)
-{
-	t_door *door;
-
-	door = &ft_game()->doors[i];
-	if (!door->is_opening)
-		return ;
-	door->dt += door->is_opening * ft_game()->dt;
-	if (door->closed && door->dt >= DOOR_OPEN_TIME)
-	{
-		door->closed = false;
-	}
-	if (door->dt >= 2 * DOOR_OPEN_TIME)
-		door->is_opening = -1;
-	if (door->is_opening == -1 && door->dt <= DOOR_OPEN_TIME)
-		door->closed = true;
-	if (door->dt <= 0.0f)
-	{
-		door->is_opening = 0;
-		door->dt = 0.0f;
-	}
-}

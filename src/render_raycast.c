@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
 /*   Updated: 2025/10/30 15:17:31 by psmolin          ###   ########.fr       */
@@ -140,14 +140,22 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_rayrender ray)
 	else if (dir == DIR_SO)
 	{
 		if (!ray.is_door)
+		{
 			*texture = ft_game()->textures.walls[wall_type].tex[DIR_SO];
-		tex_u = (int)((1.0f -(loc.x - floorf(loc.x))) * ((*texture)->width));
+			tex_u = (int)((1.0f -(loc.x - floorf(loc.x))) * ((*texture)->width));
+		}
+		else
+			tex_u = (int)(((loc.x - floorf(loc.x))) * ((*texture)->width));
 	}
 	else if (dir == DIR_EA)
 	{
 		if (!ray.is_door)
+		{
 			*texture = ft_game()->textures.walls[wall_type].tex[DIR_EA];
-		tex_u = (int)((loc.y - floorf(loc.y)) * ((*texture)->width));
+			tex_u = (int)((loc.y - floorf(loc.y)) * ((*texture)->width));
+		}
+		else
+			tex_u = (int)((1.0f - (loc.y - floorf(loc.y))) * ((*texture)->width));
 	}
 	else
 	{

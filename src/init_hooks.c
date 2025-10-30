@@ -6,58 +6,12 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 23:33:48 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/28 20:33:46 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 // #include <GLFW/glfw3.h>
-
-static bool	has_key(t_player *player)
-{
-	t_list		*pocket_items;
-	t_item		*item;
-
-	pocket_items = player->pocket;
-	if (!pocket_items)
-		return (false);
-	while (pocket_items)
-	{
-		item = (t_item *)pocket_items->content;
-		if (item->type == IT_KEY)
-			return (true);
-		pocket_items = pocket_items->next;
-	}
-	return (false);
-}
-
-void	try_open_doors(t_gs *game)
-{
-	t_player	*player;
-	t_vec2		vec_door;
-	float		door_angle;
-	int			i;
-
-	player = game->player;
-	i = 0;
-	while (i < game->door_count)
-	{
-		vec_door = (t_vec2){game->doors[i].pos.x - player->pos.x,
-			game->doors[i].pos.y - player->pos.y};
-		door_angle = fabsf(ft_angle_between_vec2(vec_door,
-					(t_vec2){player->lookdir.x, player->lookdir.y}));
-		if (ft_vec2_length(vec_door) <= DOOR_OPEN_DIST
-			&& door_angle < DOOR_OPEN_ANGLE)
-		{
-			if (!game->doors[i].key_needed || has_key(player))
-			{
-				if (!game->doors[i].is_opening)
-					game->doors[i].is_opening = 1;
-			}
-		}
-		i++;
-	}
-}
 
 void	ft_key_hook(mlx_key_data_t keydata, void *param)
 {
