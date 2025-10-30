@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/29 16:01:53 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/30 12:53:50 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ bool ft_is_door(t_vec2 p)
 
 static void	ft_clamp_new_position(t_vec2 *player_pos,t_vec2 new_pos_delta)
 {
-	// float	border_width = 0.1f;
 	t_vec2	border_offset;
 	t_vec2	closest_tile_border;
 
@@ -89,13 +88,6 @@ static void	ft_clamp_new_position(t_vec2 *player_pos,t_vec2 new_pos_delta)
 		new_pos_delta.x = closest_tile_border.x - player_pos->x;
 	if (ft_is_wall((t_vec2){player_pos->x, player_pos->y + new_pos_delta.y + border_offset.y}))
 		new_pos_delta.y = closest_tile_border.y - player_pos->y;
-	if (ft_is_wall((t_vec2){player_pos->x + new_pos_delta.x + border_offset.x, player_pos->y + border_offset.y}))
-		{
-			if (fabs(new_pos_delta.x) > fabs(new_pos_delta.y))
-				new_pos_delta.y = closest_tile_border.y - player_pos->y;
-			else
-				new_pos_delta.x = closest_tile_border.x - player_pos->x;
-		}
 	player_pos->x += new_pos_delta.x;
 	player_pos->y += new_pos_delta.y;
 }
@@ -267,7 +259,10 @@ void	ft_update(void *param)
 		|| player->is_jumping
 		|| upd_doors)
 	{
+		print_debug("Updating...");
 		ft_update_player();
+		print_debug("Player updated");
 		ft_update_graphics();
+		print_debug("Graphics updated");
 	}
 }

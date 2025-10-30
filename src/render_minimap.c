@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/29 16:03:52 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/30 14:56:01 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void	draw_map(mlx_image_t *image, t_map *map)
 				draw_square(image, PIXEL_SIZE, (t_point){x + halfx, y + halfy}, MM_COLOR_DOORS);
 			else if (ft_is_wall((t_vec2){coords.x, coords.y}))
 				draw_square(image, PIXEL_SIZE, (t_point){x + halfx, y + halfy}, MM_COLOR_WALLS);
+			else
+				draw_square(image, PIXEL_SIZE, (t_point){x + halfx, y + halfy}, MM_COLOR_EMPTY);
 		y += PIXEL_SIZE;
 		}
 	x += PIXEL_SIZE;

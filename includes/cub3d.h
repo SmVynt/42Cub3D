@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/29 17:23:57 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/30 15:03:25 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <sys/time.h>
 # include "structs.h"
 # include "ft_mat4.h"
+
+# define DEBUG_MODE	true
 
 # define WIDTH		1280
 # define HEIGHT		720
@@ -62,7 +64,7 @@
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
 # define FOV_RAD				(M_PI / 3.0)
-# define PIXEL_SIZE				4
+# define PIXEL_SIZE				2
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
 # define JUMP_IMPULSE			3.2f
@@ -151,5 +153,7 @@ t_vec2		ft_normalize_vec2(t_vec2 v);
 float		ft_angle_between_vec2(t_vec2 a, t_vec2 b);
 int			ft_clamp(int value, int min, int max);
 float		ft_clampf(float value, float min, float max);
+
+void	print_debug(const char *str);
 
 #endif
