@@ -6,13 +6,13 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/30 16:30:40 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/31 10:24:59 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_minimap_bg(void)
+void	draw_ui_minimap(void)
 {
 	uint32_t x;
 	uint32_t y;
@@ -81,7 +81,7 @@ void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color)
 	}
 }
 
-static void draw_characters_on_minimap(mlx_image_t *image, float zoom, t_point half)
+static void draw_characters_on_minimap(mlx_image_t *image, float zoom, t_point image_center)
 {
 	t_vec3		coords;
 	t_player	*player;
@@ -95,15 +95,15 @@ static void draw_characters_on_minimap(mlx_image_t *image, float zoom, t_point h
 			(ft_game()->chars[i].sprite.pos.y - player->pos.y) * zoom, 0.f};
 		if (ft_game()->chars[i].alive == false)
 			continue ;
-		if ((int)coords.x < -half.u || (int)coords.x > half.u
-			|| (int)coords.y < -half.v || (int)coords.y > half.v)
+		if ((int)coords.x < -image_center.u || (int)coords.x > image_center.u
+			|| (int)coords.y < -image_center.v || (int)coords.y > image_center.v)
 			continue ;
 		coords = ft_mat4_transform_vec3(ft_mat4_rotation_z(- atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
-		draw_circle(image, (t_point){(int)(coords.x) + half.u, (int)(coords.y) + half.v}, 3, MM_COLOR_ENEMIES);
+		draw_circle(image, (t_point){(int)(coords.x) + image_center.u, (int)(coords.y) + image_center.v}, 3, MM_COLOR_ENEMIES);
 	}
 }
 
-static void draw_items_on_minimap(mlx_image_t *image, float zoom, t_point half)
+static void draw_items_on_minimap(mlx_image_t *image, float zoom, t_point image_center)
 {
 	t_vec3		coords;
 	t_player	*player;
@@ -121,15 +121,15 @@ static void draw_items_on_minimap(mlx_image_t *image, float zoom, t_point half)
 			continue ;
 		coords = (t_vec3){(ft_game()->items[i].sprite.pos.x - player->pos.x) * zoom,
 			(ft_game()->items[i].sprite.pos.y - player->pos.y) * zoom, 0.f};
-		if ((int)coords.x < -half.u || (int)coords.x > half.u
-			|| (int)coords.y < -half.v || (int)coords.y > half.v)
+		if ((int)coords.x < -image_center.u || (int)coords.x > image_center.u
+			|| (int)coords.y < -image_center.v || (int)coords.y > image_center.v)
 			continue ;
 		coords = ft_mat4_transform_vec3(ft_mat4_rotation_z(- atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
 		if (ft_game()->items[i].type == IT_HEALTH)
 			color = MM_COLOR_HEALTH;
 		if (ft_game()->items[i].type == IT_KEY)
 			color = MM_COLOR_KEY;
-		draw_circle(image, (t_point){(int)(coords.x) + half.u, (int)(coords.y) + half.v}, 3, color);
+		draw_circle(image, (t_point){(int)(coords.x) + image_center.u, (int)(coords.y) + image_center.v}, 3, color);
 	}
 }
 
@@ -137,20 +137,20 @@ void	draw_map(mlx_image_t *image, t_map *map)
 {
 	int		x;
 	int		y;
-	t_point	half;
+	t_point	image_center;
 	t_vec3	coords;
 	t_player	*player;
 	float		zoom;
 
 	(void)map;
 	player = ft_game()->player;
-	half.u = (int)image->width / 2;
-	half.v = (int)image->height / 2;
+	image_center.u = (int)image->width / 2;
+	image_center.v = (int)image->height / 2;
 	zoom = MM_SCALE * (float)ft_game()->view3d->height / HEIGHT;
-	x = - half.u;
-	while (x < half.u)
+	x = - image_center.u;
+	while (x < image_center.u)
 	{
-		y = - half.v;
+		y = - image_center.v;
 		while (y < (int)image->height / 2)
 		{
 			coords = (t_vec3){(float)x / zoom, (float)y / zoom ,0.f};
@@ -158,17 +158,17 @@ void	draw_map(mlx_image_t *image, t_map *map)
 			coords.x += player->pos.x;
 			coords.y += player->pos.y;
 			if (ft_is_door((t_vec2){coords.x, coords.y}))
-				draw_square(image, PIXEL_SIZE, (t_point){x + half.u, y + half.v}, MM_COLOR_DOORS);
+				draw_square(image, PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_DOORS);
 			else if (ft_is_wall((t_vec2){coords.x, coords.y}))
-				draw_square(image, PIXEL_SIZE, (t_point){x + half.u, y + half.v}, MM_COLOR_WALLS);
+				draw_square(image, PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_WALLS);
 			else
-				draw_square(image, PIXEL_SIZE, (t_point){x + half.u, y + half.v}, MM_COLOR_EMPTY);
+				draw_square(image, PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_EMPTY);
 		y += PIXEL_SIZE;
 		}
 	x += PIXEL_SIZE;
 	}
-	draw_characters_on_minimap(image, zoom, half);
-	draw_items_on_minimap(image, zoom, half);
+	draw_characters_on_minimap(image, zoom, image_center);
+	draw_items_on_minimap(image, zoom, image_center);
 }
 
 void draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color)

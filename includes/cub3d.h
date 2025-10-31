@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/30 16:30:10 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/31 10:22:04 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	fill_background(mlx_image_t *image, uint32_t color);
 void	draw(int32_t width, int32_t height, void *param);
 void	draw_ui(void);
 void	draw_map(mlx_image_t *image, t_map *map);
-void	draw_minimap_bg(void);
+void	draw_ui_minimap(void);
 void	draw_player(mlx_image_t *image);
 void	draw_walls(mlx_image_t *image);
 void	draw_sprites(mlx_image_t *image);
