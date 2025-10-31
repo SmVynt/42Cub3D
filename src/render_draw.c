@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/28 20:16:24 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/30 15:06:48 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ static void ft_fill_split_bg(mlx_image_t *bg)
 void	draw(int32_t width, int32_t height, void *param)
 {
 	t_gs	*game;
-	t_map	*map;
+	// t_map	*map;
 
 
 	game = (t_gs *) param;
-	map = &game->map;
+	// map = &game->map;
 	if (game->hud)
 		mlx_delete_image(game->mlx, game->hud);
 	if (game->minimap)
@@ -67,17 +67,21 @@ void	draw(int32_t width, int32_t height, void *param)
 	ft_fill_split_bg(game->view3d_bg);
 	game->view3d = mlx_new_image(game->mlx, width, height);
 	game->hud = mlx_new_image(game->mlx, 64, height);
-	game->minimap = mlx_new_image(game->mlx, width / 3, height / 3);
-	game->miniplayer = mlx_new_image(game->mlx, width / 3, height / 3);
+	game->minimap = mlx_new_image(game->mlx, height * 2 / 5, height / 2);
+	game->miniplayer = mlx_new_image(game->mlx,height * 2 / 9, height * 2 / 9);
 	if (!game->minimap || !game->miniplayer || !game->view3d)
 		return ;
-	draw_map(game->minimap, map);
-	ft_update(game);
+	draw_ui();
 	mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
 	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
-	mlx_image_to_window(game->mlx, game->minimap, 0, 0);
-	mlx_image_to_window(game->mlx, game->miniplayer, 0, 0);
+	// mlx_image_to_window(game->mlx, game->minimap, width / 16, height / 2);
+	mlx_image_to_window(game->mlx, game->miniplayer,
+			(width / 16 + (int)((float)height * 0.11f) / PIXEL_SIZE * PIXEL_SIZE),
+			height / 2 + (int)((float)height * 0.025f) / PIXEL_SIZE * PIXEL_SIZE);
+	mlx_image_to_window(game->mlx, game->minimap, width / 16, height / 2);
 	mlx_image_to_window(game->mlx, game->hud, width - 64, 0);
+	// ft_update(game); We maybe'll need this later
+	ft_update_graphics();
 }
 
 // static inline void put_pixel(mlx_image_t *image, u_int32_t x, u_int32_t y, uint32_t color)
@@ -121,24 +125,6 @@ void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color)
 t_point	center_point(t_point point, int w, int h)
 {
 	return ((t_point){point.u + w / 2, point.v + h / 2});
-}
-
-void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color)
-{
-	int size;
-	int i;
-
-	(void) color;
-	size = MAP_SCALE;
-	i = -size / 2;
-	while (i < size / 2)
-	{
-		put_pixel(image, pos.u + i, pos.v - size / 2, COLOR_RED);
-		put_pixel(image, pos.u + i, pos.v + size / 2, COLOR_GREEN);
-		put_pixel(image, pos.u - size / 2, pos.v + i, COLOR_YELLOW);
-		put_pixel(image, pos.u + size / 2, pos.v + i, COLOR_BLUE);
-		i++;
-	}
 }
 
 void	draw_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture)
@@ -189,77 +175,6 @@ void fill_background(mlx_image_t *image, uint32_t color)
 		pixels[i] = color;
 }
 
-void	draw_map(mlx_image_t *image, t_map *map)
-{
-	int i;
-	int j;
-	int offset;
-
-
-	fill_background(image, COLOR_BLACK);
-	i = 0;
-	offset = MAP_SCALE;
-	while (i < map->h)
-	{
-		j = 0;
-		while  (j < map->w)
-		{
-			if (map->tile[i][j] == '1')
-				if (true)
-					draw_map_square(image, (t_point){j * MAP_SCALE + offset, i * MAP_SCALE + offset}, COLOR_RED);
-			j++;
-		}
-		i++;
-	}
-}
-
-void draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color)
-{
-	int x;
-	int y;
-	int r_squared;
-
-	r_squared = radius * radius;
-	for (y = -radius; y <= radius; y++)
-	{
-		for (x = -radius; x <= radius; x++)
-		{
-			if (x * x + y * y <= r_squared)
-			{
-				int px = center.u + x;
-				int py = center.v + y;
-				put_pixel(image, px, py, color);
-				// if (px >= 0 && px < WIDTH && py >= 0 && py < HEIGHT)
-				// 	pixels[py * WIDTH + px] = color;
-			}
-		}
-	}
-}
-
-void	draw_player(mlx_image_t *image)
-{
-	t_point center;
-	t_player	*player;
-	t_map		map;
-
-	player = ft_game()->player;
-	map = ft_game()->map;
-	center = (t_point){(int)(player->pos.x * MAP_SCALE + MAP_SCALE),
-		(int)(player->pos.y * MAP_SCALE + MAP_SCALE)};
-	draw_circle(image, center, 3, COLOR_BLUE);
-	float angle = - FOV_RAD / 2;
-	float dangle = FOV_RAD / (ft_game()->view3d->width - 1);
-	int x = 0;
-	while ((unsigned int)x < ft_game()->view3d->width)
-	{
-		draw_line_ray(image, center, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map, x);
-		angle += dangle;
-		x++;
-	}
-	draw_line(image, center,
-		(t_point){(int)(center.u + player->lookdir.x * 20),
-		(int)(center.v + player->lookdir.y * 20)}, COLOR_YELLOW);
-}
 
 void	draw_walls(mlx_image_t *image)
 {
@@ -318,7 +233,7 @@ void	ft_add_sprite_to_list(t_sprite *head, t_sprite *sprite)
 }
 
 void pick_up(t_item *item)
-{   
+{
 	if (!item->active)
         return;
 	item->active = false;

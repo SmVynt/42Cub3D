@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 02:51:33 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/29 00:08:29 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ static void	ft_free_mlx(void)
 		mlx_delete_texture(game->textures.wall_atlas);
 	if (game->textures.bg)
 		mlx_delete_texture(game->textures.bg);
+	if (game->textures.ui_minimap)
+		mlx_delete_texture(game->textures.ui_minimap);
 	if (game->mlx)
 	{
 		if (game->minimap)

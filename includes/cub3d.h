@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/28 20:44:57 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/31 10:22:04 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <sys/time.h>
 # include "structs.h"
 # include "ft_mat4.h"
+
+# define DEBUG_MODE	true
 
 # define WIDTH		1280
 # define HEIGHT		720
@@ -57,6 +59,7 @@
 # endif
 # define PI						3.14159265358
 # define TWO_PI					6.28318530718
+# define HALF_PI				1.57079632679
 # define DEG_TO_RAD				0.01745329251
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
@@ -117,9 +120,13 @@ bool	ft_is_door(t_vec2 p);
 t_door	*ft_get_door(int x, int y);
 void	try_open_doors(t_gs *game);
 void	open_door(int i);
+void	fill_background(mlx_image_t *image, uint32_t color);
+// void	init_player(void);
 
 void	draw(int32_t width, int32_t height, void *param);
+void	draw_ui(void);
 void	draw_map(mlx_image_t *image, t_map *map);
+void	draw_ui_minimap(void);
 void	draw_player(mlx_image_t *image);
 void	draw_walls(mlx_image_t *image);
 void	draw_sprites(mlx_image_t *image);
@@ -147,5 +154,7 @@ t_vec2		ft_normalize_vec2(t_vec2 v);
 float		ft_angle_between_vec2(t_vec2 a, t_vec2 b);
 int			ft_clamp(int value, int min, int max);
 float		ft_clampf(float value, float min, float max);
+
+void		print_debug(const char *str);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/10/28 20:30:34 by nmikuka          ###   ########.fr        #
+#    Updated: 2025/10/30 16:03:11 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,12 +57,15 @@ SRC_FILES	= \
 				main.c \
 				render_draw.c \
 				render_images.c \
+				render_minimap.c \
 				render_raycast.c \
+				render_ui.c \
 				sys_clean.c \
 				sys_errors.c \
 				sys_gamestate.c \
 				sys_lib.c \
 				sys_math.c \
+				sys_utils.c \
 				ft_mat4.c \
 				ft_mat4_transform.c \
 				ft_list.c
@@ -72,6 +75,8 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 # Headers
 HEADERS = $(INCLUDES)/cub3d.h \
 			$(INCLUDES)/structs.h \
+			$(INCLUDES)/ft_mat4.h \
+			$(INCLUDES)/bonus_setup.h \
 			$(INCLUDES)/libft_mini.h
 
 # Extra libs

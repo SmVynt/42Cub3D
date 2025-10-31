@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/28 20:15:51 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/30 15:34:43 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool ft_is_wall(t_vec2 p)
 	x = (int)roundf(p.x);
 	y = (int)roundf(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
-		return (true);
+		return (false);
 	if (ft_strchar(MAP_WALL_CHARS, map->tile[y][x]) != NULL)
 		return (true);
 	if (ft_strchar(MAP_DOOR_CHARS, map->tile[y][x]) != NULL && ft_get_door(y,x)->closed)
@@ -44,7 +44,7 @@ bool ft_is_door(t_vec2 p)
 	x = (int)roundf(p.x);
 	y = (int)roundf(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
-		return (true);
+		return (false);
 	if (ft_strchar(MAP_DOOR_CHARS, map->tile[y][x]) != NULL) //&& ft_get_door(y,x)->closed)
 		return (true);
 	return (false);
@@ -52,7 +52,6 @@ bool ft_is_door(t_vec2 p)
 
 static void	ft_clamp_new_position(t_vec2 *player_pos,t_vec2 new_pos_delta)
 {
-	// float	border_width = 0.1f;
 	t_vec2	border_offset;
 	t_vec2	closest_tile_border;
 
@@ -73,13 +72,6 @@ static void	ft_clamp_new_position(t_vec2 *player_pos,t_vec2 new_pos_delta)
 		new_pos_delta.x = closest_tile_border.x - player_pos->x;
 	if (ft_is_wall((t_vec2){player_pos->x, player_pos->y + new_pos_delta.y + border_offset.y}))
 		new_pos_delta.y = closest_tile_border.y - player_pos->y;
-	if (ft_is_wall((t_vec2){player_pos->x + new_pos_delta.x + border_offset.x, player_pos->y + border_offset.y}))
-		{
-			if (fabs(new_pos_delta.x) > fabs(new_pos_delta.y))
-				new_pos_delta.y = closest_tile_border.y - player_pos->y;
-			else
-				new_pos_delta.x = closest_tile_border.x - player_pos->x;
-		}
 	player_pos->x += new_pos_delta.x;
 	player_pos->y += new_pos_delta.y;
 }
@@ -197,7 +189,8 @@ void	ft_update_minimap(void *param)
 		return ;
 	image = (mlx_image_t *)param;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
-	draw_player(image);
+	//draw_player(image);
+	draw_map(image, &ft_game()->map);
 }
 
 static void ft_update_dt(void)
@@ -215,7 +208,6 @@ static void ft_update_dt(void)
 	if (elapsed > MAX_DT)
 		elapsed = MAX_DT;
 	ft_game()->dt = elapsed;
-	// printf("fps: %.1f\n", 1.0f / ft_game()->dt);
 	last_time = current_time;
 }
 

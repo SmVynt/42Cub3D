@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/28 16:26:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/30 15:17:31 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,14 +178,13 @@ void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
 	pixel.u = ft_find_texture_u(&texture, ray);
 	delta = 0;
 	wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
+	if (wall_start < 0)
+		delta = -wall_start / 2;
 	while (delta <= ray.wall_height)
 	{
-		if ((wall_start + delta) >= (int)image->height)
+		if ((wall_start + delta) >= (int)image->height )
 			break ;
 		pixel.v = (int)(delta / ray.wall_height * texture->height);
-		// if (ray.is_door)
-		// 	color = 0xFF00001A;
-		// else
 			color = ft_get_pixel_color(texture, pixel);
 		if (color != 0)
 			draw_square(image, PIXEL_SIZE, (t_point){x, wall_start + delta}, color);
@@ -210,7 +209,6 @@ static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 		dist = get_dist_to_screen_point(y, ray);
 		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, ft_game()->textures.walls[0].tex[DIR_WE]->width);
 		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, ft_game()->textures.walls[0].tex[DIR_NO]->height);
-		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.no, pixel));
 		color = ft_get_pixel_color(ft_game()->textures.walls[0].tex[DIR_WE], pixel);
 		if (color != 0)
 			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
@@ -235,8 +233,6 @@ static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
 		dist = get_dist_to_screen_point(y, ray);
 		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, ft_game()->textures.walls[0].tex[DIR_NO]->width);
 		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, ft_game()->textures.walls[0].tex[DIR_NO]->height);
-		// draw_square(image, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(ft_game()->textures.ea, pixel));
-		// y += PIXEL_SIZE;
 		color = ft_get_pixel_color(ft_game()->textures.walls[0].tex[DIR_NO], pixel);
 		if (color != 0)
 			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);

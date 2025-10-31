@@ -6,13 +6,13 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/27 10:47:08 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/10/31 10:21:00 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void ft_initprefabs(void)
+static void ft_init_prefabs(void)
 {
 	t_gs	*game;
 
@@ -86,7 +86,7 @@ static void ft_initprefabs(void)
 
 }
 
-static void ft_initrender(void)
+static void ft_init_render(void)
 {
 	t_gs	*game;
 
@@ -97,7 +97,7 @@ static void ft_initrender(void)
 		ft_exit_perror("Could not allocate memory for render depth buffer\n");
 }
 
-static void	ft_initmap(void)
+static void	ft_init_map(void)
 {
 	t_map	*map;
 
@@ -115,7 +115,7 @@ static void	ft_initmap(void)
 	map->h = 0;
 }
 
-static void	ft_initplayer(void)
+static void	ft_init_player(void)
 {
 	t_player	*player;
 
@@ -136,7 +136,7 @@ static void	ft_initplayer(void)
 	ft_game()->player = player;
 }
 
-static void	ft_initgame(void)
+static void	ft_init_game(void)
 {
 	t_gs	*game;
 
@@ -152,11 +152,32 @@ static void	ft_initgame(void)
 	game->playing = true;
 }
 
+static void	ft_init_null_textures(void)
+{
+	t_gs	*game;
+	int		i;
+
+	game = ft_game();
+	game->textures.wall_atlas = NULL;
+	game->textures.bg = NULL;
+	game->textures.ui_minimap = NULL;
+	i = 0;
+	while (i < WALLS_TYPES_COUNT)
+	{
+		game->textures.walls[i].tex[DIR_NO] = NULL;
+		game->textures.walls[i].tex[DIR_SO] = NULL;
+		game->textures.walls[i].tex[DIR_WE] = NULL;
+		game->textures.walls[i].tex[DIR_EA] = NULL;
+		i++;
+	}
+}
+
 void	ft_initialize(void)
 {
-	ft_initgame();
-	ft_initprefabs();
-	ft_initmap();
-	ft_initplayer();
-	ft_initrender();
+	ft_init_game();
+	ft_init_prefabs();
+	ft_init_map();
+	ft_init_player();
+	ft_init_render();
+	ft_init_null_textures();
 }
