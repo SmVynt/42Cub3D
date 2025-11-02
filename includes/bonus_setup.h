@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_setup.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/30 16:14:57 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/10/31 14:08:37 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BONUS_SETUP_H
 # define BONUS_SETUP_H
 
-# define ITEMS_TYPES_COUNT	4
-# define MAP_ITEM_CHARS		"+K.#"
+# define ITEMS_TYPES_COUNT	5
+# define MAP_ITEM_CHARS		"+K.#f"
 # define TEX_HEALTH			"textures/items/health_kit.png"
 # define TEX_KEY			"textures/items/key.png"
 # define TEX_CHANDELIER		"textures/items/chandelier.png"
 # define TEX_BARREL			"textures/items/barrel.png"
+# define TEX_FIRE			"textures/items/fire_anim.png"
 
 # define CHARS_TYPES_COUNT	2
 # define MAP_CHAR_CHARS		"as"

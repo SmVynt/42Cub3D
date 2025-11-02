@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/29 00:15:01 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/02 15:56:05 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,8 +226,14 @@ static void ft_init_sprites(void)
 	{
 		if (game->item_prefabs[i].sprite.path == NULL)
 			ft_exit_error("Item prefab texture path is NULL\n");
-		ft_load_texture(game->item_prefabs[i].sprite.path, &game->item_prefabs[i].sprite.texture);
-		i++;
+		if (!game->item_prefabs[i].sprite.animated)
+			ft_load_texture(game->item_prefabs[i].sprite.path, &game->item_prefabs[i].sprite.texture);
+		else
+		{
+			ft_load_anim_texture(game->item_prefabs[i].sprite.path, game->item_prefabs[i].sprite.anim.frames, game->item_prefabs[i].sprite.anim.n_frames);
+			game->item_prefabs[i].sprite.texture = game->item_prefabs[i].sprite.anim.frames[0];
+		}
+			i++;
 	}
 	i = 0;
 	while (i < CHARS_TYPES_COUNT)

@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/30 15:17:31 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/02 15:55:37 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,6 +440,17 @@ void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
 	int				x;
 	int				y;
 
+	if (sprite->animated)
+	{
+		sprite->anim.anim_timer += ft_game()->dt;
+		if (sprite->anim.anim_timer >= sprite->anim.frame_duration)
+		{
+			sprite->anim.anim_timer = 0.0f;
+			sprite->anim.curr_frame++;
+		}
+		// printf("here is the fire %zu %f\n", (int)ft_game()->dt % sprite->n_frames, MAX_DT / ft_game()->dt);
+		sprite->texture = sprite->anim.frames[sprite->anim.curr_frame % sprite->anim.n_frames];
+	}
 	if (!sprite->texture || !sprite->texture->pixels)
 		return ;
 	sp = &sprite->sp;

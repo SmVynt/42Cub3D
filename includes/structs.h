@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/29 00:07:41 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/02 15:53:48 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ typedef enum e_item_type
 	IT_HEALTH,
 	IT_KEY,
 	IT_CHANDELIER,
-	IT_BARREL
+	IT_BARREL,
+	IT_FIRE
 }	t_item_type;
 // Don't forget to update ITEMS_TYPES_COUNT in structs.h
 
@@ -95,6 +96,16 @@ typedef struct s_spriterender
 	bool		visible;
 }	t_spriterender;
 
+
+typedef struct s_anim
+{
+	mlx_texture_t	*frames[8];
+	size_t			n_frames;
+	float			anim_timer;
+	float			frame_duration;
+	size_t			curr_frame;
+}	t_anim;
+
 struct s_sprite
 {
 	mlx_texture_t	*texture;
@@ -102,6 +113,8 @@ struct s_sprite
 	float			bottom_offset;
 	t_vec2			pos;
 	t_spriterender	sp;
+	bool			animated;
+	t_anim			anim;
 	t_sprite		*next;
 };
 

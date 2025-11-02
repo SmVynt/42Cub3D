@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/30 15:34:43 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/01 20:47:11 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,20 +216,20 @@ void	ft_update(void *param)
 	t_gs		*game;
 	t_player	*player;
 	int			i;
-	bool		upd_doors;
+	// bool		upd_doors;
 
 	game = ft_game();
 	player = game->player;
 	(void)param;
 	ft_update_dt();
 	i = 0;
-	upd_doors = false;
+	// upd_doors = false;
 	while(i < game->door_count)
 	{
 		if (ft_game()->doors[i].is_opening)
 		{
 			open_door(i);
-			upd_doors = true;
+			// upd_doors = true;
 		}
 		i++;
 	}
@@ -239,10 +239,10 @@ void	ft_update(void *param)
 		|| player->rot_control.v != 0
 		|| player->mouse_diff.x != 0.0f
 		|| player->mouse_diff.y != 0.0f
-		|| player->is_jumping
-		|| upd_doors)
+		|| player->is_jumping)
+		// || upd_doors)
 	{
 		ft_update_player();
-		ft_update_graphics();
 	}
+	ft_update_graphics();
 }
