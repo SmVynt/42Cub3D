@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/02 21:44:37 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 23:03:31 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	draw(int32_t width, int32_t height, void *param)
 	game->hud = mlx_new_image(game->mlx, 64, height);
 	game->minimap = mlx_new_image(game->mlx, height * 2 / 5, height / 2);
 	game->miniplayer = mlx_new_image(game->mlx,height * 2 / 9, height * 2 / 9);
-	if (!game->minimap || !game->miniplayer || !game->view3d || !game->view3d || !game->view3d)
+	if (!game->minimap || !game->miniplayer || !game->view3d || !game->hud || !game->view3d_bg)
 		return ;
 	draw_ui();
 	mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
@@ -273,7 +273,7 @@ void	draw_sprites(mlx_image_t *image)
 		ft_calculate_sprite(image, &ft_game()->items[i].sprite);
 		if(ft_game()->items[i].active && ft_game()->items[i].pickupable && ft_game()->items[i].sprite.sp.dist < 1.0)
 			pick_up(&ft_game()->items[i]);
-		if (ft_game()->items[i].active)
+		if (ft_game()->items[i].sprite.sp.visible && ft_game()->items[i].active)
 			ft_lstinsert_sorted(&ft_game()->sh, &ft_game()->items[i].sprite, cmp_dist);
 	}
 	i = -1;
@@ -282,7 +282,7 @@ void	draw_sprites(mlx_image_t *image)
 		ft_calculate_sprite(image, &ft_game()->chars[i].sprite);
 		ft_lstinsert_sorted(&ft_game()->sh, &ft_game()->chars[i].sprite, cmp_dist);
 	}
-	curr = ft_game()->sh->next;
+	curr = ft_game()->sh;
 	while (curr)
 	{
 		draw_sprite(image, (t_sprite *)curr->content);
