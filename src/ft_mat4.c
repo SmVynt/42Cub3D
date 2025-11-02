@@ -62,13 +62,12 @@ t_mat4	ft_mat4_mul(t_mat4 a, t_mat4 b)
 	return (res);
 }
 
-t_vec3	ft_mat4_transform_vec3(t_mat4 m, t_vec3 v)
+t_vec2	ft_mat4_transform_vec2(t_mat4 m, t_vec2 v)
 {
-	t_vec3	res;
+	t_vec2	res;
 
-	res.x = (m.m[0][0] * v.x + m.m[0][1] * v.y + m.m[0][2] * v.z + m.m[0][3]);
-	res.y = (m.m[1][0] * v.x + m.m[1][1] * v.y + m.m[1][2] * v.z + m.m[1][3]);
-	res.z = (m.m[2][0] * v.x + m.m[2][1] * v.y + m.m[2][2] * v.z + m.m[2][3]);
+	res.x = (m.m[0][0] * v.x + m.m[0][1] * v.y);
+	res.y = (m.m[1][0] * v.x + m.m[1][1] * v.y);
 	return (res);
 }
 

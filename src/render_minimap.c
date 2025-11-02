@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_minimap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/31 10:24:59 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/02 18:12:02 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	draw_player(mlx_image_t *image)
 	int x = 0;
 	while ((unsigned int)x < ft_game()->view3d->width)
 	{
-		draw_line_ray(image, center, ft_mat4_transform_vec3(ft_mat4_rotation_z(angle), player->lookdir), map, x);
+		draw_line_ray(image, center, ft_mat4_transform_vec2(ft_mat4_rotation_z(angle), player->lookdir), map, x);
 		angle += dangle;
 		x++;
 	}
@@ -83,7 +83,7 @@ void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color)
 
 static void draw_characters_on_minimap(mlx_image_t *image, float zoom, t_point image_center)
 {
-	t_vec3		coords;
+	t_vec2		coords;
 	t_player	*player;
 	int			i;
 
@@ -91,21 +91,21 @@ static void draw_characters_on_minimap(mlx_image_t *image, float zoom, t_point i
 	i = -1;
 	while (++i < ft_game()->char_count)
 	{
-		coords = (t_vec3){(ft_game()->chars[i].sprite.pos.x - player->pos.x) * zoom,
-			(ft_game()->chars[i].sprite.pos.y - player->pos.y) * zoom, 0.f};
+		coords = (t_vec2){(ft_game()->chars[i].sprite.pos.x - player->pos.x) * zoom,
+			(ft_game()->chars[i].sprite.pos.y - player->pos.y) * zoom};
 		if (ft_game()->chars[i].alive == false)
 			continue ;
 		if ((int)coords.x < -image_center.u || (int)coords.x > image_center.u
 			|| (int)coords.y < -image_center.v || (int)coords.y > image_center.v)
 			continue ;
-		coords = ft_mat4_transform_vec3(ft_mat4_rotation_z(- atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
+		coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(- atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
 		draw_circle(image, (t_point){(int)(coords.x) + image_center.u, (int)(coords.y) + image_center.v}, 3, MM_COLOR_ENEMIES);
 	}
 }
 
 static void draw_items_on_minimap(mlx_image_t *image, float zoom, t_point image_center)
 {
-	t_vec3		coords;
+	t_vec2		coords;
 	t_player	*player;
 	int			i;
 	uint32_t	color;
@@ -119,12 +119,12 @@ static void draw_items_on_minimap(mlx_image_t *image, float zoom, t_point image_
 			continue ;
 		if (ft_game()->items[i].active == false)
 			continue ;
-		coords = (t_vec3){(ft_game()->items[i].sprite.pos.x - player->pos.x) * zoom,
-			(ft_game()->items[i].sprite.pos.y - player->pos.y) * zoom, 0.f};
+		coords = (t_vec2){(ft_game()->items[i].sprite.pos.x - player->pos.x) * zoom,
+			(ft_game()->items[i].sprite.pos.y - player->pos.y) * zoom};
 		if ((int)coords.x < -image_center.u || (int)coords.x > image_center.u
 			|| (int)coords.y < -image_center.v || (int)coords.y > image_center.v)
 			continue ;
-		coords = ft_mat4_transform_vec3(ft_mat4_rotation_z(- atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
+		coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(- atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
 		if (ft_game()->items[i].type == IT_HEALTH)
 			color = MM_COLOR_HEALTH;
 		if (ft_game()->items[i].type == IT_KEY)
@@ -138,7 +138,7 @@ void	draw_map(mlx_image_t *image, t_map *map)
 	int		x;
 	int		y;
 	t_point	image_center;
-	t_vec3	coords;
+	t_vec2	coords;
 	t_player	*player;
 	float		zoom;
 
@@ -153,8 +153,8 @@ void	draw_map(mlx_image_t *image, t_map *map)
 		y = - image_center.v;
 		while (y < (int)image->height / 2)
 		{
-			coords = (t_vec3){(float)x / zoom, (float)y / zoom ,0.f};
-			coords = ft_mat4_transform_vec3(ft_mat4_rotation_z(atan2(player->lookdir.y, player->lookdir.x) + HALF_PI), coords);
+			coords = (t_vec2){(float)x / zoom, (float)y / zoom};
+			coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(atan2(player->lookdir.y, player->lookdir.x) + HALF_PI), coords);
 			coords.x += player->pos.x;
 			coords.y += player->pos.y;
 			if (ft_is_door((t_vec2){coords.x, coords.y}))

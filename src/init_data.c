@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 16:09:08 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 18:07:25 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ static void	ft_init_player(void)
 	player->pos.y = 0;
 	player->lookdir.x = 1.0f;
 	player->lookdir.y = 0.0f;
-	player->lookdir.z = 0.0f;
 	player->mov_control = (t_point){0, 0};
 	player->rot_control = (t_point){0, 0};
 	player->mouse_pos = (t_vec2){-1.0f, -1.0f};
