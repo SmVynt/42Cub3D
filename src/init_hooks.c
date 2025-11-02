@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init_hooks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/28 20:33:46 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 17:57:43 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <signal.h>
 // #include <GLFW/glfw3.h>
 
 void	ft_key_hook(mlx_key_data_t keydata, void *param)
@@ -49,6 +50,12 @@ static void	ft_mouse_move(double x, double y, void *param)
 	player->mouse_pos.y = y;
 }
 
+static void	ft_close_hook(void *param)
+{
+	(void)param;
+	ft_exit();
+}
+
 void	ft_createhooks(void)
 {
 	t_gs	*game;
@@ -59,6 +66,7 @@ void	ft_createhooks(void)
 		mlx_set_cursor_mode(game->mlx, MLX_MOUSE_DISABLED);
 	else
 		mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
+	mlx_close_hook(game->mlx, ft_close_hook, game);
 	mlx_resize_hook(game->mlx, draw, game);
 	mlx_loop_hook(game->mlx, ft_key_press_hook, game);
 	mlx_key_hook(game->mlx, ft_key_hook, game);
