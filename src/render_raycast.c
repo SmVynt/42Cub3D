@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/02 15:55:37 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 18:13:10 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ float	ft_height_delta(float distance)
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
 		t_point diff, t_point dir);
 
-static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec3 dir, int max_steps, t_direction *wall_dir);
+static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_steps, t_direction *wall_dir);
 
 bool hit_wall(t_point p, t_map map, mlx_image_t* image)
 {
@@ -84,7 +84,7 @@ bool hit_wall(t_point p, t_map map, mlx_image_t* image)
 	return (false);
 }
 
-void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x)
+void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec2 lookdir, t_map map, int x)
 {
 	t_point		diff;
 	t_point		dir;
@@ -249,7 +249,7 @@ void	draw_wall(mlx_image_t *image, int x)
 
 	player = ft_game()->player;
 	ray.angle = - FOV_RAD / 2 + x * (FOV_RAD / (double)(image->width - 1));
-	ray.dir = ft_mat4_transform_vec3(ft_mat4_rotation_z(ray.angle), player->lookdir);
+	ray.dir = ft_mat4_transform_vec2(ft_mat4_rotation_z(ray.angle), player->lookdir);
 	ray.bgx = -1;
 	ray.start.x = player->pos.x + 0.5f;
 	ray.start.y = player->pos.y + 0.5f;
@@ -300,7 +300,7 @@ static void	get_next_point_to_draw(t_point *p, int *slope_err,
 	}
 }
 
-static t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec3 dir, int *tile_x, int *tile_y, int *side)
+static t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec2 dir, int *tile_x, int *tile_y, int *side)
 {
 	t_vec2	hit_point;
 	t_vec2	next_wall;
@@ -351,7 +351,7 @@ static t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec3 dir, int *tile_x, in
 	return hit_point;
 }
 
-static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec3 dir, int max_iter, t_direction *wall_dir)
+static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir)
 {
 	t_vec2	curr;
 	t_point	tile;

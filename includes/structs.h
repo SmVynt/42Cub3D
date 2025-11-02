@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 15:53:48 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 18:13:57 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@ typedef struct s_vec2
 	float	x;
 	float	y;
 }	t_vec2;
-
-typedef struct s_vec3
-{
-	float	x;
-	float	y;
-	float	z;
-}	t_vec3;
 
 typedef struct s_mat4
 {
@@ -172,7 +165,7 @@ typedef struct s_render
 typedef struct s_player
 {
 	t_vec2	pos;
-	t_vec3	lookdir;
+	t_vec2	lookdir;
 	t_point	mov_control;
 	t_vec2	mouse_pos;
 	t_vec2	mouse_diff;
@@ -188,7 +181,7 @@ typedef struct s_rayrender
 {
 	t_vec2		start;
 	t_vec2		end;
-	t_vec3		dir;
+	t_vec2		dir;
 	int			bgx;
 	double		angle;
 	double		dist;

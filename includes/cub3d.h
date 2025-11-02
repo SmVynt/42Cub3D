@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/01 17:08:24 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 18:12:18 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static inline void put_pixel(mlx_image_t *image, u_int32_t x, u_int32_t y, uint3
 	if (x < image->width && y < image->height)
 		((uint32_t *)image->pixels)[y * image->width + x] = color;
 }
-void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec3 lookdir, t_map map, int x);
+void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec2 lookdir, t_map map, int x);
 void	draw_wall(mlx_image_t *image, int x);
 void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
 bool	ft_is_wall(t_vec2 p);

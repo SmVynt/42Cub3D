@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/01 20:47:11 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 18:10:13 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_update_player(void)
 	maxlookupdown = ft_game()->view3d->height / 2;
 	if (player->rot_control.u != 0)
 	{
-		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(player->rot_control.u * ROTATIONSPEED * ft_game()->dt), player->lookdir);
+		player->lookdir = ft_mat4_transform_vec2(ft_mat4_rotation_z(player->rot_control.u * ROTATIONSPEED * ft_game()->dt), player->lookdir);
 	}
 	if (player->rot_control.v != 0)
 	{
@@ -100,7 +100,7 @@ void	ft_update_player(void)
 	}
 	if (player->mouse_diff.x != 0.0f)
 	{
-		player->lookdir = ft_mat4_transform_vec3(ft_mat4_rotation_z(-player->mouse_diff.x * ROTATIONSPEED * MOUSE_XSENS * ft_game()->dt), player->lookdir);
+		player->lookdir = ft_mat4_transform_vec2(ft_mat4_rotation_z(-player->mouse_diff.x * ROTATIONSPEED * MOUSE_XSENS * ft_game()->dt), player->lookdir);
 		player->mouse_diff.x = 0.0f;
 	}
 	if (player->mouse_diff.y != 0.0f)
