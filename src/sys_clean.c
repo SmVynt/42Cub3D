@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sys_clean.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/29 00:08:29 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/02 17:09:54 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,17 @@ static void	ft_free_mlx(void)
 	i = 0;
 	while (i < ITEMS_TYPES_COUNT)
 	{
-		if (game->item_prefabs[i].sprite.texture)
+		if (game->item_prefabs[i].sprite.animated)
+		{
+			size_t j = 0;
+			while (j < game->item_prefabs[i].sprite.anim.n_frames)
+			{
+				if (game->item_prefabs[i].sprite.anim.frames[j])
+					mlx_delete_texture(game->item_prefabs[i].sprite.anim.frames[j]);
+				j++;
+			}
+		}
+		else if (game->item_prefabs[i].sprite.texture)
 			mlx_delete_texture(game->item_prefabs[i].sprite.texture);
 		i++;
 	}
