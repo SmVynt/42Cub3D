@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:27:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/25 21:17:54 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 21:27:01 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,10 @@ t_list	*ft_lstinsert_sorted(t_list **head, void *content,
 	curr = *head;
 	while (curr->next && cmp(content, curr->next->content) >= 0)
 		curr = curr->next;
-
 	new_node->next = curr->next;
 	curr->next = new_node;
-
 	return (new_node);
 }
-
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {

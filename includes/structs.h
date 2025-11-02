@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 18:13:57 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 21:37:45 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ typedef enum e_char_type
 }	t_char_type;
 // Don't forget to update CHARS_TYPES_COUNT in structs.h
 
-typedef struct s_sprite t_sprite;
-
 typedef struct s_spriterender
 {
 	double		angle;
@@ -99,7 +97,7 @@ typedef struct s_anim
 	size_t			curr_frame;
 }	t_anim;
 
-struct s_sprite
+typedef struct s_sprite
 {
 	mlx_texture_t	*texture;
 	char			*path;
@@ -108,8 +106,7 @@ struct s_sprite
 	t_spriterender	sp;
 	bool			animated;
 	t_anim			anim;
-	t_sprite		*next;
-};
+}	t_sprite;
 
 typedef struct s_item
 {
@@ -206,7 +203,7 @@ typedef struct s_gs
 	t_textures		textures;
 	t_render		render;
 	bool			playing;
-	t_sprite		*sh;
+	t_list			*sh;
 	t_item			item_prefabs[ITEMS_TYPES_COUNT];
 	t_item			*items;
 	int				item_count;

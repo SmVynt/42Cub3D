@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 20:14:20 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/28 20:25:51 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 19:38:15 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ void	try_open_doors(t_gs *game)
 	{
 		vec_door = (t_vec2){game->doors[i].sprite.pos.x - player->pos.x,
 			game->doors[i].sprite.pos.y - player->pos.y};
-		door_angle = fabsf(ft_angle_between_vec2(vec_door,
-					(t_vec2){player->lookdir.x, player->lookdir.y}));
+		door_angle = fabsf(ft_angle_between_vec2(vec_door, player->lookdir));
 		if (ft_vec2_length(vec_door) <= DOOR_OPEN_DIST
 			&& door_angle < DOOR_OPEN_ANGLE)
 		{

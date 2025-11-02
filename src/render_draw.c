@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/30 15:06:48 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/02 21:44:37 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,11 @@ void	draw(int32_t width, int32_t height, void *param)
 	game->hud = mlx_new_image(game->mlx, 64, height);
 	game->minimap = mlx_new_image(game->mlx, height * 2 / 5, height / 2);
 	game->miniplayer = mlx_new_image(game->mlx,height * 2 / 9, height * 2 / 9);
-	if (!game->minimap || !game->miniplayer || !game->view3d)
+	if (!game->minimap || !game->miniplayer || !game->view3d || !game->view3d || !game->view3d)
 		return ;
 	draw_ui();
 	mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
 	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
-	// mlx_image_to_window(game->mlx, game->minimap, width / 16, height / 2);
 	mlx_image_to_window(game->mlx, game->miniplayer,
 			(width / 16 + (int)((float)height * 0.11f) / PIXEL_SIZE * PIXEL_SIZE),
 			height / 2 + (int)((float)height * 0.025f) / PIXEL_SIZE * PIXEL_SIZE);
@@ -198,11 +197,10 @@ void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite)
 	if (!sprite->texture || !sprite->texture->pixels)
 		return ;
 	sp->visible = true;
-	sprite->next = NULL;
 	player = ft_game()->player;
 	sp_dir = (t_vec2){sprite->pos.x - player->pos.x, sprite->pos.y - player->pos.y};
 	sp->dist = ft_vec2_length(sp_dir);
-	sp->angle = ft_angle_between_vec2((t_vec2){player->lookdir.x, player->lookdir.y}, sp_dir);
+	sp->angle = ft_angle_between_vec2(player->lookdir, sp_dir);
 	if (sp->dist < 0.2f || fabs(sp->angle) > FOV_RAD / 2 + M_PI / 20)
 	{
 		sp->visible = false;
@@ -219,18 +217,18 @@ void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite)
 	sp->start.v += sp->max_size * 0.5f * ft_game()->player->jump_height + player->lookupdown;
 }
 
-void	ft_add_sprite_to_list(t_sprite *head, t_sprite *sprite)
-{
-	t_sprite	*current;
+// void	ft_add_sprite_to_list(t_sprite *head, t_sprite *sprite)
+// {
+// 	t_sprite	*current;
 
-	if (!head || !sprite || !sprite->sp.visible)
-		return ;
-	current = head;
-	while (current->next && current->next->sp.dist > sprite->sp.dist)
-		current = current->next;
-	sprite->next = current->next;
-	current->next = sprite;
-}
+// 	if (!head || !sprite || !sprite->sp.visible)
+// 		return ;
+// 	current = head;
+// 	while (current->next && current->next->sp.dist > sprite->sp.dist)
+// 		current = current->next;
+// 	sprite->next = current->next;
+// 	current->next = sprite;
+// }
 
 void pick_up(t_item *item)
 {
@@ -241,15 +239,34 @@ void pick_up(t_item *item)
 	ft_lstadd_back(&ft_game()->player->pocket, ft_lstnew(item));
 }
 
+
+int cmp_dist(void *a, void *b)
+{
+	t_sprite *s1;
+	t_sprite *s2;
+	s1 = (t_sprite *)a;
+	s2 = (t_sprite *)b;
+
+    if (s1->sp.dist < s2->sp.dist)
+        return (1);
+    else if (s1->sp.dist > s2->sp.dist)
+        return (-1);
+    return (0);
+}
+
+void	del_nothing(void *ptr)
+{
+	(void) ptr;
+}
+
 void	draw_sprites(mlx_image_t *image)
 {
 	int			i;
-	t_sprite	*temp;
+	t_list		*curr;
 
-	if (!ft_game()->sh)
-		return ;
-	ft_game()->sh->next = NULL;
-	ft_game()->sh->sp.dist = 100000.0f;
+	if (ft_game()->sh)
+		ft_lstclear(&ft_game()->sh, del_nothing);
+	ft_game()->sh = NULL;
 	i = -1;
 	while (++i < ft_game()->item_count)
 	{
@@ -257,18 +274,18 @@ void	draw_sprites(mlx_image_t *image)
 		if(ft_game()->items[i].active && ft_game()->items[i].pickupable && ft_game()->items[i].sprite.sp.dist < 1.0)
 			pick_up(&ft_game()->items[i]);
 		if (ft_game()->items[i].active)
-			ft_add_sprite_to_list(ft_game()->sh, &ft_game()->items[i].sprite);
+			ft_lstinsert_sorted(&ft_game()->sh, &ft_game()->items[i].sprite, cmp_dist);
 	}
 	i = -1;
 	while (++i < ft_game()->char_count)
 	{
 		ft_calculate_sprite(image, &ft_game()->chars[i].sprite);
-		ft_add_sprite_to_list(ft_game()->sh, &ft_game()->chars[i].sprite);
+		ft_lstinsert_sorted(&ft_game()->sh, &ft_game()->chars[i].sprite, cmp_dist);
 	}
-	temp = ft_game()->sh->next;
-	while (temp)
+	curr = ft_game()->sh->next;
+	while (curr)
 	{
-		draw_sprite(image, temp);
-		temp = temp->next;
+		draw_sprite(image, (t_sprite *)curr->content);
+		curr = curr->next;
 	}
 }

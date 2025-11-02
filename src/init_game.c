@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 18:07:52 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/02 21:19:18 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,11 +251,11 @@ static void ft_init_sprites(void)
 		ft_load_texture(game->door_prefabs[i].sprite.path, &game->door_prefabs[i].sprite.texture);
 		i++;
 	}
-	game->sh = malloc(sizeof(t_sprite));
-	if (!game->sh)
-		ft_exit_perror("Could not allocate memory for sprite sorting list\n");
-	game->sh->next = NULL;
-	game->sh->texture = NULL;
+	game->sh = NULL;
+	// game->sh = malloc(sizeof(t_sprite));
+	// if (!game->sh)
+	// 	ft_exit_perror("Could not allocate memory for sprite sorting list\n");
+	// game->sh->texture = NULL;
 }
 
 void	ft_setgame(void)
