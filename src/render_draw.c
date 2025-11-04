@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 20:42:06 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 21:33:06 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ void	draw(int32_t width, int32_t height, void *param)
 		game->mmap.miniplayer_pos_show.u,
 		game->mmap.miniplayer_pos_show.v);
 	game->mmap.miniplayer_pos_hide = (t_point)
-				{game->mmap.miniplayer_pos_show.u,
+				{game->mmap.miniplayer_pos_show.u + width / 16,
 				game->mmap.miniplayer_pos_show.v + height / 2};
 	game->mmap.minimap_pos_show = (t_point){width / 16, height / 2};
 	mlx_image_to_window(game->mlx, game->minimap,
 		game->mmap.minimap_pos_show.u,
 		game->mmap.minimap_pos_show.v);
 	game->mmap.minimap_pos_hide = (t_point)
-				{game->mmap.minimap_pos_show.u,
+				{game->mmap.minimap_pos_show.u + width / 16,
 				game->mmap.minimap_pos_show.v + height / 2};
 	mlx_image_to_window(game->mlx, game->hud, width - 64, 0);
 	ft_update_graphics();

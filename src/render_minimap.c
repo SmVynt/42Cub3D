@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 21:26:10 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 21:32:35 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	ft_update_minimap()
 		if (game->mmap.lerp_progress > 0.99f)
 			game->mmap.lerp_progress = 1.0f;
 		game->minimap->instances[0].y = round(ft_lerpf(game->mmap.minimap_pos_hide.v, game->mmap.minimap_pos_show.v, game->mmap.lerp_progress));
+		game->minimap->instances[0].x = round(ft_lerpf(game->mmap.minimap_pos_hide.u, game->mmap.minimap_pos_show.u, game->mmap.lerp_progress));
 		game->miniplayer->instances[0].y = round(ft_lerpf(game->mmap.miniplayer_pos_hide.v, game->mmap.miniplayer_pos_show.v, game->mmap.lerp_progress));
+		game->miniplayer->instances[0].x = round(ft_lerpf(game->mmap.miniplayer_pos_hide.u, game->mmap.miniplayer_pos_show.u, game->mmap.lerp_progress));
 	}
 	image = game->miniplayer;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
