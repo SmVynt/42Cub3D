@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/21 23:46:44 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 10:41:09 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,9 @@ int	ft_clamp(int value, int min, int max)
 	if (value > max)
 		return (max);
 	return (value);
+}
+
+float	rand_in_range(float min, float max)
+{
+	return (min + (float)rand() / RAND_MAX * (max - min));
 }

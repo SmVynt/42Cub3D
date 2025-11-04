@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 18:07:25 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/03 19:57:29 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ static void	ft_init_player(void)
 	player->mouse_diff = (t_vec2){0.0f, 0.0f};
 	player->lookupdown = 0.0f;
 	player->is_jumping = false;
+	player->is_shaking = false;
 	ft_game()->player = player;
 }
 

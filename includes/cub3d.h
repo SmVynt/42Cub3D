@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 18:12:18 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 10:41:33 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define COLOR_BOLD		"\033[1m"
 # define COLOR_X		"\033[0m"
 
-# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asdDf"
+# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asdDf:"
 # define MAP_WALL_CHARS			"123456789"
 # define MAP_PLAYER_CHARS		"NSEW"
 
@@ -73,8 +73,8 @@
 # define TARGET_FPS				60.0f
 # define MAX_DT					0.05f
 # define DOOR_OPEN_TIME			1.0f
-# define DOOR_OPEN_DIST			2.0f
-# define DOOR_OPEN_ANGLE		(M_PI / 3.0f)
+# define INTERACT_DIST			2.0f
+# define INTERACT_ANGLE			(M_PI / 3.0f)
 # define PLAYERSPEED			6.0f
 # define ROTATIONSPEED			2.0f
 # define MOUSE_XSENS			0.5f
@@ -119,7 +119,7 @@ void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
 
 bool	ft_is_door(t_vec2 p);
 t_door	*ft_get_door(int x, int y);
-void	try_open_doors(t_gs *game);
+void	interact(t_gs *game);
 void	open_door(int i);
 void	fill_background(mlx_image_t *image, uint32_t color);
 // void	init_player(void);
@@ -155,7 +155,10 @@ t_vec2		ft_normalize_vec2(t_vec2 v);
 float		ft_angle_between_vec2(t_vec2 a, t_vec2 b);
 int			ft_clamp(int value, int min, int max);
 float		ft_clampf(float value, float min, float max);
+float		rand_in_range(float min, float max);
 
 void		print_debug(const char *str);
+
+void	 	shaky_shaky(void);
 
 #endif

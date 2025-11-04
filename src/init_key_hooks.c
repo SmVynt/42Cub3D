@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 23:30:56 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/27 23:32:06 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 10:23:07 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ static void	handle_action_keys(t_gs *game, t_player *player)
 		player->jump_impuls = JUMP_IMPULSE;
 		player->is_jumping = true;
 	}
-	if (mlx_is_key_down(game->mlx, MLX_KEY_E))
-		try_open_doors(game);
 }
 
 void	ft_key_press_hook(void *param)
