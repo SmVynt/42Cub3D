@@ -173,6 +173,7 @@ static void	ft_init_player(void)
 	player->mouse_diff = (t_vec2){0.0f, 0.0f};
 	player->lookupdown = 0.0f;
 	player->is_jumping = false;
+	player->is_shaking = false;
 	ft_game()->player = player;
 }
 

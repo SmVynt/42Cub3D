@@ -86,7 +86,7 @@ static void ft_calculate_max_entities(void)
 				game->max_items++;
 			if (ft_strchar(MAP_CHAR_CHARS, game->map.tile[i][j]) != NULL)
 				game->max_chars++;
-			if (ft_strchar(MAP_DOOR_CHARS, game->map.tile[i][j]) != NULL)
+			if (ft_strchar(SPEC_WALL_CHARS, game->map.tile[i][j]) != NULL)
 				game->max_doors++;
 			j++;
 		}
@@ -100,42 +100,46 @@ static void	ft_set_doors(void)
 	t_gs	*game;
 	int		i;
 	int		j;
-	int		door_index;
+	int		inter_wall_index;
 	int		door_num;
 
 	game = ft_game();
 	if (game->max_doors == 0)
 		return ;
-	game->doors = malloc(sizeof(t_door) * game->max_doors);
-	if (!game->doors)
+	game->inter_walls = malloc(sizeof(t_door) * game->max_doors);
+	if (!game->inter_walls)
 		ft_exit_perror("Could not allocate memory for doors\n");
-	door_index = 0;
+	inter_wall_index = 0;
 	i = 0;
 	while (i < game->map.h)
 	{
 		j = 0;
 		while (j < game->map.w)
 		{
-			door_num = ft_strchar_index(MAP_DOOR_CHARS, game->map.tile[i][j]);
-			if (door_num != -1 && door_num < DOORS_TYPES_COUNT)
+			door_num = ft_strchar_index(SPEC_WALL_CHARS, game->map.tile[i][j]);
+			if (door_num != -1 && door_num < SPEC_TYPES_COUNT)
 			{
-				if (door_index >= game->max_doors)
+				if (inter_wall_index >= game->max_doors)
 					ft_exit_error("Item index out of bounds\n");
-				game->doors[door_index] = game->door_prefabs[door_num];
-				game->doors[door_index].idx.u = j;
-				game->doors[door_index].idx.v = i;
-				game->doors[door_index].closed = true;
-				game->doors[door_index].is_opening = false;
-				game->doors[door_index].dt = 0.0f;
-				game->doors[door_index].sprite.pos = (t_vec2){(float)j, (float)i};
-				door_index++;
+				game->inter_walls[inter_wall_index] = game->door_prefabs[door_num];
+				game->inter_walls[inter_wall_index].idx.u = j;
+				game->inter_walls[inter_wall_index].idx.v = i;
+				game->inter_walls[inter_wall_index].closed = true;
+				game->inter_walls[inter_wall_index].is_opening = false;
+				game->inter_walls[inter_wall_index].dt = 0.0f;
+				game->inter_walls[inter_wall_index].sprite.pos = (t_vec2){(float)j, (float)i};
+				if (ft_strchar(SPEC_WALL_SWITCH, game->map.tile[i][j]) != NULL)
+					game->inter_walls[inter_wall_index].is_switch = true;
+				else
+					game->inter_walls[inter_wall_index].is_switch = false;
+				inter_wall_index++;
 			}
 			j++;
 		}
 		i++;
 	}
-	game->door_count = door_index;
-	printf("Initialized %d doors\n", game->door_count);
+	game->inter_wall_count = inter_wall_index;
+	printf("Initialized %d interactive walls\n", game->inter_wall_count);
 }
 
 static void	ft_set_items(void)

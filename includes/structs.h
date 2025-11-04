@@ -153,6 +153,7 @@ typedef struct s_door
 {
 	t_point idx;
 	// t_vec2	pos;
+	int		is_switch;
 	int		is_opening;
 	float	dt;
 	t_sprite	sprite;
@@ -195,6 +196,8 @@ typedef struct s_player
 	float	jump_height;
 	float	jump_impuls;
 	t_list	*pocket;
+	bool	is_shaking;
+	double	shaking_start;
 }	t_player;
 
 typedef struct s_rayrender
@@ -236,8 +239,8 @@ typedef struct s_gs
 	int				char_count;
 	int				max_chars;
 	t_door			door_prefabs[DOORS_TYPES_COUNT];
-	t_door			*doors;
-	int				door_count;
+	t_door			*inter_walls;
+	int				inter_wall_count;
 	int				max_doors;
 	float			dt;
 }	t_gs;

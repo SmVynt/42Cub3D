@@ -83,3 +83,8 @@ t_vec2	ft_lerpvec2(t_vec2 a, t_vec2 b, float t)
 	result.y = ft_lerpf(a.y, b.y, t);
 	return (result);
 }
+
+float	rand_in_range(float min, float max)
+{
+	return (min + (float)rand() / RAND_MAX * (max - min));
+}
