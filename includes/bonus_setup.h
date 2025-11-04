@@ -6,20 +6,21 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 11:07:15 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 16:49:05 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BONUS_SETUP_H
 # define BONUS_SETUP_H
 
-# define ITEMS_TYPES_COUNT	5
-# define MAP_ITEM_CHARS		"+K.#f"
-# define TEX_HEALTH			"textures/items/health_kit.png"
-# define TEX_KEY			"textures/items/key.png"
-# define TEX_CHANDELIER		"textures/items/chandelier.png"
-# define TEX_BARREL			"textures/items/barrel.png"
-# define TEX_FIRE			"textures/items/fire_anim.png"
+# define ITEMS_TYPES_COUNT	6
+# define MAP_ITEM_CHARS		"+K.#fm"
+# define TEX_HEALTH			"textures/items/it_health_kit.png"
+# define TEX_KEY			"textures/items/it_key.png"
+# define TEX_CHANDELIER		"textures/items/it_chandelier.png"
+# define TEX_BARREL			"textures/items/it_barrel.png"
+# define TEX_FIRE			"textures/items/it_fire.png"
+# define TEX_MAP			"textures/items/it_map.png"
 
 # define CHARS_TYPES_COUNT	2
 # define MAP_CHAR_CHARS		"as"
@@ -59,6 +60,6 @@
 # define MM_COLOR_ENEMIES	0xFF3000FF
 # define MM_COLOR_EMPTY		0xFF090900
 
-# define TEX_UI_MM			"textures/ui/T_MM_BG.png"
+# define TEX_UI_MM			"textures/ui/T_MM_FG.png"
 
 #endif

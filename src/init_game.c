@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/03 16:08:24 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 17:03:41 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void ft_calculate_max_entities(void)
 	game = ft_game();
 	game->max_items = 0;
 	game->max_chars = 0;
+	game->max_doors = 0;
 	i = 0;
 	while (i < game->map.h)
 	{

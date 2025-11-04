@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 01:21:03 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 18:05:54 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ typedef enum e_item_type
 	IT_KEY,
 	IT_CHANDELIER,
 	IT_BARREL,
-	IT_FIRE
+	IT_FIRE,
+	IT_MAP
 }	t_item_type;
 // Don't forget to update ITEMS_TYPES_COUNT in structs.h
 
@@ -215,6 +216,18 @@ typedef struct s_rayrender
 	t_door		*door;
 }	t_rayrender;
 
+typedef struct s_minimap
+{
+	bool		enabled;
+	bool		picked;
+	t_vec2		fg_pos_show;
+	t_vec2		fg_pos_hide;
+	t_vec2		screen_pos_show;
+	t_vec2		screen_pos_hide;
+	float		lerp_progress;
+	float		lerp_speed;
+} t_minimap;
+
 typedef struct s_gs
 {
 	t_player		*player;
@@ -228,6 +241,7 @@ typedef struct s_gs
 	t_map			map;
 	t_textures		textures;
 	t_render		render;
+	t_minimap		mmap;
 	bool			playing;
 	t_sprite		*sh;
 	t_item			item_prefabs[ITEMS_TYPES_COUNT];

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/03 23:27:36 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 18:10:27 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void	ft_update_graphics(void)
 {
 	ft_update_view3d(ft_game()->view3d);
 	ft_update_hud(ft_game()->hud);
-	ft_update_minimap(ft_game()->miniplayer);
+	ft_update_minimap();
 }
 
 void	ft_update_hud(void *param)
@@ -199,16 +199,15 @@ void	ft_update_hud(void *param)
 	}
 }
 
-void	ft_update_minimap(void *param)
+void	ft_update_minimap()
 {
 	mlx_image_t	*image;
 
-	if (!param)
+	if (!ft_game()->mmap.lerp_progress <= 0.0f || !ft_game()->mmap.picked)
 		return ;
-	image = (mlx_image_t *)param;
+	image = ft_game()->miniplayer;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
-	//draw_player(image);
-	draw_map(image, &ft_game()->map);
+	draw_map();
 }
 
 static void ft_update_dt(void)

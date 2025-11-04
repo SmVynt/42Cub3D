@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/03 21:24:01 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 18:06:22 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	draw(int32_t width, int32_t height, void *param)
 			height / 2 + (int)((float)height * 0.025f) / PIXEL_SIZE * PIXEL_SIZE);
 	mlx_image_to_window(game->mlx, game->minimap, width / 16, height / 2);
 	mlx_image_to_window(game->mlx, game->hud, width - 64, 0);
+	// game->minimap->enabled = game->mmap.enabled && game->mmap.picked;
+	// game->miniplayer->enabled = game->minimap->enabled;
 	// ft_update(game); We maybe'll need this later
 	ft_update_graphics();
 }
@@ -234,14 +236,6 @@ void	ft_add_sprite_to_list(t_sprite *head, t_sprite *sprite)
 	current->next = sprite;
 }
 
-void pick_up(t_item *item)
-{
-	if (!item->active)
-        return;
-	item->active = false;
-	printf("add item %i\n", item->sprite.texture->width);
-	ft_lstadd_back(&ft_game()->player->pocket, ft_lstnew(item));
-}
 
 void	draw_sprites(mlx_image_t *image)
 {

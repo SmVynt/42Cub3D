@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/03 23:29:01 by psmolin          ###   ########.fr        #
+#    Updated: 2025/11/04 17:20:41 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC_FILES	= \
 				game_loop.c \
 				game_doors.c \
 				game_chars.c \
+				game_items.c \
 				game_interact.c \
 				init_check.c \
 				init_checkmap.c \

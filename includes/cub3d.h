@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 00:09:04 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 17:21:40 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define COLOR_BOLD		"\033[1m"
 # define COLOR_X		"\033[0m"
 
-# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asdDf:"
+# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asdDf:m"
 # define MAP_WALL_CHARS			"123456789"
 # define MAP_PLAYER_CHARS		"NSEW"
 
@@ -64,7 +64,7 @@
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
 # define FOV_RAD				(M_PI / 3.0)
-# define PIXEL_SIZE				2
+# define PIXEL_SIZE				4
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
 # define JUMP_IMPULSE			3.2f
@@ -137,6 +137,7 @@ void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color)
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
 t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir);
 
+void	pick_up(t_item *item);
 
 uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
 int			ft_get_tex_coord(float x, int texture_width);
