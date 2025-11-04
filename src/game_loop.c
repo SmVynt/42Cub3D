@@ -6,11 +6,29 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 18:10:13 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 09:44:38 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+bool	ft_is_special_wall(t_vec2 p, const char *wall_type)
+{
+	t_gs	*game;
+	t_map	*map;
+	int		x;
+	int		y;
+
+	game = ft_game();
+	map = &game->map;
+	x = (int)roundf(p.x);
+	y = (int)roundf(p.y);
+	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
+		return (false);
+	if (ft_strchar(wall_type, map->tile[y][x]) != NULL)
+		return (true);
+	return (false);
+}
 
 bool ft_is_wall(t_vec2 p)
 {
@@ -223,10 +241,12 @@ void	ft_update(void *param)
 	(void)param;
 	ft_update_dt();
 	i = 0;
+	if (player->is_shaking)
+		shaky_shaky();
 	// upd_doors = false;
-	while(i < game->door_count)
+	while(i < game->inter_wall_count)
 	{
-		if (ft_game()->doors[i].is_opening)
+		if (ft_game()->inter_walls[i].is_opening)
 		{
 			open_door(i);
 			// upd_doors = true;

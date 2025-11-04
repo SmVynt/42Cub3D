@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/28 20:33:46 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 10:23:24 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ft_key_hook(mlx_key_data_t keydata, void *param)
 		else
 			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
 	}
+	if (keydata.key == MLX_KEY_E && keydata.action == MLX_RELEASE)
+		interact(game);
 }
 
 static void	ft_mouse_move(double x, double y, void *param)
