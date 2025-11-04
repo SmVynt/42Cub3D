@@ -6,12 +6,11 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 21:32:35 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 22:31:14 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 void	ft_update_minimap()
 {
@@ -44,32 +43,6 @@ void	ft_update_minimap()
 	image = game->miniplayer;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
 	draw_map();
-}
-
-void	draw_ui_minimap(void)
-{
-	uint32_t x;
-	uint32_t y;
-	uint32_t x_tex;
-	uint32_t y_tex;
-	mlx_texture_t *bg;
-	float win_scale;
-
-	win_scale = (float)ft_game()->view3d->height / HEIGHT * (float)UI_SCALE;
-	bg = ft_game()->textures.ui_minimap;
-	x = PIXEL_SIZE / 2;
-	while (x < bg->width * win_scale)
-	{
-		y = PIXEL_SIZE / 2;
-		x_tex = x / win_scale;
-		while (y < bg->height * win_scale)
-		{
-			y_tex = y / win_scale;
-			draw_square(ft_game()->minimap, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(bg, (t_point){x_tex, y_tex}));
-			y += PIXEL_SIZE;
-		}
-		x+=PIXEL_SIZE;
-	}
 }
 
 void	draw_player(mlx_image_t *image)
@@ -193,14 +166,14 @@ void	draw_map(void)
 			coords.x += player->pos.x;
 			coords.y += player->pos.y;
 			if (ft_is_door((t_vec2){coords.x, coords.y}))
-				draw_square(image, PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_DOORS);
+				draw_square(image, UI_PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_DOORS);
 			else if (ft_is_wall((t_vec2){coords.x, coords.y}))
-				draw_square(image, PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_WALLS);
+				draw_square(image, UI_PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_WALLS);
 			else
-				draw_square(image, PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_EMPTY);
-		y += PIXEL_SIZE;
+				draw_square(image, UI_PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_EMPTY);
+		y += UI_PIXEL_SIZE;
 		}
-	x += PIXEL_SIZE;
+	x += UI_PIXEL_SIZE;
 	}
 	draw_characters_on_minimap(image, zoom, image_center);
 	draw_items_on_minimap(image, zoom, image_center);

@@ -6,12 +6,14 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 16:49:05 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 23:41:49 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BONUS_SETUP_H
 # define BONUS_SETUP_H
+
+# define MAX_HP				100.0f
 
 # define ITEMS_TYPES_COUNT	6
 # define MAP_ITEM_CHARS		"+K.#fm"
@@ -29,6 +31,8 @@
 # define AI_SPEED_ALIEN		1.5f
 # define AI_SPEED_SLIME		1.0f
 # define AI_TIMER			0.1f
+# define AI_CONTACT_DIST	0.3f
+# define AI_DAMAGE_PER_SEC	100.0f
 
 # define DOORS_TYPES_COUNT	2
 # define MAP_DOOR_CHARS		"dD"
@@ -53,6 +57,7 @@
 # define MM_XSTART			10
 # define MM_YSTART			10
 # define MM_SCALE			12.0f
+# define MM_ANIM_SPEED		10.0f
 # define MM_COLOR_WALLS		0xFF00A9FF
 # define MM_COLOR_DOORS		0xFF253ED4
 # define MM_COLOR_HEALTH	0xFF89E21D
@@ -60,6 +65,10 @@
 # define MM_COLOR_ENEMIES	0xFF3000FF
 # define MM_COLOR_EMPTY		0xFF090900
 
+# define UI_HP_BAR_XSCALE	0.8f
+# define UI_HP_BAR_YSCALE	0.5f
+
 # define TEX_UI_MM			"textures/ui/T_MM_FG.png"
+# define TEX_UI_HEALTH		"textures/ui/T_HP_FG.png"
 
 #endif

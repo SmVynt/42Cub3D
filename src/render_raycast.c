@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 00:59:35 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 23:48:52 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
 	image = ft_game()->view3d;
 	pixel.u = ft_find_texture_u(&texture, ray);
 	delta = 0;
-	wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
+	wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE;
 	if (wall_start < 0)
 		delta = -wall_start / 2 / PIXEL_SIZE * PIXEL_SIZE;
 	while (delta <= ray.wall_height)
@@ -204,7 +204,7 @@ static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 	uint32_t	color;
 
 	image = ft_game()->view3d;
-	y = wall_end / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
+	y = wall_end / PIXEL_SIZE * PIXEL_SIZE;
 	while (y < (int)image->height)
 	{
 		dist = get_dist_to_screen_point(y, ray);
@@ -228,7 +228,7 @@ static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
 	uint32_t	color;
 
 	image = ft_game()->view3d;
-	y = PIXEL_SIZE / 2;
+	y = 0;
 	while (y < wall_start)
 	{
 		dist = get_dist_to_screen_point(y, ray);
@@ -453,7 +453,7 @@ void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
 	sp = &sprite->sp;
 	if (!sp->visible)
 		return ;
-	x = (PIXEL_SIZE - sp->start.u % PIXEL_SIZE) % PIXEL_SIZE + PIXEL_SIZE / 2;
+	x = (PIXEL_SIZE - sp->start.u % PIXEL_SIZE) % PIXEL_SIZE;
 	while (x < sp->size.u)
 	{
 		sp->screen.u = sp->start.u + x;
@@ -464,7 +464,7 @@ void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
 				x += PIXEL_SIZE;
 				continue ;
 			}
-			y = (PIXEL_SIZE - sp->start.v % PIXEL_SIZE) % PIXEL_SIZE + PIXEL_SIZE / 2;
+			y = (PIXEL_SIZE - sp->start.v % PIXEL_SIZE) % PIXEL_SIZE;
 			while (y < sp->size.v)
 			{
 				sp->screen.v = sp->start.v + y;

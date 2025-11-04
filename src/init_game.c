@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 17:03:41 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 23:04:38 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static void ft_init_ui_textures(void)
 	game = ft_game();
 	ft_load_texture(TEX_UI_MM, &game->textures.ui_minimap);
 	printf("Loaded UI minimap texture\n");
+	ft_load_texture(TEX_UI_HEALTH, &game->textures.ui_health);
+	printf("Loaded UI health texture\n");
 }
 
 static void ft_calculate_max_entities(void)

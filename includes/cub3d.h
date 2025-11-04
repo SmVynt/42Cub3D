@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 18:13:11 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 00:12:45 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
 # define FOV_RAD				(M_PI / 3.0)
-# define PIXEL_SIZE				4
+# define PIXEL_SIZE				2
+# define UI_PIXEL_SIZE			1
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
 # define JUMP_IMPULSE			3.2f
@@ -147,9 +148,13 @@ void	ft_key_press_hook(void *param);
 void	ft_update(void *param);
 void	ft_update_hud(void *param);
 void	ft_update_minimap(void);
+void	ft_update_hp_bar(void);
 void	ft_update_chars(void);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
+
+bool	ft_player_try_damage(float damage);
+bool	ft_player_try_heal(float heal);
 
 // math
 int			ft_sign(int n);

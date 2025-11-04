@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 21:32:35 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 22:26:34 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ static void	ft_init_player(void)
 	player = malloc(sizeof(t_player));
 	if (!player)
 		ft_exit_perror("Could not allocate memory for player\n");
+	player->hp = 100.0f;
 	player->pos.x = 0;
 	player->pos.y = 0;
 	player->lookdir.x = 1.0f;
@@ -198,6 +199,8 @@ static void	ft_init_game(void)
 	game->minimap = NULL;
 	game->hud = NULL;
 	game->miniplayer = NULL;
+	game->health = NULL;
+	game->health_bar = NULL;
 	game->view3d = NULL;
 	game->view3d_bg = NULL;
 	game->playing = true;
