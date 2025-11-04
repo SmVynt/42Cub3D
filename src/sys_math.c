@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 00:19:53 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 11:39:02 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_vec2	ft_lerpvec2(t_vec2 a, t_vec2 b, float t)
 {
 	t_vec2 result;
 
-	result.x = a.x + t * (b.x - a.x);
-	result.y = a.y + t * (b.y - a.y);
+	result.x = ft_lerpf(a.x, b.x, t);
+	result.y = ft_lerpf(a.y, b.y, t);
 	return (result);
 }
