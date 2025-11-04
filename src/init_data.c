@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/03 16:04:20 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 11:08:56 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,18 @@ static void ft_init_prefabs(void)
 		.health = 50,
 		.max_health = 50,
 		.alive = true,
-		.sprite.texture = NULL,
-		.sprite.animated = false,
-		.sprite.path = TEX_SLIME,
-		.sprite.bottom_offset = 0.6f
+		.sprite = (t_sprite){
+			.texture = NULL,
+			.path = TEX_SLIME,
+			.bottom_offset = 0.6f,
+			.animated = true,
+			.anim = (t_anim){
+				.n_frames = 8,
+				.frame_duration = 0.07f,
+				.anim_timer = 0.0f,
+				.curr_frame = rand() % 8
+			}
+		}
 	};
 	game->door_prefabs[0] = (t_door){
 		.sprite.texture = NULL,
