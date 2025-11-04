@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 10:41:33 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 00:09:04 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
 # define FOV_RAD				(M_PI / 3.0)
-# define PIXEL_SIZE				1
+# define PIXEL_SIZE				2
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
 # define JUMP_IMPULSE			3.2f
@@ -106,7 +106,7 @@ void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture);
 
 
 float	ft_height_delta(float distance);
-static inline void put_pixel(mlx_image_t *image, u_int32_t x, u_int32_t y, uint32_t color)
+static inline void put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
 {
 	if (x < image->width && y < image->height)
 		((uint32_t *)image->pixels)[y * image->width + x] = color;
@@ -122,7 +122,6 @@ t_door	*ft_get_door(int x, int y);
 void	interact(t_gs *game);
 void	open_door(int i);
 void	fill_background(mlx_image_t *image, uint32_t color);
-// void	init_player(void);
 
 void	draw(int32_t width, int32_t height, void *param);
 void	draw_ui(void);
@@ -136,6 +135,8 @@ void	draw_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture
 void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
+t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir);
+
 
 uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
 int			ft_get_tex_coord(float x, int texture_width);
@@ -145,6 +146,7 @@ void	ft_key_press_hook(void *param);
 void	ft_update(void *param);
 void	ft_update_hud(void *param);
 void	ft_update_minimap(void *param);
+void	ft_update_chars(void);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
 
@@ -155,6 +157,8 @@ t_vec2		ft_normalize_vec2(t_vec2 v);
 float		ft_angle_between_vec2(t_vec2 a, t_vec2 b);
 int			ft_clamp(int value, int min, int max);
 float		ft_clampf(float value, float min, float max);
+float		ft_lerpf(float a, float b, float t);
+t_vec2		ft_lerpvec2(t_vec2 a, t_vec2 b, float t);
 float		rand_in_range(float min, float max);
 
 void		print_debug(const char *str);

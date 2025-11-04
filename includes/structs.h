@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 09:44:12 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 01:21:03 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,13 @@ typedef enum e_char_type
 }	t_char_type;
 // Don't forget to update CHARS_TYPES_COUNT in structs.h
 
+typedef enum e_ai_state
+{
+	AI_IDLE,
+	AI_MOVING,
+	AI_THINKING
+}	t_ai_state;
+
 typedef struct s_sprite t_sprite;
 
 typedef struct s_spriterender
@@ -120,11 +127,23 @@ typedef struct s_item
 	int				pickup_value;
 }	t_item;
 
+typedef struct s_ai
+{
+	t_ai_state		state;
+	t_vec2			start_pos;
+	t_vec2			target_pos;
+	float			lerp_speed;
+	float			lerp_progress;
+	float			speed;
+	float			timer;
+	t_direction		facing;
+}	t_ai;
+
 typedef struct s_char
 {
 	t_char_type		type;
 	t_sprite		sprite;
-	t_vec2			velocity;
+	t_ai			ai;
 	bool			alive;
 	int				health;
 	int				max_health;
@@ -159,6 +178,7 @@ typedef struct s_render
 {
 	int			projection_plane_dist;
 	float		*depth;
+	float		bg_proportion;
 	uint32_t	top_color;
 	uint32_t	bottom_color;
 }	t_render;

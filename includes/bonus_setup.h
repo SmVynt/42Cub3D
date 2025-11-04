@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_setup.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 09:40:37 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 11:07:15 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@
 
 # define CHARS_TYPES_COUNT	2
 # define MAP_CHAR_CHARS		"as"
-# define TEX_ALIEN			"textures/characters/alien.png"
-# define TEX_SLIME			"textures/characters/slime.png"
+# define TEX_ALIEN			"textures/characters/e_jellyfish.png"
+# define TEX_SLIME			"textures/characters/e_blob.png"
+# define AI_SPEED_ALIEN		1.5f
+# define AI_SPEED_SLIME		1.0f
+# define AI_TIMER			0.1f
 
 # define DOORS_TYPES_COUNT	2
 # define MAP_DOOR_CHARS		"dD"

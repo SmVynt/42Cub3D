@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/03 19:57:29 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 11:08:56 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,36 @@ static void ft_init_prefabs(void)
 		.health = 100,
 		.max_health = 100,
 		.alive = true,
-		.sprite.texture = NULL,
-		.sprite.animated = false,
-		.sprite.path = TEX_ALIEN,
-		.sprite.bottom_offset = 0.0f
+		.sprite = (t_sprite){
+			.texture = NULL,
+			.path = TEX_ALIEN,
+			.bottom_offset = 0.0f,
+			.animated = true,
+			.anim = (t_anim){
+				.n_frames = 8,
+				.frame_duration = 0.07f,
+				.anim_timer = 0.0f,
+				.curr_frame = rand() % 8
+			}
+		}
 	};
 	game->char_prefabs[CH_SLIME] = (t_char){
 		.type = CH_SLIME,
 		.health = 50,
 		.max_health = 50,
 		.alive = true,
-		.sprite.texture = NULL,
-		.sprite.animated = false,
-		.sprite.path = TEX_SLIME,
-		.sprite.bottom_offset = 0.6f
+		.sprite = (t_sprite){
+			.texture = NULL,
+			.path = TEX_SLIME,
+			.bottom_offset = 0.6f,
+			.animated = true,
+			.anim = (t_anim){
+				.n_frames = 8,
+				.frame_duration = 0.07f,
+				.anim_timer = 0.0f,
+				.curr_frame = rand() % 8
+			}
+		}
 	};
 	game->door_prefabs[0] = (t_door){
 		.sprite.texture = NULL,
