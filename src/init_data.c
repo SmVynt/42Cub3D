@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 17:04:26 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 21:21:44 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,8 +201,11 @@ static void	ft_init_game(void)
 	game->view3d = NULL;
 	game->view3d_bg = NULL;
 	game->playing = true;
-	game->mmap.enabled = true;
+	game->mmap.enabled = false;
+	game->mmap.opening = false;
 	game->mmap.picked = false;
+	game->mmap.lerp_progress = 0.0f;
+	game->mmap.lerp_speed = 10.0f;
 }
 
 static void	ft_init_null_textures(void)

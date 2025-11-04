@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 18:05:54 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 21:11:48 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,11 +219,12 @@ typedef struct s_rayrender
 typedef struct s_minimap
 {
 	bool		enabled;
+	bool		opening;
 	bool		picked;
-	t_vec2		fg_pos_show;
-	t_vec2		fg_pos_hide;
-	t_vec2		screen_pos_show;
-	t_vec2		screen_pos_hide;
+	t_point		minimap_pos_show;
+	t_point		minimap_pos_hide;
+	t_point		miniplayer_pos_show;
+	t_point		miniplayer_pos_hide;
 	float		lerp_progress;
 	float		lerp_speed;
 } t_minimap;

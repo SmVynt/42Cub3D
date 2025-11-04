@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 18:10:27 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 20:40:15 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,6 @@ void	ft_update_hud(void *param)
 	if (!param || !pocket_items)
 		return ;
 	image = (mlx_image_t *)param;
-	// memset(image->pixels, COLOR_RED_TRANSP, image->width * image->height * sizeof(int32_t));
 	int i = 0;
 	while (pocket_items)
 	{
@@ -197,17 +196,6 @@ void	ft_update_hud(void *param)
 		pocket_items = pocket_items->next;
 		i++;
 	}
-}
-
-void	ft_update_minimap()
-{
-	mlx_image_t	*image;
-
-	if (!ft_game()->mmap.lerp_progress <= 0.0f || !ft_game()->mmap.picked)
-		return ;
-	image = ft_game()->miniplayer;
-	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
-	draw_map();
 }
 
 static void ft_update_dt(void)

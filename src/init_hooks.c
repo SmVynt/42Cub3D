@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 18:05:59 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 21:17:15 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void	ft_key_hook(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_M && keydata.action == MLX_RELEASE)
 	{
 		if (game->mmap.picked)
-			game->mmap.enabled = !game->mmap.enabled;
+		{
+			game->mmap.opening = !game->mmap.opening;
+			game->mmap.enabled = true;
+		}
 	}
 }
 

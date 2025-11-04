@@ -3,14 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   render_minimap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/02 18:12:02 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 21:26:10 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+
+void	ft_update_minimap()
+{
+	mlx_image_t	*image;
+	t_gs		*game;
+
+	game = ft_game();
+	game->minimap->enabled = game->mmap.enabled;
+	game->miniplayer->enabled = game->mmap.enabled;
+	if (!game->mmap.enabled)
+		return ;
+	if (!(game->mmap.opening && game->mmap.lerp_progress == 1.0f))
+	{
+		if (game->mmap.opening)
+			game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 1.0f, game->mmap.lerp_speed * game->dt);
+		else
+			game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 0.0f, game->mmap.lerp_speed * game->dt);
+		if (game->mmap.lerp_progress < 0.01f)
+		{
+			game->mmap.lerp_progress = 0.0f;
+			game->mmap.enabled = false;
+		}
+		if (game->mmap.lerp_progress > 0.99f)
+			game->mmap.lerp_progress = 1.0f;
+		game->minimap->instances[0].y = round(ft_lerpf(game->mmap.minimap_pos_hide.v, game->mmap.minimap_pos_show.v, game->mmap.lerp_progress));
+		game->miniplayer->instances[0].y = round(ft_lerpf(game->mmap.miniplayer_pos_hide.v, game->mmap.miniplayer_pos_show.v, game->mmap.lerp_progress));
+	}
+	image = game->miniplayer;
+	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
+	draw_map();
+}
 
 void	draw_ui_minimap(void)
 {
@@ -133,7 +165,7 @@ static void draw_items_on_minimap(mlx_image_t *image, float zoom, t_point image_
 	}
 }
 
-void	draw_map(mlx_image_t *image, t_map *map)
+void	draw_map(void)
 {
 	int		x;
 	int		y;
@@ -141,9 +173,10 @@ void	draw_map(mlx_image_t *image, t_map *map)
 	t_vec2	coords;
 	t_player	*player;
 	float		zoom;
+	mlx_image_t	*image;
 
-	(void)map;
 	player = ft_game()->player;
+	image = ft_game()->miniplayer;
 	image_center.u = (int)image->width / 2;
 	image_center.v = (int)image->height / 2;
 	zoom = MM_SCALE * (float)ft_game()->view3d->height / HEIGHT;

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 17:21:40 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 18:13:11 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	fill_background(mlx_image_t *image, uint32_t color);
 
 void	draw(int32_t width, int32_t height, void *param);
 void	draw_ui(void);
-void	draw_map(mlx_image_t *image, t_map *map);
+void	draw_map(void);
 void	draw_ui_minimap(void);
 void	draw_player(mlx_image_t *image);
 void	draw_walls(mlx_image_t *image);
@@ -146,7 +146,7 @@ void	ft_createhooks(void);
 void	ft_key_press_hook(void *param);
 void	ft_update(void *param);
 void	ft_update_hud(void *param);
-void	ft_update_minimap(void *param);
+void	ft_update_minimap(void);
 void	ft_update_chars(void);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
