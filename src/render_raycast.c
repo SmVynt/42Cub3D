@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/02 18:13:10 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 00:59:35 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static void ft_draw_cubemap(mlx_image_t *image, t_rayrender *ray, t_point screen
 		ray->bgx = (int)((angle / (2.0 * M_PI)) * (float)bg->width);
 	}
 	pixel.u = ray->bgx;
-	scale_correction = 0.5f * (float)bg->height / (float)image->height;
+	scale_correction = ft_game()->render.bg_proportion * (float)bg->height / (float)image->height;
+	// scale_correction = 0.5f * (float)bg->height / (float)image->height;
 	new_y = ((float)screen_coords.v - (float)image->height / 2) * scale_correction + (float)bg->height / 2;
 	pixel.v = (int)new_y - (int)(ft_game()->player->lookupdown * scale_correction);
 	draw_square(image, PIXEL_SIZE, screen_coords, ft_get_pixel_color(bg, pixel));
@@ -66,7 +67,7 @@ float	ft_height_delta(float distance)
 static void	get_next_point_to_draw(t_point *p, int *slope_err,
 		t_point diff, t_point dir);
 
-static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_steps, t_direction *wall_dir);
+// static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_steps, t_direction *wall_dir);
 
 bool hit_wall(t_point p, t_map map, mlx_image_t* image)
 {
@@ -179,7 +180,7 @@ void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
 	delta = 0;
 	wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
 	if (wall_start < 0)
-		delta = -wall_start / 2;
+		delta = -wall_start / 2 / PIXEL_SIZE * PIXEL_SIZE;
 	while (delta <= ray.wall_height)
 	{
 		if ((wall_start + delta) >= (int)image->height )
@@ -351,7 +352,7 @@ static t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec2 dir, int *tile_x, in
 	return hit_point;
 }
 
-static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir)
+t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir)
 {
 	t_vec2	curr;
 	t_point	tile;
@@ -363,8 +364,12 @@ static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_it
 	while (i < max_iter)
 	{
 		curr = get_next_wall_intersection(curr, dir, &tile.u, &tile.v, &side);
-		// printf("Hit wall at (%.2f, %.2f), tile[%d][%d], side=%d\n",
-		//        hit_point.x, hit_point.y, tile_y, tile_x, side);
+
+		if (tile.u < 0 || tile.v < 0 || tile.u >= ft_game()->map.w || tile.v >= ft_game()->map.h)
+		{
+			*wall_dir = DIR_NO;
+			return (curr);
+		}
 		ray->is_door = ft_is_door((t_vec2){tile.u, tile.v});
 		ray->wall_type = ft_game()->map.tile[tile.v][tile.u];
 		if (ft_is_wall((t_vec2){tile.u, tile.v}) || ray->is_door)
@@ -405,21 +410,12 @@ static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_it
 				curr.y -= coeff * ray->dir.y;
 				if (ray->door->is_opening)
 				{
-					// printf("%f\n",ft_get_door(tile.v, tile.u)->dt/DOOR_OPEN_TIME);
 					if (side && curr.x - floorf(curr.x) > (DOOR_OPEN_TIME - ray->door->dt)/DOOR_OPEN_TIME)
 						continue;
 					if (!side && ceilf(curr.y) - curr.y > (DOOR_OPEN_TIME - ray->door->dt)/DOOR_OPEN_TIME)
 						continue;
 				}
 			}
-			// if (side && dir.y > 0)
-			// 	*color = COLOR_RED;
-			// else if (side)
-			// 	*color = COLOR_GREEN;
-			// else if (dir.x > 0)
-			// 	*color = COLOR_YELLOW;
-			// else
-			// 	*color = COLOR_BLUE;
 			if (side && dir.y > 0)
 				*wall_dir = DIR_SO;
 			else if (side)
@@ -430,6 +426,7 @@ static t_vec2 get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_it
 				*wall_dir = DIR_WE;
 			return (curr);
 		}
+		i++;
 	}
 	return (t_vec2){0.0, 0.0};
 }

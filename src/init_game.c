@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 18:07:52 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/03 16:08:24 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,13 @@ static void ft_init_sprites(void)
 	{
 		if (game->char_prefabs[i].sprite.path == NULL)
 			ft_exit_error("Char prefab texture path is NULL\n");
-		ft_load_texture(game->char_prefabs[i].sprite.path, &game->char_prefabs[i].sprite.texture);
+		if (!game->char_prefabs[i].sprite.animated)
+			ft_load_texture(game->char_prefabs[i].sprite.path, &game->char_prefabs[i].sprite.texture);
+		else
+		{
+			ft_load_anim_texture(game->char_prefabs[i].sprite.path, game->char_prefabs[i].sprite.anim.frames, game->char_prefabs[i].sprite.anim.n_frames);
+			game->char_prefabs[i].sprite.texture = game->char_prefabs[i].sprite.anim.frames[0];
+		}
 		i++;
 	}
 	i = 0;

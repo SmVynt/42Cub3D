@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sys_math.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/21 23:46:44 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 00:19:53 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,18 @@ int	ft_clamp(int value, int min, int max)
 	if (value > max)
 		return (max);
 	return (value);
+}
+
+float	ft_lerpf(float a, float b, float t)
+{
+	return (a + t * (b - a));
+}
+
+t_vec2	ft_lerpvec2(t_vec2 a, t_vec2 b, float t)
+{
+	t_vec2 result;
+
+	result.x = a.x + t * (b.x - a.x);
+	result.y = a.y + t * (b.y - a.y);
+	return (result);
 }

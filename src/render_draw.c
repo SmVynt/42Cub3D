@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/30 15:06:48 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/03 21:24:01 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	draw(int32_t width, int32_t height, void *param)
 	if (!game->minimap || !game->miniplayer || !game->view3d)
 		return ;
 	draw_ui();
+	ft_game()->render.bg_proportion = (float)game->view3d_bg->height / ((float)game->view3d_bg->width * 1.5707f);
 	mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
 	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
-	// mlx_image_to_window(game->mlx, game->minimap, width / 16, height / 2);
 	mlx_image_to_window(game->mlx, game->miniplayer,
 			(width / 16 + (int)((float)height * 0.11f) / PIXEL_SIZE * PIXEL_SIZE),
 			height / 2 + (int)((float)height * 0.025f) / PIXEL_SIZE * PIXEL_SIZE);
@@ -148,18 +148,20 @@ void	draw_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture
 
 void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
+	t_point	start_pos;
 
 	if ((color & 0xFF000000) == 0)
 		return ;
-	i = -size / 2;
-	while (i <= size / 2)
+	start_pos = (t_point){pos.u - size / 2, pos.v - size / 2};
+	i = 0;
+	while (i < size)
 	{
-		j = -size / 2;
-		while (j <= size / 2)
+		j = 0;
+		while (j < size)
 		{
-			put_pixel(image, pos.u + i, pos.v + j, color);
+			put_pixel(image, start_pos.u + i, start_pos.v + j, color);
 			j++;
 		}
 		i++;
