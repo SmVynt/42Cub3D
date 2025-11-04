@@ -72,7 +72,7 @@ void	draw(int32_t width, int32_t height, void *param)
 	if (!game->minimap || !game->miniplayer || !game->view3d)
 		return ;
 	draw_ui();
-	ft_game()->render.bg_proportion = (float)game->view3d_bg->height / ((float)game->view3d_bg->width * 1.5707f);
+	ft_game()->render.bg_proportion = (float)game->view3d_bg->height / ((float)game->view3d_bg->width * M_PI / 2);
 	mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
 	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
 	mlx_image_to_window(game->mlx, game->miniplayer,
