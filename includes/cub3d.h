@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 00:09:04 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 00:12:45 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define COLOR_BOLD		"\033[1m"
 # define COLOR_X		"\033[0m"
 
-# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asdDf:"
+# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asdDf:m"
 # define MAP_WALL_CHARS			"123456789"
 # define MAP_PLAYER_CHARS		"NSEW"
 
@@ -65,6 +65,7 @@
 # define FOV					60.0f
 # define FOV_RAD				(M_PI / 3.0)
 # define PIXEL_SIZE				2
+# define UI_PIXEL_SIZE			1
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
 # define JUMP_IMPULSE			3.2f
@@ -125,7 +126,7 @@ void	fill_background(mlx_image_t *image, uint32_t color);
 
 void	draw(int32_t width, int32_t height, void *param);
 void	draw_ui(void);
-void	draw_map(mlx_image_t *image, t_map *map);
+void	draw_map(void);
 void	draw_ui_minimap(void);
 void	draw_player(mlx_image_t *image);
 void	draw_walls(mlx_image_t *image);
@@ -137,6 +138,7 @@ void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color)
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
 t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir);
 
+void	pick_up(t_item *item);
 
 uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
 int			ft_get_tex_coord(float x, int texture_width);
@@ -145,10 +147,14 @@ void	ft_createhooks(void);
 void	ft_key_press_hook(void *param);
 void	ft_update(void *param);
 void	ft_update_hud(void *param);
-void	ft_update_minimap(void *param);
+void	ft_update_minimap(void);
+void	ft_update_hp_bar(void);
 void	ft_update_chars(void);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
+
+bool	ft_player_try_damage(float damage);
+bool	ft_player_try_heal(float heal);
 
 // math
 int			ft_sign(int n);

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 17:57:43 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 21:17:15 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_key_hook(mlx_key_data_t keydata, void *param)
 	t_gs		*game;
 
 	game = (t_gs *)param;
-	if (keydata.key == MLX_KEY_M && keydata.action == MLX_RELEASE)
+	if (keydata.key == MLX_KEY_L && keydata.action == MLX_RELEASE)
 	{
 		game->playing = !game->playing;
 		if (game->playing)
@@ -29,6 +29,14 @@ void	ft_key_hook(mlx_key_data_t keydata, void *param)
 	}
 	if (keydata.key == MLX_KEY_E && keydata.action == MLX_RELEASE)
 		interact(game);
+	if (keydata.key == MLX_KEY_M && keydata.action == MLX_RELEASE)
+	{
+		if (game->mmap.picked)
+		{
+			game->mmap.opening = !game->mmap.opening;
+			game->mmap.enabled = true;
+		}
+	}
 }
 
 static void	ft_mouse_move(double x, double y, void *param)

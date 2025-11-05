@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/03 23:27:36 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 20:40:15 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void	ft_update_graphics(void)
 {
 	ft_update_view3d(ft_game()->view3d);
 	ft_update_hud(ft_game()->hud);
-	ft_update_minimap(ft_game()->miniplayer);
+	ft_update_minimap();
 }
 
 void	ft_update_hud(void *param)
@@ -188,7 +188,6 @@ void	ft_update_hud(void *param)
 	if (!param || !pocket_items)
 		return ;
 	image = (mlx_image_t *)param;
-	// memset(image->pixels, COLOR_RED_TRANSP, image->width * image->height * sizeof(int32_t));
 	int i = 0;
 	while (pocket_items)
 	{
@@ -197,18 +196,6 @@ void	ft_update_hud(void *param)
 		pocket_items = pocket_items->next;
 		i++;
 	}
-}
-
-void	ft_update_minimap(void *param)
-{
-	mlx_image_t	*image;
-
-	if (!param)
-		return ;
-	image = (mlx_image_t *)param;
-	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
-	//draw_player(image);
-	draw_map(image, &ft_game()->map);
 }
 
 static void ft_update_dt(void)

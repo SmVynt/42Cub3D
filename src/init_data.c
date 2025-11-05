@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 11:08:56 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 22:26:34 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ static void ft_init_prefabs(void)
 				.curr_frame = rand() % 8
 			}
 		}
+	};
+	game->item_prefabs[IT_MAP] = (t_item){
+		.type = IT_MAP,
+		.pickupable = true,
+		.active = true,
+		.pickup_value = 1,
+		.sprite.texture = NULL,
+		.sprite.animated = false,
+		.sprite.path = TEX_MAP,
+		.sprite.bottom_offset = 0.0f
 	};
 	game->char_prefabs[CH_ALIEN] = (t_char){
 		.type = CH_ALIEN,
@@ -163,6 +173,7 @@ static void	ft_init_player(void)
 	player = malloc(sizeof(t_player));
 	if (!player)
 		ft_exit_perror("Could not allocate memory for player\n");
+	player->hp = 100.0f;
 	player->pos.x = 0;
 	player->pos.y = 0;
 	player->lookdir.x = 1.0f;
@@ -188,9 +199,16 @@ static void	ft_init_game(void)
 	game->minimap = NULL;
 	game->hud = NULL;
 	game->miniplayer = NULL;
+	game->health = NULL;
+	game->health_bar = NULL;
 	game->view3d = NULL;
 	game->view3d_bg = NULL;
 	game->playing = true;
+	game->mmap.enabled = false;
+	game->mmap.opening = false;
+	game->mmap.picked = false;
+	game->mmap.lerp_progress = 0.0f;
+	game->mmap.lerp_speed = 10.0f;
 }
 
 static void	ft_init_null_textures(void)

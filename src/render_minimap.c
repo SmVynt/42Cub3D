@@ -3,39 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   render_minimap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/02 18:12:02 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 22:31:14 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_ui_minimap(void)
+void	ft_update_minimap()
 {
-	uint32_t x;
-	uint32_t y;
-	uint32_t x_tex;
-	uint32_t y_tex;
-	mlx_texture_t *bg;
-	float win_scale;
+	mlx_image_t	*image;
+	t_gs		*game;
 
-	win_scale = (float)ft_game()->view3d->height / HEIGHT * (float)UI_SCALE;
-	bg = ft_game()->textures.ui_minimap;
-	x = PIXEL_SIZE / 2;
-	while (x < bg->width * win_scale)
+	game = ft_game();
+	game->minimap->enabled = game->mmap.enabled;
+	game->miniplayer->enabled = game->mmap.enabled;
+	if (!game->mmap.enabled)
+		return ;
+	if (!(game->mmap.opening && game->mmap.lerp_progress == 1.0f))
 	{
-		y = PIXEL_SIZE / 2;
-		x_tex = x / win_scale;
-		while (y < bg->height * win_scale)
+		if (game->mmap.opening)
+			game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 1.0f, game->mmap.lerp_speed * game->dt);
+		else
+			game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 0.0f, game->mmap.lerp_speed * game->dt);
+		if (game->mmap.lerp_progress < 0.01f)
 		{
-			y_tex = y / win_scale;
-			draw_square(ft_game()->minimap, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(bg, (t_point){x_tex, y_tex}));
-			y += PIXEL_SIZE;
+			game->mmap.lerp_progress = 0.0f;
+			game->mmap.enabled = false;
 		}
-		x+=PIXEL_SIZE;
+		if (game->mmap.lerp_progress > 0.99f)
+			game->mmap.lerp_progress = 1.0f;
+		game->minimap->instances[0].y = round(ft_lerpf(game->mmap.minimap_pos_hide.v, game->mmap.minimap_pos_show.v, game->mmap.lerp_progress));
+		game->minimap->instances[0].x = round(ft_lerpf(game->mmap.minimap_pos_hide.u, game->mmap.minimap_pos_show.u, game->mmap.lerp_progress));
+		game->miniplayer->instances[0].y = round(ft_lerpf(game->mmap.miniplayer_pos_hide.v, game->mmap.miniplayer_pos_show.v, game->mmap.lerp_progress));
+		game->miniplayer->instances[0].x = round(ft_lerpf(game->mmap.miniplayer_pos_hide.u, game->mmap.miniplayer_pos_show.u, game->mmap.lerp_progress));
 	}
+	image = game->miniplayer;
+	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
+	draw_map();
 }
 
 void	draw_player(mlx_image_t *image)
@@ -133,7 +140,7 @@ static void draw_items_on_minimap(mlx_image_t *image, float zoom, t_point image_
 	}
 }
 
-void	draw_map(mlx_image_t *image, t_map *map)
+void	draw_map(void)
 {
 	int		x;
 	int		y;
@@ -141,9 +148,10 @@ void	draw_map(mlx_image_t *image, t_map *map)
 	t_vec2	coords;
 	t_player	*player;
 	float		zoom;
+	mlx_image_t	*image;
 
-	(void)map;
 	player = ft_game()->player;
+	image = ft_game()->miniplayer;
 	image_center.u = (int)image->width / 2;
 	image_center.v = (int)image->height / 2;
 	zoom = MM_SCALE * (float)ft_game()->view3d->height / HEIGHT;
@@ -158,14 +166,14 @@ void	draw_map(mlx_image_t *image, t_map *map)
 			coords.x += player->pos.x;
 			coords.y += player->pos.y;
 			if (ft_is_door((t_vec2){coords.x, coords.y}))
-				draw_square(image, PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_DOORS);
+				draw_square(image, UI_PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_DOORS);
 			else if (ft_is_wall((t_vec2){coords.x, coords.y}))
-				draw_square(image, PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_WALLS);
+				draw_square(image, UI_PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_WALLS);
 			else
-				draw_square(image, PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_EMPTY);
-		y += PIXEL_SIZE;
+				draw_square(image, UI_PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_EMPTY);
+		y += UI_PIXEL_SIZE;
 		}
-	x += PIXEL_SIZE;
+	x += UI_PIXEL_SIZE;
 	}
 	draw_characters_on_minimap(image, zoom, image_center);
 	draw_items_on_minimap(image, zoom, image_center);

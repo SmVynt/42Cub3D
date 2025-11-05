@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sys_clean.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 17:09:54 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/04 23:05:19 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ static void	ft_free_mlx(void)
 		mlx_delete_texture(game->textures.bg);
 	if (game->textures.ui_minimap)
 		mlx_delete_texture(game->textures.ui_minimap);
+	if (game->textures.ui_health)
+		mlx_delete_texture(game->textures.ui_health);
 	if (game->mlx)
 	{
 		if (game->minimap)
@@ -88,6 +90,12 @@ static void	ft_free_mlx(void)
 			mlx_delete_image(game->mlx, game->view3d);
 		if (game->view3d_bg)
 			mlx_delete_image(game->mlx, game->view3d_bg);
+		if (game->hud)
+			mlx_delete_image(game->mlx, game->hud);
+		if (game->health)
+			mlx_delete_image(game->mlx, game->health);
+		if (game->health_bar)
+			mlx_delete_image(game->mlx, game->health_bar);
 		mlx_terminate(game->mlx);
 	}
 	i = 0;

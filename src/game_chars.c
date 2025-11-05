@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 23:28:13 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 01:38:11 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 00:13:35 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,13 @@ static void	update_char(t_char *ch)
 		ft_ai_alien(ch);
 	if (ch->type == CH_SLIME)
 		ft_ai_slime(ch);
+	if (ft_vec2_length((t_vec2){
+		ft_game()->player->pos.x - ch->sprite.pos.x,
+		ft_game()->player->pos.y - ch->sprite.pos.y
+	}) < AI_CONTACT_DIST)
+	{
+		ft_player_try_damage(AI_DAMAGE_PER_SEC * ft_game()->dt);
+	}
 	return ;
 }
 
