@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 23:48:52 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 21:32:46 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,18 +174,22 @@ void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
 	t_point			pixel;
 	int				delta;
 	uint32_t		color;
+	// int				delta_fix;
 
 	image = ft_game()->view3d;
 	pixel.u = ft_find_texture_u(&texture, ray);
 	delta = 0;
-	wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE;
+	// wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE;
+	// if (wall_start < 0)
+	// 	delta = -wall_start / 2 / PIXEL_SIZE * PIXEL_SIZE;
+	delta = PIXEL_SIZE - wall_start % PIXEL_SIZE;
 	if (wall_start < 0)
-		delta = -wall_start / 2 / PIXEL_SIZE * PIXEL_SIZE;
+		delta = -wall_start;
 	while (delta <= ray.wall_height)
 	{
-		if ((wall_start + delta) >= (int)image->height )
+		if ((wall_start + delta) >= (int)image->height)
 			break ;
-		pixel.v = (int)(delta / ray.wall_height * texture->height);
+		pixel.v = round((float)delta / (float)ray.wall_height * (float)texture->height);
 			color = ft_get_pixel_color(texture, pixel);
 		if (color != 0)
 			draw_square(image, PIXEL_SIZE, (t_point){x, wall_start + delta}, color);
@@ -255,7 +259,6 @@ void	draw_wall(mlx_image_t *image, int x)
 	ray.start.x = player->pos.x + 0.5f;
 	ray.start.y = player->pos.y + 0.5f;
 	ray.end = (t_vec2){ray.start.x, ray.start.y};
-	// ray.wall_dir = COLOR_GREEN;
 	ray.wall_dir = DIR_NO;
 	ray.end = get_ray_end(&ray, ray.end, ray.dir, 1000, &ray.wall_dir);
 	ray.dist = ft_vec2_length((t_vec2){ray.end.x - ray.start.x, ray.end.y - ray.start.y}) * cos(ray.angle);
@@ -272,13 +275,14 @@ static void draw_vertical_slice(int x, t_rayrender ray)
 	int	wall_start;
 
 	image = ft_game()->view3d;
-	wall_start = (((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->lookupdown;
-
-	if (true)
+	// wall_start = (((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->lookupdown;
+	wall_start = ((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) + ft_game()->player->lookupdown;
+	// wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE;
+	if (false)
 		ft_draw_ceil_part(ray, x, wall_start);
 	if (true)
 		ft_draw_wall_part(ray, x, wall_start);
-	if (true)
+	if (false)
 		ft_draw_floor_part(ray, x, wall_start + ray.wall_height);
 }
 

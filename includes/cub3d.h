@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/05 20:48:08 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 21:35:22 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "structs.h"
 # include "ft_mat4.h"
 
-# define DEBUG_MODE	true
+# define DEBUG_MODE	false
 
 # define WIDTH		1280
 # define HEIGHT		720
