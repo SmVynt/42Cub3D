@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 01:21:03 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 21:34:38 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,9 @@ typedef struct s_gs
 	mlx_image_t		*miniplayer;
 	mlx_image_t		*view3d;
 	mlx_image_t		*view3d_bg;
+	mlx_image_t		*hints;
+	mlx_image_t		*msg;
+	double			msg_time;
 	t_map			map;
 	t_textures		textures;
 	t_render		render;

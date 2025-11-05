@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/03 23:27:36 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/04 18:22:48 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ void	ft_update(void *param)
 	i = 0;
 	if (player->is_shaking)
 		shaky_shaky();
+	print_interact_msg(game);
 	// upd_doors = false;
 	while(i < game->inter_wall_count)
 	{
