@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 20:40:15 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 20:41:26 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,11 @@ static void	ft_update_view3d(void *param)
 
 void	ft_update_graphics(void)
 {
+	print_debug("--view3d...");
 	ft_update_view3d(ft_game()->view3d);
+	print_debug("--hud...");
 	ft_update_hud(ft_game()->hud);
+	print_debug("--minimap...");
 	ft_update_minimap();
 }
 
@@ -226,11 +229,14 @@ void	ft_update(void *param)
 	game = ft_game();
 	player = game->player;
 	(void)param;
+	print_debug("updating dt...");
 	ft_update_dt();
 	i = 0;
+	print_debug("shaky shaky...");
 	if (player->is_shaking)
 		shaky_shaky();
 	// upd_doors = false;
+	print_debug("updating doors...");
 	while(i < game->inter_wall_count)
 	{
 		if (ft_game()->inter_walls[i].is_opening)
@@ -240,7 +246,9 @@ void	ft_update(void *param)
 		}
 		i++;
 	}
+	print_debug("updating chars...");
 	ft_update_chars();
+	print_debug("player update...");
 	if (player->mov_control.u != 0
 		|| player->mov_control.v != 0
 		|| player->rot_control.u != 0
@@ -252,5 +260,6 @@ void	ft_update(void *param)
 	{
 		ft_update_player();
 	}
+	print_debug("updating graphics...");
 	ft_update_graphics();
 }

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/05 00:12:45 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 20:48:08 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
 # define FOV_RAD				(M_PI / 3.0)
-# define PIXEL_SIZE				2
+# define PIXEL_SIZE				4
 # define UI_PIXEL_SIZE			1
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
