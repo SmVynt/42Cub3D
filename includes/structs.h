@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 23:03:48 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 23:09:32 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,13 @@ typedef struct s_player
 	bool	is_shaking;
 	double	shaking_start;
 }	t_player;
+
+typedef struct s_colrender
+{
+	int	wall_start;
+	int	wall_end;
+	int	wall_height;
+} t_colrender;
 
 typedef struct s_rayrender
 {

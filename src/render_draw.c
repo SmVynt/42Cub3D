@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 23:49:02 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 22:54:27 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,48 +166,48 @@ void	draw_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture
 	}
 }
 
-// void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color)
-// {
-// 	int	i;
-// 	int	j;
-// 	t_point	start_pos;
-
-// 	if ((color & 0xFF000000) == 0)
-// 		return ;
-// 	start_pos = (t_point){pos.u - size / 2, pos.v - size / 2};
-// 	i = 0;
-// 	while (i < size)
-// 	{
-// 		j = 0;
-// 		while (j < size)
-// 		{
-// 			put_pixel(image, start_pos.u + i, start_pos.v + j, color);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
 void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color)
 {
 	int	i;
 	int	j;
-	// t_point	start_pos;
+	t_point	start_pos;
 
 	if ((color & 0xFF000000) == 0)
 		return ;
-	// start_pos = (t_point){pos.u - size / 2, pos.v - size / 2};
+	start_pos = (t_point){pos.u - size / 2, pos.v - size / 2};
 	i = 0;
 	while (i < size)
 	{
 		j = 0;
 		while (j < size)
 		{
-			put_pixel(image, pos.u + i, pos.v + j, color);
+			put_pixel(image, start_pos.u + i, start_pos.v + j, color);
 			j++;
 		}
 		i++;
 	}
 }
+// void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color)
+// {
+// 	int	i;
+// 	int	j;
+// 	// t_point	start_pos;
+
+// 	if ((color & 0xFF000000) == 0)
+// 		return ;
+// 	// start_pos = (t_point){pos.u - size / 2, pos.v - size / 2};
+// 	i = 0;
+// 	while (i < size)
+// 	{
+// 		j = 0;
+// 		while (j < size)
+// 		{
+// 			put_pixel(image, pos.u + i, pos.v + j, color);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void fill_background(mlx_image_t *image, uint32_t color)
 {
@@ -223,12 +223,13 @@ void	draw_walls(mlx_image_t *image)
 {
 	uint32_t	x;
 
-	x = 0;
+	x = PIXEL_SIZE / 2;
 	while (x < ft_game()->view3d->width)
 	{
 		draw_wall(image, x);
 		x += PIXEL_SIZE;
 	}
+	draw_wall(image,x);
 }
 
 void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite)

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/05 21:32:46 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 23:32:29 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,34 +167,34 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_rayrender ray)
 	return (tex_u);
 }
 
-void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
+void ft_draw_wall_part(t_rayrender ray, int x, double wall_start)
 {
 	mlx_image_t		*image;
 	mlx_texture_t	*texture;
 	t_point			pixel;
 	int				delta;
 	uint32_t		color;
-	// int				delta_fix;
+	t_colrender		cr;
 
 	image = ft_game()->view3d;
 	pixel.u = ft_find_texture_u(&texture, ray);
 	delta = 0;
-	// wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE;
-	// if (wall_start < 0)
-	// 	delta = -wall_start / 2 / PIXEL_SIZE * PIXEL_SIZE;
-	delta = PIXEL_SIZE - wall_start % PIXEL_SIZE;
-	if (wall_start < 0)
-		delta = -wall_start;
-	while (delta <= ray.wall_height)
+	cr.wall_start = floor(wall_start);
+	cr.wall_end = round(wall_start + ray.wall_height + 0.5f);
+	cr.wall_height = cr.wall_end - cr.wall_start;
+	delta = PIXEL_SIZE - cr.wall_start % PIXEL_SIZE;
+	if (cr.wall_start < 0)
+		delta = -cr.wall_start;
+	while (delta <= cr.wall_height)
 	{
-		if ((wall_start + delta) >= (int)image->height)
+		if ((cr.wall_start + delta) >= (int)image->height)
 			break ;
-		pixel.v = round((float)delta / (float)ray.wall_height * (float)texture->height);
-			color = ft_get_pixel_color(texture, pixel);
+		pixel.v = ((float)(delta + cr.wall_start) - wall_start) * (float)texture->height / ray.wall_height;
+		color = ft_get_pixel_color(texture, pixel);
 		if (color != 0)
-			draw_square(image, PIXEL_SIZE, (t_point){x, wall_start + delta}, color);
+			draw_square(image, PIXEL_SIZE, (t_point){x, cr.wall_start + delta}, color);
 		else
-			ft_draw_cubemap(image, &ray, (t_point){x, wall_start + delta});
+			ft_draw_cubemap(image, &ray, (t_point){x, cr.wall_start + delta});
 		delta += PIXEL_SIZE;
 	}
 }
@@ -223,7 +223,7 @@ static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 	}
 }
 
-static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
+static void ft_draw_ceil_part(t_rayrender ray, int x, double wall_start)
 {
 	mlx_image_t *image;
 	t_point		pixel;
@@ -264,7 +264,7 @@ void	draw_wall(mlx_image_t *image, int x)
 	ray.dist = ft_vec2_length((t_vec2){ray.end.x - ray.start.x, ray.end.y - ray.start.y}) * cos(ray.angle);
 	if (ray.dist < 1e-9)
 		return ;
-	ray.wall_height = ft_game()->render.projection_plane_dist / ray.dist;
+	ray.wall_height = (double)ft_game()->render.projection_plane_dist / ray.dist;
 	ft_game()->render.depth[x / PIXEL_SIZE] = (float)ray.dist;
 	draw_vertical_slice(x, ray);
 }
@@ -272,18 +272,18 @@ void	draw_wall(mlx_image_t *image, int x)
 static void draw_vertical_slice(int x, t_rayrender ray)
 {
 	mlx_image_t		*image;
-	int	wall_start;
+	double			wall_start;
 
 	image = ft_game()->view3d;
 	// wall_start = (((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->lookupdown;
-	wall_start = ((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) + ft_game()->player->lookupdown;
+	wall_start = (((double)image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) + ft_game()->player->lookupdown;
 	// wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE;
-	if (false)
+	if (true)
 		ft_draw_ceil_part(ray, x, wall_start);
 	if (true)
-		ft_draw_wall_part(ray, x, wall_start);
-	if (false)
 		ft_draw_floor_part(ray, x, wall_start + ray.wall_height);
+	if (true)
+		ft_draw_wall_part(ray, x, wall_start);
 }
 
 
@@ -460,7 +460,7 @@ void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
 	x = (PIXEL_SIZE - sp->start.u % PIXEL_SIZE) % PIXEL_SIZE;
 	while (x < sp->size.u)
 	{
-		sp->screen.u = sp->start.u + x;
+		sp->screen.u = sp->start.u + x + PIXEL_SIZE / 2;
 		if (sp->screen.u >= 0 && sp->screen.u < (int)image->width)
 		{
 			if (sp->dist > ft_game()->render.depth[sp->screen.u / PIXEL_SIZE])
