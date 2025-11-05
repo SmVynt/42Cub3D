@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 22:26:34 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/06 00:33:02 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,9 @@ static void	ft_init_null_textures(void)
 	game->textures.wall_atlas = NULL;
 	game->textures.bg = NULL;
 	game->textures.ui_minimap = NULL;
+	game->textures.ui_health = NULL;
+	game->textures.floor_atlas = NULL;
+	game->textures.ceiling_atlas = NULL;
 	i = 0;
 	while (i < WALLS_TYPES_COUNT)
 	{
@@ -229,6 +232,12 @@ static void	ft_init_null_textures(void)
 		game->textures.walls[i].tex[DIR_EA] = NULL;
 		i++;
 	}
+	i = -1;
+	while (++i < FLOOR_TYPE_COUNT)
+		game->textures.floor[i] = NULL;
+	i = -1;
+	while (++i < CEILING_TYPE_COUNT)
+		game->textures.ceiling[i] = NULL;
 }
 
 void	ft_initialize(void)

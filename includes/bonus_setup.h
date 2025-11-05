@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 23:41:49 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/06 00:27:48 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,19 @@
 # define TEX_DOOR			"textures/red_door.png"
 
 # define WALLS_TYPES_COUNT	9
-# define TEX_WALL_ATLAS		"textures/walls.png"
-# define TEX_WALL_PLCHLDR	"textures/wall_placeholder.png"
+# define TEX_WALL_ATLAS		"textures/t_walls.png"
+# define TEX_WALL_PLCHLDR	"textures/t_wall_placeholder.png"
 
 # define SPEC_TYPES_COUNT	4
 # define SPEC_WALL_CHARS	"dD67"
 # define SPEC_WALL_FADE		"8:"
 # define SPEC_WALL_SWITCH	"67"
+
+# define FLOOR_TYPE_COUNT	4
+# define TEX_FLOOR_ATLAS	"textures/t_floor.png"
+
+# define CEILING_TYPE_COUNT	4
+# define TEX_CEILING_ATLAS	"textures/t_ceiling.png"
 
 # define UI_SCALE			2
 

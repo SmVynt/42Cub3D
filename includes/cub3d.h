@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/05 21:35:22 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/06 00:38:20 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define COLOR_BOLD		"\033[1m"
 # define COLOR_X		"\033[0m"
 
-# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asdDf:m"
+# define MAP_ALLOWED_CHARS		"0123456789NSEW _+.K#asdDf:m"
 # define MAP_WALL_CHARS			"123456789"
 # define MAP_PLAYER_CHARS		"NSEW"
 
@@ -103,7 +103,7 @@ void	ft_exit(void);
 // t_player	*init_player(char **map, int w, int h);
 void	ft_load_texture(const char *path, mlx_texture_t **texture);
 void	ft_load_anim_texture(const char *path, mlx_texture_t **frames, int n_frames);
-void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture);
+void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture);
 
 
 float	ft_height_delta(float distance);
