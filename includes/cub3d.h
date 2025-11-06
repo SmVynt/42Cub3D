@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/06 00:38:20 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/06 01:26:02 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_exit(void);
 // t_player	*init_player(char **map, int w, int h);
 void	ft_load_texture(const char *path, mlx_texture_t **texture);
 void	ft_load_anim_texture(const char *path, mlx_texture_t **frames, int n_frames);
-void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture);
+void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture, mlx_texture_t *atlas);
 
 
 float	ft_height_delta(float distance);

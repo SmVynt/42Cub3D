@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/06 00:41:11 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/06 01:42:21 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void ft_init_walls_textures(void)
 		dir = DIR_NO;
 		while (dir <= DIR_WE)
 		{
-			ft_load_texture_from_atlas(i - 1, dir, &game->textures.walls[i].tex[dir]);
+			ft_load_texture_from_atlas(i - 1, dir, &game->textures.walls[i].tex[dir], game->textures.wall_atlas);
 			printf("Loaded wall texture %d dir %d\n", i, dir);
 			dir++;
 		}
@@ -68,7 +68,7 @@ static void ft_init_floor_textures(void)
 	i = 0;
 	while (i < FLOOR_TYPE_COUNT)
 	{
-		ft_load_texture_from_atlas(0, i, &game->textures.floor[i]);
+		ft_load_texture_from_atlas(0, i, &game->textures.floor[i], game->textures.floor_atlas);
 		printf("Loaded floor texture %d\n", i);
 		i++;
 	}
@@ -84,7 +84,7 @@ static void ft_init_ceiling_textures(void)
 	i = 0;
 	while (i < CEILING_TYPE_COUNT)
 	{
-		ft_load_texture_from_atlas(1, i, &game->textures.ceiling[i]);
+		ft_load_texture_from_atlas(0, i, &game->textures.ceiling[i], game->textures.ceiling_atlas);
 		printf("Loaded ceiling texture %d\n", i);
 		i++;
 	}

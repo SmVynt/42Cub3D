@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/05 23:32:29 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/06 01:42:38 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,50 +199,91 @@ void ft_draw_wall_part(t_rayrender ray, int x, double wall_start)
 	}
 }
 
+static mlx_texture_t *ft_floor_texture(t_vec2 p)
+{
+	t_gs	*game;
+	t_map	*map;
+	int		x;
+	int		y;
+
+	game = ft_game();
+	map = &game->map;
+	x = (int)(p.x);
+	y = (int)(p.y);
+	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
+		return (game->textures.floor[3]);
+	if (map->tile[y][x] == '0')
+		return (game->textures.floor[0]);
+	if (map->tile[y][x] == ' ')
+		return (game->textures.floor[1]);
+	if (map->tile[y][x] == '_')
+		return (game->textures.floor[2]);
+	return (game->textures.floor[3]);
+}
+
 static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 {
-	mlx_image_t *image;
-	t_point		pixel;
-	int			y;
-	double		dist;
-	uint32_t	color;
+	t_point			pixel;
+	int				y;
+	double			dist;
+	uint32_t		color;
 
-	image = ft_game()->view3d;
 	y = wall_end / PIXEL_SIZE * PIXEL_SIZE;
-	while (y < (int)image->height)
+	while (y < (int)ft_game()->view3d->height)
 	{
 		dist = get_dist_to_screen_point(y, ray);
-		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, ft_game()->textures.walls[0].tex[DIR_WE]->width);
-		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, ft_game()->textures.walls[0].tex[DIR_NO]->height);
-		color = ft_get_pixel_color(ft_game()->textures.walls[0].tex[DIR_WE], pixel);
+		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, STANDARD_SPRITE_SIZE);
+		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, STANDARD_SPRITE_SIZE);
+		color = ft_get_pixel_color(ft_floor_texture((t_vec2){ray.start.x + ray.dir.x * dist, ray.start.y + ray.dir.y * dist}), pixel);
 		if (color != 0)
-			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
+			draw_square(ft_game()->view3d, PIXEL_SIZE, (t_point){x, y}, color);
 		else
-			ft_draw_cubemap(image, &ray, (t_point){x, y});
+			ft_draw_cubemap(ft_game()->view3d, &ray, (t_point){x, y});
 		y += PIXEL_SIZE;
 	}
 }
 
+static mlx_texture_t *ft_ceil_texture(t_vec2 p)
+{
+	t_gs	*game;
+	t_map	*map;
+	int		x;
+	int		y;
+
+	game = ft_game();
+	map = &game->map;
+	x = (int)(p.x);
+	y = (int)(p.y);
+	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
+		return (game->textures.ceiling[3]);
+	if (map->tile[y][x] == '0')
+		return (game->textures.ceiling[0]);
+	if (map->tile[y][x] == ' ')
+		return (game->textures.ceiling[1]);
+	if (map->tile[y][x] == '_')
+		return (game->textures.ceiling[2]);
+	return (game->textures.ceiling[3]);
+}
+
 static void ft_draw_ceil_part(t_rayrender ray, int x, double wall_start)
 {
-	mlx_image_t *image;
 	t_point		pixel;
 	int			y;
 	double		dist;
 	uint32_t	color;
 
-	image = ft_game()->view3d;
 	y = 0;
 	while (y < wall_start)
 	{
 		dist = get_dist_to_screen_point(y, ray);
-		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, ft_game()->textures.walls[0].tex[DIR_NO]->width);
-		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, ft_game()->textures.walls[0].tex[DIR_NO]->height);
-		color = ft_get_pixel_color(ft_game()->textures.walls[0].tex[DIR_NO], pixel);
+		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, STANDARD_SPRITE_SIZE);
+		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, STANDARD_SPRITE_SIZE);
+		color = ft_get_pixel_color(ft_ceil_texture((t_vec2){ray.start.x - ray.dir.x * dist, ray.start.y - ray.dir.y * dist}), pixel);
+		// color = ft_get_pixel_color(ft_game()->textures.walls[0].tex[DIR_NO], pixel);
 		if (color != 0)
-			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
+			draw_square(ft_game()->view3d, PIXEL_SIZE, (t_point){x, y}, color);
 		else
-			ft_draw_cubemap(image, &ray, (t_point){x, y});
+			ft_draw_cubemap(ft_game()->view3d, &ray, (t_point){x, y});
 		y += PIXEL_SIZE;
 	}
 }
