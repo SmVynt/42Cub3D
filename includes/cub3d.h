@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/05 00:12:45 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/07 11:29:15 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "structs.h"
 # include "ft_mat4.h"
 
-# define DEBUG_MODE	true
+# define DEBUG_MODE	false
 
 # define WIDTH		1280
 # define HEIGHT		720
@@ -49,8 +49,8 @@
 # define COLOR_BOLD		"\033[1m"
 # define COLOR_X		"\033[0m"
 
-# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asdDf:m"
-# define MAP_WALL_CHARS			"123456789"
+# define MAP_ALLOWED_CHARS		"0123456789:#NSEW _+.KbasdDfm"
+# define MAP_WALL_CHARS			"123456789:"
 # define MAP_PLAYER_CHARS		"NSEW"
 
 # define MAP_SCALE				10
@@ -64,7 +64,7 @@
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
 # define FOV_RAD				(M_PI / 3.0)
-# define PIXEL_SIZE				2
+# define PIXEL_SIZE				4
 # define UI_PIXEL_SIZE			1
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
@@ -103,7 +103,7 @@ void	ft_exit(void);
 // t_player	*init_player(char **map, int w, int h);
 void	ft_load_texture(const char *path, mlx_texture_t **texture);
 void	ft_load_anim_texture(const char *path, mlx_texture_t **frames, int n_frames);
-void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture);
+void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture, mlx_texture_t *atlas);
 
 
 float	ft_height_delta(float distance);

@@ -168,78 +168,123 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_rayrender ray)
 	return (tex_u);
 }
 
-void ft_draw_wall_part(t_rayrender ray, int x, int wall_start)
+void ft_draw_wall_part(t_rayrender ray, int x, double wall_start)
 {
 	mlx_image_t		*image;
 	mlx_texture_t	*texture;
 	t_point			pixel;
 	int				delta;
 	uint32_t		color;
+	t_colrender		cr;
 
 	image = ft_game()->view3d;
 	pixel.u = ft_find_texture_u(&texture, ray);
 	delta = 0;
-	wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE;
-	if (wall_start < 0)
-		delta = -wall_start / 2 / PIXEL_SIZE * PIXEL_SIZE;
-	while (delta <= ray.wall_height)
+	cr.wall_start = floor(wall_start);
+	cr.wall_end = round(wall_start + ray.wall_height + 0.5f);
+	cr.wall_height = cr.wall_end - cr.wall_start;
+	delta = PIXEL_SIZE - cr.wall_start % PIXEL_SIZE;
+	if (cr.wall_start < 0)
+		delta = -cr.wall_start;
+	while (delta <= cr.wall_height)
 	{
-		if ((wall_start + delta) >= (int)image->height )
+		if ((cr.wall_start + delta) >= (int)image->height + PIXEL_SIZE)
 			break ;
-		pixel.v = (int)(delta / ray.wall_height * texture->height);
-			color = ft_get_pixel_color(texture, pixel);
+		pixel.v = ((float)(delta + cr.wall_start) - wall_start) * (float)texture->height / ray.wall_height;
+		color = ft_get_pixel_color(texture, pixel);
 		if (color != 0)
-			draw_square(image, PIXEL_SIZE, (t_point){x, wall_start + delta}, color);
+			draw_square(image, PIXEL_SIZE, (t_point){x, cr.wall_start + delta}, color);
 		else
-			ft_draw_cubemap(image, &ray, (t_point){x, wall_start + delta});
+			ft_draw_cubemap(image, &ray, (t_point){x, cr.wall_start + delta});
 		delta += PIXEL_SIZE;
 	}
 }
 
+static mlx_texture_t *ft_floor_texture(t_vec2 p)
+{
+	t_gs	*game;
+	t_map	*map;
+	int		x;
+	int		y;
+
+	game = ft_game();
+	map = &game->map;
+	x = (int)(p.x);
+	y = (int)(p.y);
+	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
+		return (game->textures.floor[3]);
+	if (map->tile[y][x] == '0')
+		return (game->textures.floor[0]);
+	if (map->tile[y][x] == ' ')
+		return (game->textures.floor[1]);
+	if (map->tile[y][x] == '_')
+		return (game->textures.floor[2]);
+	return (game->textures.floor[3]);
+}
+
 static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 {
-	mlx_image_t *image;
-	t_point		pixel;
-	int			y;
-	double		dist;
-	uint32_t	color;
+	t_point			pixel;
+	int				y;
+	double			dist;
+	uint32_t		color;
 
-	image = ft_game()->view3d;
 	y = wall_end / PIXEL_SIZE * PIXEL_SIZE;
-	while (y < (int)image->height)
+	while (y < (int)ft_game()->view3d->height + PIXEL_SIZE / 2)
 	{
 		dist = get_dist_to_screen_point(y, ray);
-		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, ft_game()->textures.walls[0].tex[DIR_WE]->width);
-		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, ft_game()->textures.walls[0].tex[DIR_NO]->height);
-		color = ft_get_pixel_color(ft_game()->textures.walls[0].tex[DIR_WE], pixel);
+		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, STANDARD_SPRITE_SIZE);
+		pixel.v = ft_get_tex_coord(ray.start.y + ray.dir.y * dist, STANDARD_SPRITE_SIZE);
+		color = ft_get_pixel_color(ft_floor_texture((t_vec2){ray.start.x + ray.dir.x * dist, ray.start.y + ray.dir.y * dist}), pixel);
 		if (color != 0)
-			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
+			draw_square(ft_game()->view3d, PIXEL_SIZE, (t_point){x, y}, color);
 		else
-			ft_draw_cubemap(image, &ray, (t_point){x, y});
+			ft_draw_cubemap(ft_game()->view3d, &ray, (t_point){x, y});
 		y += PIXEL_SIZE;
 	}
 }
 
-static void ft_draw_ceil_part(t_rayrender ray, int x, int wall_start)
+static mlx_texture_t *ft_ceil_texture(t_vec2 p)
 {
-	mlx_image_t *image;
+	t_gs	*game;
+	t_map	*map;
+	int		x;
+	int		y;
+
+	game = ft_game();
+	map = &game->map;
+	x = (int)(p.x);
+	y = (int)(p.y);
+	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
+		return (game->textures.ceiling[3]);
+	if (map->tile[y][x] == '0')
+		return (game->textures.ceiling[0]);
+	if (map->tile[y][x] == ' ')
+		return (game->textures.ceiling[1]);
+	if (map->tile[y][x] == '_')
+		return (game->textures.ceiling[2]);
+	return (game->textures.ceiling[3]);
+}
+
+static void ft_draw_ceil_part(t_rayrender ray, int x, double wall_start)
+{
 	t_point		pixel;
 	int			y;
 	double		dist;
 	uint32_t	color;
 
-	image = ft_game()->view3d;
 	y = 0;
 	while (y < wall_start)
 	{
 		dist = get_dist_to_screen_point(y, ray);
-		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, ft_game()->textures.walls[0].tex[DIR_NO]->width);
-		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, ft_game()->textures.walls[0].tex[DIR_NO]->height);
-		color = ft_get_pixel_color(ft_game()->textures.walls[0].tex[DIR_NO], pixel);
+		pixel.u = ft_get_tex_coord(ray.start.x - ray.dir.x * dist, STANDARD_SPRITE_SIZE);
+		pixel.v = ft_get_tex_coord(ray.start.y - ray.dir.y * dist, STANDARD_SPRITE_SIZE);
+		color = ft_get_pixel_color(ft_ceil_texture((t_vec2){ray.start.x - ray.dir.x * dist, ray.start.y - ray.dir.y * dist}), pixel);
+		// color = ft_get_pixel_color(ft_game()->textures.walls[0].tex[DIR_NO], pixel);
 		if (color != 0)
-			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
+			draw_square(ft_game()->view3d, PIXEL_SIZE, (t_point){x, y}, color);
 		else
-			ft_draw_cubemap(image, &ray, (t_point){x, y});
+			ft_draw_cubemap(ft_game()->view3d, &ray, (t_point){x, y});
 		y += PIXEL_SIZE;
 	}
 }
@@ -256,13 +301,12 @@ void	draw_wall(mlx_image_t *image, int x)
 	ray.start.x = player->pos.x + 0.5f;
 	ray.start.y = player->pos.y + 0.5f;
 	ray.end = (t_vec2){ray.start.x, ray.start.y};
-	// ray.wall_dir = COLOR_GREEN;
 	ray.wall_dir = DIR_NO;
 	ray.end = get_ray_end(&ray, ray.end, ray.dir, 1000, &ray.wall_dir);
 	ray.dist = ft_vec2_length((t_vec2){ray.end.x - ray.start.x, ray.end.y - ray.start.y}) * cos(ray.angle);
 	if (ray.dist < 1e-9)
 		return ;
-	ray.wall_height = ft_game()->render.projection_plane_dist / ray.dist;
+	ray.wall_height = (double)ft_game()->render.projection_plane_dist / ray.dist;
 	ft_game()->render.depth[x / PIXEL_SIZE] = (float)ray.dist;
 	draw_vertical_slice(x, ray);
 }
@@ -270,17 +314,18 @@ void	draw_wall(mlx_image_t *image, int x)
 static void draw_vertical_slice(int x, t_rayrender ray)
 {
 	mlx_image_t		*image;
-	int	wall_start;
+	double			wall_start;
 
 	image = ft_game()->view3d;
-	wall_start = (((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->lookupdown;
-
+	// wall_start = (((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->lookupdown;
+	wall_start = (((double)image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) + ft_game()->player->lookupdown;
+	// wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE;
 	if (true)
 		ft_draw_ceil_part(ray, x, wall_start);
 	if (true)
-		ft_draw_wall_part(ray, x, wall_start);
-	if (true)
 		ft_draw_floor_part(ray, x, wall_start + ray.wall_height);
+	if (true)
+		ft_draw_wall_part(ray, x, wall_start);
 }
 
 
@@ -473,7 +518,7 @@ void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
 	x = (PIXEL_SIZE - sp->start.u % PIXEL_SIZE) % PIXEL_SIZE;
 	while (x < sp->size.u)
 	{
-		sp->screen.u = sp->start.u + x;
+		sp->screen.u = sp->start.u + x + PIXEL_SIZE / 2;
 		if (sp->screen.u >= 0 && sp->screen.u < (int)image->width)
 		{
 			if (sp->dist > ft_game()->render.depth[sp->screen.u / PIXEL_SIZE])

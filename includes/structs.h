@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/07 12:02:13 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/06 00:30:04 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,10 @@ typedef struct s_textures
 {
 	mlx_texture_t	*wall_atlas;
 	t_walltexture	walls[WALLS_TYPES_COUNT];
+	mlx_texture_t	*floor_atlas;
+	mlx_texture_t	*floor[FLOOR_TYPE_COUNT];
+	mlx_texture_t	*ceiling_atlas;
+	mlx_texture_t	*ceiling[CEILING_TYPE_COUNT];
 	mlx_texture_t	*bg;
 	mlx_texture_t	*ui_minimap;
 	mlx_texture_t	*ui_health;
@@ -202,6 +206,13 @@ typedef struct s_player
 	bool	is_shaking;
 	double	shaking_start;
 }	t_player;
+
+typedef struct s_colrender
+{
+	int	wall_start;
+	int	wall_end;
+	int	wall_height;
+} t_colrender;
 
 typedef struct s_rayrender
 {

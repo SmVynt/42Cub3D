@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/01 18:04:30 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/06 01:24:51 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,16 @@ void	ft_load_anim_texture(const char *path, mlx_texture_t **frames, int n_frames
 }
 
 
-void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture)
+void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture, mlx_texture_t *atlas)
 {
 	uint32_t		y;
 	uint32_t		x;
 	uint32_t		y_start;
 	uint32_t		x_start;
-	mlx_texture_t	*atlas;
 	//copying to the texture a part of a texture atlas based on index and dir
 	ft_load_texture(TEX_WALL_PLCHLDR, texture);
-	y_start = (index - 1) * (*texture)->height;
-	x_start = dir * (*texture)->width;
-	atlas = ft_game()->textures.wall_atlas;
+	y_start = row * (*texture)->height;
+	x_start = col * (*texture)->width;
 	y = 0;
 	while (y < (*texture)->height)
 	{
