@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 23:48:52 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/07 12:43:59 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_rayrender ray)
 	loc = ray.end;
 	wall_type = ray.wall_type - '1';
 	wall_type = ft_clamp(wall_type, 0, WALLS_TYPES_COUNT - 1);
-	// wall_type = 1;
+	if (ray.is_doorway)
+		wall_type = 8;
 	if (ray.is_door)
 	{
 		*texture = ray.door->sprite.texture;
@@ -355,16 +356,22 @@ static t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec2 dir, int *tile_x, in
 t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir)
 {
 	t_vec2	curr;
+	t_vec2	next;
 	t_point	tile;
 	int		i;
 	int		side;
 
 	curr = start;
+	ray->is_doorway = false;
+	if (ft_is_door(start))
+		ray->is_doorway = true;
 	i = 0;
 	while (i < max_iter)
 	{
-		curr = get_next_wall_intersection(curr, dir, &tile.u, &tile.v, &side);
-
+		next = get_next_wall_intersection(curr, dir, &tile.u, &tile.v, &side);
+		if (ray->is_doorway && ft_vec2_length((t_vec2){curr.x - next.x, curr.y - next.y}) >= 1.0f)
+			ray->is_doorway = false;
+		curr = next;
 		if (tile.u < 0 || tile.v < 0 || tile.u >= ft_game()->map.w || tile.v >= ft_game()->map.h)
 		{
 			*wall_dir = DIR_NO;
@@ -410,6 +417,7 @@ t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_d
 				curr.y -= coeff * ray->dir.y;
 				if (ray->door->is_opening)
 				{
+					ray->is_doorway = true;
 					if (side && curr.x - floorf(curr.x) > (DOOR_OPEN_TIME - ray->door->dt)/DOOR_OPEN_TIME)
 						continue;
 					if (!side && ceilf(curr.y) - curr.y > (DOOR_OPEN_TIME - ray->door->dt)/DOOR_OPEN_TIME)
