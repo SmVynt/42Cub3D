@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 23:48:52 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/07 16:44:01 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_rayrender ray)
 	loc = ray.end;
 	wall_type = ray.wall_type - '1';
 	wall_type = ft_clamp(wall_type, 0, WALLS_TYPES_COUNT - 1);
-	// wall_type = 1;
+	if (ray.is_doorway)
+		wall_type = 8;
 	if (ray.is_door)
 	{
 		*texture = ray.door->sprite.texture;
@@ -360,20 +361,35 @@ t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_d
 	int		side;
 
 	curr = start;
+	ray->is_doorway = false;
+	ray->is_door = false;
+	ray->door = NULL;
+	start.x -= 0.5;
+	start.y -= 0.5;
+	if (ft_is_door(start))
+		ray->is_doorway = true;
 	i = 0;
 	while (i < max_iter)
 	{
 		curr = get_next_wall_intersection(curr, dir, &tile.u, &tile.v, &side);
-
 		if (tile.u < 0 || tile.v < 0 || tile.u >= ft_game()->map.w || tile.v >= ft_game()->map.h)
 		{
 			*wall_dir = DIR_NO;
 			return (curr);
 		}
 		ray->is_door = ft_is_door((t_vec2){tile.u, tile.v});
-		ray->wall_type = ft_game()->map.tile[tile.v][tile.u];
 		if (ft_is_wall((t_vec2){tile.u, tile.v}) || ray->is_door)
-		{
+		{	
+			ray->wall_type = ft_game()->map.tile[tile.v][tile.u];
+			if (ray->is_doorway)
+			{
+				if (ray->door && !((abs(ray->door->idx.u - tile.u) == 1 && ray->door->idx.v == tile.v)
+					|| (ray->door->idx.u == tile.u && abs(ray->door->idx.v - tile.v) == 1)))
+					ray->is_doorway = false;
+				if (!ray->door && !((abs((int)roundf(start.x) - tile.u) == 1 && roundf(start.y) == tile.v)
+					|| (roundf(start.x) == tile.u && abs((int)roundf(start.y) - tile.v) == 1)))
+					ray->is_doorway = false;
+			}
 			if (ray->is_door)
 			{
 				ray->door = ft_get_door(tile.v, tile.u);
@@ -410,6 +426,7 @@ t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_d
 				curr.y -= coeff * ray->dir.y;
 				if (ray->door->is_opening)
 				{
+					ray->is_doorway = true;
 					if (side && curr.x - floorf(curr.x) > (DOOR_OPEN_TIME - ray->door->dt)/DOOR_OPEN_TIME)
 						continue;
 					if (!side && ceilf(curr.y) - curr.y > (DOOR_OPEN_TIME - ray->door->dt)/DOOR_OPEN_TIME)
