@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
 /*   Updated: 2025/11/06 00:30:04 by psmolin          ###   ########.fr       */
@@ -226,6 +226,7 @@ typedef struct s_rayrender
 	char		wall_type;
 	double		wall_height;
 	bool		is_door;
+	bool		is_doorway;
 	t_door		*door;
 }	t_rayrender;
 
