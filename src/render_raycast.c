@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/06 01:42:38 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/07 12:42:59 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ void ft_draw_wall_part(t_rayrender ray, int x, double wall_start)
 		delta = -cr.wall_start;
 	while (delta <= cr.wall_height)
 	{
-		if ((cr.wall_start + delta) >= (int)image->height)
+		if ((cr.wall_start + delta) >= (int)image->height + PIXEL_SIZE)
 			break ;
 		pixel.v = ((float)(delta + cr.wall_start) - wall_start) * (float)texture->height / ray.wall_height;
 		color = ft_get_pixel_color(texture, pixel);
@@ -229,7 +229,7 @@ static void ft_draw_floor_part(t_rayrender ray, int x, int wall_end)
 	uint32_t		color;
 
 	y = wall_end / PIXEL_SIZE * PIXEL_SIZE;
-	while (y < (int)ft_game()->view3d->height)
+	while (y < (int)ft_game()->view3d->height + PIXEL_SIZE / 2)
 	{
 		dist = get_dist_to_screen_point(y, ray);
 		pixel.u = ft_get_tex_coord(ray.start.x + ray.dir.x * dist, STANDARD_SPRITE_SIZE);
