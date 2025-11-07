@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/06 00:27:48 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/06 01:49:08 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define AI_TIMER			0.1f
 # define AI_CONTACT_DIST	0.3f
 # define AI_DAMAGE_PER_SEC	100.0f
+
+# define LAV_DAMAGE_PER_SEC	300.0f
 
 # define DOORS_TYPES_COUNT	2
 # define MAP_DOOR_CHARS		"dD"
