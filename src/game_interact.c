@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_interact.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 10:42:38 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/07 11:15:18 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	interact(t_gs *game)
 			if (game->inter_walls[i].is_switch)
 			{
 				toggle_switch(&game->inter_walls[i]);
-				swap_chars('8', ':');
+				swap_chars('8', '#');
 				game->player->is_shaking = true;
 				game->player->shaking_start = mlx_get_time();
 			}
