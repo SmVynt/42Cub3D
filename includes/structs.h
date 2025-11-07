@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/05 16:52:50 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/07 17:30:21 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,8 @@ typedef struct s_textures
 	t_walltexture	walls[WALLS_TYPES_COUNT];
 	mlx_texture_t	*bg;
 	mlx_texture_t	*ui_minimap;
+	mlx_texture_t	*screen_victory;
+	mlx_texture_t	*screen_defeat;
 }	t_textures;
 
 typedef struct s_render

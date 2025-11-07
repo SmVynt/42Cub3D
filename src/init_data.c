@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/05 16:53:43 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/07 17:31:22 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,8 @@ static void	ft_init_null_textures(void)
 	game->textures.wall_atlas = NULL;
 	game->textures.bg = NULL;
 	game->textures.ui_minimap = NULL;
+	game->textures.screen_defeat = NULL;
+	game->textures.screen_victory = NULL;
 	i = 0;
 	while (i < WALLS_TYPES_COUNT)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/03 16:08:24 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/07 17:28:39 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,6 +273,7 @@ void	ft_setgame(void)
 	ft_set_player();
 	ft_init_walls_textures();
 	ft_init_ui_textures();
+	ft_init_end_screen_textures();
 	ft_init_sprites();
 	ft_calculate_max_entities();
 	ft_set_doors();

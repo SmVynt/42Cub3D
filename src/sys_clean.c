@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/02 17:09:54 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/07 17:32:18 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ static void	ft_free_mlx(void)
 		mlx_delete_texture(game->textures.bg);
 	if (game->textures.ui_minimap)
 		mlx_delete_texture(game->textures.ui_minimap);
+	if (game->textures.screen_defeat)
+		mlx_delete_texture(game->textures.screen_defeat);
+	if (game->textures.screen_victory)
+		mlx_delete_texture(game->textures.screen_victory);
 	if (game->mlx)
 	{
 		if (game->minimap)

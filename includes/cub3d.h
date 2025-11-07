@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/05 15:59:52 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/07 17:29:36 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_exit(void);
 void	ft_load_texture(const char *path, mlx_texture_t **texture);
 void	ft_load_anim_texture(const char *path, mlx_texture_t **frames, int n_frames);
 void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture);
-
+void	ft_init_end_screen_textures(void);
 
 float	ft_height_delta(float distance);
 static inline void put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
