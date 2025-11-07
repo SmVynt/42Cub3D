@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 21:34:38 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/05 16:52:50 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ typedef struct s_gs
 	mlx_image_t		*miniplayer;
 	mlx_image_t		*view3d;
 	mlx_image_t		*view3d_bg;
+	mlx_image_t		*end_screen;
 	mlx_image_t		*hints;
 	mlx_image_t		*msg;
 	double			msg_time;
@@ -232,6 +233,7 @@ typedef struct s_gs
 	t_textures		textures;
 	t_render		render;
 	bool			playing;
+	int				victory;
 	t_sprite		*sh;
 	t_item			item_prefabs[ITEMS_TYPES_COUNT];
 	t_item			*items;

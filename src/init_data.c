@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 11:08:56 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 16:53:43 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,8 +189,12 @@ static void	ft_init_game(void)
 	game->hud = NULL;
 	game->miniplayer = NULL;
 	game->view3d = NULL;
+	game->end_screen = NULL;
+	game->hints = NULL;
+	game->msg = NULL;
 	game->view3d_bg = NULL;
 	game->playing = true;
+	game->victory = 0;
 }
 
 static void	ft_init_null_textures(void)

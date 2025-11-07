@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_setup.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 11:07:15 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/05 15:47:06 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,8 @@
 # define MM_COLOR_EMPTY		0xFF090900
 
 # define TEX_UI_MM			"textures/ui/T_MM_BG.png"
+
+# define TEX_DEFEAT			"textures/end_screens/defeat.png"
+# define TEX_VICTORY		"textures/end_screens/victory.png"
 
 #endif
