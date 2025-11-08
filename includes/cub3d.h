@@ -25,7 +25,7 @@
 # include "structs.h"
 # include "ft_mat4.h"
 
-# define DEBUG_MODE	true
+# define DEBUG_MODE	false
 
 # define WIDTH		1280
 # define HEIGHT		720
@@ -49,8 +49,8 @@
 # define COLOR_BOLD		"\033[1m"
 # define COLOR_X		"\033[0m"
 
-# define MAP_ALLOWED_CHARS		"0123456789NSEW +.K#asdDf:"
-# define MAP_WALL_CHARS			"123456789"
+# define MAP_ALLOWED_CHARS		"0123456789:#NSEW _+.KbasdDfm"
+# define MAP_WALL_CHARS			"123456789:"
 # define MAP_PLAYER_CHARS		"NSEW"
 
 # define MAP_SCALE				10
@@ -64,7 +64,8 @@
 # define RAD_TO_DEG				57.2957795131
 # define FOV					60.0f
 # define FOV_RAD				(M_PI / 3.0)
-# define PIXEL_SIZE				2
+# define PIXEL_SIZE				4
+# define UI_PIXEL_SIZE			1
 # define STANDARD_SPRITE_SIZE	64
 # define JUMP_HEIGHT			1.0f
 # define JUMP_IMPULSE			3.2f
@@ -104,6 +105,8 @@ void	ft_load_texture(const char *path, mlx_texture_t **texture);
 void	ft_load_anim_texture(const char *path, mlx_texture_t **frames, int n_frames);
 void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture);
 void	ft_init_end_screen_textures(void);
+void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture, mlx_texture_t *atlas);
+
 
 float	ft_height_delta(float distance);
 static inline void put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
@@ -126,7 +129,7 @@ void	fill_background(mlx_image_t *image, uint32_t color);
 
 void	draw(int32_t width, int32_t height, void *param);
 void	draw_ui(void);
-void	draw_map(mlx_image_t *image, t_map *map);
+void	draw_map(void);
 void	draw_ui_minimap(void);
 void	draw_player(mlx_image_t *image);
 void	draw_walls(mlx_image_t *image);
@@ -138,6 +141,7 @@ void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color)
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
 t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir);
 
+void	pick_up(t_item *item);
 
 uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
 int			ft_get_tex_coord(float x, int texture_width);
@@ -146,12 +150,15 @@ void	ft_createhooks(void);
 void	ft_key_press_hook(void *param);
 void	ft_update(void *param);
 void	ft_update_hud(void *param);
-void	ft_update_minimap(void *param);
+void	ft_update_minimap(void);
+void	ft_update_hp_bar(void);
 void	ft_update_chars(void);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
 
 void	show_end_screen(int victory);
+bool	ft_player_try_damage(float damage);
+bool	ft_player_try_heal(float heal);
 
 // math
 int			ft_sign(int n);

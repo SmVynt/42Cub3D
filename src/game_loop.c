@@ -50,6 +50,24 @@ bool ft_is_wall(t_vec2 p)
 	return (false);
 }
 
+bool ft_is_lava(t_vec2 p)
+{
+	t_gs	*game;
+	t_map	*map;
+	int		x;
+	int		y;
+
+	game = ft_game();
+	map = &game->map;
+	x = (int)roundf(p.x);
+	y = (int)roundf(p.y);
+	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
+		return (false);
+	if (map->tile[y][x] == '_')
+		return (true);
+	return (false);
+}
+
 bool ft_is_door(t_vec2 p)
 {
 	t_gs	*game;
@@ -154,6 +172,10 @@ void	ft_update_player(void)
 			player->is_jumping = false;
 		}
 	}
+	else if (ft_is_lava(player->pos))
+	{
+		ft_player_try_damage(LAV_DAMAGE_PER_SEC * ft_game()->dt);
+	}
 	player->mov_control = (t_point){0, 0};
 	player->rot_control = (t_point){0, 0};
 }
@@ -173,9 +195,12 @@ static void	ft_update_view3d(void *param)
 
 void	ft_update_graphics(void)
 {
+	print_debug("--view3d...");
 	ft_update_view3d(ft_game()->view3d);
+	print_debug("--hud...");
 	ft_update_hud(ft_game()->hud);
-	ft_update_minimap(ft_game()->miniplayer);
+	print_debug("--minimap...");
+	ft_update_minimap();
 }
 
 void	ft_update_hud(void *param)
@@ -188,7 +213,6 @@ void	ft_update_hud(void *param)
 	if (!param || !pocket_items)
 		return ;
 	image = (mlx_image_t *)param;
-	// memset(image->pixels, COLOR_RED_TRANSP, image->width * image->height * sizeof(int32_t));
 	int i = 0;
 	while (pocket_items)
 	{
@@ -197,18 +221,6 @@ void	ft_update_hud(void *param)
 		pocket_items = pocket_items->next;
 		i++;
 	}
-}
-
-void	ft_update_minimap(void *param)
-{
-	mlx_image_t	*image;
-
-	if (!param)
-		return ;
-	image = (mlx_image_t *)param;
-	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
-	//draw_player(image);
-	draw_map(image, &ft_game()->map);
 }
 
 static void ft_update_dt(void)
@@ -239,12 +251,15 @@ void	ft_update(void *param)
 	game = ft_game();
 	player = game->player;
 	(void)param;
+	print_debug("updating dt...");
 	ft_update_dt();
 	i = 0;
+	print_debug("shaky shaky...");
 	if (player->is_shaking)
 		shaky_shaky();
 	print_interact_msg(game);
 	// upd_doors = false;
+	print_debug("updating doors...");
 	while(i < game->inter_wall_count)
 	{
 		if (ft_game()->inter_walls[i].is_opening)
@@ -254,7 +269,9 @@ void	ft_update(void *param)
 		}
 		i++;
 	}
+	print_debug("updating chars...");
 	ft_update_chars();
+	print_debug("player update...");
 	if (player->mov_control.u != 0
 		|| player->mov_control.v != 0
 		|| player->rot_control.u != 0
@@ -266,5 +283,6 @@ void	ft_update(void *param)
 	{
 		ft_update_player();
 	}
+	print_debug("updating graphics...");
 	ft_update_graphics();
 }

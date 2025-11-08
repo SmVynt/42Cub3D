@@ -50,10 +50,42 @@ static void ft_init_walls_textures(void)
 		dir = DIR_NO;
 		while (dir <= DIR_WE)
 		{
-			ft_load_wall_texture(i, dir, &game->textures.walls[i].tex[dir]);
+			ft_load_texture_from_atlas(i - 1, dir, &game->textures.walls[i].tex[dir], game->textures.wall_atlas);
 			printf("Loaded wall texture %d dir %d\n", i, dir);
 			dir++;
 		}
+		i++;
+	}
+}
+
+static void ft_init_floor_textures(void)
+{
+	t_gs		*game;
+	int			i;
+
+	game = ft_game();
+	ft_load_texture(TEX_FLOOR_ATLAS, &game->textures.floor_atlas);
+	i = 0;
+	while (i < FLOOR_TYPE_COUNT)
+	{
+		ft_load_texture_from_atlas(0, i, &game->textures.floor[i], game->textures.floor_atlas);
+		printf("Loaded floor texture %d\n", i);
+		i++;
+	}
+}
+
+static void ft_init_ceiling_textures(void)
+{
+	t_gs		*game;
+	int			i;
+
+	game = ft_game();
+	ft_load_texture(TEX_CEILING_ATLAS, &game->textures.ceiling_atlas);
+	i = 0;
+	while (i < CEILING_TYPE_COUNT)
+	{
+		ft_load_texture_from_atlas(0, i, &game->textures.ceiling[i], game->textures.ceiling_atlas);
+		printf("Loaded ceiling texture %d\n", i);
 		i++;
 	}
 }
@@ -65,6 +97,8 @@ static void ft_init_ui_textures(void)
 	game = ft_game();
 	ft_load_texture(TEX_UI_MM, &game->textures.ui_minimap);
 	printf("Loaded UI minimap texture\n");
+	ft_load_texture(TEX_UI_HEALTH, &game->textures.ui_health);
+	printf("Loaded UI health texture\n");
 }
 
 static void ft_calculate_max_entities(void)
@@ -76,6 +110,7 @@ static void ft_calculate_max_entities(void)
 	game = ft_game();
 	game->max_items = 0;
 	game->max_chars = 0;
+	game->max_doors = 0;
 	i = 0;
 	while (i < game->map.h)
 	{
@@ -272,6 +307,8 @@ void	ft_setgame(void)
 {
 	ft_set_player();
 	ft_init_walls_textures();
+	ft_init_floor_textures();
+	ft_init_ceiling_textures();
 	ft_init_ui_textures();
 	ft_init_end_screen_textures();
 	ft_init_sprites();

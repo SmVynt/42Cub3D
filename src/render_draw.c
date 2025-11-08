@@ -50,6 +50,10 @@ void	draw(int32_t width, int32_t height, void *param)
 		mlx_delete_image(game->mlx, game->minimap);
 	if (game->miniplayer)
 		mlx_delete_image(game->mlx, game->miniplayer);
+	if (game->health)
+		mlx_delete_image(game->mlx, game->health);
+	if (game->health_bar)
+		mlx_delete_image(game->mlx, game->health_bar);
 	if (game->view3d)
 		mlx_delete_image(game->mlx, game->view3d);
 	if (game->view3d_bg)
@@ -71,20 +75,37 @@ void	draw(int32_t width, int32_t height, void *param)
 	game->hud = mlx_new_image(game->mlx, 64, height);
 	game->minimap = mlx_new_image(game->mlx, height * 2 / 5, height / 2);
 	game->miniplayer = mlx_new_image(game->mlx,height * 2 / 9, height * 2 / 9);
+	game->health = mlx_new_image(game->mlx, height / 4, height / 18);
+	game->health_bar = mlx_new_image(game->mlx, height / 4, height / 18);
 	if (!game->minimap || !game->miniplayer || !game->view3d)
 		return ;
 	draw_ui();
 	ft_game()->render.bg_proportion = (float)game->view3d_bg->height / ((float)game->view3d_bg->width * M_PI / 2);
 	mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
 	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
+	game->mmap.miniplayer_pos_show = (t_point)
+				{(width / 16) + round((float)height * 0.11f),
+				(height / 2) + round((float)height * 0.025f)};
 	mlx_image_to_window(game->mlx, game->miniplayer,
-			(width / 16 + (int)((float)height * 0.11f) / PIXEL_SIZE * PIXEL_SIZE),
-			height / 2 + (int)((float)height * 0.025f) / PIXEL_SIZE * PIXEL_SIZE);
-	mlx_image_to_window(game->mlx, game->minimap, width / 16, height / 2);
+		game->mmap.miniplayer_pos_show.u,
+		game->mmap.miniplayer_pos_show.v);
+	game->mmap.miniplayer_pos_hide = (t_point)
+				{game->mmap.miniplayer_pos_show.u + width / 16,
+				game->mmap.miniplayer_pos_show.v + height / 2};
+	game->mmap.minimap_pos_show = (t_point){width / 16, height / 2};
+	mlx_image_to_window(game->mlx, game->minimap,
+		game->mmap.minimap_pos_show.u,
+		game->mmap.minimap_pos_show.v);
+	game->mmap.minimap_pos_hide = (t_point)
+				{game->mmap.minimap_pos_show.u + width / 16,
+				game->mmap.minimap_pos_show.v + height / 2};
 	mlx_image_to_window(game->mlx, game->hud, width - 64, 0);
 	if (game->victory)
 		show_end_screen(game->victory);
 	// ft_update(game); We maybe'll need this later
+	mlx_image_to_window(game->mlx, game->health_bar, width -  width / 16 - height / 4, height - height / 18);
+	mlx_image_to_window(game->mlx, game->health, width -  width / 16 - height / 4, height - height / 18);
+	// mlx_image_to_window(game->mlx, game->health_bar, width -  width / 16 - height / 4, height - height / 18);
 	ft_update_graphics();
 }
 
@@ -171,6 +192,27 @@ void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color)
 		i++;
 	}
 }
+// void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color)
+// {
+// 	int	i;
+// 	int	j;
+// 	// t_point	start_pos;
+
+// 	if ((color & 0xFF000000) == 0)
+// 		return ;
+// 	// start_pos = (t_point){pos.u - size / 2, pos.v - size / 2};
+// 	i = 0;
+// 	while (i < size)
+// 	{
+// 		j = 0;
+// 		while (j < size)
+// 		{
+// 			put_pixel(image, pos.u + i, pos.v + j, color);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void fill_background(mlx_image_t *image, uint32_t color)
 {
@@ -192,6 +234,7 @@ void	draw_walls(mlx_image_t *image)
 		draw_wall(image, x);
 		x += PIXEL_SIZE;
 	}
+	draw_wall(image,x);
 }
 
 void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite)
@@ -238,14 +281,6 @@ void	ft_add_sprite_to_list(t_sprite *head, t_sprite *sprite)
 	current->next = sprite;
 }
 
-void pick_up(t_item *item)
-{
-	if (!item->active)
-        return;
-	item->active = false;
-	printf("add item %i\n", item->sprite.texture->width);
-	ft_lstadd_back(&ft_game()->player->pocket, ft_lstnew(item));
-}
 
 void	draw_sprites(mlx_image_t *image)
 {

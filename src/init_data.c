@@ -75,6 +75,16 @@ static void ft_init_prefabs(void)
 			}
 		}
 	};
+	game->item_prefabs[IT_MAP] = (t_item){
+		.type = IT_MAP,
+		.pickupable = true,
+		.active = true,
+		.pickup_value = 1,
+		.sprite.texture = NULL,
+		.sprite.animated = false,
+		.sprite.path = TEX_MAP,
+		.sprite.bottom_offset = 0.0f
+	};
 	game->char_prefabs[CH_ALIEN] = (t_char){
 		.type = CH_ALIEN,
 		.health = 100,
@@ -163,6 +173,7 @@ static void	ft_init_player(void)
 	player = malloc(sizeof(t_player));
 	if (!player)
 		ft_exit_perror("Could not allocate memory for player\n");
+	player->hp = 100.0f;
 	player->pos.x = 0;
 	player->pos.y = 0;
 	player->lookdir.x = 1.0f;
@@ -188,6 +199,8 @@ static void	ft_init_game(void)
 	game->minimap = NULL;
 	game->hud = NULL;
 	game->miniplayer = NULL;
+	game->health = NULL;
+	game->health_bar = NULL;
 	game->view3d = NULL;
 	game->end_screen = NULL;
 	game->hints = NULL;
@@ -195,6 +208,11 @@ static void	ft_init_game(void)
 	game->view3d_bg = NULL;
 	game->playing = true;
 	game->victory = 0;
+	game->mmap.enabled = false;
+	game->mmap.opening = false;
+	game->mmap.picked = false;
+	game->mmap.lerp_progress = 0.0f;
+	game->mmap.lerp_speed = 10.0f;
 }
 
 static void	ft_init_null_textures(void)
@@ -208,6 +226,9 @@ static void	ft_init_null_textures(void)
 	game->textures.ui_minimap = NULL;
 	game->textures.screen_defeat = NULL;
 	game->textures.screen_victory = NULL;
+	game->textures.ui_health = NULL;
+	game->textures.floor_atlas = NULL;
+	game->textures.ceiling_atlas = NULL;
 	i = 0;
 	while (i < WALLS_TYPES_COUNT)
 	{
@@ -217,6 +238,12 @@ static void	ft_init_null_textures(void)
 		game->textures.walls[i].tex[DIR_EA] = NULL;
 		i++;
 	}
+	i = -1;
+	while (++i < FLOOR_TYPE_COUNT)
+		game->textures.floor[i] = NULL;
+	i = -1;
+	while (++i < CEILING_TYPE_COUNT)
+		game->textures.ceiling[i] = NULL;
 }
 
 void	ft_initialize(void)

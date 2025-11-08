@@ -63,7 +63,8 @@ typedef enum e_item_type
 	IT_KEY,
 	IT_CHANDELIER,
 	IT_BARREL,
-	IT_FIRE
+	IT_FIRE,
+	IT_MAP
 }	t_item_type;
 // Don't forget to update ITEMS_TYPES_COUNT in structs.h
 
@@ -170,10 +171,15 @@ typedef struct s_textures
 {
 	mlx_texture_t	*wall_atlas;
 	t_walltexture	walls[WALLS_TYPES_COUNT];
+	mlx_texture_t	*floor_atlas;
+	mlx_texture_t	*floor[FLOOR_TYPE_COUNT];
+	mlx_texture_t	*ceiling_atlas;
+	mlx_texture_t	*ceiling[CEILING_TYPE_COUNT];
 	mlx_texture_t	*bg;
 	mlx_texture_t	*ui_minimap;
 	mlx_texture_t	*screen_victory;
 	mlx_texture_t	*screen_defeat;
+	mlx_texture_t	*ui_health;
 }	t_textures;
 
 typedef struct s_render
@@ -187,6 +193,7 @@ typedef struct s_render
 
 typedef struct s_player
 {
+	float	hp;
 	t_vec2	pos;
 	t_vec2	lookdir;
 	t_point	mov_control;
@@ -202,6 +209,13 @@ typedef struct s_player
 	double	shaking_start;
 }	t_player;
 
+typedef struct s_colrender
+{
+	int	wall_start;
+	int	wall_end;
+	int	wall_height;
+} t_colrender;
+
 typedef struct s_rayrender
 {
 	t_vec2		start;
@@ -214,8 +228,22 @@ typedef struct s_rayrender
 	char		wall_type;
 	double		wall_height;
 	bool		is_door;
+	bool		is_doorway;
 	t_door		*door;
 }	t_rayrender;
+
+typedef struct s_minimap
+{
+	bool		enabled;
+	bool		opening;
+	bool		picked;
+	t_point		minimap_pos_show;
+	t_point		minimap_pos_hide;
+	t_point		miniplayer_pos_show;
+	t_point		miniplayer_pos_hide;
+	float		lerp_progress;
+	float		lerp_speed;
+} t_minimap;
 
 typedef struct s_gs
 {
@@ -225,6 +253,8 @@ typedef struct s_gs
 	mlx_image_t		*minimap;
 	mlx_image_t		*hud;
 	mlx_image_t		*miniplayer;
+	mlx_image_t		*health;
+	mlx_image_t		*health_bar;
 	mlx_image_t		*view3d;
 	mlx_image_t		*view3d_bg;
 	mlx_image_t		*end_screen;
@@ -234,6 +264,7 @@ typedef struct s_gs
 	t_map			map;
 	t_textures		textures;
 	t_render		render;
+	t_minimap		mmap;
 	bool			playing;
 	int				victory;
 	t_sprite		*sh;

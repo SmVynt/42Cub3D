@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   sys_clean.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
 /*   Updated: 2025/11/07 17:32:18 by nmikuka          ###   ########.fr       */
@@ -52,71 +52,96 @@ static void	ft_freemap(void)
 	ft_free_string(&map->c);
 }
 
+static void ft_free_texture(mlx_texture_t **texture)
+{
+	if (texture && *texture)
+	{
+		printf(COLOR_G"Freeing texture...\n"COLOR_X);
+		mlx_delete_texture(*texture);
+		*texture = NULL;
+	}
+}
+
+static void ft_free_image(mlx_image_t **image)
+{
+	if (image && *image)
+	{
+		printf(COLOR_G"Freeing image...\n"COLOR_X);
+		mlx_delete_image(ft_game()->mlx, *image);
+		*image = NULL;
+	}
+}
+
 static void	ft_free_mlx(void)
 {
 	t_gs		*game;
 	int			i;
+	int			j;
 	t_direction	dir;
 
 	game = ft_game();
 	printf(COLOR_C"Freeing MLX resources...\n"COLOR_X);
-	i = 0;
-	while (i < WALLS_TYPES_COUNT)
+	i = -1;
+	while (++i < WALLS_TYPES_COUNT)
 	{
 		dir = DIR_NO;
 		while (dir <= DIR_WE)
 		{
-			if (game->textures.walls[i].tex[dir])
-				mlx_delete_texture(game->textures.walls[i].tex[dir]);
+			ft_free_texture(&game->textures.walls[i].tex[dir]);
 			dir++;
 		}
-		i++;
 	}
-	if (game->textures.wall_atlas)
-		mlx_delete_texture(game->textures.wall_atlas);
-	if (game->textures.bg)
-		mlx_delete_texture(game->textures.bg);
-	if (game->textures.ui_minimap)
-		mlx_delete_texture(game->textures.ui_minimap);
-	if (game->textures.screen_defeat)
-		mlx_delete_texture(game->textures.screen_defeat);
-	if (game->textures.screen_victory)
-		mlx_delete_texture(game->textures.screen_victory);
-	if (game->mlx)
+	printf(COLOR_C"Freeing floor and ceiling textures...\n"COLOR_X);
+	i = -1;
+	while (++i < FLOOR_TYPE_COUNT)
+		ft_free_texture(&game->textures.floor[i]);
+	i = -1;
+	while (++i < CEILING_TYPE_COUNT)
+		ft_free_texture(&game->textures.ceiling[i]);
+	printf(COLOR_C"Freeing char prefab textures...\n"COLOR_X);
+	i = -1;
+	while (++i < CHARS_TYPES_COUNT)
 	{
-		if (game->minimap)
-			mlx_delete_image(game->mlx, game->minimap);
-		if (game->miniplayer)
-			mlx_delete_image(game->mlx, game->miniplayer);
-		if (game->view3d)
-			mlx_delete_image(game->mlx, game->view3d);
-		if (game->view3d_bg)
-			mlx_delete_image(game->mlx, game->view3d_bg);
-		mlx_terminate(game->mlx);
+		if (game->char_prefabs[i].sprite.animated)
+		{
+			j = -1;
+			while (++j < (int)game->char_prefabs[i].sprite.anim.n_frames)
+				ft_free_texture(&game->char_prefabs[i].sprite.anim.frames[j]);
+		}
+		else
+			ft_free_texture(&game->char_prefabs[i].sprite.texture);
 	}
-	i = 0;
-	while (i < ITEMS_TYPES_COUNT)
+	printf(COLOR_C"Freeing item prefab textures...\n"COLOR_X);
+	i = -1;
+	while (++i < ITEMS_TYPES_COUNT)
 	{
 		if (game->item_prefabs[i].sprite.animated)
 		{
-			size_t j = 0;
-			while (j < game->item_prefabs[i].sprite.anim.n_frames)
-			{
-				if (game->item_prefabs[i].sprite.anim.frames[j])
-					mlx_delete_texture(game->item_prefabs[i].sprite.anim.frames[j]);
-				j++;
-			}
+			j = -1;
+			while (++j < (int)game->item_prefabs[i].sprite.anim.n_frames)
+				ft_free_texture(&game->item_prefabs[i].sprite.anim.frames[j]);
 		}
-		else if (game->item_prefabs[i].sprite.texture)
-			mlx_delete_texture(game->item_prefabs[i].sprite.texture);
-		i++;
+		else
+			ft_free_texture(&game->item_prefabs[i].sprite.texture);
 	}
-	i = 0;
-	while (i < CHARS_TYPES_COUNT)
+	ft_free_texture(&game->textures.floor_atlas);
+	ft_free_texture(&game->textures.ceiling_atlas);
+	ft_free_texture(&game->textures.bg);
+	ft_free_texture(&game->textures.wall_atlas);
+	ft_free_texture(&game->textures.bg);
+	ft_free_texture(&game->textures.ui_minimap);
+	ft_free_texture(&game->textures.ui_health);
+	if (game->mlx)
 	{
-		if (game->char_prefabs[i].sprite.texture)
-			mlx_delete_texture(game->char_prefabs[i].sprite.texture);
-		i++;
+		printf(COLOR_C"Freeing images...\n"COLOR_X);
+		ft_free_image(&game->minimap);
+		ft_free_image(&game->miniplayer);
+		ft_free_image(&game->view3d);
+		ft_free_image(&game->view3d_bg);
+		ft_free_image(&game->hud);
+		ft_free_image(&game->health);
+		ft_free_image(&game->health_bar);
+		mlx_terminate(game->mlx);
 	}
 }
 
