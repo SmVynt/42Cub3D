@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 15:59:19 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/09 17:58:22 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,9 @@ static inline void put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec2 lookdir, t_map map, int x);
 void	draw_wall(mlx_image_t *image, int x);
 void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
-bool	ft_is_wall(t_vec2 p);
 void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
 
-bool	ft_is_door(t_vec2 p);
+
 t_door	*ft_get_door(int x, int y);
 void	interact(t_gs *game);
 void	print_interact_msg(t_gs *game);
@@ -145,13 +144,22 @@ int			ft_get_tex_coord(float x, int texture_width);
 
 void	ft_createhooks(void);
 void	ft_key_press_hook(void *param);
+
+// update
+void	ft_update_dt(void);
 void	ft_update(void *param);
-void	ft_update_hud(void *param);
 void	ft_update_minimap(void);
 void	ft_update_hp_bar(void);
 void	ft_update_chars(void);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
+
+// tile checks
+bool	ft_is_special_wall(t_vec2 p, const char *wall_type);
+bool	ft_is_wall(t_vec2 p);
+bool	ft_is_lava(t_vec2 p);
+bool	ft_is_pod(t_vec2 p);
+bool	ft_is_door(t_vec2 p);
 
 void	show_end_screen(void);
 bool	ft_player_try_damage(float damage);
@@ -171,6 +179,8 @@ float		rand_in_range(float min, float max);
 void		print_debug(const char *str);
 
 void	 	shaky_shaky(void);
+
+
 
 // cleaning
 void	ft_free_and_null(void **ptr);

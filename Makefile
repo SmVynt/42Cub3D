@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/09 16:10:23 by psmolin          ###   ########.fr        #
+#    Updated: 2025/11/09 18:02:42 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,9 @@ COL_C		= \033[1;36m
 
 # Source and object files
 SRC_FILES	= \
+				game_loop_graphics.c \
+				game_loop_player.c \
+				game_loop_tile_check.c \
 				game_loop.c \
 				game_doors.c \
 				game_chars.c \
