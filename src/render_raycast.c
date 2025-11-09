@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/08 22:32:52 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:48:20 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -424,7 +424,7 @@ t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_d
 		}
 		ray->is_door = ft_is_door((t_vec2){tile.u, tile.v});
 		if (ft_is_wall((t_vec2){tile.u, tile.v}) || ray->is_door)
-		{	
+		{
 			ray->wall_type = ft_game()->map.tile[tile.v][tile.u];
 			if (ray->is_doorway)
 			{
@@ -486,11 +486,6 @@ t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_d
 				*wall_dir = DIR_EA;
 			else
 				*wall_dir = DIR_WE;
-			if (ray->wall_type == '9' && ft_vec2_length((t_vec2){curr.x - start.x, curr.y - start.y}) < 1.2)
-			{
-				ft_game()->game_over = 1;
-				show_end_screen();
-			}
 			return (curr);
 		}
 		i++;

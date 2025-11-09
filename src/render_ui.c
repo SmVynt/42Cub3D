@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 23:48:09 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:59:54 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_update_hp_bar(void)
 		j = offset.v;
 		while (j < round(image->height - offset.v) )
 		{
-			draw_square(image, UI_PIXEL_SIZE, (t_point){i, j}, COLOR_RED);
+			draw_square(image, UI_PIXEL_SIZE, (t_point){i, j}, UI_COLOR_HP);
 			j+=UI_PIXEL_SIZE;
 		}
 		i+=UI_PIXEL_SIZE;

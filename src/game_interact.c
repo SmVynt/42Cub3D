@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_interact.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/08 20:46:38 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:16:17 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	print_interact_msg(t_gs *game)
 
 	if (game->hints)
 		mlx_delete_image(game->mlx, game->hints);
-	
+
 	if (game->msg && mlx_get_time() - game->msg_time > 2)
 		mlx_delete_image(game->mlx, game->msg);
 	player = game->player;
@@ -162,7 +162,7 @@ void	print_interact_msg(t_gs *game)
 				float bck = game->inter_walls[i].sprite.pos.x;
 				if (game->inter_walls[i].is_switch)
 				{
-					game->inter_walls[i].sprite.pos.x -= 0.5f;
+					// game->inter_walls[i].sprite.pos.x -= 0.5f;
 					msg = "[E] to interact";
 				}
 				else

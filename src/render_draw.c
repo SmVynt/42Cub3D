@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/08 22:24:21 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:28:59 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	draw(int32_t width, int32_t height, void *param)
 		mlx_delete_image(game->mlx, game->end_screen);
 	if (game->render.depth)
 		free(game->render.depth);
-	game->render.depth = malloc(sizeof(float) * (width / PIXEL_SIZE + 1));
+	game->render.depth = malloc(sizeof(float) * (width / PIXEL_SIZE + 2));
 	if (!game->render.depth)
 	{
 		printf("Error: Could not reallocate depth buffer for width %d\n", width);
@@ -100,7 +100,9 @@ void	draw(int32_t width, int32_t height, void *param)
 				{game->mmap.minimap_pos_show.u + width / 16,
 				game->mmap.minimap_pos_show.v + height / 2};
 	mlx_image_to_window(game->mlx, game->hud, width - 64, 0);
+	printf("Draw completed: %dx%d\n", width, height);
 	show_end_screen();
+	printf("End screen shown\n");
 	// ft_update(game); We maybe'll need this later
 	mlx_image_to_window(game->mlx, game->health_bar, width -  width / 16 - height / 4, height - height / 18);
 	mlx_image_to_window(game->mlx, game->health, width -  width / 16 - height / 4, height - height / 18);

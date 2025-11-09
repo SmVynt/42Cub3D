@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 10:30:30 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:56:13 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,24 @@ bool ft_is_lava(t_vec2 p)
 		return (true);
 	return (false);
 }
+
+bool ft_is_pod(t_vec2 p)
+{
+	t_gs	*game;
+	t_map	*map;
+	int		x;
+	int		y;
+
+	game = ft_game();
+	map = &game->map;
+	x = (int)roundf(p.x);
+	y = (int)roundf(p.y);
+	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
+		return (false);
+	if (map->tile[y][x] == 'X')
+		return (true);
+	return (false);
+};
 
 bool ft_is_door(t_vec2 p)
 {
@@ -148,6 +166,12 @@ void	ft_update_player(void)
 		if (player->lookupdown < -maxlookupdown)
 			player->lookupdown = -maxlookupdown;
 		player->mouse_diff.y = 0.0f;
+	}
+	if (ft_game()->game_over != 0)
+	{
+		player->mov_control = (t_point){0, 0};
+		player->rot_control = (t_point){0, 0};
+		return ;
 	}
 	if (player->mov_control.v != 0 || player->mov_control.u != 0)
 	{
@@ -249,7 +273,7 @@ void	ft_update(void *param)
 	// bool		upd_doors;
 
 	game = ft_game();
-	if (game->game_over)
+	if (game->game_over == -1)
 		return ;
 	player = game->player;
 	(void)param;
@@ -274,20 +298,25 @@ void	ft_update(void *param)
 	print_debug("updating chars...");
 	ft_update_chars();
 	print_debug("player update...");
-	if (player->mov_control.u != 0
-		|| player->mov_control.v != 0
-		|| player->rot_control.u != 0
-		|| player->rot_control.v != 0
-		|| player->mouse_diff.x != 0.0f
-		|| player->mouse_diff.y != 0.0f
-		|| player->is_jumping)
-		// || upd_doors)
-	{
+	// if (player->mov_control.u != 0
+	// 	|| player->mov_control.v != 0
+	// 	|| player->rot_control.u != 0
+	// 	|| player->rot_control.v != 0
+	// 	|| player->mouse_diff.x != 0.0f
+	// 	|| player->mouse_diff.y != 0.0f
+	// 	|| player->is_jumping)
+	// 	// || upd_doors)
+	// {
 		ft_update_player();
-	}
+	// }
 	if (player->hp <= 0)
 	{
 		ft_game()->game_over = -1;
+		show_end_screen();
+	}
+	if (ft_is_pod(player->pos))
+	{
+		ft_game()->game_over = 1;
 		show_end_screen();
 	}
 	print_debug("updating graphics...");

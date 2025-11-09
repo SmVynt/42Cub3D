@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 11:39:02 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:11:58 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,5 @@ t_vec2	ft_lerpvec2(t_vec2 a, t_vec2 b, float t)
 
 float	rand_in_range(float min, float max)
 {
-	return (min + (float)rand() / RAND_MAX * (max - min));
+	return (min + (float)rand() / (float)RAND_MAX * (max - min));
 }
