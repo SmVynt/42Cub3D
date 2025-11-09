@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/07 17:30:21 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/08 22:22:12 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,7 @@ typedef struct s_gs
 	t_render		render;
 	t_minimap		mmap;
 	bool			playing;
-	int				victory;
+	int				game_over;
 	t_sprite		*sh;
 	t_item			item_prefabs[ITEMS_TYPES_COUNT];
 	t_item			*items;
@@ -276,7 +276,7 @@ typedef struct s_gs
 	t_char			*chars;
 	int				char_count;
 	int				max_chars;
-	t_door			door_prefabs[DOORS_TYPES_COUNT];
+	t_door			door_prefabs[SPEC_TYPES_COUNT];
 	t_door			*inter_walls;
 	int				inter_wall_count;
 	int				max_doors;

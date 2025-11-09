@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 18:22:48 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/09 10:30:30 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,8 @@ void	ft_update(void *param)
 	// bool		upd_doors;
 
 	game = ft_game();
+	if (game->game_over)
+		return ;
 	player = game->player;
 	(void)param;
 	print_debug("updating dt...");
@@ -282,6 +284,11 @@ void	ft_update(void *param)
 		// || upd_doors)
 	{
 		ft_update_player();
+	}
+	if (player->hp <= 0)
+	{
+		ft_game()->game_over = -1;
+		show_end_screen();
 	}
 	print_debug("updating graphics...");
 	ft_update_graphics();

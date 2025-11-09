@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/06 16:55:45 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/08 22:24:21 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,7 @@ void	draw(int32_t width, int32_t height, void *param)
 				{game->mmap.minimap_pos_show.u + width / 16,
 				game->mmap.minimap_pos_show.v + height / 2};
 	mlx_image_to_window(game->mlx, game->hud, width - 64, 0);
-	if (game->victory)
-		show_end_screen(game->victory);
+	show_end_screen();
 	// ft_update(game); We maybe'll need this later
 	mlx_image_to_window(game->mlx, game->health_bar, width -  width / 16 - height / 4, height - height / 18);
 	mlx_image_to_window(game->mlx, game->health, width -  width / 16 - height / 4, height - height / 18);

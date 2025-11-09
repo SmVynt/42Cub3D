@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_chars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 23:28:13 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/05 00:13:35 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/08 22:53:15 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ void	ft_update_chars(void)
 	int		i;
 
 	game = ft_game();
+	if (game->game_over)
+		return ;
 	i = 0;
 	while (i < game->char_count)
 	{

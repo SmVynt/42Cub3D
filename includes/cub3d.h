@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/07 17:29:36 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/08 22:23:50 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	ft_update_chars(void);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
 
-void	show_end_screen(int victory);
+void	show_end_screen(void);
 bool	ft_player_try_damage(float damage);
 bool	ft_player_try_heal(float heal);
 

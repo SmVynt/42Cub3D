@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/07 17:31:22 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/08 22:24:12 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,20 @@ static void ft_init_prefabs(void)
 		.sprite.bottom_offset = 0.0f,
 		.key_needed = true
 	};
+	game->door_prefabs[2] = (t_door){
+		.sprite.texture = NULL,
+		.sprite.animated = false,
+		.sprite.path = TEX_DOOR,
+		.sprite.bottom_offset = 0.0f,
+		.key_needed = false
+	};
+	game->door_prefabs[3] = (t_door){
+		.sprite.texture = NULL,
+		.sprite.animated = false,
+		.sprite.path = TEX_DOOR,
+		.sprite.bottom_offset = 0.0f,
+		.key_needed = false
+	};
 }
 
 static void ft_init_render(void)
@@ -207,7 +221,7 @@ static void	ft_init_game(void)
 	game->msg = NULL;
 	game->view3d_bg = NULL;
 	game->playing = true;
-	game->victory = 0;
+	game->game_over = 0;
 	game->mmap.enabled = false;
 	game->mmap.opening = false;
 	game->mmap.picked = false;

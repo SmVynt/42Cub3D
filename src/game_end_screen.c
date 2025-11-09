@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:33:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/07 21:01:33 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/08 22:54:49 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,21 @@ static void	draw_end_screen(mlx_texture_t *tex)
 	uint32_t y_tex;
 	double win_scale;
 
-	win_scale = (double)(ft_game()->view3d->width / (double)WIDTH * UI_SCALE);
-	printf("win scale screen %f\n", win_scale);
-	x = PIXEL_SIZE / 2;
+	// win_scale = (double)(ft_game()->view3d->width / (double) WIDTH * UI_SCALE);
+	win_scale = ft_game()->end_screen->width / (double)ft_game()->textures.screen_victory->width;
+	int pixelize = 1;
+	x = pixelize / 2;
 	while (x < tex->width * win_scale)
 	{
-		y = PIXEL_SIZE / 2;
+		y = pixelize / 2;
 		x_tex = (int)round(x / win_scale);
 		while (y < tex->height * win_scale)
 		{
 			y_tex =(int)round(y / win_scale);
-			draw_square(ft_game()->end_screen, PIXEL_SIZE, (t_point){x, y}, ft_get_pixel_color(tex, (t_point){x_tex, y_tex}));
-			y += PIXEL_SIZE;
+			draw_square(ft_game()->end_screen, pixelize, (t_point){x, y}, ft_get_pixel_color(tex, (t_point){x_tex, y_tex}));
+			y += pixelize;
 		}
-		x+=PIXEL_SIZE;
+		x+=pixelize;
 	}
 }
 
@@ -64,18 +65,16 @@ static void load_centered_image(mlx_t *mlx, mlx_texture_t *tex)
 	}
 }
 
-void show_end_screen(int victory)
+void show_end_screen(void)
 {
-	if (!victory)
+	t_gs	*game;
+
+	game = ft_game();
+	if (!game->game_over)
 		return ;
-	ft_game()->playing = false;
 	ft_game()->end_screen = mlx_new_image(ft_game()->mlx, ft_game()->view3d->width / 2, ft_game()->view3d->width / 4);
-    if (victory == 1)
+    if (game->game_over == 1)
 		load_centered_image(ft_game()->mlx, ft_game()->textures.screen_victory);
-    else
+    else if (game->game_over == -1)
         load_centered_image(ft_game()->mlx, ft_game()->textures.screen_defeat);
-	// if (ft_game()->end_screen)
-	// 	mlx_image_to_window(ft_game()->mlx, ft_game()->end_screen, 0, 0);
-	printf("game over\n");
-	// mlx_set_instance_depth(&ft_game()->end_screen->instances[0], 1000);
 }

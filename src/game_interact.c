@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_interact.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 21:36:32 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/08 20:46:38 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,12 +158,17 @@ void	print_interact_msg(t_gs *game)
 		{
 			if (game->inter_walls[i].is_switch || !game->inter_walls[i].is_opening)
 			{
-				ft_calculate_sprite(game->view3d, &game->inter_walls[i].sprite);
 				char	*msg;
+				float bck = game->inter_walls[i].sprite.pos.x;
 				if (game->inter_walls[i].is_switch)
+				{
+					game->inter_walls[i].sprite.pos.x -= 0.5f;
 					msg = "[E] to interact";
+				}
 				else
 					msg = "[E] to open";
+				ft_calculate_sprite(game->view3d, &game->inter_walls[i].sprite);
+				game->inter_walls[i].sprite.pos.x = bck;
 				game->hints = mlx_put_string(game->mlx, msg, game->inter_walls[i].sprite.sp.screen_pos.x, game->inter_walls[i].sprite.sp.screen_pos.y + game->player->lookupdown + 0.5 * game->player->jump_height * game->inter_walls[i].sprite.sp.max_size);
 				break ;
 			}
