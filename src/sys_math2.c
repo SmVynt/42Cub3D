@@ -1,52 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sys_math.c                                         :+:      :+:    :+:   */
+/*   sys_math2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 16:11:29 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/09 16:10:10 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_sign(int n)
+float	ft_clampf(float value, float min, float max)
 {
-	if (n < 0)
-		return (-1);
-	return (1);
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
 }
 
-int	ft_signf(float n)
+int	ft_clamp(int value, int min, int max)
 {
-	if (n < 0.0f)
-		return (-1);
-	return (1);
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
 }
 
-t_vec2	ft_normalize_vec2(t_vec2 v)
+float	ft_lerpf(float a, float b, float t)
 {
-	float	length;
-
-	length = ft_vec2_length(v);
-	if (length < 1e-9)
-		return ((t_vec2){0.0f, 0.0f});
-	return ((t_vec2){v.x / length, v.y / length});
+	return (a + t * (b - a));
 }
 
-/**
- * Returns the angle in degrees between two 2D vectors.
- */
-float	ft_angle_between_vec2(t_vec2 a, t_vec2 b)
+t_vec2	ft_lerpvec2(t_vec2 a, t_vec2 b, float t)
 {
-	float	angle;
+	t_vec2	result;
 
-	angle = atan2f(b.y, b.x) - atan2f(a.y, a.x);
-	if (angle < -M_PI)
-		angle += 2.0f * M_PI;
-	if (angle > M_PI)
-		angle -= 2.0f * M_PI;
-	return (angle);
+	result.x = ft_lerpf(a.x, b.x, t);
+	result.y = ft_lerpf(a.y, b.y, t);
+	return (result);
+}
+
+float	rand_in_range(float min, float max)
+{
+	return (min + (float)rand() / (float)RAND_MAX * (max - min));
 }

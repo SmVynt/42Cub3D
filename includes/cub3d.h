@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 13:58:02 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/09 15:59:19 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ void	ft_setgame(void);
 
 t_gs	*ft_game(void);
 
-void	ft_free_and_null(void **ptr);
-void	ft_clean(void);
-
 void	ft_exit_perror(char *str);
 void	ft_exit_error(char *str);
 void	ft_exit(void);
@@ -174,5 +171,18 @@ float		rand_in_range(float min, float max);
 void		print_debug(const char *str);
 
 void	 	shaky_shaky(void);
+
+// cleaning
+void	ft_free_and_null(void **ptr);
+void	ft_clean(void);
+void	ft_free_string(char **ptr);
+void	ft_free_mlx(void);
+void	ft_freemap(void);
+void	ft_free_texture(mlx_texture_t **texture);
+void	ft_free_image(mlx_image_t **image);
+void	ft_free_render(void);
+void	ft_free_mlx_envirtex(t_gs *game);
+void	ft_free_mlx_prefabs_chars(t_gs *game);
+void	ft_free_mlx_prefabs_items(t_gs *game);
 
 #endif

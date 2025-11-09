@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/05 16:00:48 by nmikuka          ###   ########.fr        #
+#    Updated: 2025/11/09 16:10:23 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,11 +65,15 @@ SRC_FILES	= \
 				render_minimap.c \
 				render_raycast.c \
 				render_ui.c \
+				sys_clean_mlx.c \
+				sys_clean_mlx2.c \
 				sys_clean.c \
 				sys_errors.c \
 				sys_gamestate.c \
 				sys_lib.c \
+				sys_lib2.c \
 				sys_math.c \
+				sys_math2.c \
 				sys_utils.c \
 				ft_mat4.c \
 				ft_mat4_transform.c \
