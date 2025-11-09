@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/06 01:49:20 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/09 10:30:30 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,8 @@ void	ft_update(void *param)
 	// bool		upd_doors;
 
 	game = ft_game();
+	if (game->game_over)
+		return ;
 	player = game->player;
 	(void)param;
 	print_debug("updating dt...");
@@ -257,6 +259,7 @@ void	ft_update(void *param)
 	print_debug("shaky shaky...");
 	if (player->is_shaking)
 		shaky_shaky();
+	print_interact_msg(game);
 	// upd_doors = false;
 	print_debug("updating doors...");
 	while(i < game->inter_wall_count)
@@ -281,6 +284,11 @@ void	ft_update(void *param)
 		// || upd_doors)
 	{
 		ft_update_player();
+	}
+	if (player->hp <= 0)
+	{
+		ft_game()->game_over = -1;
+		show_end_screen();
 	}
 	print_debug("updating graphics...");
 	ft_update_graphics();

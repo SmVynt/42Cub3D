@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/06 01:48:23 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/08 20:19:58 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,7 @@ static void ft_init_sprites(void)
 		i++;
 	}
 	i = 0;
-	while (i < DOORS_TYPES_COUNT)
+	while (i < SPEC_TYPES_COUNT)
 	{
 		if (game->door_prefabs[i].sprite.path == NULL)
 			ft_exit_error("Door prefab texture path is NULL\n");
@@ -310,6 +310,7 @@ void	ft_setgame(void)
 	ft_init_floor_textures();
 	ft_init_ceiling_textures();
 	ft_init_ui_textures();
+	ft_init_end_screen_textures();
 	ft_init_sprites();
 	ft_calculate_max_entities();
 	ft_set_doors();

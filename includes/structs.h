@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/06 00:30:04 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/08 22:22:12 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,8 @@ typedef struct s_textures
 	mlx_texture_t	*ceiling[CEILING_TYPE_COUNT];
 	mlx_texture_t	*bg;
 	mlx_texture_t	*ui_minimap;
+	mlx_texture_t	*screen_victory;
+	mlx_texture_t	*screen_defeat;
 	mlx_texture_t	*ui_health;
 }	t_textures;
 
@@ -255,11 +257,16 @@ typedef struct s_gs
 	mlx_image_t		*health_bar;
 	mlx_image_t		*view3d;
 	mlx_image_t		*view3d_bg;
+	mlx_image_t		*end_screen;
+	mlx_image_t		*hints;
+	mlx_image_t		*msg;
+	double			msg_time;
 	t_map			map;
 	t_textures		textures;
 	t_render		render;
 	t_minimap		mmap;
 	bool			playing;
+	int				game_over;
 	t_sprite		*sh;
 	t_item			item_prefabs[ITEMS_TYPES_COUNT];
 	t_item			*items;
@@ -269,7 +276,7 @@ typedef struct s_gs
 	t_char			*chars;
 	int				char_count;
 	int				max_chars;
-	t_door			door_prefabs[DOORS_TYPES_COUNT];
+	t_door			door_prefabs[SPEC_TYPES_COUNT];
 	t_door			*inter_walls;
 	int				inter_wall_count;
 	int				max_doors;

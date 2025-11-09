@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/05 00:15:39 by psmolin          ###   ########.fr        #
+#    Updated: 2025/11/05 16:00:48 by nmikuka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC_FILES	= \
 				game_chars.c \
 				game_items.c \
 				game_interact.c \
+				game_end_screen.c \
 				game_player.c \
 				init_check.c \
 				init_checkmap.c \

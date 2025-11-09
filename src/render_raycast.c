@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/07 16:44:01 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/08 22:32:52 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static int	ft_find_texture_u(mlx_texture_t **texture, t_rayrender ray)
 	wall_type = ray.wall_type - '1';
 	wall_type = ft_clamp(wall_type, 0, WALLS_TYPES_COUNT - 1);
 	if (ray.is_doorway)
-		wall_type = 8;
+		wall_type = 9;
 	if (ray.is_door)
 	{
 		*texture = ray.door->sprite.texture;
@@ -486,6 +486,11 @@ t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_d
 				*wall_dir = DIR_EA;
 			else
 				*wall_dir = DIR_WE;
+			if (ray->wall_type == '9' && ft_vec2_length((t_vec2){curr.x - start.x, curr.y - start.y}) < 1.2)
+			{
+				ft_game()->game_over = 1;
+				show_end_screen();
+			}
 			return (curr);
 		}
 		i++;

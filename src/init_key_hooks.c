@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 23:30:56 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/04 10:23:07 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/08 22:51:13 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ void	ft_key_press_hook(void *param)
 		ft_exit();
 	handle_movement_keys(game, player);
 	handle_rotation_keys(game, player);
+	if (game->game_over == 1)
+		return ;
 	handle_action_keys(game, player);
 }

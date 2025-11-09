@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_hooks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/04 21:17:15 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/08 21:24:55 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ft_key_hook(mlx_key_data_t keydata, void *param)
 			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_DISABLED);
 		else
 			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
+		// game->victory = 1;
+		// show_end_screen(game->victory);
 	}
 	if (keydata.key == MLX_KEY_E && keydata.action == MLX_RELEASE)
 		interact(game);
