@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 22:04:34 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 22:37:18 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	ft_init_prefabs(void);
 void	ft_init_prefabs_items(t_gs *game);
 void	ft_init_prefabs_chars(t_gs *game);
 void	ft_init_prefabs_doors(t_gs *game);
+void	ft_init_null_textures(void);
 
 void	ft_setgame(void);
 

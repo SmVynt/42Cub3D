@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/10 22:04:55 by psmolin          ###   ########.fr        #
+#    Updated: 2025/11/10 22:37:11 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRC_FILES	= \
 				init_check_file.c \
 				init_check_map.c \
 				init_check_tex_colors.c \
+				init_data_null.c \
 				init_data_prefabs_chars.c \
 				init_data_prefabs_doors.c \
 				init_data_prefabs_items.c \

@@ -6,13 +6,13 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 22:13:09 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 22:32:29 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void ft_init_prefab_hp_chand(t_gs *game)
+static void	ft_init_prefab_hp_chand(t_gs *game)
 {
 	game->item_prefabs[IT_HEALTH] = (t_item){
 		.type = IT_HEALTH,
@@ -36,7 +36,7 @@ static void ft_init_prefab_hp_chand(t_gs *game)
 	};
 }
 
-static void ft_init_prefab_key_barrel(t_gs *game)
+static void	ft_init_prefab_key_barrel(t_gs *game)
 {
 	game->item_prefabs[IT_KEY] = (t_item){
 		.type = IT_KEY,
@@ -60,7 +60,7 @@ static void ft_init_prefab_key_barrel(t_gs *game)
 	};
 }
 
-static void ft_init_prefab_map(t_gs *game)
+static void	ft_init_prefab_map(t_gs *game)
 {
 	game->item_prefabs[IT_MAP] = (t_item){
 		.type = IT_MAP,
@@ -74,7 +74,7 @@ static void ft_init_prefab_map(t_gs *game)
 	};
 }
 
-static void ft_init_prefab_fire(t_gs *game)
+static void	ft_init_prefab_fire(t_gs *game)
 {
 	game->item_prefabs[IT_FIRE] = (t_item){
 		.type = IT_FIRE,
@@ -82,17 +82,17 @@ static void ft_init_prefab_fire(t_gs *game)
 		.active = true,
 		.pickup_value = 1,
 		.sprite = (t_sprite){
-			.texture = NULL,
-			.path = TEX_FIRE,
-			.bottom_offset = 0.0f,
-			.animated = true,
-			.anim = (t_anim){
-				.n_frames = 8,
-				.frame_duration = 0.07f,
-				.anim_timer = 0.0f,
-				.curr_frame = rand() % 8
-			}
-		}
+		.texture = NULL,
+		.path = TEX_FIRE,
+		.bottom_offset = 0.0f,
+		.animated = true,
+		.anim = (t_anim){
+		.n_frames = 8,
+		.frame_duration = 0.07f,
+		.anim_timer = 0.0f,
+		.curr_frame = rand() % 8
+	}
+	}
 	};
 }
 

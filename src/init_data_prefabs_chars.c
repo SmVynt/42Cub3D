@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 22:08:07 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 22:33:21 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ static void	ft_init_prefab_alien(t_gs *game)
 		.alive = true,
 		.dps = AI_ALIEN_DMG_PS,
 		.sprite = (t_sprite){
-			.texture = NULL,
-			.path = TEX_ALIEN,
-			.bottom_offset = 0.0f,
-			.animated = true,
-			.anim = (t_anim){
-				.n_frames = 8,
-				.frame_duration = 0.07f,
-				.anim_timer = 0.0f,
-				.curr_frame = rand() % 8
-			}
-		}
+		.texture = NULL,
+		.path = TEX_ALIEN,
+		.bottom_offset = 0.0f,
+		.animated = true,
+		.anim = (t_anim){
+		.n_frames = 8,
+		.frame_duration = 0.07f,
+		.anim_timer = 0.0f,
+		.curr_frame = rand() % 8
+	}
+	}
 	};
 }
 
@@ -40,21 +40,21 @@ static void	ft_init_prefab_slime(t_gs *game)
 		.alive = true,
 		.dps = AI_SLIME_DMG_PS,
 		.sprite = (t_sprite){
-			.texture = NULL,
-			.path = TEX_SLIME,
-			.bottom_offset = 0.6f,
-			.animated = true,
-			.anim = (t_anim){
-				.n_frames = 8,
-				.frame_duration = 0.07f,
-				.anim_timer = 0.0f,
-				.curr_frame = rand() % 8
-			}
-		}
+		.texture = NULL,
+		.path = TEX_SLIME,
+		.bottom_offset = 0.6f,
+		.animated = true,
+		.anim = (t_anim){
+		.n_frames = 8,
+		.frame_duration = 0.07f,
+		.anim_timer = 0.0f,
+		.curr_frame = rand() % 8
+	}
+	}
 	};
 }
 
-void ft_init_prefabs_chars(t_gs *game)
+void	ft_init_prefabs_chars(t_gs *game)
 {
 	ft_init_prefab_alien(game);
 	ft_init_prefab_slime(game);
