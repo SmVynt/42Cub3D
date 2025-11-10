@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/08 20:19:58 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 17:23:11 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,71 +36,6 @@ static void	ft_set_player(void)
 	player->pocket = NULL;
 }
 
-static void ft_init_walls_textures(void)
-{
-	t_gs		*game;
-	int			i;
-	t_direction	dir;
-
-	game = ft_game();
-	ft_load_texture(TEX_WALL_ATLAS, &game->textures.wall_atlas);
-	i = 1;
-	while (i < WALLS_TYPES_COUNT)
-	{
-		dir = DIR_NO;
-		while (dir <= DIR_WE)
-		{
-			ft_load_texture_from_atlas(i - 1, dir, &game->textures.walls[i].tex[dir], game->textures.wall_atlas);
-			printf("Loaded wall texture %d dir %d\n", i, dir);
-			dir++;
-		}
-		i++;
-	}
-}
-
-static void ft_init_floor_textures(void)
-{
-	t_gs		*game;
-	int			i;
-
-	game = ft_game();
-	ft_load_texture(TEX_FLOOR_ATLAS, &game->textures.floor_atlas);
-	i = 0;
-	while (i < FLOOR_TYPE_COUNT)
-	{
-		ft_load_texture_from_atlas(0, i, &game->textures.floor[i], game->textures.floor_atlas);
-		printf("Loaded floor texture %d\n", i);
-		i++;
-	}
-}
-
-static void ft_init_ceiling_textures(void)
-{
-	t_gs		*game;
-	int			i;
-
-	game = ft_game();
-	ft_load_texture(TEX_CEILING_ATLAS, &game->textures.ceiling_atlas);
-	i = 0;
-	while (i < CEILING_TYPE_COUNT)
-	{
-		ft_load_texture_from_atlas(0, i, &game->textures.ceiling[i], game->textures.ceiling_atlas);
-		printf("Loaded ceiling texture %d\n", i);
-		i++;
-	}
-}
-
-static void ft_init_ui_textures(void)
-{
-	t_gs		*game;
-
-	game = ft_game();
-	ft_load_texture(TEX_UI_MM, &game->textures.ui_minimap);
-	printf("Loaded UI minimap texture\n");
-	ft_load_texture(TEX_UI_HEALTH, &game->textures.ui_health);
-	printf("Loaded UI health texture\n");
-}
-
 static void ft_calculate_max_entities(void)
 {
 	t_gs	*game;
@@ -111,11 +46,11 @@ static void ft_calculate_max_entities(void)
 	game->max_items = 0;
 	game->max_chars = 0;
 	game->max_doors = 0;
-	i = 0;
-	while (i < game->map.h)
+	i = -1;
+	while (++i < game->map.h)
 	{
-		j = 0;
-		while (j < game->map.w)
+		j = -1;
+		while (++j < game->map.w)
 		{
 			if (ft_strchar(MAP_ITEM_CHARS, game->map.tile[i][j]) != NULL)
 				game->max_items++;
@@ -123,185 +58,184 @@ static void ft_calculate_max_entities(void)
 				game->max_chars++;
 			if (ft_strchar(SPEC_WALL_CHARS, game->map.tile[i][j]) != NULL)
 				game->max_doors++;
-			j++;
 		}
-		i++;
 	}
-	printf("Max items: %d, max chars: %d, max doors: %d\n", game->max_items, game->max_chars, game->max_doors);
+	printf("Max items: %d, max chars: %d, max doors: %d\n",
+		game->max_items, game->max_chars, game->max_doors);
 }
 
-static void	ft_set_doors(void)
-{
-	t_gs	*game;
-	int		i;
-	int		j;
-	int		inter_wall_index;
-	int		door_num;
+// void	ft_set_doors(void)
+// {
+// 	t_gs	*game;
+// 	int		i;
+// 	int		j;
+// 	int		inter_wall_index;
+// 	int		door_num;
 
-	game = ft_game();
-	if (game->max_doors == 0)
-		return ;
-	game->inter_walls = malloc(sizeof(t_door) * game->max_doors);
-	if (!game->inter_walls)
-		ft_exit_perror("Could not allocate memory for doors\n");
-	inter_wall_index = 0;
-	i = 0;
-	while (i < game->map.h)
-	{
-		j = 0;
-		while (j < game->map.w)
-		{
-			door_num = ft_strchar_index(SPEC_WALL_CHARS, game->map.tile[i][j]);
-			if (door_num != -1 && door_num < SPEC_TYPES_COUNT)
-			{
-				if (inter_wall_index >= game->max_doors)
-					ft_exit_error("Item index out of bounds\n");
-				game->inter_walls[inter_wall_index] = game->door_prefabs[door_num];
-				game->inter_walls[inter_wall_index].idx.u = j;
-				game->inter_walls[inter_wall_index].idx.v = i;
-				game->inter_walls[inter_wall_index].closed = true;
-				game->inter_walls[inter_wall_index].is_opening = false;
-				game->inter_walls[inter_wall_index].dt = 0.0f;
-				game->inter_walls[inter_wall_index].sprite.pos = (t_vec2){(float)j, (float)i};
-				if (ft_strchar(SPEC_WALL_SWITCH, game->map.tile[i][j]) != NULL)
-					game->inter_walls[inter_wall_index].is_switch = true;
-				else
-					game->inter_walls[inter_wall_index].is_switch = false;
-				inter_wall_index++;
-			}
-			j++;
-		}
-		i++;
-	}
-	game->inter_wall_count = inter_wall_index;
-	printf("Initialized %d interactive walls\n", game->inter_wall_count);
-}
+// 	game = ft_game();
+// 	if (game->max_doors == 0)
+// 		return ;
+// 	game->inter_walls = malloc(sizeof(t_door) * game->max_doors);
+// 	if (!game->inter_walls)
+// 		ft_exit_perror("Could not allocate memory for doors\n");
+// 	inter_wall_index = 0;
+// 	i = 0;
+// 	while (i < game->map.h)
+// 	{
+// 		j = 0;
+// 		while (j < game->map.w)
+// 		{
+// 			door_num = ft_strchar_index(SPEC_WALL_CHARS, game->map.tile[i][j]);
+// 			if (door_num != -1 && door_num < SPEC_TYPES_COUNT)
+// 			{
+// 				if (inter_wall_index >= game->max_doors)
+// 					ft_exit_error("Item index out of bounds\n");
+// 				game->inter_walls[inter_wall_index] = game->door_prefabs[door_num];
+// 				game->inter_walls[inter_wall_index].idx.u = j;
+// 				game->inter_walls[inter_wall_index].idx.v = i;
+// 				game->inter_walls[inter_wall_index].closed = true;
+// 				game->inter_walls[inter_wall_index].is_opening = false;
+// 				game->inter_walls[inter_wall_index].dt = 0.0f;
+// 				game->inter_walls[inter_wall_index].sprite.pos = (t_vec2){(float)j, (float)i};
+// 				if (ft_strchar(SPEC_WALL_SWITCH, game->map.tile[i][j]) != NULL)
+// 					game->inter_walls[inter_wall_index].is_switch = true;
+// 				else
+// 					game->inter_walls[inter_wall_index].is_switch = false;
+// 				inter_wall_index++;
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	game->inter_wall_count = inter_wall_index;
+// 	printf("Initialized %d interactive walls\n", game->inter_wall_count);
+// }
 
-static void	ft_set_items(void)
-{
-	t_gs	*game;
-	int		i;
-	int		j;
-	int		item_index;
-	int		item_num;
+// void	ft_set_items(void)
+// {
+// 	t_gs	*game;
+// 	int		i;
+// 	int		j;
+// 	int		item_index;
+// 	int		item_num;
 
-	game = ft_game();
-	if (game->max_items == 0)
-		return ;
-	game->items = malloc(sizeof(t_item) * game->max_items);
-	if (!game->items)
-		ft_exit_perror("Could not allocate memory for items\n");
-	item_index = 0;
-	i = 0;
-	while (i < game->map.h)
-	{
-		j = 0;
-		while (j < game->map.w)
-		{
-			item_num = ft_strchar_index(MAP_ITEM_CHARS, game->map.tile[i][j]);
-			if (item_num != -1 && item_num < ITEMS_TYPES_COUNT)
-			{
-				if (item_index >= game->max_items)
-					ft_exit_error("Item index out of bounds\n");
-				game->items[item_index] = game->item_prefabs[item_num];
-				game->items[item_index].sprite.pos = (t_vec2){(float)j, (float)i};
-				item_index++;
-			}
-			j++;
-		}
-		i++;
-	}
-	game->item_count = item_index;
-	printf("Initialized %d items\n", game->item_count);
-}
+// 	game = ft_game();
+// 	if (game->max_items == 0)
+// 		return ;
+// 	game->items = malloc(sizeof(t_item) * game->max_items);
+// 	if (!game->items)
+// 		ft_exit_perror("Could not allocate memory for items\n");
+// 	item_index = 0;
+// 	i = 0;
+// 	while (i < game->map.h)
+// 	{
+// 		j = 0;
+// 		while (j < game->map.w)
+// 		{
+// 			item_num = ft_strchar_index(MAP_ITEM_CHARS, game->map.tile[i][j]);
+// 			if (item_num != -1 && item_num < ITEMS_TYPES_COUNT)
+// 			{
+// 				if (item_index >= game->max_items)
+// 					ft_exit_error("Item index out of bounds\n");
+// 				game->items[item_index] = game->item_prefabs[item_num];
+// 				game->items[item_index].sprite.pos = (t_vec2){(float)j, (float)i};
+// 				item_index++;
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	game->item_count = item_index;
+// 	printf("Initialized %d items\n", game->item_count);
+// }
 
-static void	ft_set_chars(void)
-{
-	t_gs	*game;
-	int		i;
-	int		j;
-	int		char_index;
-	int		char_num;
+// void	ft_set_chars(void)
+// {
+// 	t_gs	*game;
+// 	int		i;
+// 	int		j;
+// 	int		char_index;
+// 	int		char_num;
 
-	game = ft_game();
-	if (game->max_chars == 0)
-		return ;
-	game->chars = malloc(sizeof(t_char) * game->max_chars);
-	if (!game->chars)
-		ft_exit_perror("Could not allocate memory for chars\n");
-	char_index = 0;
-	i = 0;
-	while (i < game->map.h)
-	{
-		j = 0;
-		while (j < game->map.w)
-		{
-			char_num = ft_strchar_index(MAP_CHAR_CHARS, game->map.tile[i][j]);
-			if (ft_strchar(MAP_CHAR_CHARS, game->map.tile[i][j]) != NULL)
-			if (char_num != -1 && char_num < CHARS_TYPES_COUNT)
-			{
-				if (char_index >= game->max_chars)
-					ft_exit_error("Char index out of bounds\n");
-				game->chars[char_index] = game->char_prefabs[char_num];
-				game->chars[char_index].sprite.pos = (t_vec2){(float)j, (float)i};
-				char_index++;
-			}
-			j++;
-		}
-		i++;
-	}
-	game->char_count = char_index;
-	printf("Initialized %d chars\n", game->char_count);
-}
+// 	game = ft_game();
+// 	if (game->max_chars == 0)
+// 		return ;
+// 	game->chars = malloc(sizeof(t_char) * game->max_chars);
+// 	if (!game->chars)
+// 		ft_exit_perror("Could not allocate memory for chars\n");
+// 	char_index = 0;
+// 	i = 0;
+// 	while (i < game->map.h)
+// 	{
+// 		j = 0;
+// 		while (j < game->map.w)
+// 		{
+// 			char_num = ft_strchar_index(MAP_CHAR_CHARS, game->map.tile[i][j]);
+// 			if (ft_strchar(MAP_CHAR_CHARS, game->map.tile[i][j]) != NULL)
+// 			if (char_num != -1 && char_num < CHARS_TYPES_COUNT)
+// 			{
+// 				if (char_index >= game->max_chars)
+// 					ft_exit_error("Char index out of bounds\n");
+// 				game->chars[char_index] = game->char_prefabs[char_num];
+// 				game->chars[char_index].sprite.pos = (t_vec2){(float)j, (float)i};
+// 				char_index++;
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	game->char_count = char_index;
+// 	printf("Initialized %d chars\n", game->char_count);
+// }
 
-static void ft_init_sprites(void)
-{
-	t_gs	*game;
-	int		i;
+// static void ft_init_sprites(void)
+// {
+// 	t_gs	*game;
+// 	int		i;
 
-	game = ft_game();
-	i = 0;
-	while (i < ITEMS_TYPES_COUNT)
-	{
-		if (game->item_prefabs[i].sprite.path == NULL)
-			ft_exit_error("Item prefab texture path is NULL\n");
-		if (!game->item_prefabs[i].sprite.animated)
-			ft_load_texture(game->item_prefabs[i].sprite.path, &game->item_prefabs[i].sprite.texture);
-		else
-		{
-			ft_load_anim_texture(game->item_prefabs[i].sprite.path, game->item_prefabs[i].sprite.anim.frames, game->item_prefabs[i].sprite.anim.n_frames);
-			game->item_prefabs[i].sprite.texture = game->item_prefabs[i].sprite.anim.frames[0];
-		}
-			i++;
-	}
-	i = 0;
-	while (i < CHARS_TYPES_COUNT)
-	{
-		if (game->char_prefabs[i].sprite.path == NULL)
-			ft_exit_error("Char prefab texture path is NULL\n");
-		if (!game->char_prefabs[i].sprite.animated)
-			ft_load_texture(game->char_prefabs[i].sprite.path, &game->char_prefabs[i].sprite.texture);
-		else
-		{
-			ft_load_anim_texture(game->char_prefabs[i].sprite.path, game->char_prefabs[i].sprite.anim.frames, game->char_prefabs[i].sprite.anim.n_frames);
-			game->char_prefabs[i].sprite.texture = game->char_prefabs[i].sprite.anim.frames[0];
-		}
-		i++;
-	}
-	i = 0;
-	while (i < SPEC_TYPES_COUNT)
-	{
-		if (game->door_prefabs[i].sprite.path == NULL)
-			ft_exit_error("Door prefab texture path is NULL\n");
-		ft_load_texture(game->door_prefabs[i].sprite.path, &game->door_prefabs[i].sprite.texture);
-		i++;
-	}
-	game->sh = malloc(sizeof(t_sprite));
-	if (!game->sh)
-		ft_exit_perror("Could not allocate memory for sprite sorting list\n");
-	game->sh->next = NULL;
-	game->sh->texture = NULL;
-}
+// 	game = ft_game();
+// 	i = 0;
+// 	while (i < ITEMS_TYPES_COUNT)
+// 	{
+// 		if (game->item_prefabs[i].sprite.path == NULL)
+// 			ft_exit_error("Item prefab texture path is NULL\n");
+// 		if (!game->item_prefabs[i].sprite.animated)
+// 			ft_load_texture(game->item_prefabs[i].sprite.path, &game->item_prefabs[i].sprite.texture);
+// 		else
+// 		{
+// 			ft_load_anim_texture(game->item_prefabs[i].sprite.path, game->item_prefabs[i].sprite.anim.frames, game->item_prefabs[i].sprite.anim.n_frames);
+// 			game->item_prefabs[i].sprite.texture = game->item_prefabs[i].sprite.anim.frames[0];
+// 		}
+// 			i++;
+// 	}
+// 	i = 0;
+// 	while (i < CHARS_TYPES_COUNT)
+// 	{
+// 		if (game->char_prefabs[i].sprite.path == NULL)
+// 			ft_exit_error("Char prefab texture path is NULL\n");
+// 		if (!game->char_prefabs[i].sprite.animated)
+// 			ft_load_texture(game->char_prefabs[i].sprite.path, &game->char_prefabs[i].sprite.texture);
+// 		else
+// 		{
+// 			ft_load_anim_texture(game->char_prefabs[i].sprite.path, game->char_prefabs[i].sprite.anim.frames, game->char_prefabs[i].sprite.anim.n_frames);
+// 			game->char_prefabs[i].sprite.texture = game->char_prefabs[i].sprite.anim.frames[0];
+// 		}
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < SPEC_TYPES_COUNT)
+// 	{
+// 		if (game->door_prefabs[i].sprite.path == NULL)
+// 			ft_exit_error("Door prefab texture path is NULL\n");
+// 		ft_load_texture(game->door_prefabs[i].sprite.path, &game->door_prefabs[i].sprite.texture);
+// 		i++;
+// 	}
+// 	game->sh = malloc(sizeof(t_sprite));
+// 	if (!game->sh)
+// 		ft_exit_perror("Could not allocate memory for sprite sorting list\n");
+// 	game->sh->next = NULL;
+// 	game->sh->texture = NULL;
+// }
 
 void	ft_setgame(void)
 {

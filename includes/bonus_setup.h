@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 02:47:39 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 16:19:41 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define CEILING_TYPE_COUNT	4
 # define TEX_CEILING_ATLAS	"textures/t_ceiling.png"
 
-# define UI_SCALE			2
+# define UI_SCALE			2.0
 
 # define MAX_HOR_SHAKING	0.1
 # define MAX_VERT_SHAKING	0.8

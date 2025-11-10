@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/10 02:56:46 by psmolin          ###   ########.fr        #
+#    Updated: 2025/11/10 17:20:00 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,11 @@ SRC_FILES	= \
 				init_checkmap.c \
 				init_data.c \
 				init_fillmap.c \
+				init_game_doors.c \
+				init_game_items_chars.c \
+				init_game_sprites.c \
+				init_game_textures_env.c \
+				init_game_textures_ui.c \
 				init_game.c \
 				init_hooks.c \
 				init_key_hooks.c \
