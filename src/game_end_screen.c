@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:33:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 17:03:43 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 19:03:30 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void	show_end_screen(void)
 		height = game->view3d->height / 2;
 		width = height * 2;
 	}
-	game->end_screen = mlx_new_image(game->mlx, width, height);
+	game->end_screen = mlx_new_image(game->mlx, clamp1(width), clamp1(height));
+	printf("Created end screen image %dx%d\n", width, height);
 	if (game->game_over == 1)
 		load_centered_image(game->mlx, game->textures.screen_victory);
 	else if (game->game_over == -1)

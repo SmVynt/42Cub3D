@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 17:27:45 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 17:30:11 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	ft_set_items(void)
 				if (item_index >= game->max_items)
 					ft_exit_error("Item index out of bounds\n");
 				game->items[item_index] = game->item_prefabs[item_num];
-				game->items[item_index].sprite.pos = (t_vec2){(float)j, (float)i};
+				game->items[item_index].sprite.pos
+					= (t_vec2){(float)j, (float)i};
 				item_index++;
 			}
 			j++;
@@ -72,12 +73,14 @@ void	ft_set_chars(void)
 		while (j < game->map.w)
 		{
 			char_num = ft_strchar_index(MAP_CHAR_CHARS, game->map.tile[i][j]);
-			if (ft_strchar(MAP_CHAR_CHARS, game->map.tile[i][j]) != NULL && char_num != -1 && char_num < CHARS_TYPES_COUNT)
+			if (ft_strchar(MAP_CHAR_CHARS, game->map.tile[i][j]) != NULL
+				&& char_num != -1 && char_num < CHARS_TYPES_COUNT)
 			{
 				if (char_index >= game->max_chars)
 					ft_exit_error("Char index out of bounds\n");
 				game->chars[char_index] = game->char_prefabs[char_num];
-				game->chars[char_index].sprite.pos = (t_vec2){(float)j, (float)i};
+				game->chars[char_index].sprite.pos
+					= (t_vec2){(float)j, (float)i};
 				char_index++;
 			}
 			j++;
