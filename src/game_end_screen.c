@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:33:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 17:15:27 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 19:52:43 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	show_end_screen(void)
 		width = height * 2;
 	}
 	game->end_screen = mlx_new_image(game->mlx, width, height);
+	if (!game->end_screen)
+		return ;
 	if (game->game_over == 1)
 		load_centered_image(game->mlx, game->textures.screen_victory);
 	else if (game->game_over == -1)
