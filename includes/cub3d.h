@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 13:58:02 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 02:56:20 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ void	ft_setgame(void);
 
 t_gs	*ft_game(void);
 
-void	ft_free_and_null(void **ptr);
-void	ft_clean(void);
-
 void	ft_exit_perror(char *str);
 void	ft_exit_error(char *str);
 void	ft_exit(void);
@@ -107,7 +104,6 @@ void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture);
 void	ft_init_end_screen_textures(void);
 void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture, mlx_texture_t *atlas);
 
-
 float	ft_height_delta(float distance);
 static inline void put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
 {
@@ -117,10 +113,9 @@ static inline void put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec2 lookdir, t_map map, int x);
 void	draw_wall(mlx_image_t *image, int x);
 void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
-bool	ft_is_wall(t_vec2 p);
 void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
 
-bool	ft_is_door(t_vec2 p);
+
 t_door	*ft_get_door(int x, int y);
 void	interact(t_gs *game);
 void	print_interact_msg(t_gs *game);
@@ -148,13 +143,25 @@ int			ft_get_tex_coord(float x, int texture_width);
 
 void	ft_createhooks(void);
 void	ft_key_press_hook(void *param);
+
+// update
+void	ft_update_dt(void);
 void	ft_update(void *param);
-void	ft_update_hud(void *param);
 void	ft_update_minimap(void);
 void	ft_update_hp_bar(void);
 void	ft_update_chars(void);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
+
+// ai
+void	ft_ai_alien(t_char *ch);
+
+// tile checks
+bool	ft_is_special_wall(t_vec2 p, const char *wall_type);
+bool	ft_is_wall(t_vec2 p);
+bool	ft_is_lava(t_vec2 p);
+bool	ft_is_pod(t_vec2 p);
+bool	ft_is_door(t_vec2 p);
 
 void	show_end_screen(void);
 bool	ft_player_try_damage(float damage);
@@ -174,5 +181,20 @@ float		rand_in_range(float min, float max);
 void		print_debug(const char *str);
 
 void	 	shaky_shaky(void);
+
+
+
+// cleaning
+void	ft_free_and_null(void **ptr);
+void	ft_clean(void);
+void	ft_free_string(char **ptr);
+void	ft_free_mlx(void);
+void	ft_freemap(void);
+void	ft_free_texture(mlx_texture_t **texture);
+void	ft_free_image(mlx_image_t **image);
+void	ft_free_render(void);
+void	ft_free_mlx_envirtex(t_gs *game);
+void	ft_free_mlx_prefabs_chars(t_gs *game);
+void	ft_free_mlx_prefabs_items(t_gs *game);
 
 #endif

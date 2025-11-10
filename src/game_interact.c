@@ -6,39 +6,13 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/09 13:16:17 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 02:30:28 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	shaky_shaky(void)
-{
-	t_player	*player;
-	t_vec2		perp;
-	float		offset;
-	double		elapsed;
-	float		intensity;
-
-	player = ft_game()->player;
-	elapsed = mlx_get_time() - player->shaking_start;
-	if (elapsed > SHAKING_TIME)
-	{
-		player->is_shaking = false;
-		player->jump_height = 0.0f;
-		return ;
-	}
-	intensity = expf(-5.0f * elapsed / SHAKING_TIME);
-	perp.x = -player->lookdir.y;
-	perp.y = player->lookdir.x;
-	offset = rand_in_range(-MAX_HOR_SHAKING, MAX_HOR_SHAKING) * intensity;
-	player->pos.x += perp.x * offset;
-	player->pos.y += perp.y * offset;
-	player->jump_height = rand_in_range(-MAX_VERT_SHAKING, MAX_VERT_SHAKING)
-		* intensity;
-}
-
-void	toggle_switch(t_door *inter_switch)
+static void	toggle_switch(t_door *inter_switch)
 {
 	char	*tile;
 
@@ -52,7 +26,7 @@ void	toggle_switch(t_door *inter_switch)
 		*tile = '6';
 }
 
-void	swap_chars(char from, char to)
+static void	swap_chars(char from, char to)
 {
 	char	**tile;
 	int		i;
@@ -93,6 +67,31 @@ static bool	has_key(t_player *player)
 	return (false);
 }
 
+static void	interact_sub(t_gs *game, int i)
+{
+	t_player	*player;
+
+	player = game->player;
+	if (game->inter_walls[i].is_switch)
+	{
+		toggle_switch(&game->inter_walls[i]);
+		swap_chars('8', '#');
+		game->player->is_shaking = true;
+		game->player->shaking_start = mlx_get_time();
+	}
+	else if (!game->inter_walls[i].key_needed || has_key(player))
+		game->inter_walls[i].is_opening = 1;
+	else
+	{
+		if (game->msg)
+			mlx_delete_image(game->mlx, game->msg);
+		game->msg = mlx_put_string(game->mlx,
+				"Door is closed. Key needed!", game->view3d->height
+				- 200, game->view3d->height - 100);
+		game->msg_time = mlx_get_time();
+	}
+}
+
 void	interact(t_gs *game)
 {
 	t_player	*player;
@@ -110,69 +109,7 @@ void	interact(t_gs *game)
 					(t_vec2){player->lookdir.x, player->lookdir.y}));
 		if (ft_vec2_length(vec_door) <= INTERACT_DIST
 			&& door_angle < INTERACT_ANGLE)
-		{
-			if (game->inter_walls[i].is_switch)
-			{
-				toggle_switch(&game->inter_walls[i]);
-				swap_chars('8', '#');
-				game->player->is_shaking = true;
-				game->player->shaking_start = mlx_get_time();
-			}
-			else if (!game->inter_walls[i].key_needed || has_key(player))
-				game->inter_walls[i].is_opening = 1;
-			else
-			{
-				// if (game->inter_walls[i].key_needed && !has_key(player))
-				if (game->msg)
-					mlx_delete_image(game->mlx, game->msg);
-				game->msg = mlx_put_string(game->mlx, "Door is closed. Key needed!", game->view3d->height - 200, game->view3d->height - 100);
-				game->msg_time = mlx_get_time();
-			}
-		}
-		i++;
-	}
-}
-
-void	print_interact_msg(t_gs *game)
-{
-	t_player	*player;
-	t_vec2		vec_door;
-	float		door_angle;
-	int			i;
-
-	if (game->hints)
-		mlx_delete_image(game->mlx, game->hints);
-
-	if (game->msg && mlx_get_time() - game->msg_time > 2)
-		mlx_delete_image(game->mlx, game->msg);
-	player = game->player;
-	i = 0;
-	while (i < game->inter_wall_count)
-	{
-		vec_door = (t_vec2){game->inter_walls[i].sprite.pos.x - player->pos.x,
-			game->inter_walls[i].sprite.pos.y - player->pos.y};
-		door_angle = fabsf(ft_angle_between_vec2(vec_door,
-					(t_vec2){player->lookdir.x, player->lookdir.y}));
-		if (ft_vec2_length(vec_door) <= INTERACT_DIST
-			&& door_angle < INTERACT_ANGLE)
-		{
-			if (game->inter_walls[i].is_switch || !game->inter_walls[i].is_opening)
-			{
-				char	*msg;
-				float bck = game->inter_walls[i].sprite.pos.x;
-				if (game->inter_walls[i].is_switch)
-				{
-					// game->inter_walls[i].sprite.pos.x -= 0.5f;
-					msg = "[E] to interact";
-				}
-				else
-					msg = "[E] to open";
-				ft_calculate_sprite(game->view3d, &game->inter_walls[i].sprite);
-				game->inter_walls[i].sprite.pos.x = bck;
-				game->hints = mlx_put_string(game->mlx, msg, game->inter_walls[i].sprite.sp.screen_pos.x, game->inter_walls[i].sprite.sp.screen_pos.y + game->player->lookupdown + 0.5 * game->player->jump_height * game->inter_walls[i].sprite.sp.max_size);
-				break ;
-			}
-		}
+			interact_sub(game, i);
 		i++;
 	}
 }
