@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_end_screen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:33:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/09 13:43:58 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 15:19:15 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,19 @@ static void	draw_end_screen(mlx_texture_t *tex)
 	uint32_t y_tex;
 	double win_scale;
 
-	// win_scale = (double)(ft_game()->view3d->width / (double) WIDTH * UI_SCALE);
 	win_scale = ft_game()->end_screen->width / (double)ft_game()->textures.screen_victory->width;
-	int pixelize = 1;
-	x = pixelize / 2;
+	x = 0;
 	while (x < tex->width * win_scale)
 	{
-		y = pixelize / 2;
+		y = 0;
 		x_tex = (int)round(x / win_scale);
 		while (y < tex->height * win_scale)
 		{
 			y_tex =(int)round(y / win_scale);
-			draw_square(ft_game()->end_screen, pixelize, (t_point){x, y}, ft_get_pixel_color(tex, (t_point){x_tex, y_tex}));
-			y += pixelize;
+			put_pixel(ft_game()->end_screen, x, y, ft_get_pixel_color(tex, (t_point){x_tex, y_tex}));
+			y ++;
 		}
-		x+=pixelize;
+		x ++;
 	}
 }
 
@@ -59,7 +57,7 @@ static void load_centered_image(mlx_t *mlx, mlx_texture_t *tex)
 	y = ft_clamp((ft_game()->view3d->height - img->height) / 2, 0,ft_game()->view3d->height);
 	if (mlx_image_to_window(mlx, img, x, y) < 0)
 	{
-		fprintf(stderr, "Error: failed to put image to window\n");
+		ft_exit_perror("Failed to put image to window\n");
 		mlx_delete_image(mlx, img);
 		ft_game()->end_screen = NULL;
 	}
@@ -68,13 +66,25 @@ static void load_centered_image(mlx_t *mlx, mlx_texture_t *tex)
 void show_end_screen(void)
 {
 	t_gs	*game;
+	int		width;
+	int		height;
 
 	game = ft_game();
 	if (!game->game_over)
 		return ;
-	ft_game()->end_screen = mlx_new_image(ft_game()->mlx, ft_game()->view3d->width / 2, ft_game()->view3d->width / 4);
+	if (game->view3d->height > game->view3d->width / 2)
+	{
+		width = game->view3d->width / 2;
+		height = width / 2;
+	}
+	else
+	{
+		height = game->view3d->height / 2;
+		width = height * 2;
+	}
+	game->end_screen = mlx_new_image(game->mlx, width, height);
     if (game->game_over == 1)
-		load_centered_image(ft_game()->mlx, ft_game()->textures.screen_victory);
+		load_centered_image(game->mlx, game->textures.screen_victory);
     else if (game->game_over == -1)
-        load_centered_image(ft_game()->mlx, ft_game()->textures.screen_defeat);
+        load_centered_image(game->mlx, game->textures.screen_defeat);
 }
