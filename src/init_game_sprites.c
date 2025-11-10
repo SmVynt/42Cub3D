@@ -6,13 +6,13 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 17:25:54 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 21:06:51 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_init_sprites(void)
+static void	ft_init_sprites_items(void)
 {
 	t_gs	*game;
 	int		i;
@@ -36,6 +36,14 @@ void	ft_init_sprites(void)
 		}
 		i++;
 	}
+}
+
+static void	ft_init_sprites_chars(void)
+{
+	t_gs	*game;
+	int		i;
+
+	game = ft_game();
 	i = 0;
 	while (i < CHARS_TYPES_COUNT)
 	{
@@ -54,6 +62,14 @@ void	ft_init_sprites(void)
 		}
 		i++;
 	}
+}
+
+static void	ft_init_sprites_specials(void)
+{
+	t_gs	*game;
+	int		i;
+
+	game = ft_game();
 	i = 0;
 	while (i < SPEC_TYPES_COUNT)
 	{
@@ -63,6 +79,16 @@ void	ft_init_sprites(void)
 			&game->door_prefabs[i].sprite.texture);
 		i++;
 	}
+}
+
+void	ft_init_sprites(void)
+{
+	t_gs	*game;
+
+	game = ft_game();
+	ft_init_sprites_items();
+	ft_init_sprites_chars();
+	ft_init_sprites_specials();
 	game->sh = malloc(sizeof(t_sprite));
 	if (!game->sh)
 		ft_exit_perror("Could not allocate memory \
