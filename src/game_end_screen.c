@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:33:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 15:26:37 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 16:52:31 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ static void	draw_end_screen(mlx_texture_t *tex)
 	uint32_t	y_tex;
 	double		win_scale;
 
-	win_scale = ft_game()->end_screen->width
-		/ (double)ft_game()->textures.screen_victory->width;
+	win_scale = ft_game()->end_screen->width / (double)tex->width;
 	x = 0;
 	while (x < tex->width * win_scale)
 	{
