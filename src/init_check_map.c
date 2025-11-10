@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_checkmap.c                                    :+:      :+:    :+:   */
+/*   init_check_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 21:17:51 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/11 00:01:16 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ static void	ft_checkwalls(void)
 void	ft_checkmap(void)
 {
 	ft_checkdigits();
+	if (ft_game()->map.start.u == -1 || ft_game()->map.start.v == -1)
+		ft_exit_error("Map is missing a starting position\n");
 	printf(COLOR_G"Map digits check passed!\n"COLOR_X);
 	ft_checkwalls();
 	printf(COLOR_G"Map walls check passed!\n"COLOR_X);
