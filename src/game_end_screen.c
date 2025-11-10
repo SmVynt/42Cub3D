@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:33:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 15:26:37 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 17:15:27 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,6 @@ void	ft_init_end_screen_textures(void)
 	ft_load_texture(TEX_DEFEAT, &game->textures.screen_defeat);
 }
 
-static void	draw_end_screen(mlx_texture_t *tex)
-{
-	uint32_t	x;
-	uint32_t	y;
-	uint32_t	x_tex;
-	uint32_t	y_tex;
-	double		win_scale;
-
-	win_scale = ft_game()->end_screen->width
-		/ (double)ft_game()->textures.screen_victory->width;
-	x = 0;
-	while (x < tex->width * win_scale)
-	{
-		y = 0;
-		x_tex = (int)round(x / win_scale);
-		while (y < tex->height * win_scale)
-		{
-			y_tex = (int)round(y / win_scale);
-			put_pixel(ft_game()->end_screen, x, y,
-				ft_get_pixel_color(tex, (t_point){x_tex, y_tex}));
-			y ++;
-		}
-		x ++;
-	}
-}
-
 static void	load_centered_image(mlx_t *mlx, mlx_texture_t *tex)
 {
 	int32_t			x;
@@ -54,7 +28,7 @@ static void	load_centered_image(mlx_t *mlx, mlx_texture_t *tex)
 	mlx_image_t		*img;
 
 	img = ft_game()->end_screen;
-	draw_end_screen(tex);
+	draw_ui_img(img, tex);
 	x = (ft_game()->view3d->width - img->width) / 2;
 	y = (ft_game()->view3d->height - img->height) / 2;
 	x = ft_clamp(x, 0, ft_game()->view3d->width);
