@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 12:40:44 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 19:18:08 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 21:31:29 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	print_debug(const char *str)
 {
-	struct timeval	current_time;
+	double	current_time;
 
 	if (!DEBUG_MODE)
 		return ;
-	gettimeofday(&current_time, NULL);
-	printf(COLOR_C"[%ld] %s\n"COLOR_X, current_time.tv_sec, str);
+	current_time = mlx_get_time();
+	printf(COLOR_C"[%f] %s\n"COLOR_X, current_time, str);
 }

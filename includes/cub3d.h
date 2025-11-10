@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 20:48:47 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 21:32:45 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@
 # include <fcntl.h>
 # include <math.h>
 # include <string.h>
-# include <sys/time.h>
 # include "structs.h"
 # include "ft_mat4.h"
 
-# define DEBUG_MODE	false
+# define DEBUG_MODE		false
 
 # define MIN_WIDTH		128
 # define MIN_HEIGHT		72
