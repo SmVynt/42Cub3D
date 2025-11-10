@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/09 13:28:59 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 20:12:17 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,12 @@ void	draw(int32_t width, int32_t height, void *param)
 
 
 	game = (t_gs *) param;
-	// map = &game->map;
+    if (width < MIN_WIDTH || height < MIN_HEIGHT)
+    {
+        mlx_set_window_size(game->mlx, ft_clamp(width, MIN_WIDTH, width),
+			ft_clamp(height, MIN_HEIGHT, height));
+        return ;
+    }
 	if (game->hud)
 		mlx_delete_image(game->mlx, game->hud);
 	if (game->minimap)
@@ -77,7 +82,8 @@ void	draw(int32_t width, int32_t height, void *param)
 	game->miniplayer = mlx_new_image(game->mlx,height * 2 / 9, height * 2 / 9);
 	game->health = mlx_new_image(game->mlx, height / 4, height / 18);
 	game->health_bar = mlx_new_image(game->mlx, height / 4, height / 18);
-	if (!game->minimap || !game->miniplayer || !game->view3d)
+	if (!game->minimap || !game->miniplayer || !game->view3d || !game->view3d_bg
+		  || !game->view3d_bg || !game->hud || !game->health || !game->health_bar)
 		return ;
 	draw_ui();
 	ft_game()->render.bg_proportion = (float)game->view3d_bg->height / ((float)game->view3d_bg->width * M_PI / 2);
@@ -104,8 +110,10 @@ void	draw(int32_t width, int32_t height, void *param)
 	show_end_screen();
 	printf("End screen shown\n");
 	// ft_update(game); We maybe'll need this later
-	mlx_image_to_window(game->mlx, game->health_bar, width -  width / 16 - height / 4, height - height / 18);
-	mlx_image_to_window(game->mlx, game->health, width -  width / 16 - height / 4, height - height / 18);
+	if (game->health_bar)
+		mlx_image_to_window(game->mlx, game->health_bar, width -  width / 16 - height / 4, height - height / 18);
+	if (game->health)
+		mlx_image_to_window(game->mlx, game->health, width -  width / 16 - height / 4, height - height / 18);
 	// mlx_image_to_window(game->mlx, game->health_bar, width -  width / 16 - height / 4, height - height / 18);
 	ft_update_graphics();
 }

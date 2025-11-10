@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 17:08:47 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 20:08:48 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@
 
 # define DEBUG_MODE	false
 
-# define WIDTH		1280
-# define HEIGHT		720
+# define MIN_WIDTH		128
+# define MIN_HEIGHT		72
+# define WIDTH			1280
+# define HEIGHT			720
 
 # define COLOR_WHITE	0xFFFFFFFF
 # define COLOR_BLACK	0xFF000000

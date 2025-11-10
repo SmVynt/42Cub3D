@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 17:18:14 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 19:30:05 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	ft_update_hp_bar(void)
 	t_point		offset;
 
 	image = ft_game()->health_bar;
+	if (!image)
+		return ;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
 	offset.u = round((float)image->width * (1 - UI_HP_BAR_XSCALE)) / 2;
 	offset.v = round((float)image->height * (1 - UI_HP_BAR_YSCALE)) / 2;
@@ -99,6 +101,8 @@ void	draw_ui_img(mlx_image_t *img, mlx_texture_t *tex)
 	uint32_t		y_tex;
 	double			win_scale;
 
+	if (!img || !tex)
+		return ;
 	win_scale = img->width / (double)tex->width;
 	x = 0;
 	while (x < tex->width * win_scale)
