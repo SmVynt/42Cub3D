@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 00:08:47 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 02:19:17 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 02:58:43 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ bool	ft_player_try_heal(float heal)
 	ft_update_hp_bar();
 	return (true);
 }
-
 
 void	shaky_shaky(void)
 {

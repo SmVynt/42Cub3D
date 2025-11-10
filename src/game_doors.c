@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 20:14:20 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/09 13:54:39 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 02:37:02 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,6 @@ void	open_door(int i)
 	t_door	*door;
 
 	door = &ft_game()->inter_walls[i];
-	// if (ft_game()->game_over)
-	// {
-	// 	door->closed = true;
-	// 	door->is_opening = 0;
-	// 	door->dt = 0.0f;
-	// 	return ;
-	// }
 	ft_calculate_sprite(ft_game()->view3d, &door->sprite);
 	if (door->sprite.sp.dist < INTERACT_DIST && !door->closed)
 		return ;

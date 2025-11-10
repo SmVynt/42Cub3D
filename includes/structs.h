@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/08 22:22:12 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 02:50:46 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,7 @@ typedef struct s_char
 	t_sprite		sprite;
 	t_ai			ai;
 	bool			alive;
-	int				health;
-	int				max_health;
+	float			dps;
 }	t_char;
 
 typedef struct s_door

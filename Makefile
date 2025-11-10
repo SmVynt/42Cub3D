@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/10 02:21:59 by psmolin          ###   ########.fr        #
+#    Updated: 2025/11/10 02:56:46 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC_FILES	= \
 				game_loop_tile_check.c \
 				game_loop.c \
 				game_doors.c \
+				game_chars_alien.c \
 				game_chars.c \
 				game_items.c \
 				game_interact_message.c \

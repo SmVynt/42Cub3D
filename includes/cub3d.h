@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 17:58:22 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 02:56:20 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture);
 void	ft_init_end_screen_textures(void);
 void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture, mlx_texture_t *atlas);
 
-
 float	ft_height_delta(float distance);
 static inline void put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
 {
@@ -153,6 +152,9 @@ void	ft_update_hp_bar(void);
 void	ft_update_chars(void);
 void	ft_update_player(void);
 void	ft_update_graphics(void);
+
+// ai
+void	ft_ai_alien(t_char *ch);
 
 // tile checks
 bool	ft_is_special_wall(t_vec2 p, const char *wall_type);

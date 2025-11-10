@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/08 22:24:12 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 02:51:10 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,8 @@ static void ft_init_prefabs(void)
 	};
 	game->char_prefabs[CH_ALIEN] = (t_char){
 		.type = CH_ALIEN,
-		.health = 100,
-		.max_health = 100,
 		.alive = true,
+		.dps = AI_ALIEN_DMG_PS,
 		.sprite = (t_sprite){
 			.texture = NULL,
 			.path = TEX_ALIEN,
@@ -105,9 +104,8 @@ static void ft_init_prefabs(void)
 	};
 	game->char_prefabs[CH_SLIME] = (t_char){
 		.type = CH_SLIME,
-		.health = 50,
-		.max_health = 50,
 		.alive = true,
+		.dps = AI_SLIME_DMG_PS,
 		.sprite = (t_sprite){
 			.texture = NULL,
 			.path = TEX_SLIME,
