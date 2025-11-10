@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/09 13:48:20 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 09:55:46 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,12 +347,14 @@ static void	get_next_point_to_draw(t_point *p, int *slope_err,
 	}
 }
 
-static t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec2 dir, int *tile_x, int *tile_y, int *side)
+t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec2 dir, int *tile_x, int *tile_y, int *side)
 {
 	t_vec2	hit_point;
 	t_vec2	next_wall;
 	t_vec2	dist;
 
+	dir.x = dir.x / ft_vec2_length(dir);
+	dir.y = dir.y / ft_vec2_length(dir);
 	int step_x = (dir.x >= 0) - (dir.x <= 0);
 	int step_y = (dir.y >= 0) - (dir.y <= 0);
 	if (dir.x > 0)

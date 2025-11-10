@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 13:56:13 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 11:49:47 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	ft_is_special_wall(t_vec2 p, const char *wall_type)
+bool	ft_is_special_wall(t_vec2 p)
 {
 	t_gs	*game;
 	t_map	*map;
@@ -25,7 +25,7 @@ bool	ft_is_special_wall(t_vec2 p, const char *wall_type)
 	y = (int)roundf(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
 		return (false);
-	if (ft_strchar(wall_type, map->tile[y][x]) != NULL)
+	if (ft_strchar(SPEC_WALL_CHARS, map->tile[y][x]) != NULL)
 		return (true);
 	return (false);
 }

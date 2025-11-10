@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 13:58:02 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 11:53:31 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,13 @@ static inline void put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_
 }
 void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec2 lookdir, t_map map, int x);
 void	draw_wall(mlx_image_t *image, int x);
+t_vec2 get_next_wall_intersection(t_vec2 pos, t_vec2 dir, int *tile_x, int *tile_y, int *side);
+
 void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
 bool	ft_is_wall(t_vec2 p);
 void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
 
+bool	ft_is_special_wall(t_vec2 p);
 bool	ft_is_door(t_vec2 p);
 t_door	*ft_get_door(int x, int y);
 void	interact(t_gs *game);

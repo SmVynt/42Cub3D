@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_interact.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/09 13:16:17 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 15:06:37 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,25 +104,28 @@ void	interact(t_gs *game)
 	i = 0;
 	while (i < game->inter_wall_count)
 	{
-		vec_door = (t_vec2){game->inter_walls[i].sprite.pos.x - player->pos.x,
-			game->inter_walls[i].sprite.pos.y - player->pos.y};
-		door_angle = fabsf(ft_angle_between_vec2(vec_door,
-					(t_vec2){player->lookdir.x, player->lookdir.y}));
+		t_door wall = game->inter_walls[i];
+		vec_door = (t_vec2){wall.sprite.pos.x - player->pos.x,
+			wall.sprite.pos.y - player->pos.y};
+		door_angle = fabsf(ft_angle_between_vec2(vec_door, player->lookdir));
 		if (ft_vec2_length(vec_door) <= INTERACT_DIST
 			&& door_angle < INTERACT_ANGLE)
 		{
-			if (game->inter_walls[i].is_switch)
-			{
-				toggle_switch(&game->inter_walls[i]);
+			printf("E is pressed\n");
+			if (wall.is_switch)
+			{	
+				printf("switch\n");
+				toggle_switch(&wall);
 				swap_chars('8', '#');
-				game->player->is_shaking = true;
-				game->player->shaking_start = mlx_get_time();
+				player->is_shaking = true;
+				player->shaking_start = mlx_get_time();
 			}
-			else if (!game->inter_walls[i].key_needed || has_key(player))
-				game->inter_walls[i].is_opening = 1;
+			else if (!wall.key_needed || has_key(player))
+				wall.is_opening = 1;
 			else
 			{
-				// if (game->inter_walls[i].key_needed && !has_key(player))
+				printf("door canot open\n");
+				// if (wall.key_needed && !has_key(player))
 				if (game->msg)
 					mlx_delete_image(game->mlx, game->msg);
 				game->msg = mlx_put_string(game->mlx, "Door is closed. Key needed!", game->view3d->height - 200, game->view3d->height - 100);
@@ -133,46 +136,93 @@ void	interact(t_gs *game)
 	}
 }
 
+
+t_vec2	ft_compute_screen_pos(mlx_image_t *image, t_vec2 wall_dir)
+{
+	t_player		*player;
+	t_vec2			screen_pos;
+	double			size;
+	double			dist;
+	double			angle;
+
+	player = ft_game()->player;
+	// printf("sprite pos calc %f %f\n",sprite->pos.x, sprite->pos.y);
+	// printf("calc dir %f %f\n", sp_dir.x, sp_dir.y);
+	dist = ft_vec2_length(wall_dir);
+	angle = ft_angle_between_vec2(player->lookdir, wall_dir);
+	dist *= cos(angle);
+	screen_pos.x = (float)(image->width / 2.0f + (angle / FOV_RAD) * image->width);
+	screen_pos.y = (float)(image->height / 2.0f);
+	size = (1.0f / dist) * ft_game()->render.projection_plane_dist;
+	screen_pos.y += size * 0.5f * ft_game()->player->jump_height + player->lookupdown;
+	return (screen_pos);
+}
+
 void	print_interact_msg(t_gs *game)
 {
 	t_player	*player;
-	t_vec2		vec_door;
-	float		door_angle;
+	t_vec2		wall_vec;
+	float		wall_angle;
 	int			i;
 
 	if (game->hints)
 		mlx_delete_image(game->mlx, game->hints);
-
 	if (game->msg && mlx_get_time() - game->msg_time > 2)
 		mlx_delete_image(game->mlx, game->msg);
+	if (false)
+	{
 	player = game->player;
 	i = 0;
 	while (i < game->inter_wall_count)
 	{
-		vec_door = (t_vec2){game->inter_walls[i].sprite.pos.x - player->pos.x,
-			game->inter_walls[i].sprite.pos.y - player->pos.y};
-		door_angle = fabsf(ft_angle_between_vec2(vec_door,
-					(t_vec2){player->lookdir.x, player->lookdir.y}));
-		if (ft_vec2_length(vec_door) <= INTERACT_DIST
-			&& door_angle < INTERACT_ANGLE)
+		t_door wall = game->inter_walls[i];
+		wall_vec = (t_vec2){wall.sprite.pos.x - player->pos.x,
+			wall.sprite.pos.y - player->pos.y};
+		wall_angle = fabsf(ft_angle_between_vec2(player->lookdir, wall_vec));
+		if (ft_vec2_length(wall_vec) <= INTERACT_DIST
+			&& wall_angle < INTERACT_ANGLE)
 		{
-			if (game->inter_walls[i].is_switch || !game->inter_walls[i].is_opening)
+			if (wall.is_switch || !wall.is_opening)
 			{
 				char	*msg;
-				float bck = game->inter_walls[i].sprite.pos.x;
-				if (game->inter_walls[i].is_switch)
+				t_vec2 bckup = wall.sprite.pos;
+				// printf("%f %f\n", bckup.x, bckup.y);
+				if (wall.is_switch)
 				{
-					// game->inter_walls[i].sprite.pos.x -= 0.5f;
+					t_vec2 start = player->pos;
+					int tile_x, tile_y, side;
+					tile_x = start.x;
+					tile_y = start.y;
+					// printf("%f %f\n", start.x, start.y);
+					// wall_vec.x /= ft_vec2_length(wall_vec);
+					// wall_vec.y /= ft_vec2_length(wall_vec);
+					// printf("dir %f %f\n", wall_vec.x, wall_vec.y);
+					start.x += 0.5;
+					start.y += 0.5;
+					while (!ft_is_wall((t_vec2){tile_x, tile_y}))
+						start = get_next_wall_intersection(start, wall_vec, &tile_x, &tile_y, &side);
+					// if (!ft_is_special_wall((t_vec2){tile_x, tile_y}))
+					// {
+					// 	i++;
+					// 	continue ;
+					// }
+					if (!side)
+						wall.sprite.pos.x -= ft_signf(wall_vec.x) * 0.5f;
+					else
+						wall.sprite.pos.y -= ft_signf(wall_vec.y) * 0.5f;
 					msg = "[E] to interact";
 				}
 				else
 					msg = "[E] to open";
-				ft_calculate_sprite(game->view3d, &game->inter_walls[i].sprite);
-				game->inter_walls[i].sprite.pos.x = bck;
-				game->hints = mlx_put_string(game->mlx, msg, game->inter_walls[i].sprite.sp.screen_pos.x, game->inter_walls[i].sprite.sp.screen_pos.y + game->player->lookupdown + 0.5 * game->player->jump_height * game->inter_walls[i].sprite.sp.max_size);
+				// printf("sprite pos %f %f\n", wall.sprite.pos.x, wall.sprite.pos.y);
+				t_vec2 screen_pos = ft_compute_screen_pos(game->view3d, wall_vec);
+				// printf("sprite pos %f %f\n", wall.sprite.pos.x, wall.sprite.pos.y);
+				game->hints = mlx_put_string(game->mlx, msg, screen_pos.x, screen_pos.y);
+				wall.sprite.pos = bckup;
 				break ;
 			}
 		}
 		i++;
 	}
+}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/09 13:28:59 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 15:03:54 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,8 @@ void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite)
 	sprite->next = NULL;
 	player = ft_game()->player;
 	sp_dir = (t_vec2){sprite->pos.x - player->pos.x, sprite->pos.y - player->pos.y};
+	// printf("sprite pos calc %f %f\n",sprite->pos.x, sprite->pos.y);
+	// printf("calc dir %f %f\n", sp_dir.x, sp_dir.y);
 	sp->dist = ft_vec2_length(sp_dir);
 	sp->angle = ft_angle_between_vec2((t_vec2){player->lookdir.x, player->lookdir.y}, sp_dir);
 	if (sp->dist < 0.2f || fabs(sp->angle) > FOV_RAD / 2 + M_PI / 20)
