@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/09 18:02:42 by psmolin          ###   ########.fr        #
+#    Updated: 2025/11/10 02:21:59 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC_FILES	= \
 				game_doors.c \
 				game_chars.c \
 				game_items.c \
+				game_interact_message.c \
 				game_interact.c \
 				game_end_screen.c \
 				game_player.c \

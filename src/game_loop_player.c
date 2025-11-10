@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 18:21:27 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 02:03:58 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,16 @@ static void	ft_clamp_new_position(t_vec2 *player_pos, t_vec2 new_pos_delta)
 {
 	t_vec2	border_offset;
 	t_vec2	closest_tile_border;
+	t_vec2	signs;
 
-	if (new_pos_delta.x < 0.0f)
-		closest_tile_border.x = (float)(
-				(int)(player_pos->x)) + 0.5f + TILE_BORDER;
-	else
-		closest_tile_border.x = (float)(
-				(int)(player_pos->x + 1.0f)) - 0.5f - TILE_BORDER;
+	signs.x = ft_signf(new_pos_delta.x);
+	signs.y = ft_signf(new_pos_delta.y);
+	closest_tile_border.x = roundf(player_pos->x + signs.x * 0.5f)
+		- signs.x * (TILE_BORDER + 0.5f);
 	if (new_pos_delta.x == 0.0f)
 		closest_tile_border.x = player_pos->x;
-	if (new_pos_delta.y < 0.0f)
-		closest_tile_border.y = (float)(
-				(int)(player_pos->y)) + 0.5f + TILE_BORDER;
-	else
-		closest_tile_border.y = (float)(
-				(int)(player_pos->y + 1.0f)) - 0.5f - TILE_BORDER;
+	closest_tile_border.y = roundf(player_pos->y + signs.y * 0.5f)
+		- signs.y * (TILE_BORDER + 0.5f);
 	if (new_pos_delta.y == 0.0f)
 		closest_tile_border.y = player_pos->y;
 	border_offset = (t_vec2){ft_signf(new_pos_delta.x) * TILE_BORDER,

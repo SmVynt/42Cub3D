@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 00:08:47 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/05 20:36:50 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 02:19:17 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,31 @@ bool	ft_player_try_heal(float heal)
 		player->hp = MAX_HP;
 	ft_update_hp_bar();
 	return (true);
+}
+
+
+void	shaky_shaky(void)
+{
+	t_player	*player;
+	t_vec2		perp;
+	float		offset;
+	double		elapsed;
+	float		intensity;
+
+	player = ft_game()->player;
+	elapsed = mlx_get_time() - player->shaking_start;
+	if (elapsed > SHAKING_TIME)
+	{
+		player->is_shaking = false;
+		player->jump_height = 0.0f;
+		return ;
+	}
+	intensity = expf(-5.0f * elapsed / SHAKING_TIME);
+	perp.x = -player->lookdir.y;
+	perp.y = player->lookdir.x;
+	offset = rand_in_range(-MAX_HOR_SHAKING, MAX_HOR_SHAKING) * intensity;
+	player->pos.x += perp.x * offset;
+	player->pos.y += perp.y * offset;
+	player->jump_height = rand_in_range(-MAX_VERT_SHAKING, MAX_VERT_SHAKING)
+		* intensity;
 }
