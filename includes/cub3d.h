@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 17:19:38 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 20:48:47 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@
 
 # define DEBUG_MODE	false
 
-# define WIDTH		1280
-# define HEIGHT		720
+# define MIN_WIDTH		128
+# define MIN_HEIGHT		72
+# define WIDTH			1280
+# define HEIGHT			720
 
 # define COLOR_WHITE	0xFFFFFFFF
 # define COLOR_BLACK	0xFF000000
@@ -124,6 +126,7 @@ void	fill_background(mlx_image_t *image, uint32_t color);
 
 void	draw(int32_t width, int32_t height, void *param);
 void	draw_ui(void);
+void	draw_ui_img(mlx_image_t *img, mlx_texture_t *tex);
 void	draw_map(void);
 void	draw_ui_minimap(void);
 void	draw_player(mlx_image_t *image);

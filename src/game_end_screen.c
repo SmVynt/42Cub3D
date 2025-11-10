@@ -6,36 +6,19 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:33:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 19:03:30 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 20:49:09 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	draw_end_screen(mlx_texture_t *tex)
+void	ft_init_end_screen_textures(void)
 {
-	uint32_t	x;
-	uint32_t	y;
-	uint32_t	x_tex;
-	uint32_t	y_tex;
-	double		win_scale;
+	t_gs	*game;
 
-	win_scale = ft_game()->end_screen->width
-		/ (double)ft_game()->textures.screen_victory->width;
-	x = 0;
-	while (x < tex->width * win_scale)
-	{
-		y = 0;
-		x_tex = (int)round(x / win_scale);
-		while (y < tex->height * win_scale)
-		{
-			y_tex = (int)round(y / win_scale);
-			put_pixel(ft_game()->end_screen, x, y,
-				ft_get_pixel_color(tex, (t_point){x_tex, y_tex}));
-			y ++;
-		}
-		x ++;
-	}
+	game = ft_game();
+	ft_load_texture(TEX_VICTORY, &game->textures.screen_victory);
+	ft_load_texture(TEX_DEFEAT, &game->textures.screen_defeat);
 }
 
 static void	load_centered_image(mlx_t *mlx, mlx_texture_t *tex)
@@ -45,7 +28,7 @@ static void	load_centered_image(mlx_t *mlx, mlx_texture_t *tex)
 	mlx_image_t		*img;
 
 	img = ft_game()->end_screen;
-	draw_end_screen(tex);
+	draw_ui_img(img, tex);
 	x = (ft_game()->view3d->width - img->width) / 2;
 	y = (ft_game()->view3d->height - img->height) / 2;
 	x = ft_clamp(x, 0, ft_game()->view3d->width);
@@ -77,8 +60,9 @@ void	show_end_screen(void)
 		height = game->view3d->height / 2;
 		width = height * 2;
 	}
-	game->end_screen = mlx_new_image(game->mlx, clamp1(width), clamp1(height));
-	printf("Created end screen image %dx%d\n", width, height);
+	game->end_screen = mlx_new_image(game->mlx, width, height);
+	if (!game->end_screen)
+		return ;
 	if (game->game_over == 1)
 		load_centered_image(game->mlx, game->textures.screen_victory);
 	else if (game->game_over == -1)
