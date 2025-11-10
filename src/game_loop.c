@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 15:35:49 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 19:33:58 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void	ft_update(void *param)
 
 	game = ft_game();
 	if (game->game_over == -1)
+		return ;
+
+	print_debug("---- GAME LOOP START ----");
+	if (game->view3d->height == 0 || game->view3d->width == 0)
 		return ;
 	player = game->player;
 	(void)param;

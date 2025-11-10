@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   game_end_screen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:33:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 19:52:43 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 20:56:43 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	ft_init_end_screen_textures(void)
-{
-	t_gs	*game;
-
-	game = ft_game();
-	ft_load_texture(TEX_VICTORY, &game->textures.screen_victory);
-	ft_load_texture(TEX_DEFEAT, &game->textures.screen_defeat);
-}
 
 static void	load_centered_image(mlx_t *mlx, mlx_texture_t *tex)
 {
