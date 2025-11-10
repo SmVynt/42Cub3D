@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 01:45:57 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 15:35:49 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ static void	ft_update_player_general(t_player *player)
 		shaky_shaky();
 	print_debug("player update...");
 	ft_update_player();
-	if (player->hp <= 0)
+	if (!ft_game()->game_over && player->hp <= 0)
 	{
 		ft_game()->game_over = -1;
 		show_end_screen();
 	}
-	if (ft_is_pod(player->pos))
+	if (!ft_game()->game_over && ft_is_pod(player->pos))
 	{
 		ft_game()->game_over = 1;
 		show_end_screen();
