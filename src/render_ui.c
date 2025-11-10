@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 16:56:31 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 17:18:14 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	ft_update_hp_bar(void)
 	offset.u = round((float)image->width * (1 - UI_HP_BAR_XSCALE)) / 2;
 	offset.v = round((float)image->height * (1 - UI_HP_BAR_YSCALE)) / 2;
 	i = offset.u;
-	while (i < round((float)((image->width - offset.u) * ft_game()->player->hp) / MAX_HP))
+	while (i < round((float)((image->width - offset.u) * ft_game()->player->hp)
+		/ MAX_HP))
 	{
 		j = offset.v;
 		while (j < round(image->height - offset.v))
@@ -82,7 +83,8 @@ void	draw_ui_health(void)
 		while (y < bg->height * win_scale)
 		{
 			y_tex = y / win_scale;
-			put_pixel(ft_game()->health, x, y, ft_get_pixel_color(bg, (t_point){x_tex, y_tex}));
+			put_pixel(ft_game()->health, x, y,
+				ft_get_pixel_color(bg, (t_point){x_tex, y_tex}));
 			y++;
 		}
 		x++;
@@ -97,8 +99,7 @@ void	draw_ui_img(mlx_image_t *img, mlx_texture_t *tex)
 	uint32_t		y_tex;
 	double			win_scale;
 
-	win_scale = (double)ft_game()->view3d->height / (double)HEIGHT * UI_SCALE;
-	// win_scale = img->width / (double)tex->width;
+	win_scale = img->width / (double)tex->width;
 	x = 0;
 	while (x < tex->width * win_scale)
 	{
@@ -107,7 +108,8 @@ void	draw_ui_img(mlx_image_t *img, mlx_texture_t *tex)
 		while (y < tex->height * win_scale)
 		{
 			y_tex = y / win_scale;
-			put_pixel(img, x, y, ft_get_pixel_color(tex, (t_point){x_tex, y_tex}));
+			put_pixel(img, x, y,
+				ft_get_pixel_color(tex, (t_point){x_tex, y_tex}));
 			y++;
 		}
 		x++;
@@ -116,8 +118,7 @@ void	draw_ui_img(mlx_image_t *img, mlx_texture_t *tex)
 
 void	draw_ui(void)
 {
-	draw_ui_minimap();
-	draw_ui_health();
-	// draw_ui_img(ft_game()->health, ft_game()->textures.ui_health);
+	draw_ui_img(ft_game()->minimap, ft_game()->textures.ui_minimap);
+	draw_ui_img(ft_game()->health, ft_game()->textures.ui_health);
 	ft_update_hp_bar();
 }
