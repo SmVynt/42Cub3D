@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_minimap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/09 17:52:24 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 23:17:22 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,6 @@ void	ft_update_minimap()
 	image = game->miniplayer;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
 	draw_map();
-}
-
-void	draw_player(mlx_image_t *image)
-{
-	t_point center;
-	t_player	*player;
-	t_map		map;
-
-	player = ft_game()->player;
-	map = ft_game()->map;
-	center = (t_point){(int)(player->pos.x * MAP_SCALE + MAP_SCALE),
-		(int)(player->pos.y * MAP_SCALE + MAP_SCALE)};
-	draw_circle(image, center, 3, COLOR_BLUE);
-	float angle = - FOV_RAD / 2;
-	float dangle = FOV_RAD / (ft_game()->view3d->width - 1);
-	int x = 0;
-	while ((unsigned int)x < ft_game()->view3d->width)
-	{
-		draw_line_ray(image, center, ft_mat4_transform_vec2(ft_mat4_rotation_z(angle), player->lookdir), map, x);
-		angle += dangle;
-		x++;
-	}
-	draw_line(image, center,
-		(t_point){(int)(center.u + player->lookdir.x * 20),
-		(int)(center.v + player->lookdir.y * 20)}, COLOR_YELLOW);
 }
 
 void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color)
@@ -131,7 +106,7 @@ static void draw_items_on_minimap(mlx_image_t *image, float zoom, t_point image_
 		if ((int)coords.x < -image_center.u || (int)coords.x > image_center.u
 			|| (int)coords.y < -image_center.v || (int)coords.y > image_center.v)
 			continue ;
-		coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(- atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
+		coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(-atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
 		if (ft_game()->items[i].type == IT_HEALTH)
 			color = MM_COLOR_HEALTH;
 		if (ft_game()->items[i].type == IT_KEY)
@@ -155,10 +130,10 @@ void	draw_map(void)
 	image_center.u = (int)image->width / 2;
 	image_center.v = (int)image->height / 2;
 	zoom = MM_SCALE * (float)ft_game()->view3d->height / HEIGHT;
-	x = - image_center.u;
+	x = -image_center.u;
 	while (x < image_center.u)
 	{
-		y = - image_center.v;
+		y = -image_center.v;
 		while (y < (int)image->height / 2)
 		{
 			coords = (t_vec2){(float)x / zoom, (float)y / zoom};
@@ -177,25 +152,4 @@ void	draw_map(void)
 	}
 	draw_characters_on_minimap(image, zoom, image_center);
 	draw_items_on_minimap(image, zoom, image_center);
-}
-
-void draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color)
-{
-	int x;
-	int y;
-	int r_squared;
-
-	r_squared = radius * radius;
-	for (y = -radius; y <= radius; y++)
-	{
-		for (x = -radius; x <= radius; x++)
-		{
-			if (x * x + y * y <= r_squared)
-			{
-				int px = center.u + x;
-				int py = center.v + y;
-				put_pixel(image, px, py, color);
-			}
-		}
-	}
 }

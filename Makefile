@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/10 02:56:46 by psmolin          ###   ########.fr        #
+#    Updated: 2025/11/10 23:18:17 by nmikuka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,8 @@ SRC_FILES	= \
 				render_images.c \
 				render_minimap.c \
 				render_raycast.c \
+				render_shapes.c \
+				render_sprites.c \
 				render_ui.c \
 				sys_clean_mlx.c \
 				sys_clean_mlx2.c \

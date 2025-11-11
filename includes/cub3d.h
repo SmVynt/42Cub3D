@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 20:08:48 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/10 23:14:38 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,7 @@
 # ifndef M_PI
 #  define M_PI					3.14159265358979323846
 # endif
-# define PI						3.14159265358
-# define TWO_PI					6.28318530718
-# define HALF_PI				1.57079632679
-# define DEG_TO_RAD				0.01745329251
-# define RAD_TO_DEG				57.2957795131
-# define FOV					60.0f
+# define HALF_PI				1.57079632679489661923
 # define FOV_RAD				(M_PI / 3.0)
 # define PIXEL_SIZE				4
 # define UI_PIXEL_SIZE			1
@@ -129,14 +124,12 @@ void	draw_ui(void);
 void	draw_ui_img(mlx_image_t *img, mlx_texture_t *tex);
 void	draw_map(void);
 void	draw_ui_minimap(void);
-void	draw_player(mlx_image_t *image);
 void	draw_walls(mlx_image_t *image);
 void	draw_sprites(mlx_image_t *image);
 void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color);
 void	draw_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture);
 void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
-void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
 t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir);
 
 void	pick_up(t_item *item);
@@ -199,5 +192,9 @@ void	ft_free_render(void);
 void	ft_free_mlx_envirtex(t_gs *game);
 void	ft_free_mlx_prefabs_chars(t_gs *game);
 void	ft_free_mlx_prefabs_items(t_gs *game);
+
+// depricated functions to delete
+void	draw_player(mlx_image_t *image);
+void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
 
 #endif
