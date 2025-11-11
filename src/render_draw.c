@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 20:12:17 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/11 15:00:13 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	draw(int32_t width, int32_t height, void *param)
 	if (game->health)
 		mlx_image_to_window(game->mlx, game->health, width -  width / 16 - height / 4, height - height / 18);
 	// mlx_image_to_window(game->mlx, game->health_bar, width -  width / 16 - height / 4, height - height / 18);
-	ft_update_graphics();
+	// ft_update_graphics();
 }
 
 // static inline void put_pixel(mlx_image_t *image, u_int32_t x, u_int32_t y, uint32_t color)

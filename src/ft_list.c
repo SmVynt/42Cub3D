@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_list.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:27:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/10/25 21:17:54 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/11 15:04:33 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,6 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	}
 	last->next = new;
 }
-
-t_list	*ft_lstinsert_sorted(t_list **head, void *content,
-			int (*cmp)(void *, void *))
-{
-	t_list	*new_node;
-	t_list	*curr;
-
-	new_node = ft_lstnew(content);
-	if (!new_node)
-		return (NULL);
-	if (!*head || cmp(content, (*head)->content) < 0)
-	{
-		new_node->next = *head;
-		*head = new_node;
-		return (new_node);
-	}
-	curr = *head;
-	while (curr->next && cmp(content, curr->next->content) >= 0)
-		curr = curr->next;
-
-	new_node->next = curr->next;
-	curr->next = new_node;
-
-	return (new_node);
-}
-
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 22:41:31 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/11 13:27:02 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static void	ft_init_game(void)
 	t_gs	*game;
 
 	game = ft_game();
+	game->is_bonus = false;
 	game->mlx = NULL;
 	game->items = NULL;
 	game->chars = NULL;
