@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/11 16:12:03 by nmikuka          ###   ########.fr        #
+#    Updated: 2025/11/11 21:47:44 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -158,4 +158,8 @@ re: fclean all
 
 bonus: all
 
-.PHONY: all clean fclean re
+norm:
+	norminette $(SRC_DIR)
+	norminette $(INCLUDES)/
+
+.PHONY: all clean fclean re bonus norm
