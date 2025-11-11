@@ -6,150 +6,81 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 23:17:22 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/11 16:21:40 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "cub3d.h"
 
-void	ft_update_minimap()
+static void	update_lerp_progress(t_gs *game)
 {
-	mlx_image_t	*image;
-	t_gs		*game;
+	if (game->mmap.opening)
+		game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 1.0f,
+				game->mmap.lerp_speed * game->dt);
+	else
+		game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 0.0f,
+				game->mmap.lerp_speed * game->dt);
+	if (game->mmap.lerp_progress < 0.01f)
+	{
+		game->mmap.lerp_progress = 0.0f;
+		game->mmap.enabled = false;
+	}
+	if (game->mmap.lerp_progress > 0.99f)
+		game->mmap.lerp_progress = 1.0f;
+}
+
+static void	update_minimap_position(t_gs *game)
+{
+	float	progress;
+
+	progress = game->mmap.lerp_progress;
+	game->minimap->instances[0].x = round(ft_lerpf(
+				game->mmap.minimap_pos_hide.u,
+				game->mmap.minimap_pos_show.u, progress));
+	game->minimap->instances[0].y = round(ft_lerpf(
+				game->mmap.minimap_pos_hide.v,
+				game->mmap.minimap_pos_show.v, progress));
+}
+
+static void	update_miniplayer_position(t_gs *game)
+{
+	float	progress;
+
+	progress = game->mmap.lerp_progress;
+	game->miniplayer->instances[0].x = round(ft_lerpf(
+				game->mmap.miniplayer_pos_hide.u,
+				game->mmap.miniplayer_pos_show.u, progress));
+	game->miniplayer->instances[0].y = round(ft_lerpf(
+				game->mmap.miniplayer_pos_hide.v,
+				game->mmap.miniplayer_pos_show.v, progress));
+}
+
+static bool	is_animation_complete(t_gs *game)
+{
+	return (game->mmap.opening && game->mmap.lerp_progress == 1.0f);
+}
+
+void	clear_image(mlx_image_t *image)
+{
+	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
+}
+
+void	ft_update_minimap(void)
+{
+	t_gs	*game;
 
 	game = ft_game();
 	game->minimap->enabled = game->mmap.enabled;
 	game->miniplayer->enabled = game->mmap.enabled;
 	if (!game->mmap.enabled)
 		return ;
-	if (!(game->mmap.opening && game->mmap.lerp_progress == 1.0f))
+	if (!is_animation_complete(game))
 	{
-		if (game->mmap.opening)
-			game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 1.0f, game->mmap.lerp_speed * game->dt);
-		else
-			game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 0.0f, game->mmap.lerp_speed * game->dt);
-		if (game->mmap.lerp_progress < 0.01f)
-		{
-			game->mmap.lerp_progress = 0.0f;
-			game->mmap.enabled = false;
-		}
-		if (game->mmap.lerp_progress > 0.99f)
-			game->mmap.lerp_progress = 1.0f;
-		game->minimap->instances[0].y = round(ft_lerpf(game->mmap.minimap_pos_hide.v, game->mmap.minimap_pos_show.v, game->mmap.lerp_progress));
-		game->minimap->instances[0].x = round(ft_lerpf(game->mmap.minimap_pos_hide.u, game->mmap.minimap_pos_show.u, game->mmap.lerp_progress));
-		game->miniplayer->instances[0].y = round(ft_lerpf(game->mmap.miniplayer_pos_hide.v, game->mmap.miniplayer_pos_show.v, game->mmap.lerp_progress));
-		game->miniplayer->instances[0].x = round(ft_lerpf(game->mmap.miniplayer_pos_hide.u, game->mmap.miniplayer_pos_show.u, game->mmap.lerp_progress));
+		update_lerp_progress(game);
+		update_minimap_position(game);
+		update_miniplayer_position(game);
 	}
-	image = game->miniplayer;
-	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
+	clear_image(game->miniplayer);
 	draw_map();
-}
-
-void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color)
-{
-	int size;
-	int i;
-
-	(void) color;
-	size = MAP_SCALE;
-	i = -size / 2;
-	while (i < size / 2)
-	{
-		put_pixel(image, pos.u + i, pos.v - size / 2, COLOR_RED);
-		put_pixel(image, pos.u + i, pos.v + size / 2, COLOR_GREEN);
-		put_pixel(image, pos.u - size / 2, pos.v + i, COLOR_YELLOW);
-		put_pixel(image, pos.u + size / 2, pos.v + i, COLOR_BLUE);
-		i++;
-	}
-}
-
-static void draw_characters_on_minimap(mlx_image_t *image, float zoom, t_point image_center)
-{
-	t_vec2		coords;
-	t_player	*player;
-	int			i;
-
-	player = ft_game()->player;
-	i = -1;
-	while (++i < ft_game()->char_count)
-	{
-		coords = (t_vec2){(ft_game()->chars[i].sprite.pos.x - player->pos.x) * zoom,
-			(ft_game()->chars[i].sprite.pos.y - player->pos.y) * zoom};
-		if (ft_game()->chars[i].alive == false)
-			continue ;
-		if ((int)coords.x < -image_center.u || (int)coords.x > image_center.u
-			|| (int)coords.y < -image_center.v || (int)coords.y > image_center.v)
-			continue ;
-		coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(- atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
-		draw_circle(image, (t_point){(int)(coords.x) + image_center.u, (int)(coords.y) + image_center.v}, 3, MM_COLOR_ENEMIES);
-	}
-}
-
-static void draw_items_on_minimap(mlx_image_t *image, float zoom, t_point image_center)
-{
-	t_vec2		coords;
-	t_player	*player;
-	int			i;
-	uint32_t	color;
-
-	player = ft_game()->player;
-	i = -1;
-	while (++i < ft_game()->item_count)
-	{
-		if (!(ft_game()->items[i].type ==  IT_HEALTH
-				|| ft_game()->items[i].type == IT_KEY))
-			continue ;
-		if (ft_game()->items[i].active == false)
-			continue ;
-		coords = (t_vec2){(ft_game()->items[i].sprite.pos.x - player->pos.x) * zoom,
-			(ft_game()->items[i].sprite.pos.y - player->pos.y) * zoom};
-		if ((int)coords.x < -image_center.u || (int)coords.x > image_center.u
-			|| (int)coords.y < -image_center.v || (int)coords.y > image_center.v)
-			continue ;
-		coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(-atan2(player->lookdir.y, player->lookdir.x) - HALF_PI), coords);
-		if (ft_game()->items[i].type == IT_HEALTH)
-			color = MM_COLOR_HEALTH;
-		if (ft_game()->items[i].type == IT_KEY)
-			color = MM_COLOR_KEY;
-		draw_circle(image, (t_point){(int)(coords.x) + image_center.u, (int)(coords.y) + image_center.v}, 3, color);
-	}
-}
-
-void	draw_map(void)
-{
-	int		x;
-	int		y;
-	t_point	image_center;
-	t_vec2	coords;
-	t_player	*player;
-	float		zoom;
-	mlx_image_t	*image;
-
-	player = ft_game()->player;
-	image = ft_game()->miniplayer;
-	image_center.u = (int)image->width / 2;
-	image_center.v = (int)image->height / 2;
-	zoom = MM_SCALE * (float)ft_game()->view3d->height / HEIGHT;
-	x = -image_center.u;
-	while (x < image_center.u)
-	{
-		y = -image_center.v;
-		while (y < (int)image->height / 2)
-		{
-			coords = (t_vec2){(float)x / zoom, (float)y / zoom};
-			coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(atan2(player->lookdir.y, player->lookdir.x) + HALF_PI), coords);
-			coords.x += player->pos.x;
-			coords.y += player->pos.y;
-			if (ft_is_door((t_vec2){coords.x, coords.y}))
-				draw_square(image, UI_PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_DOORS);
-			else if (ft_is_wall((t_vec2){coords.x, coords.y}))
-				draw_square(image, UI_PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_WALLS);
-			else
-				draw_square(image, UI_PIXEL_SIZE, (t_point){x + image_center.u, y + image_center.v}, MM_COLOR_EMPTY);
-		y += UI_PIXEL_SIZE;
-		}
-	x += UI_PIXEL_SIZE;
-	}
-	draw_characters_on_minimap(image, zoom, image_center);
-	draw_items_on_minimap(image, zoom, image_center);
 }

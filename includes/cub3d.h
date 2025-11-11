@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 23:14:38 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/11 16:03:18 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,18 +117,24 @@ t_door	*ft_get_door(int x, int y);
 void	interact(t_gs *game);
 void	print_interact_msg(t_gs *game);
 void	open_door(int i);
+
+// render helper functions
+bool	allocate_depth_buffer(t_gs *game, int32_t width);
+void	setup_minimap_positions(t_gs *game, int32_t width, int32_t height);
+void	ft_fill_split_bg(mlx_image_t *bg);
 void	fill_background(mlx_image_t *image, uint32_t color);
 
 void	draw(int32_t width, int32_t height, void *param);
 void	draw_ui(void);
 void	draw_ui_img(mlx_image_t *img, mlx_texture_t *tex);
 void	draw_map(void);
-void	draw_ui_minimap(void);
+void	draw_chars_on_minimap(mlx_image_t *img, float zoom, t_point img_center);
+void	draw_items_on_minimap(mlx_image_t *img, float zoom, t_point img_center);
+
 void	draw_walls(mlx_image_t *image);
 void	draw_sprites(mlx_image_t *image);
 void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color);
-void	draw_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture);
-void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
+void	draw_ui_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture);
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
 t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir);
 
@@ -196,5 +202,6 @@ void	ft_free_mlx_prefabs_items(t_gs *game);
 // depricated functions to delete
 void	draw_player(mlx_image_t *image);
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
+void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
 
 #endif

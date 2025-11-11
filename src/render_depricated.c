@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 22:53:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 22:56:05 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/11 15:14:24 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,23 @@ void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color)
 			err.u += delta.u;
 			start.v += sign.v;
 		}
+	}
+}
+
+void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color)
+{
+	int size;
+	int i;
+
+	(void) color;
+	size = MAP_SCALE;
+	i = -size / 2;
+	while (i < size / 2)
+	{
+		put_pixel(image, pos.u + i, pos.v - size / 2, COLOR_RED);
+		put_pixel(image, pos.u + i, pos.v + size / 2, COLOR_GREEN);
+		put_pixel(image, pos.u - size / 2, pos.v + i, COLOR_YELLOW);
+		put_pixel(image, pos.u + size / 2, pos.v + i, COLOR_BLUE);
+		i++;
 	}
 }
