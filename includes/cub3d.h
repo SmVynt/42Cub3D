@@ -53,6 +53,7 @@
 # define MAP_ALLOWED_CHARS		"0123456789:#NSEW _+.KbasdDfmX"
 # define MAP_WALL_CHARS			"123456789:"
 # define MAP_PLAYER_CHARS		"NSEW"
+# define MAP_MANDATORY_CHARS	"01 NSEW"
 
 # define MAP_SCALE				10
 # ifndef M_PI
@@ -198,8 +199,6 @@ float		rand_in_range(float min, float max);
 void		print_debug(const char *str);
 
 void	 	shaky_shaky(void);
-
-
 
 // cleaning
 void	ft_free_and_null(void **ptr);

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/09 13:48:20 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/11 13:41:37 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,9 +320,9 @@ static void draw_vertical_slice(int x, t_rayrender ray)
 	// wall_start = (((int)(image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) / PIXEL_SIZE) * PIXEL_SIZE + ft_game()->player->lookupdown;
 	wall_start = (((double)image->height - ray.wall_height * (1 - ft_game()->player->jump_height)) / 2) + ft_game()->player->lookupdown;
 	// wall_start = wall_start / PIXEL_SIZE * PIXEL_SIZE;
-	if (true)
+	if (ft_game()->is_bonus)
 		ft_draw_ceil_part(ray, x, wall_start);
-	if (true)
+	if (ft_game()->is_bonus)
 		ft_draw_floor_part(ray, x, wall_start + ray.wall_height);
 	if (true)
 		ft_draw_wall_part(ray, x, wall_start);

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 02:50:46 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/11 13:26:22 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ typedef struct s_minimap
 
 typedef struct s_gs
 {
+	bool			is_bonus;
 	t_player		*player;
 	void			*mlx;
 	void			*window;

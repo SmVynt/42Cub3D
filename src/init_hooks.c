@@ -6,13 +6,12 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 15:59:53 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/11 13:26:37 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <signal.h>
-// #include <GLFW/glfw3.h>
 
 void	ft_key_hook(mlx_key_data_t keydata, void *param)
 {

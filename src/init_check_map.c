@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 00:01:16 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/11 15:05:14 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,27 @@ static void	ft_checkdigits(void)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i < ft_game()->map.h)
+	i = -1;
+	while (++i < ft_game()->map.h)
 	{
-		j = 0;
-		while (j < ft_game()->map.w)
+		j = -1;
+		while (++j < ft_game()->map.w)
 		{
 			if (ft_strchar(MAP_ALLOWED_CHARS, ft_game()->map.tile[i][j])
 					== NULL)
-				ft_exit_error(COLOR_R"Map has invalid characters\n"COLOR_X);
-			j++;
+				ft_exit_error("Map has invalid characters\n");
 			if (ft_strchar(MAP_PLAYER_CHARS, ft_game()->map.tile[i][j]) != NULL)
 			{
-				printf("Found player start at %d,%d\n", j, i);
 				if (ft_game()->map.start.u != -1
 					|| ft_game()->map.start.v != -1)
 					ft_exit_error("Map has multiple starting positions\n");
 				ft_game()->map.start.u = j;
 				ft_game()->map.start.v = i;
 			}
+			if (ft_strchar(MAP_MANDATORY_CHARS,
+					ft_game()->map.tile[i][j]) == NULL)
+				ft_game()->is_bonus = true;
 		}
-		i++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 02:03:58 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/11 13:48:02 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	ft_update_player_rotation_keys(t_player *player)
 					* ROTATIONSPEED * ft_game()->dt),
 				player->lookdir);
 	}
-	if (player->rot_control.v != 0)
+	if (player->rot_control.v != 0 && ft_game()->is_bonus)
 	{
 		player->lookupdown += player->rot_control.v
 			* ROTATIONSPEED * 500 * ft_game()->dt;
@@ -77,7 +77,7 @@ static void	ft_update_player_rotation_mouse(t_player *player)
 				player->lookdir);
 		player->mouse_diff.x = 0.0f;
 	}
-	if (player->mouse_diff.y != 0.0f)
+	if (player->mouse_diff.y != 0.0f && ft_game()->is_bonus)
 	{
 		player->lookupdown += player->mouse_diff.y
 			* ROTATIONSPEED * MOUSE_YSENS * ft_game()->dt;
