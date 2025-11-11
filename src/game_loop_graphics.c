@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop_graphics.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 19:34:22 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/11 14:31:52 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	ft_update_hud(void *param)
 	while (pocket_items)
 	{
 		item = (t_item *)pocket_items->content;
-		draw_item(image, 64, (t_point){0, i * 64}, item->sprite.texture);
+		draw_ui_item(image, 64, (t_point){0, i * 64}, item->sprite.texture);
 		pocket_items = pocket_items->next;
 		i++;
 	}
