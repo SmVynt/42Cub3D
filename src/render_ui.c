@@ -6,38 +6,11 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 19:30:05 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/11 14:31:32 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	draw_ui_minimap(void)
-{
-	uint32_t		x;
-	uint32_t		y;
-	uint32_t		x_tex;
-	uint32_t		y_tex;
-	mlx_texture_t	*bg;
-	double			win_scale;
-
-	win_scale = (double)(ft_game()->view3d->height / (double)HEIGHT * UI_SCALE);
-	bg = ft_game()->textures.ui_minimap;
-	x = 0;
-	while (x < bg->width * win_scale)
-	{
-		y = 0;
-		x_tex = x / win_scale;
-		while (y < bg->height * win_scale)
-		{
-			y_tex = y / win_scale;
-			draw_square(ft_game()->minimap, UI_PIXEL_SIZE, (t_point){x, y},
-				ft_get_pixel_color(bg, (t_point){x_tex, y_tex}));
-			y += UI_PIXEL_SIZE;
-		}
-		x += UI_PIXEL_SIZE;
-	}
-}
 
 void	ft_update_hp_bar(void)
 {
@@ -66,33 +39,6 @@ void	ft_update_hp_bar(void)
 	}
 }
 
-void	draw_ui_health(void)
-{
-	uint32_t		x;
-	uint32_t		y;
-	uint32_t		x_tex;
-	uint32_t		y_tex;
-	mlx_texture_t	*bg;
-	float			win_scale;
-
-	win_scale = (float)ft_game()->view3d->height / HEIGHT * (float)UI_SCALE;
-	bg = ft_game()->textures.ui_health;
-	x = 0;
-	while (x < bg->width * win_scale)
-	{
-		y = 0;
-		x_tex = x / win_scale;
-		while (y < bg->height * win_scale)
-		{
-			y_tex = y / win_scale;
-			put_pixel(ft_game()->health, x, y,
-				ft_get_pixel_color(bg, (t_point){x_tex, y_tex}));
-			y++;
-		}
-		x++;
-	}
-}
-
 void	draw_ui_img(mlx_image_t *img, mlx_texture_t *tex)
 {
 	uint32_t		x;
@@ -114,6 +60,30 @@ void	draw_ui_img(mlx_image_t *img, mlx_texture_t *tex)
 			y_tex = y / win_scale;
 			put_pixel(img, x, y,
 				ft_get_pixel_color(tex, (t_point){x_tex, y_tex}));
+			y++;
+		}
+		x++;
+	}
+}
+
+void	draw_ui_item(mlx_image_t *image, int size, t_point pos,
+		mlx_texture_t *tex)
+{
+	size_t	x;
+	size_t	y;
+	t_point	screen_pos;
+	int		color;
+
+	x = 0;
+	while (x < tex->width)
+	{
+		y = 0;
+		while (y < tex->height)
+		{
+			screen_pos.u = pos.u + (2 * x) + size / 2;
+			screen_pos.v = pos.v + (2 * y) + size / 2;
+			color = ft_get_pixel_color(tex, (t_point){x, y});
+			draw_square(image, 2, screen_pos, color);
 			y++;
 		}
 		x++;
