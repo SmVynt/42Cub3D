@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sys_utils.c                                        :+:      :+:    :+:   */
+/*   init_data_prefabs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/30 12:40:44 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 21:31:29 by psmolin          ###   ########.fr       */
+/*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
+/*   Updated: 2025/11/11 11:11:36 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	print_debug(const char *str)
+void	ft_init_prefabs(void)
 {
-	double	current_time;
+	t_gs	*game;
 
-	if (!DEBUG_MODE)
-		return ;
-	current_time = mlx_get_time();
-	printf(COLOR_C"[%f] %s\n"COLOR_X, current_time, str);
+	game = ft_game();
+	ft_init_prefabs_items(game);
+	ft_init_prefabs_chars(game);
+	ft_init_prefabs_interacts(game);
 }

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 19:33:58 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/10 21:30:54 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,15 @@
 
 void	ft_update_dt(void)
 {
-	static struct timeval	last_time;
-	struct timeval			current_time;
-	float					elapsed;
+	static double			last_time;
+	double					current_time;
+	double					elapsed;
 
-	gettimeofday(&current_time, NULL);
-	if (last_time.tv_sec == 0)
-		last_time = current_time;
-	elapsed = (current_time.tv_sec - last_time.tv_sec)
-		+ (current_time.tv_usec - last_time.tv_usec) / 1000000.0f;
+	current_time = mlx_get_time();
+	elapsed = current_time - last_time;
 	if (elapsed > MAX_DT)
 		elapsed = MAX_DT;
-	ft_game()->dt = elapsed;
+	ft_game()->dt = (float)elapsed;
 	last_time = current_time;
 }
 
