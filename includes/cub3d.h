@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
 /*   Updated: 2025/11/11 16:03:18 by nmikuka          ###   ########.fr       */
@@ -21,11 +21,10 @@
 # include <fcntl.h>
 # include <math.h>
 # include <string.h>
-# include <sys/time.h>
 # include "structs.h"
 # include "ft_mat4.h"
 
-# define DEBUG_MODE	false
+# define DEBUG_MODE		false
 
 # define MIN_WIDTH		128
 # define MIN_HEIGHT		72
@@ -78,13 +77,20 @@
 # define MOUSE_XSENS			0.5f
 # define MOUSE_YSENS			100.0f
 
+// initialization
+void	ft_assign_textures(void);
+void	ft_assign_colors(void);
 void	ft_initialize(void);
-
 int		ft_initial_map_read(const char *src);
 void	ft_second_map_read(const char *src, int map_start);
 void	ft_checkinput(int argc, char **argv);
 void	ft_checkmap(void);
 void	ft_printmap(t_map *map);
+void	ft_init_prefabs(void);
+void	ft_init_prefabs_items(t_gs *game);
+void	ft_init_prefabs_chars(t_gs *game);
+void	ft_init_prefabs_interacts(t_gs *game);
+void	ft_init_null_textures(void);
 
 void	ft_setgame(void);
 
@@ -94,11 +100,8 @@ void	ft_exit_perror(char *str);
 void	ft_exit_error(char *str);
 void	ft_exit(void);
 
-// t_player	*init_player(char **map, int w, int h);
 void	ft_load_texture(const char *path, mlx_texture_t **texture);
 void	ft_load_anim_texture(const char *path, mlx_texture_t **frames, int n_frames);
-void	ft_load_wall_texture(int index, t_direction dir, mlx_texture_t **texture);
-void	ft_init_end_screen_textures(void);
 void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture, mlx_texture_t *atlas);
 
 float	ft_height_delta(float distance);
@@ -145,6 +148,18 @@ int			ft_get_tex_coord(float x, int texture_width);
 
 void	ft_createhooks(void);
 void	ft_key_press_hook(void *param);
+
+
+// initialization
+void	ft_init_walls_textures(void);
+void	ft_init_floor_textures(void);
+void	ft_init_ceiling_textures(void);
+void	ft_init_end_screen_textures(void);
+void	ft_init_ui_textures(void);
+void	ft_set_doors(void);
+void	ft_set_items(void);
+void	ft_set_chars(void);
+void	ft_init_sprites(void);
 
 // update
 void	ft_update_dt(void);

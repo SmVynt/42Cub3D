@@ -56,10 +56,21 @@ SRC_FILES	= \
 				game_interact.c \
 				game_end_screen.c \
 				game_player.c \
-				init_check.c \
-				init_checkmap.c \
+				init_check_file.c \
+				init_check_map.c \
+				init_check_tex_colors.c \
+				init_data_null.c \
+				init_data_prefabs_chars.c \
+				init_data_prefabs_doors.c \
+				init_data_prefabs_items.c \
+				init_data_prefabs.c \
 				init_data.c \
 				init_fillmap.c \
+				init_game_doors.c \
+				init_game_items_chars.c \
+				init_game_sprites.c \
+				init_game_textures_env.c \
+				init_game_textures_ui.c \
 				init_game.c \
 				init_hooks.c \
 				init_key_hooks.c \

@@ -19,9 +19,13 @@ static void	ft_update_view3d(void *param)
 	if (!param)
 		return ;
 	image = (mlx_image_t *)param;
+	print_debug("clearing memory...");
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
+	print_debug("memory cleared");
 	draw_walls(ft_game()->view3d);
+	print_debug("walls drawn");
 	draw_sprites(ft_game()->view3d);
+	print_debug("sprites drawn");
 }
 
 static void	ft_update_hud(void *param)
@@ -47,6 +51,8 @@ static void	ft_update_hud(void *param)
 
 void	ft_update_graphics(void)
 {
+	if (ft_game()->view3d->height == 0 || ft_game()->view3d->width == 0)
+		return ;
 	print_debug("--view3d...");
 	ft_update_view3d(ft_game()->view3d);
 	print_debug("--hud...");
