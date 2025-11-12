@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 11:02:49 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 16:06:03 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ typedef struct s_colrender
 	int				wall_end;
 	int				wall_height;
 	mlx_texture_t	*texture;
-} t_colrender;
+}	t_colrender;
 
 typedef struct s_rayrender
 {
