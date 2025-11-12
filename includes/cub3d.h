@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 15:33:12 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 16:16:19 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,40 +80,43 @@
 # define RAYCAST_MAX_ITER		100
 
 // initialization
-void	ft_assign_textures(void);
-void	ft_assign_colors(void);
-void	ft_initialize(void);
-int		ft_initial_map_read(const char *src);
-void	ft_second_map_read(const char *src, int map_start);
-void	ft_checkinput(int argc, char **argv);
-void	ft_checkmap(void);
-void	ft_printmap(t_map *map);
-void	ft_init_prefabs(void);
-void	ft_init_prefabs_items(t_gs *game);
-void	ft_init_prefabs_chars(t_gs *game);
-void	ft_init_prefabs_interacts(t_gs *game);
-void	ft_init_null_textures(void);
+void		ft_assign_textures(void);
+void		ft_assign_colors(void);
+void		ft_initialize(void);
+int			ft_initial_map_read(const char *src);
+void		ft_second_map_read(const char *src, int map_start);
+void		ft_checkinput(int argc, char **argv);
+void		ft_checkmap(void);
+void		ft_printmap(t_map *map);
+void		ft_init_prefabs(void);
+void		ft_init_prefabs_items(t_gs *game);
+void		ft_init_prefabs_chars(t_gs *game);
+void		ft_init_prefabs_interacts(t_gs *game);
+void		ft_init_null_textures(void);
 
-void	ft_setgame(void);
+void		ft_setgame(void);
 
-t_gs	*ft_game(void);
+t_gs		*ft_game(void);
 
-void	ft_exit_perror(char *str);
-void	ft_exit_error(char *str);
-void	ft_exit(void);
+void		ft_exit_perror(char *str);
+void		ft_exit_error(char *str);
+void		ft_exit(void);
 
-void	ft_load_texture(const char *path, mlx_texture_t **texture);
-void	ft_load_anim_texture(const char *path, mlx_texture_t **frames, int n_frames);
-void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture, mlx_texture_t *atlas);
+void		ft_load_texture(const char *path, mlx_texture_t **texture);
+void		ft_load_anim_texture(const char *path, mlx_texture_t **frames,
+				int n_frames);
+void		ft_load_texture_from_atlas(int row, int col,
+				mlx_texture_t **texture, mlx_texture_t *atlas);
 
-static inline void put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
+static inline void	put_pixel(mlx_image_t *image, uint32_t x, uint32_t y,
+				uint32_t color)
 {
 	if (x < image->width && y < image->height)
 		((uint32_t *)image->pixels)[y * image->width + x] = color;
 }
-void	draw_wall(mlx_image_t *image, int x);
-void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
-void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
+void		draw_wall(mlx_image_t *image, int x);
+void		draw_sprite(mlx_image_t *image, t_sprite *sprite);
+void		ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
 
 t_door		*ft_get_door(int x, int y);
 void		interact(t_gs *game);
@@ -121,32 +124,40 @@ void		print_interact_msg(t_gs *game);
 void		open_door(int i);
 
 // render helper functions
-bool	allocate_depth_buffer(t_gs *game, int32_t width);
-void	setup_minimap_positions(t_gs *game, int32_t width, int32_t height);
-void	ft_fill_split_bg(mlx_image_t *bg);
-void	fill_background(mlx_image_t *image, uint32_t color);
+bool		allocate_depth_buffer(t_gs *game, int32_t width);
+void		setup_minimap_positions(t_gs *game, int32_t width, int32_t height);
+void		ft_fill_split_bg(mlx_image_t *bg);
+void		fill_background(mlx_image_t *image, uint32_t color);
 
-void	draw(int32_t width, int32_t height, void *param);
-void	draw_ui(void);
-void	draw_ui_img(mlx_image_t *img, mlx_texture_t *tex);
-void	draw_map(void);
-void	draw_chars_on_minimap(mlx_image_t *img, float zoom, t_point img_center);
-void	draw_items_on_minimap(mlx_image_t *img, float zoom, t_point img_center);
+void		draw(int32_t width, int32_t height, void *param);
+void		draw_ui(void);
+void		draw_ui_img(mlx_image_t *img, mlx_texture_t *tex);
+void		draw_map(void);
+void		draw_chars_on_minimap(mlx_image_t *img, float zoom,
+				t_point img_center);
+void		draw_items_on_minimap(mlx_image_t *img, float zoom,
+				t_point img_center);
 
-void	draw_walls(mlx_image_t *image);
-void 	draw_cubemap(mlx_image_t *image, t_rayrender *ray, t_point screen_coords);
-void 	draw_floor_part(t_rayrender ray, int x, int wall_end);
-void	draw_ceil_part(t_rayrender ray, int x, double wall_start);
-void	draw_wall_part(t_rayrender ray, int x, double wall_start);
-void	draw_sprites(mlx_image_t *image);
-void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color);
-void	draw_ui_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture);
-void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
-t_vec2	get_ray_end(t_rayrender *ray);
-t_vec2	get_next_wall_intersection(t_vec2 pos, t_vec2 dir, t_point *tile, int *side);
-bool	process_wall_hit(t_rayrender *ray, t_vec2 *curr, t_point tile, int *side);
+void		draw_walls(mlx_image_t *image);
+void		draw_cubemap(mlx_image_t *image, t_rayrender *ray,
+				t_point screen_coords);
+void		draw_floor_part(t_rayrender ray, int x, int wall_end);
+void		draw_ceil_part(t_rayrender ray, int x, double wall_start);
+void		draw_wall_part(t_rayrender ray, int x, double wall_start);
+void		draw_sprites(mlx_image_t *image);
+void		draw_square(mlx_image_t *image, int size, t_point pos,
+				uint32_t color);
+void		draw_ui_item(mlx_image_t *image, int size, t_point pos,
+				mlx_texture_t *texture);
+void		draw_circle(mlx_image_t *image, t_point center, int radius,
+				uint32_t color);
+t_vec2		get_ray_end(t_rayrender *ray);
+t_vec2		get_next_wall_intersection(t_vec2 pos, t_vec2 dir, t_point *tile,
+				int *side);
+bool		process_wall_hit(t_rayrender *ray, t_vec2 *curr, t_point tile,
+				int *side);
 
-void	pick_up(t_item *item);
+void		pick_up(t_item *item);
 
 uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
 int			ft_get_tex_coord(float x, int texture_width);
@@ -217,10 +228,12 @@ void		ft_free_mlx_prefabs_chars(t_gs *game);
 void		ft_free_mlx_prefabs_items(t_gs *game);
 
 // depricated functions to delete
-void	draw_player(mlx_image_t *image);
-void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
-void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
-void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec2 lookdir, t_map map, int x);
-float	ft_height_delta(float distance);
+void		draw_player(mlx_image_t *image);
+void		draw_line(mlx_image_t *image, t_point start, t_point end,
+				uint32_t color);
+void		draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
+void		draw_line_ray(mlx_image_t *image, t_point p0, t_vec2 lookdir,
+				t_map map, int x);
+float		ft_height_delta(float distance);
 
 #endif
