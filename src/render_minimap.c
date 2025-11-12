@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_minimap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/11 16:21:40 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 16:28:06 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,6 @@ static void	update_miniplayer_position(t_gs *game)
 static bool	is_animation_complete(t_gs *game)
 {
 	return (game->mmap.opening && game->mmap.lerp_progress == 1.0f);
-}
-
-void	clear_image(mlx_image_t *image)
-{
-	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
 }
 
 void	ft_update_minimap(void)

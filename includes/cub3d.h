@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 16:16:19 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 16:31:15 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,8 @@ void		ft_update_hp_bar(void);
 void		ft_update_chars(void);
 void		ft_update_player(void);
 void		ft_update_graphics(void);
+void		clear_image(mlx_image_t *image);
+void		shaky_shaky(void);
 
 // ai
 void		ft_ai_alien(t_char *ch);
@@ -212,8 +214,6 @@ float		rand_in_range(float min, float max);
 
 void		print_debug(const char *str);
 
-void		shaky_shaky(void);
-
 // cleaning
 void		ft_free_and_null(void **ptr);
 void		ft_clean(void);
@@ -226,14 +226,5 @@ void		ft_free_render(void);
 void		ft_free_mlx_envirtex(t_gs *game);
 void		ft_free_mlx_prefabs_chars(t_gs *game);
 void		ft_free_mlx_prefabs_items(t_gs *game);
-
-// depricated functions to delete
-void		draw_player(mlx_image_t *image);
-void		draw_line(mlx_image_t *image, t_point start, t_point end,
-				uint32_t color);
-void		draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
-void		draw_line_ray(mlx_image_t *image, t_point p0, t_vec2 lookdir,
-				t_map map, int x);
-float		ft_height_delta(float distance);
 
 #endif
