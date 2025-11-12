@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 22:30:44 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 23:06:20 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static inline void	put_pixel(mlx_image_t *image, uint32_t x, uint32_t y,
 				uint32_t color)
 {
 	int				a;
-	static uint32_t	mask[4] = {0xFFEEEEEE, 0xFFFFEEDD, 0xFFDDFFEE, 0xFFEEDDFF};
+	static uint32_t	mask[4] = {0xFFDDBBAA, 0xFFFFDDDD, 0xFFDDFFDD, 0xFFDDDDFF};
 	uint8_t			color1[4];
 	uint8_t			color2[4];
 
@@ -122,7 +122,7 @@ static inline void	put_pixel(mlx_image_t *image, uint32_t x, uint32_t y,
 	color2[1] = color >> 16 & 0xFF;
 	color2[2] = color >> 8 & 0xFF;
 	color2[3] = color & 0xFF;
-	a = (x % 4) * (y % 4 != 0);
+	a = (x % 4) * (y % 2 != 0);
 	color1[0] = mask[a] >> 24 & 0xFF;
 	color1[1] = mask[a] >> 16 & 0xFF;
 	color1[2] = mask[a] >> 8 & 0xFF;
