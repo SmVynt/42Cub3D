@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 16:31:15 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 22:30:44 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,29 @@ void		ft_load_texture_from_atlas(int row, int col,
 static inline void	put_pixel(mlx_image_t *image, uint32_t x, uint32_t y,
 				uint32_t color)
 {
-	if (x < image->width && y < image->height)
-		((uint32_t *)image->pixels)[y * image->width + x] = color;
+	int				a;
+	static uint32_t	mask[4] = {0xFFEEEEEE, 0xFFFFEEDD, 0xFFDDFFEE, 0xFFEEDDFF};
+	uint8_t			color1[4];
+	uint8_t			color2[4];
+
+	if (!image || x >= image->width || y >= image->height)
+		return ;
+	color2[0] = color >> 24 & 0xFF;
+	color2[1] = color >> 16 & 0xFF;
+	color2[2] = color >> 8 & 0xFF;
+	color2[3] = color & 0xFF;
+	a = (x % 4) * (y % 4 != 0);
+	color1[0] = mask[a] >> 24 & 0xFF;
+	color1[1] = mask[a] >> 16 & 0xFF;
+	color1[2] = mask[a] >> 8 & 0xFF;
+	color1[3] = mask[a] & 0xFF;
+	color = ((color1[0] * color2[0] / 255) << 24)
+		| ((color1[1] * color2[1] / 255) << 16)
+		| ((color1[2] * color2[2] / 255) << 8)
+		| ((color1[3] * color2[3] / 255));
+	((uint32_t *)image->pixels)[y * image->width + x] = color;
 }
+
 void		draw_wall(mlx_image_t *image, int x);
 void		draw_sprite(mlx_image_t *image, t_sprite *sprite);
 void		ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
