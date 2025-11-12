@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 15:02:42 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 15:33:12 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	draw_ui_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *text
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
 t_vec2	get_ray_end(t_rayrender *ray);
 t_vec2	get_next_wall_intersection(t_vec2 pos, t_vec2 dir, t_point *tile, int *side);
+bool	process_wall_hit(t_rayrender *ray, t_vec2 *curr, t_point tile, int *side);
 
 void	pick_up(t_item *item);
 

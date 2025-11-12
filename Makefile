@@ -6,7 +6,7 @@
 #    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/12 14:42:33 by nmikuka          ###   ########.fr        #
+#    Updated: 2025/11/12 15:33:28 by nmikuka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ SRC_FILES	= \
 				render_minimap_utils.c \
 				render_minimap.c \
 				render_raycast_ceil_floor.c \
+				render_raycast_rayend_door.c \
 				render_raycast_rayend.c \
 				render_raycast_utils.c \
 				render_raycast_wall.c \

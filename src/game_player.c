@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 00:08:47 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 02:58:43 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 15:34:27 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
