@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 13:26:22 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 11:02:49 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,9 +210,10 @@ typedef struct s_player
 
 typedef struct s_colrender
 {
-	int	wall_start;
-	int	wall_end;
-	int	wall_height;
+	int				wall_start;
+	int				wall_end;
+	int				wall_height;
+	mlx_texture_t	*texture;
 } t_colrender;
 
 typedef struct s_rayrender
