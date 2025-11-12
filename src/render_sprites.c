@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:11:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/11 14:23:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/11 17:49:38 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,55 @@ void	draw_sprites(mlx_image_t *image)
 {
 	prepare_sprite_list(image);
 	render_sprite_list(image);
+}
+
+void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
+{
+	t_spriterender	*sp;
+	int				x;
+	int				y;
+
+	if (sprite->animated)
+	{
+		sprite->anim.anim_timer += ft_game()->dt;
+		if (sprite->anim.anim_timer >= sprite->anim.frame_duration)
+		{
+			sprite->anim.anim_timer = 0.0f;
+			sprite->anim.curr_frame++;
+		}
+		// printf("here is the fire %zu %f\n", (int)ft_game()->dt % sprite->n_frames, MAX_DT / ft_game()->dt);
+		sprite->texture = sprite->anim.frames[sprite->anim.curr_frame % sprite->anim.n_frames];
+	}
+	if (!sprite->texture || !sprite->texture->pixels)
+		return ;
+	sp = &sprite->sp;
+	if (!sp->visible)
+		return ;
+	x = (PIXEL_SIZE - sp->start.u % PIXEL_SIZE) % PIXEL_SIZE;
+	while (x < sp->size.u)
+	{
+		sp->screen.u = sp->start.u + x + PIXEL_SIZE / 2;
+		if (sp->screen.u >= 0 && sp->screen.u < (int)image->width)
+		{
+			if (sp->dist > ft_game()->render.depth[sp->screen.u / PIXEL_SIZE])
+			{
+				x += PIXEL_SIZE;
+				continue ;
+			}
+			y = (PIXEL_SIZE - sp->start.v % PIXEL_SIZE) % PIXEL_SIZE;
+			while (y < sp->size.v)
+			{
+				sp->screen.v = sp->start.v + y;
+				if (sp->screen.v >= 0 && sp->screen.v < (int)image->height)
+				{
+					draw_square(image, PIXEL_SIZE, (t_point){sp->screen.u, sp->screen.v},
+						ft_get_pixel_color(sprite->texture, (t_point){
+							(int)((float)x / (float)sp->size.u * (float)sprite->texture->width),
+							(int)((float)y / (float)sp->size.v * (float)sprite->texture->height)}));
+				}
+				y += PIXEL_SIZE;
+			}
+		}
+		x += PIXEL_SIZE;
+	}
 }

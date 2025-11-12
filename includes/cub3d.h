@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 16:03:18 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 00:13:54 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,11 @@ void	ft_load_texture(const char *path, mlx_texture_t **texture);
 void	ft_load_anim_texture(const char *path, mlx_texture_t **frames, int n_frames);
 void	ft_load_texture_from_atlas(int row, int col, mlx_texture_t **texture, mlx_texture_t *atlas);
 
-float	ft_height_delta(float distance);
 static inline void put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
 {
 	if (x < image->width && y < image->height)
 		((uint32_t *)image->pixels)[y * image->width + x] = color;
 }
-void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec2 lookdir, t_map map, int x);
 void	draw_wall(mlx_image_t *image, int x);
 void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
 void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
@@ -136,11 +134,16 @@ void	draw_chars_on_minimap(mlx_image_t *img, float zoom, t_point img_center);
 void	draw_items_on_minimap(mlx_image_t *img, float zoom, t_point img_center);
 
 void	draw_walls(mlx_image_t *image);
+void 	draw_cubemap(mlx_image_t *image, t_rayrender *ray, t_point screen_coords);
+void 	draw_floor_part(t_rayrender ray, int x, int wall_end);
+void	draw_ceil_part(t_rayrender ray, int x, double wall_start);
+void	draw_wall_part(t_rayrender ray, int x, double wall_start);
 void	draw_sprites(mlx_image_t *image);
 void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color);
 void	draw_ui_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture);
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
 t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir);
+t_vec2	get_next_wall_intersection(t_vec2 pos, t_vec2 dir, t_point *tile, int *side);
 
 void	pick_up(t_item *item);
 
@@ -217,5 +220,7 @@ void	ft_free_mlx_prefabs_items(t_gs *game);
 void	draw_player(mlx_image_t *image);
 void	draw_line(mlx_image_t *image, t_point start, t_point end, uint32_t color);
 void	draw_map_square(mlx_image_t *image, t_point pos, uint32_t color);
+void	draw_line_ray(mlx_image_t *image, t_point p0, t_vec2 lookdir, t_map map, int x);
+float	ft_height_delta(float distance);
 
 #endif
