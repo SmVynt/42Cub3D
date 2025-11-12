@@ -24,31 +24,31 @@
 # include "structs.h"
 # include "ft_mat4.h"
 
-# define DEBUG_MODE		false
+# define DEBUG_MODE				false
 
-# define MIN_WIDTH		128
-# define MIN_HEIGHT		72
-# define WIDTH			1280
-# define HEIGHT			720
+# define MIN_WIDTH				128
+# define MIN_HEIGHT				72
+# define WIDTH					1280
+# define HEIGHT					720
 
-# define COLOR_WHITE	0xFFFFFFFF
-# define COLOR_BLACK	0xFF000000
-# define COLOR_RED		0xFF0000FF
-# define COLOR_GREEN	0xFF00FF00
-# define COLOR_BLUE		0xFFFF0000
-# define COLOR_YELLOW	0xFF00FFFF
-# define COLOR_GREY		0xFF00FFFF
-# define COLOR_RED_TRANSP	0xFF00001A
+# define COLOR_WHITE			0xFFFFFFFF
+# define COLOR_BLACK			0xFF000000
+# define COLOR_RED				0xFF0000FF
+# define COLOR_GREEN			0xFF00FF00
+# define COLOR_BLUE				0xFFFF0000
+# define COLOR_YELLOW			0xFF00FFFF
+# define COLOR_GREY				0xFF808080
+# define COLOR_RED_TRANSP		0xFF00001A
 
-# define COLOR_R		"\033[31m"
-# define COLOR_G		"\033[32m"
-# define COLOR_Y		"\033[33m"
-# define COLOR_B		"\033[34m"
-# define COLOR_M		"\033[35m"
-# define COLOR_C		"\033[36m"
-# define COLOR_W		"\033[37m"
-# define COLOR_BOLD		"\033[1m"
-# define COLOR_X		"\033[0m"
+# define COLOR_R				"\033[31m"
+# define COLOR_G				"\033[32m"
+# define COLOR_Y				"\033[33m"
+# define COLOR_B				"\033[34m"
+# define COLOR_M				"\033[35m"
+# define COLOR_C				"\033[36m"
+# define COLOR_W				"\033[37m"
+# define COLOR_BOLD				"\033[1m"
+# define COLOR_X				"\033[0m"
 
 # define MAP_ALLOWED_CHARS		"0123456789:#NSEW _+.KbasdDfmX"
 # define MAP_WALL_CHARS			"123456789:"
@@ -60,7 +60,7 @@
 #  define M_PI					3.14159265358979323846
 # endif
 # define HALF_PI				1.57079632679489661923
-# define FOV_RAD				(M_PI / 3.0)
+# define FOV_RAD				1.04719755119659774615
 # define PIXEL_SIZE				4
 # define UI_PIXEL_SIZE			1
 # define STANDARD_SPRITE_SIZE	64
@@ -72,7 +72,7 @@
 # define MAX_DT					0.05f
 # define DOOR_OPEN_TIME			1.0f
 # define INTERACT_DIST			2.0f
-# define INTERACT_ANGLE			(M_PI / 3.0f)
+# define INTERACT_ANGLE			1.04719755119659774615
 # define PLAYERSPEED			6.0f
 # define ROTATIONSPEED			2.0f
 # define MOUSE_XSENS			0.5f
@@ -115,11 +115,10 @@ void	draw_wall(mlx_image_t *image, int x);
 void	draw_sprite(mlx_image_t *image, t_sprite *sprite);
 void	ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
 
-
-t_door	*ft_get_door(int x, int y);
-void	interact(t_gs *game);
-void	print_interact_msg(t_gs *game);
-void	open_door(int i);
+t_door		*ft_get_door(int x, int y);
+void		interact(t_gs *game);
+void		print_interact_msg(t_gs *game);
+void		open_door(int i);
 
 // render helper functions
 bool	allocate_depth_buffer(t_gs *game, int32_t width);
@@ -152,43 +151,42 @@ void	pick_up(t_item *item);
 uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
 int			ft_get_tex_coord(float x, int texture_width);
 
-void	ft_createhooks(void);
-void	ft_key_press_hook(void *param);
-
+void		ft_createhooks(void);
+void		ft_key_press_hook(void *param);
 
 // initialization
-void	ft_init_walls_textures(void);
-void	ft_init_floor_textures(void);
-void	ft_init_ceiling_textures(void);
-void	ft_init_end_screen_textures(void);
-void	ft_init_ui_textures(void);
-void	ft_set_doors(void);
-void	ft_set_items(void);
-void	ft_set_chars(void);
-void	ft_init_sprites(void);
+void		ft_init_walls_textures(void);
+void		ft_init_floor_textures(void);
+void		ft_init_ceiling_textures(void);
+void		ft_init_end_screen_textures(void);
+void		ft_init_ui_textures(void);
+void		ft_set_doors(void);
+void		ft_set_items(void);
+void		ft_set_chars(void);
+void		ft_init_sprites(void);
 
 // update
-void	ft_update_dt(void);
-void	ft_update(void *param);
-void	ft_update_minimap(void);
-void	ft_update_hp_bar(void);
-void	ft_update_chars(void);
-void	ft_update_player(void);
-void	ft_update_graphics(void);
+void		ft_update_dt(void);
+void		ft_update(void *param);
+void		ft_update_minimap(void);
+void		ft_update_hp_bar(void);
+void		ft_update_chars(void);
+void		ft_update_player(void);
+void		ft_update_graphics(void);
 
 // ai
-void	ft_ai_alien(t_char *ch);
+void		ft_ai_alien(t_char *ch);
 
 // tile checks
-bool	ft_is_special_wall(t_vec2 p, const char *wall_type);
-bool	ft_is_wall(t_vec2 p);
-bool	ft_is_lava(t_vec2 p);
-bool	ft_is_pod(t_vec2 p);
-bool	ft_is_door(t_vec2 p);
+bool		ft_is_special_wall(t_vec2 p, const char *wall_type);
+bool		ft_is_wall(t_vec2 p);
+bool		ft_is_lava(t_vec2 p);
+bool		ft_is_pod(t_vec2 p);
+bool		ft_is_door(t_vec2 p);
 
-void	show_end_screen(void);
-bool	ft_player_try_damage(float damage);
-bool	ft_player_try_heal(float heal);
+void		show_end_screen(void);
+bool		ft_player_try_damage(float damage);
+bool		ft_player_try_heal(float heal);
 
 // math
 int			ft_sign(int n);
@@ -203,20 +201,20 @@ float		rand_in_range(float min, float max);
 
 void		print_debug(const char *str);
 
-void	 	shaky_shaky(void);
+void		shaky_shaky(void);
 
 // cleaning
-void	ft_free_and_null(void **ptr);
-void	ft_clean(void);
-void	ft_free_string(char **ptr);
-void	ft_free_mlx(void);
-void	ft_freemap(void);
-void	ft_free_texture(mlx_texture_t **texture);
-void	ft_free_image(mlx_image_t **image);
-void	ft_free_render(void);
-void	ft_free_mlx_envirtex(t_gs *game);
-void	ft_free_mlx_prefabs_chars(t_gs *game);
-void	ft_free_mlx_prefabs_items(t_gs *game);
+void		ft_free_and_null(void **ptr);
+void		ft_clean(void);
+void		ft_free_string(char **ptr);
+void		ft_free_mlx(void);
+void		ft_freemap(void);
+void		ft_free_texture(mlx_texture_t **texture);
+void		ft_free_image(mlx_image_t **image);
+void		ft_free_render(void);
+void		ft_free_mlx_envirtex(t_gs *game);
+void		ft_free_mlx_prefabs_chars(t_gs *game);
+void		ft_free_mlx_prefabs_items(t_gs *game);
 
 // depricated functions to delete
 void	draw_player(mlx_image_t *image);
