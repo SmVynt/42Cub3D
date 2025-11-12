@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_chars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 23:28:13 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 02:54:31 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ static void	ft_ai_slime_idle(t_char *ch)
 	t_vec2	new_target;
 
 	if (ch->ai.facing == DIR_NO)
-		new_target = (t_vec2){ch->sprite.pos.x, ch->sprite.pos.y - 1.0f};
+		new_target = (t_vec2){ch->sprite.pos.x, ch->sprite.pos.y - 1.0};
 	else if (ch->ai.facing == DIR_EA)
-		new_target = (t_vec2){ch->sprite.pos.x + 1.0f, ch->sprite.pos.y};
+		new_target = (t_vec2){ch->sprite.pos.x + 1.0, ch->sprite.pos.y};
 	else if (ch->ai.facing == DIR_SO)
-		new_target = (t_vec2){ch->sprite.pos.x, ch->sprite.pos.y + 1.0f};
+		new_target = (t_vec2){ch->sprite.pos.x, ch->sprite.pos.y + 1.0};
 	else
-		new_target = (t_vec2){ch->sprite.pos.x - 1.0f, ch->sprite.pos.y};
+		new_target = (t_vec2){ch->sprite.pos.x - 1.0, ch->sprite.pos.y};
 	if (ft_is_wall(new_target) == false)
 	{
 		ch->ai.state = AI_MOVING;
-		ch->ai.lerp_progress = 0.0f;
+		ch->ai.lerp_progress = 0.0;
 		ch->ai.speed = AI_SPEED_SLIME;
-		ch->ai.lerp_speed = ch->ai.speed / 1.0f;
+		ch->ai.lerp_speed = ch->ai.speed / 1.0;
 		ch->ai.start_pos = ch->sprite.pos;
 		ch->ai.target_pos = new_target;
 	}
@@ -48,13 +48,13 @@ static void	ft_ai_slime(t_char *ch)
 	if (ch->ai.state == AI_THINKING)
 	{
 		ch->ai.timer -= ft_game()->dt;
-		if (ch->ai.timer <= 0.0f)
+		if (ch->ai.timer <= 0.0)
 			ch->ai.state = AI_IDLE;
 	}
 	if (ch->ai.state == AI_MOVING)
 	{
 		ch->ai.lerp_progress += ch->ai.lerp_speed * ft_game()->dt;
-		if (ch->ai.lerp_progress >= 1.0f)
+		if (ch->ai.lerp_progress >= 1.0)
 			ch->ai.state = AI_IDLE;
 		ch->sprite.pos = ft_lerpvec2(ch->ai.start_pos, ch->ai.target_pos,
 				ch->ai.lerp_progress);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 16:31:15 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:31:18 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,19 @@
 # define PIXEL_SIZE				4
 # define UI_PIXEL_SIZE			1
 # define STANDARD_SPRITE_SIZE	64
-# define JUMP_HEIGHT			1.0f
+# define JUMP_HEIGHT			1.0
 # define JUMP_IMPULSE			3.2f
 # define GRAVITY				9.8f
-# define TILE_BORDER			0.1f
-# define TARGET_FPS				60.0f
-# define MAX_DT					0.05f
-# define DOOR_OPEN_TIME			1.0f
-# define INTERACT_DIST			2.0f
+# define TILE_BORDER			0.1
+# define TARGET_FPS				60.0
+# define MAX_DT					0.05
+# define DOOR_OPEN_TIME			1.0
+# define INTERACT_DIST			2.0
 # define INTERACT_ANGLE			1.04719755119659774615
-# define PLAYERSPEED			6.0f
-# define ROTATIONSPEED			2.0f
-# define MOUSE_XSENS			0.5f
-# define MOUSE_YSENS			100.0f
+# define PLAYERSPEED			6.0
+# define ROTATIONSPEED			2.0
+# define MOUSE_XSENS			2.0
+# define MOUSE_YSENS			100.0
 # define RAYCAST_MAX_ITER		100
 
 // initialization
@@ -133,9 +133,9 @@ void		draw(int32_t width, int32_t height, void *param);
 void		draw_ui(void);
 void		draw_ui_img(mlx_image_t *img, mlx_texture_t *tex);
 void		draw_map(void);
-void		draw_chars_on_minimap(mlx_image_t *img, float zoom,
+void		draw_chars_on_minimap(mlx_image_t *img, double zoom,
 				t_point img_center);
-void		draw_items_on_minimap(mlx_image_t *img, float zoom,
+void		draw_items_on_minimap(mlx_image_t *img, double zoom,
 				t_point img_center);
 
 void		draw_walls(mlx_image_t *image);
@@ -160,7 +160,7 @@ bool		process_wall_hit(t_rayrender *ray, t_vec2 *curr, t_point tile,
 void		pick_up(t_item *item);
 
 uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel);
-int			ft_get_tex_coord(float x, int texture_width);
+int			ft_get_tex_coord(double x, int texture_width);
 
 void		ft_createhooks(void);
 void		ft_key_press_hook(void *param);
@@ -198,19 +198,19 @@ bool		ft_is_pod(t_vec2 p);
 bool		ft_is_door(t_vec2 p);
 
 void		show_end_screen(void);
-bool		ft_player_try_damage(float damage);
-bool		ft_player_try_heal(float heal);
+bool		ft_player_try_damage(double damage);
+bool		ft_player_try_heal(double heal);
 
 // math
 int			ft_sign(int n);
-int			ft_signf(float n);
+int			ft_signd(double n);
 t_vec2		ft_normalize_vec2(t_vec2 v);
-float		ft_angle_between_vec2(t_vec2 a, t_vec2 b);
+double		ft_angle_between_vec2(t_vec2 a, t_vec2 b);
 int			ft_clamp(int value, int min, int max);
-float		ft_clampf(float value, float min, float max);
-float		ft_lerpf(float a, float b, float t);
-t_vec2		ft_lerpvec2(t_vec2 a, t_vec2 b, float t);
-float		rand_in_range(float min, float max);
+double		ft_clampf(double value, double min, double max);
+double		ft_lerpf(double a, double b, double t);
+t_vec2		ft_lerpvec2(t_vec2 a, t_vec2 b, double t);
+double		rand_in_range(double min, double max);
 
 void		print_debug(const char *str);
 

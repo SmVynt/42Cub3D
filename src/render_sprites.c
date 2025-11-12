@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:11:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 15:43:39 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	prepare_sprite_list(mlx_image_t *image)
 	if (!ft_game()->sh)
 		return ;
 	ft_game()->sh->next = NULL;
-	ft_game()->sh->sp.dist = 100000.0f;
+	ft_game()->sh->sp.dist = 100000.0;
 	i = 0;
 	while (i < ft_game()->item_count)
 	{

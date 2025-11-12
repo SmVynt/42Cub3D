@@ -6,13 +6,13 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:31:04 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/06/27 23:32:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:56:06 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_mat4.h"
 
-t_mat4	ft_mat4_translation(float tx, float ty, float tz)
+t_mat4	ft_mat4_translation(double tx, double ty, double tz)
 {
 	t_mat4	m;
 
@@ -23,7 +23,7 @@ t_mat4	ft_mat4_translation(float tx, float ty, float tz)
 	return (m);
 }
 
-t_mat4	ft_mat4_scaling(float sx, float sy, float sz)
+t_mat4	ft_mat4_scaling(double sx, double sy, double sz)
 {
 	t_mat4	m;
 
@@ -34,38 +34,38 @@ t_mat4	ft_mat4_scaling(float sx, float sy, float sz)
 	return (m);
 }
 
-t_mat4	ft_mat4_rotation_x(float radians)
+t_mat4	ft_mat4_rotation_x(double radians)
 {
 	t_mat4	m;
 
 	m = ft_mat4_identity();
-	m.m[1][1] = cosf(radians);
-	m.m[1][2] = -sinf(radians);
-	m.m[2][1] = sinf(radians);
-	m.m[2][2] = cosf(radians);
+	m.m[1][1] = cos(radians);
+	m.m[1][2] = -sin(radians);
+	m.m[2][1] = sin(radians);
+	m.m[2][2] = cos(radians);
 	return (m);
 }
 
-t_mat4	ft_mat4_rotation_y(float radians)
+t_mat4	ft_mat4_rotation_y(double radians)
 {
 	t_mat4	m;
 
 	m = ft_mat4_identity();
-	m.m[0][0] = cosf(radians);
-	m.m[0][2] = sinf(radians);
-	m.m[2][0] = -sinf(radians);
-	m.m[2][2] = cosf(radians);
+	m.m[0][0] = cos(radians);
+	m.m[0][2] = sin(radians);
+	m.m[2][0] = -sin(radians);
+	m.m[2][2] = cos(radians);
 	return (m);
 }
 
-t_mat4	ft_mat4_rotation_z(float radians)
+t_mat4	ft_mat4_rotation_z(double radians)
 {
 	t_mat4	m;
 
 	m = ft_mat4_identity();
-	m.m[0][0] = cosf(radians);
-	m.m[0][1] = -sinf(radians);
-	m.m[1][0] = sinf(radians);
-	m.m[1][1] = cosf(radians);
+	m.m[0][0] = cos(radians);
+	m.m[0][1] = -sin(radians);
+	m.m[1][0] = sin(radians);
+	m.m[1][1] = cos(radians);
 	return (m);
 }

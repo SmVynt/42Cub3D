@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop_tile_check.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 18:01:30 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:54:22 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ bool	ft_is_special_wall(t_vec2 p, const char *wall_type)
 
 	game = ft_game();
 	map = &game->map;
-	x = (int)roundf(p.x);
-	y = (int)roundf(p.y);
+	x = (int)round(p.x);
+	y = (int)round(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
 		return (false);
 	if (ft_strchar(wall_type, map->tile[y][x]) != NULL)
@@ -39,8 +39,8 @@ bool	ft_is_wall(t_vec2 p)
 
 	game = ft_game();
 	map = &game->map;
-	x = (int)roundf(p.x);
-	y = (int)roundf(p.y);
+	x = (int)round(p.x);
+	y = (int)round(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
 		return (false);
 	if (ft_strchar(MAP_WALL_CHARS, map->tile[y][x]) != NULL)
@@ -60,8 +60,8 @@ bool	ft_is_lava(t_vec2 p)
 
 	game = ft_game();
 	map = &game->map;
-	x = (int)roundf(p.x);
-	y = (int)roundf(p.y);
+	x = (int)round(p.x);
+	y = (int)round(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
 		return (false);
 	if (map->tile[y][x] == '_')
@@ -78,8 +78,8 @@ bool	ft_is_pod(t_vec2 p)
 
 	game = ft_game();
 	map = &game->map;
-	x = (int)roundf(p.x);
-	y = (int)roundf(p.y);
+	x = (int)round(p.x);
+	y = (int)round(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
 		return (false);
 	if (map->tile[y][x] == 'X')
@@ -96,8 +96,8 @@ bool	ft_is_door(t_vec2 p)
 
 	game = ft_game();
 	map = &game->map;
-	x = (int)roundf(p.x);
-	y = (int)roundf(p.y);
+	x = (int)round(p.x);
+	y = (int)round(p.y);
 	if (x < 0 || y < 0 || x >= map->w || y >= map->h)
 		return (false);
 	if (ft_strchar(MAP_DOOR_CHARS, map->tile[y][x]) != NULL)

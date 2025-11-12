@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 16:10:54 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/11 16:18:36 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static uint32_t	get_tile_color(t_vec2 world_pos)
 }
 
 static t_vec2	screen_to_world_coords(int x, int y, t_player *player,
-		float zoom)
+		double zoom)
 {
 	t_vec2	coords;
-	float	rotation_angle;
+	double	rotation_angle;
 
-	coords = (t_vec2){(float)x / zoom, (float)y / zoom};
+	coords = (t_vec2){(double)x / zoom, (double)y / zoom};
 	rotation_angle = atan2(player->lookdir.y, player->lookdir.x) + HALF_PI;
 	coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(rotation_angle), coords);
 	coords.x += player->pos.x;
@@ -36,7 +36,7 @@ static t_vec2	screen_to_world_coords(int x, int y, t_player *player,
 	return (coords);
 }
 
-static void	draw_map_tiles(mlx_image_t *image, t_point image_center, float zoom)
+static void	draw_map_tiles(mlx_image_t *image, t_point image_center, double zoom)
 {
 	int			x;
 	int			y;
@@ -64,13 +64,13 @@ static void	draw_map_tiles(mlx_image_t *image, t_point image_center, float zoom)
 void	draw_map(void)
 {
 	t_point		image_center;
-	float		zoom;
+	double		zoom;
 	mlx_image_t	*image;
 
 	image = ft_game()->miniplayer;
 	image_center.u = image->width / 2;
 	image_center.v = image->height / 2;
-	zoom = MM_SCALE * (float)ft_game()->view3d->height / HEIGHT;
+	zoom = MM_SCALE * (double)ft_game()->view3d->height / HEIGHT;
 	draw_map_tiles(image, image_center, zoom);
 	draw_chars_on_minimap(image, zoom, image_center);
 	draw_items_on_minimap(image, zoom, image_center);

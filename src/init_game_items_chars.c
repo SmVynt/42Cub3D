@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game_items_chars.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 21:14:11 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	ft_set_items_check(int *item_index)
 					ft_exit_error("Item index out of bounds\n");
 				game->items[*item_index] = game->item_prefabs[item_num];
 				game->items[*item_index].sprite.pos
-					= (t_vec2){(float)j, (float)i};
+					= (t_vec2){(double)j, (double)i};
 				(*item_index)++;
 			}
 		}
@@ -79,7 +79,7 @@ static void	ft_set_chars_check(int *char_index)
 					ft_exit_error("Char index out of bounds\n");
 				game->chars[*char_index] = game->char_prefabs[char_num];
 				game->chars[*char_index].sprite.pos
-					= (t_vec2){(float)j, (float)i};
+					= (t_vec2){(double)j, (double)i};
 				(*char_index)++;
 			}
 		}

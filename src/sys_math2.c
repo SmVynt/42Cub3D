@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sys_math2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 16:10:10 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-float	ft_clampf(float value, float min, float max)
+double	ft_clampf(double value, double min, double max)
 {
 	if (value < min)
 		return (min);
@@ -30,12 +30,12 @@ int	ft_clamp(int value, int min, int max)
 	return (value);
 }
 
-float	ft_lerpf(float a, float b, float t)
+double	ft_lerpf(double a, double b, double t)
 {
 	return (a + t * (b - a));
 }
 
-t_vec2	ft_lerpvec2(t_vec2 a, t_vec2 b, float t)
+t_vec2	ft_lerpvec2(t_vec2 a, t_vec2 b, double t)
 {
 	t_vec2	result;
 
@@ -44,7 +44,7 @@ t_vec2	ft_lerpvec2(t_vec2 a, t_vec2 b, float t)
 	return (result);
 }
 
-float	rand_in_range(float min, float max)
+double	rand_in_range(double min, double max)
 {
-	return (min + (float)rand() / (float)RAND_MAX * (max - min));
+	return (min + (double)rand() / (double)RAND_MAX * (max - min));
 }

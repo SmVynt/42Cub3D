@@ -6,35 +6,35 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 00:08:47 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 15:34:27 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:14 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	ft_player_try_damage(float damage)
+bool	ft_player_try_damage(double damage)
 {
 	t_player	*player;
 
-	if (damage <= 0.0f)
+	if (damage <= 0.0)
 		return (false);
 	player = ft_game()->player;
-	if (player->hp <= 0.0f)
+	if (player->hp <= 0.0)
 		return (false);
 	player->hp -= damage;
 	player->is_shaking = true;
 	player->shaking_start = mlx_get_time();
-	if (player->hp < 0.0f)
-		player->hp = 0.0f;
+	if (player->hp < 0.0)
+		player->hp = 0.0;
 	ft_update_hp_bar();
 	return (true);
 }
 
-bool	ft_player_try_heal(float heal)
+bool	ft_player_try_heal(double heal)
 {
 	t_player	*player;
 
-	if (heal <= 0.0f)
+	if (heal <= 0.0)
 		return (false);
 	player = ft_game()->player;
 	if (player->hp >= MAX_HP)
@@ -50,19 +50,19 @@ void	shaky_shaky(void)
 {
 	t_player	*player;
 	t_vec2		perp;
-	float		offset;
+	double		offset;
 	double		elapsed;
-	float		intensity;
+	double		intensity;
 
 	player = ft_game()->player;
 	elapsed = mlx_get_time() - player->shaking_start;
 	if (elapsed > SHAKING_TIME)
 	{
 		player->is_shaking = false;
-		player->jump_height = 0.0f;
+		player->jump_height = 0.1;
 		return ;
 	}
-	intensity = expf(-5.0f * elapsed / SHAKING_TIME);
+	intensity = expf(-5.0 * elapsed / SHAKING_TIME);
 	perp.x = -player->lookdir.y;
 	perp.y = player->lookdir.x;
 	offset = rand_in_range(-MAX_HOR_SHAKING, MAX_HOR_SHAKING) * intensity;

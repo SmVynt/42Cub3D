@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_prefabs_items.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 22:32:29 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:14 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	ft_init_prefab_hp_chand(t_gs *game)
 		.sprite.texture = NULL,
 		.sprite.animated = false,
 		.sprite.path = TEX_HEALTH,
-		.sprite.bottom_offset = 0.0f
+		.sprite.bottom_offset = 0.0
 	};
 	game->item_prefabs[IT_CHANDELIER] = (t_item){
 		.type = IT_CHANDELIER,
@@ -32,7 +32,7 @@ static void	ft_init_prefab_hp_chand(t_gs *game)
 		.sprite.texture = NULL,
 		.sprite.animated = false,
 		.sprite.path = TEX_CHANDELIER,
-		.sprite.bottom_offset = -0.1f
+		.sprite.bottom_offset = -0.1
 	};
 }
 
@@ -46,7 +46,7 @@ static void	ft_init_prefab_key_barrel(t_gs *game)
 		.sprite.texture = NULL,
 		.sprite.animated = false,
 		.sprite.path = TEX_KEY,
-		.sprite.bottom_offset = 0.0f
+		.sprite.bottom_offset = 0.0
 	};
 	game->item_prefabs[IT_BARREL] = (t_item){
 		.type = IT_BARREL,
@@ -56,7 +56,7 @@ static void	ft_init_prefab_key_barrel(t_gs *game)
 		.sprite.texture = NULL,
 		.sprite.animated = false,
 		.sprite.path = TEX_BARREL,
-		.sprite.bottom_offset = 0.0f
+		.sprite.bottom_offset = 0.0
 	};
 }
 
@@ -70,7 +70,7 @@ static void	ft_init_prefab_map(t_gs *game)
 		.sprite.texture = NULL,
 		.sprite.animated = false,
 		.sprite.path = TEX_MAP,
-		.sprite.bottom_offset = 0.0f
+		.sprite.bottom_offset = 0.0
 	};
 }
 
@@ -84,12 +84,12 @@ static void	ft_init_prefab_fire(t_gs *game)
 		.sprite = (t_sprite){
 		.texture = NULL,
 		.path = TEX_FIRE,
-		.bottom_offset = 0.0f,
+		.bottom_offset = 0.0,
 		.animated = true,
 		.anim = (t_anim){
 		.n_frames = 8,
 		.frame_duration = 0.07f,
-		.anim_timer = 0.0f,
+		.anim_timer = 0.0,
 		.curr_frame = rand() % 8
 	}
 	}

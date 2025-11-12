@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop_player.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 13:48:02 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:28:15 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ static void	ft_clamp_new_position(t_vec2 *player_pos, t_vec2 new_pos_delta)
 	t_vec2	closest_tile_border;
 	t_vec2	signs;
 
-	signs.x = ft_signf(new_pos_delta.x);
-	signs.y = ft_signf(new_pos_delta.y);
-	closest_tile_border.x = roundf(player_pos->x + signs.x * 0.5f)
-		- signs.x * (TILE_BORDER + 0.5f);
-	if (new_pos_delta.x == 0.0f)
+	signs.x = ft_signd(new_pos_delta.x);
+	signs.y = ft_signd(new_pos_delta.y);
+	closest_tile_border.x = round(player_pos->x + signs.x * 0.5)
+		- signs.x * (TILE_BORDER + 0.5);
+	if (new_pos_delta.x == 0.0)
 		closest_tile_border.x = player_pos->x;
-	closest_tile_border.y = roundf(player_pos->y + signs.y * 0.5f)
-		- signs.y * (TILE_BORDER + 0.5f);
-	if (new_pos_delta.y == 0.0f)
+	closest_tile_border.y = round(player_pos->y + signs.y * 0.5)
+		- signs.y * (TILE_BORDER + 0.5);
+	if (new_pos_delta.y == 0.0)
 		closest_tile_border.y = player_pos->y;
-	border_offset = (t_vec2){ft_signf(new_pos_delta.x) * TILE_BORDER,
-		ft_signf(new_pos_delta.y) * TILE_BORDER};
+	border_offset = (t_vec2){ft_signd(new_pos_delta.x) * TILE_BORDER,
+		ft_signd(new_pos_delta.y) * TILE_BORDER};
 	if (ft_is_wall((t_vec2){player_pos->x + new_pos_delta.x
 			+ border_offset.x, player_pos->y}))
 		new_pos_delta.x = closest_tile_border.x - player_pos->x;
@@ -42,7 +42,7 @@ static void	ft_clamp_new_position(t_vec2 *player_pos, t_vec2 new_pos_delta)
 
 static void	ft_update_player_rotation_keys(t_player *player)
 {
-	float	maxlookupdown;
+	double	maxlookupdown;
 
 	maxlookupdown = ft_game()->view3d->height / 2;
 	if (player->rot_control.u != 0)
@@ -56,28 +56,25 @@ static void	ft_update_player_rotation_keys(t_player *player)
 	{
 		player->lookupdown += player->rot_control.v
 			* ROTATIONSPEED * 500 * ft_game()->dt;
-		if (player->lookupdown > maxlookupdown)
-			player->lookupdown = maxlookupdown;
-		if (player->lookupdown < -maxlookupdown)
-			player->lookupdown = -maxlookupdown;
-		player->rot_control.v = 0.0f;
+		player->lookupdown = ft_clamp(player->lookupdown, -maxlookupdown, maxlookupdown);
+		player->rot_control.v = 0.0;
 	}
 }
 
 static void	ft_update_player_rotation_mouse(t_player *player)
 {
-	float	maxlookupdown;
+	double	maxlookupdown;
 
 	maxlookupdown = ft_game()->view3d->height / 2;
-	if (player->mouse_diff.x != 0.0f)
+	if (player->mouse_diff.x != 0.0)
 	{
 		player->lookdir = ft_mat4_transform_vec2(
 				ft_mat4_rotation_z(-player->mouse_diff.x
 					* ROTATIONSPEED * MOUSE_XSENS * ft_game()->dt),
 				player->lookdir);
-		player->mouse_diff.x = 0.0f;
+		player->mouse_diff.x = 0.0;
 	}
-	if (player->mouse_diff.y != 0.0f && ft_game()->is_bonus)
+	if (player->mouse_diff.y != 0.0 && ft_game()->is_bonus)
 	{
 		player->lookupdown += player->mouse_diff.y
 			* ROTATIONSPEED * MOUSE_YSENS * ft_game()->dt;
@@ -86,7 +83,7 @@ static void	ft_update_player_rotation_mouse(t_player *player)
 			player->lookupdown = maxlookupdown;
 		if (player->lookupdown < -maxlookupdown)
 			player->lookupdown = -maxlookupdown;
-		player->mouse_diff.y = 0.0f;
+		player->mouse_diff.y = 0.0;
 	}
 }
 
@@ -123,9 +120,9 @@ void	ft_update_player(void)
 		{
 			player->jump_impuls += -9.8f * ft_game()->dt;
 			player->jump_height += player->jump_impuls * ft_game()->dt;
-			if (player->jump_height < 0.1f)
+			if (player->jump_height < 0.1)
 			{
-				player->jump_height = 0.1f;
+				player->jump_height = 0.1;
 				player->is_jumping = false;
 			}
 		}

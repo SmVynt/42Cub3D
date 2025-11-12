@@ -25,9 +25,9 @@ t_mat4	ft_mat4_identity(void)
 		while (j < 4)
 		{
 			if (i == j)
-				m.m[i][j] = 1.0f;
+				m.m[i][j] = 1.0;
 			else
-				m.m[i][j] = 0.0f;
+				m.m[i][j] = 0.0;
 			j++;
 		}
 		i++;
@@ -49,7 +49,7 @@ t_mat4	ft_mat4_mul(t_mat4 a, t_mat4 b)
 		while (j < 4)
 		{
 			k = 0;
-			res.m[i][j] = 0.0f;
+			res.m[i][j] = 0.0;
 			while (k < 4)
 			{
 				res.m[i][j] += a.m[i][k] * b.m[k][j];
@@ -71,7 +71,7 @@ t_vec2	ft_mat4_transform_vec2(t_mat4 m, t_vec2 v)
 	return (res);
 }
 
-float	ft_vec2_length(t_vec2 v)
+double	ft_vec2_length(t_vec2 v)
 {
-	return (sqrtf(v.x * v.x + v.y * v.y));
+	return (sqrt(v.x * v.x + v.y * v.y));
 }

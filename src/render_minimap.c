@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_minimap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 16:28:06 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:14 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@
 static void	update_lerp_progress(t_gs *game)
 {
 	if (game->mmap.opening)
-		game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 1.0f,
+		game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 1.0,
 				game->mmap.lerp_speed * game->dt);
 	else
-		game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 0.0f,
+		game->mmap.lerp_progress = ft_lerpf(game->mmap.lerp_progress, 0.0,
 				game->mmap.lerp_speed * game->dt);
-	if (game->mmap.lerp_progress < 0.01f)
+	if (game->mmap.lerp_progress < 0.01)
 	{
-		game->mmap.lerp_progress = 0.0f;
+		game->mmap.lerp_progress = 0.0;
 		game->mmap.enabled = false;
 	}
 	if (game->mmap.lerp_progress > 0.99f)
-		game->mmap.lerp_progress = 1.0f;
+		game->mmap.lerp_progress = 1.0;
 }
 
 static void	update_minimap_position(t_gs *game)
 {
-	float	progress;
+	double	progress;
 
 	progress = game->mmap.lerp_progress;
 	game->minimap->instances[0].x = round(ft_lerpf(
@@ -45,7 +45,7 @@ static void	update_minimap_position(t_gs *game)
 
 static void	update_miniplayer_position(t_gs *game)
 {
-	float	progress;
+	double	progress;
 
 	progress = game->mmap.lerp_progress;
 	game->miniplayer->instances[0].x = round(ft_lerpf(
@@ -58,7 +58,7 @@ static void	update_miniplayer_position(t_gs *game)
 
 static bool	is_animation_complete(t_gs *game)
 {
-	return (game->mmap.opening && game->mmap.lerp_progress == 1.0f);
+	return (game->mmap.opening && game->mmap.lerp_progress == 1.0);
 }
 
 void	ft_update_minimap(void)

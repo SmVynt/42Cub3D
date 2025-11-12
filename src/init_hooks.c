@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_hooks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 13:26:37 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ static void	ft_mouse_move(double x, double y, void *param)
 		return ;
 	player = game->player;
 	if (player->mouse_pos.x == -1)
-		player->mouse_diff.x = 0.0f;
+		player->mouse_diff.x = 0.0;
 	else
 		player->mouse_diff.x = player->mouse_pos.x - x;
 	player->mouse_pos.x = x;
 	if (player->mouse_pos.y == -1)
-		player->mouse_diff.y = 0.0f;
+		player->mouse_diff.y = 0.0;
 	else
 		player->mouse_diff.y = player->mouse_pos.y - y;
 	player->mouse_pos.y = y;

@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 15:04:03 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ void	draw_wall(mlx_image_t *image, int x)
 		return ;
 	ray.wall_height = (double)ft_game()->render.projection_plane_dist
 		/ ray.dist;
-	ft_game()->render.depth[x / PIXEL_SIZE] = (float)ray.dist;
+	ft_game()->render.depth[x / PIXEL_SIZE] = (double)ray.dist;
 	draw_vertical_slice(x, ray);
 }
