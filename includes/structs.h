@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 13:26:22 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/11 21:31:17 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef enum e_ai_state
 	AI_THINKING
 }	t_ai_state;
 
-typedef struct s_sprite t_sprite;
+typedef struct s_sprite	t_sprite;
 
 typedef struct s_spriterender
 {
@@ -96,7 +96,6 @@ typedef struct s_spriterender
 	t_point		screen;
 	bool		visible;
 }	t_spriterender;
-
 
 typedef struct s_anim
 {
@@ -151,14 +150,13 @@ typedef struct s_char
 
 typedef struct s_door
 {
-	t_point idx;
-	// t_vec2	pos;
-	int		is_switch;
-	int		is_opening;
-	float	dt;
+	t_point		idx;
+	int			is_switch;
+	int			is_opening;
+	float		dt;
 	t_sprite	sprite;
-	bool	closed;
-	bool	key_needed;
+	bool		closed;
+	bool		key_needed;
 }	t_door;
 
 typedef struct s_walltexture
@@ -213,7 +211,7 @@ typedef struct s_colrender
 	int	wall_start;
 	int	wall_end;
 	int	wall_height;
-} t_colrender;
+}	t_colrender;
 
 typedef struct s_rayrender
 {
@@ -242,7 +240,7 @@ typedef struct s_minimap
 	t_point		miniplayer_pos_hide;
 	float		lerp_progress;
 	float		lerp_speed;
-} t_minimap;
+}	t_minimap;
 
 typedef struct s_gs
 {
