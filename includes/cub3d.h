@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 00:13:54 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 15:02:42 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@
 # define ROTATIONSPEED			2.0f
 # define MOUSE_XSENS			0.5f
 # define MOUSE_YSENS			100.0f
+# define RAYCAST_MAX_ITER		100
 
 // initialization
 void	ft_assign_textures(void);
@@ -142,7 +143,7 @@ void	draw_sprites(mlx_image_t *image);
 void	draw_square(mlx_image_t *image, int size, t_point pos, uint32_t color);
 void	draw_ui_item(mlx_image_t *image, int size, t_point pos, mlx_texture_t *texture);
 void	draw_circle(mlx_image_t *image, t_point center, int radius, uint32_t color);
-t_vec2	get_ray_end(t_rayrender *ray, t_vec2 start, t_vec2 dir, int max_iter, t_direction *wall_dir);
+t_vec2	get_ray_end(t_rayrender *ray);
 t_vec2	get_next_wall_intersection(t_vec2 pos, t_vec2 dir, t_point *tile, int *side);
 
 void	pick_up(t_item *item);

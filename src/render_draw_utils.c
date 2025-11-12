@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/11 15:04:00 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 14:15:21 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,10 @@ void	draw_walls(mlx_image_t *image)
 {
 	uint32_t	x;
 
-	x = PIXEL_SIZE / 2;
+	x = 0;
 	while (x < ft_game()->view3d->width)
 	{
-		draw_wall(image, x);
+		draw_wall(image, x + PIXEL_SIZE / 2);
 		x += PIXEL_SIZE;
 	}
-	draw_wall(image, x);
 }

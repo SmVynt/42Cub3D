@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_chars_alien.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 23:28:13 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 03:00:35 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 15:02:55 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool	ft_can_see_player(t_vec2 char_pos, t_vec2 player_pos)
 	ray.dir = ft_normalize_vec2((t_vec2){
 			player_pos.x - char_pos.x,
 			player_pos.y - char_pos.y});
-	ray.end = get_ray_end(&ray, ray.start, ray.dir, 100, &ray.wall_dir);
+	ray.end = get_ray_end(&ray);
 	wall_distance = ft_vec2_length((t_vec2){
 			ray.end.x - char_pos.x,
 			ray.end.y - char_pos.y});
