@@ -6,19 +6,19 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/11 16:07:56 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 static bool	draw_entity_on_minimap(t_vec2 entity_pos, t_point image_center,
-		float zoom, uint32_t color)
+		double zoom, uint32_t color)
 {
 	t_player	*player;
 	mlx_image_t	*image;
 	t_vec2		coords;
-	float		rotation_angle;
+	double		rotation_angle;
 
 	player = ft_game()->player;
 	image = ft_game()->miniplayer;
@@ -36,7 +36,7 @@ static bool	draw_entity_on_minimap(t_vec2 entity_pos, t_point image_center,
 	return (true);
 }
 
-void	draw_chars_on_minimap(mlx_image_t *img, float zoom, t_point img_center)
+void	draw_chars_on_minimap(mlx_image_t *img, double zoom, t_point img_center)
 {
 	int			i;
 
@@ -51,7 +51,7 @@ void	draw_chars_on_minimap(mlx_image_t *img, float zoom, t_point img_center)
 	}
 }
 
-void	draw_items_on_minimap(mlx_image_t *img, float zoom, t_point img_center)
+void	draw_items_on_minimap(mlx_image_t *img, double zoom, t_point img_center)
 {
 	int			i;
 	uint32_t	color;

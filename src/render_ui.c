@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/11 14:31:32 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	ft_update_hp_bar(void)
 	if (!image)
 		return ;
 	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
-	offset.u = round((float)image->width * (1 - UI_HP_BAR_XSCALE)) / 2;
-	offset.v = round((float)image->height * (1 - UI_HP_BAR_YSCALE)) / 2;
+	offset.u = round((double)image->width * (1 - UI_HP_BAR_XSCALE)) / 2;
+	offset.v = round((double)image->height * (1 - UI_HP_BAR_YSCALE)) / 2;
 	i = offset.u;
-	while (i < round((float)((image->width - offset.u) * ft_game()->player->hp)
+	while (i < round((double)((image->width - offset.u) * ft_game()->player->hp)
 		/ MAX_HP))
 	{
 		j = offset.v;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_interact_message.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 02:21:26 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:53:33 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	print_message_sub(t_gs *game, int i)
 {
 	char	*msg;
-	float	bck;
+	double	bck;
 
 	if (game->inter_walls[i].is_switch || !game->inter_walls[i].is_opening)
 	{
@@ -40,7 +40,7 @@ void	print_interact_msg(t_gs *game)
 {
 	t_player	*player;
 	t_vec2		vec_door;
-	float		door_angle;
+	double		door_angle;
 	int			i;
 
 	if (game->hints)
@@ -53,7 +53,7 @@ void	print_interact_msg(t_gs *game)
 	{
 		vec_door = (t_vec2){game->inter_walls[i].sprite.pos.x - player->pos.x,
 			game->inter_walls[i].sprite.pos.y - player->pos.y};
-		door_angle = fabsf(ft_angle_between_vec2(vec_door,
+		door_angle = fabs(ft_angle_between_vec2(vec_door,
 					(t_vec2){player->lookdir.x, player->lookdir.y}));
 		if (ft_vec2_length(vec_door) <= INTERACT_DIST
 			&& door_angle < INTERACT_ANGLE && print_message_sub(game, i))

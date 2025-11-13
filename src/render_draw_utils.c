@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 14:15:21 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:25 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	allocate_depth_buffer(t_gs *game, int32_t width)
 {
 	if (game->render.depth)
 		free(game->render.depth);
-	game->render.depth = malloc(sizeof(float) * (width / PIXEL_SIZE + 2));
+	game->render.depth = malloc(sizeof(double) * (width / PIXEL_SIZE + 2));
 	if (!game->render.depth)
 		return (false);
 	game->render.projection_plane_dist = (width / 2.0) / tan(FOV_RAD / 2.0);
@@ -26,8 +26,8 @@ bool	allocate_depth_buffer(t_gs *game, int32_t width)
 void	setup_minimap_positions(t_gs *game, int32_t width, int32_t height)
 {
 	game->mmap.miniplayer_pos_show = (t_point){
-		(width / 16) + round((float)height * 0.11f),
-		(height / 2) + round((float)height * 0.025f)};
+		(width / 16) + round((double)height * 0.11),
+		(height / 2) + round((double)height * 0.025)};
 	game->mmap.miniplayer_pos_hide = (t_point){
 		game->mmap.miniplayer_pos_show.u + width / 16,
 		game->mmap.miniplayer_pos_show.v + height / 2};

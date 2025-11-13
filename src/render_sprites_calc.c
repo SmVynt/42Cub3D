@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_sptites_calc.c                              :+:      :+:    :+:   */
+/*   render_sprites_calc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:09:35 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/11 14:20:30 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:25 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static bool	is_sprite_visible(float dist, float angle)
+static bool	is_sprite_visible(double dist, double angle)
 {
 	if (dist < 0.2f)
 		return (false);
@@ -24,14 +24,14 @@ static bool	is_sprite_visible(float dist, float angle)
 static void	calculate_sprite_screen_position(t_spriterender *sp,
 				mlx_image_t *image)
 {
-	sp->screen_pos.x = (float)(image->width / 2.0f
+	sp->screen_pos.x = (double)(image->width / 2.0
 			+ (sp->angle / FOV_RAD) * image->width);
-	sp->screen_pos.y = (float)(image->height / 2.0f);
+	sp->screen_pos.y = (double)(image->height / 2.0);
 }
 
 static void	calculate_sprite_size(t_sprite *sprite, t_spriterender *sp)
 {
-	sp->max_size = (1.0f / sp->dist)
+	sp->max_size = (1.0 / sp->dist)
 		* ft_game()->render.projection_plane_dist;
 	sp->size.u = (int)(sprite->texture->width * sp->max_size
 			/ STANDARD_SPRITE_SIZE);
@@ -42,13 +42,13 @@ static void	calculate_sprite_size(t_sprite *sprite, t_spriterender *sp)
 static void	calculate_sprite_offset(t_sprite *sprite, t_spriterender *sp,
 				t_player *player)
 {
-	float	vertical_offset;
+	double	vertical_offset;
 
 	sp->start.u = (int)(sp->screen_pos.x) - sp->size.u / 2;
 	sp->start.v = (int)(sp->screen_pos.y) - sp->size.v;
-	vertical_offset = sp->max_size * (0.5f - sprite->bottom_offset / 2);
+	vertical_offset = sp->max_size * (0.5 - sprite->bottom_offset / 2);
 	sp->start.v += vertical_offset;
-	sp->start.v += sp->max_size * 0.5f * player->jump_height
+	sp->start.v += sp->max_size * 0.5 * player->jump_height
 		+ player->lookupdown;
 }
 

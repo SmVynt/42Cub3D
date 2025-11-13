@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 17:39:50 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:14 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ static void	ft_set_player(void)
 
 	game = ft_game();
 	player = game->player;
-	player->pos = (t_vec2){(float)game->map.start.u, (float)game->map.start.v};
+	player->pos = (t_vec2){(double)game->map.start.u, (double)game->map.start.v};
 	start_char = game->map.tile[game->map.start.v][game->map.start.u];
 	if (start_char == 'N')
-		player->lookdir = (t_vec2){0.0f, -1.0f};
+		player->lookdir = (t_vec2){0.0, -1.0};
 	if (start_char == 'E')
-		player->lookdir = (t_vec2){1.0f, 0.0f};
+		player->lookdir = (t_vec2){1.0, 0.0};
 	if (start_char == 'S')
-		player->lookdir = (t_vec2){0.0f, 1.0f};
+		player->lookdir = (t_vec2){0.0, 1.0};
 	if (start_char == 'W')
-		player->lookdir = (t_vec2){-1.0f, 0.0f};
-	player->jump_height = 0.1f;
-	player->jump_impuls = 0.0f;
+		player->lookdir = (t_vec2){-1.0, 0.0};
+	player->jump_height = 0.1;
+	player->jump_impuls = 0.0;
 	player->is_jumping = false;
 	player->pocket = NULL;
 }

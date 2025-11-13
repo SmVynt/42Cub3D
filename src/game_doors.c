@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_doors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 20:14:20 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 02:37:02 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	open_door(int i)
 		door->is_opening = -1;
 	if (door->is_opening == -1 && door->dt <= DOOR_OPEN_TIME)
 		door->closed = true;
-	if (door->dt <= 0.0f)
+	if (door->dt <= 0.0)
 	{
 		door->is_opening = 0;
-		door->dt = 0.0f;
+		door->dt = 0.0;
 	}
 }

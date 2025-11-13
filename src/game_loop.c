@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 15:02:01 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_update_dt(void)
 	elapsed = current_time - last_time;
 	if (elapsed > MAX_DT)
 		elapsed = MAX_DT;
-	ft_game()->dt = (float)elapsed;
+	ft_game()->dt = (double)elapsed;
 	last_time = current_time;
 }
 

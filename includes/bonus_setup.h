@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_setup.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/10 16:19:41 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:25 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BONUS_SETUP_H
 # define BONUS_SETUP_H
 
-# define MAX_HP				100.0f
+# define MAX_HP				100.0
 
 # define ITEMS_TYPES_COUNT	6
 # define MAP_ITEM_CHARS		"+K.bfm"
@@ -28,14 +28,14 @@
 # define MAP_CHAR_CHARS		"as"
 # define TEX_ALIEN			"textures/characters/e_jellyfish.png"
 # define TEX_SLIME			"textures/characters/e_blob.png"
-# define AI_SPEED_ALIEN		1.5f
-# define AI_SPEED_SLIME		1.0f
-# define AI_TIMER			0.1f
+# define AI_SPEED_ALIEN		1.5
+# define AI_SPEED_SLIME		1.0
+# define AI_TIMER			0.1
 # define AI_CONTACT_DIST	0.3f
-# define AI_SLIME_DMG_PS	300.0f
-# define AI_ALIEN_DMG_PS	100.0f
+# define AI_SLIME_DMG_PS	300.0
+# define AI_ALIEN_DMG_PS	100.0
 
-# define LAV_DAMAGE_PER_SEC	300.0f
+# define LAV_DAMAGE_PER_SEC	300.0
 
 # define DOORS_TYPES_COUNT	2
 # define MAP_DOOR_CHARS		"dD"
@@ -65,8 +65,8 @@
 # define MM_SIZE			150
 # define MM_XSTART			10
 # define MM_YSTART			10
-# define MM_SCALE			12.0f
-# define MM_ANIM_SPEED		10.0f
+# define MM_SCALE			12.0
+# define MM_ANIM_SPEED		10.0
 # define MM_COLOR_WALLS		0xFF00A9FF
 # define MM_COLOR_DOORS		0xFF253ED4
 # define MM_COLOR_HEALTH	0xFF89E21D
@@ -75,7 +75,7 @@
 # define MM_COLOR_EMPTY		0xFF090900
 
 # define UI_HP_BAR_XSCALE	0.8f
-# define UI_HP_BAR_YSCALE	0.5f
+# define UI_HP_BAR_YSCALE	0.5
 # define UI_COLOR_HP		0xFF006AFF
 
 # define TEX_UI_MM			"textures/ui/T_MM_FG.png"

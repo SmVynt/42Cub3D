@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:56:11 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/11 15:04:18 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	draw(int32_t width, int32_t height, void *param)
 	if (!create_images(game, width, height))
 		return ;
 	draw_ui();
-	ft_game()->render.bg_proportion = (float)game->view3d_bg->height
-	/ ((float)game->view3d_bg->width * M_PI / 2);
+	ft_game()->render.bg_proportion = (double)game->view3d_bg->height
+	/ ((double)game->view3d_bg->width * M_PI / 2);
 	setup_minimap_positions(game, width, height);
 	display_images(game, width, height);
 	printf("Draw completed: %dx%d\n", width, height);

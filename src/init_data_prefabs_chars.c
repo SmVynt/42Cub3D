@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_prefabs_chars.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 22:33:21 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static void	ft_init_prefab_alien(t_gs *game)
 		.sprite = (t_sprite){
 		.texture = NULL,
 		.path = TEX_ALIEN,
-		.bottom_offset = 0.0f,
+		.bottom_offset = 0.0,
 		.animated = true,
 		.anim = (t_anim){
 		.n_frames = 8,
 		.frame_duration = 0.07f,
-		.anim_timer = 0.0f,
+		.anim_timer = 0.0,
 		.curr_frame = rand() % 8
 	}
 	}
@@ -47,7 +47,7 @@ static void	ft_init_prefab_slime(t_gs *game)
 		.anim = (t_anim){
 		.n_frames = 8,
 		.frame_duration = 0.07f,
-		.anim_timer = 0.0f,
+		.anim_timer = 0.0,
 		.curr_frame = rand() % 8
 	}
 	}

@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 15:57:12 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ uint32_t	ft_get_pixel_color(mlx_texture_t *texture, t_point pixel)
 	return (pixels[pixel.v * texture->width + pixel.u]);
 }
 
-int	ft_get_tex_coord(float x, int texture_width)
+int	ft_get_tex_coord(double x, int texture_width)
 {
 	int	tex_coord;
 
 	if (x < 0)
 		return (0);
-	tex_coord = (int)((x - floorf(x)) * (float)texture_width);
+	tex_coord = (int)((x - floorf(x)) * (double)texture_width);
 	return (tex_coord);
 }

@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:00:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 00:17:00 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:59:13 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static double	get_dist_to_screen_point(int y, t_rayrender ray)
 	screen_center_y = ft_game()->view3d->height / 2.0;
 	height_from_center = y - screen_center_y - ft_game()->player->lookupdown;
 	jump_scale_factor = ft_game()->player->jump_height
-		+ ft_signf(height_from_center) * 1.0;
+		+ ft_signd(height_from_center) * 1.0;
 	dist = (ft_game()->render.projection_plane_dist * jump_scale_factor)
 		/ (2.0 * fabs(height_from_center) * cos(ray.angle));
 	return (dist);

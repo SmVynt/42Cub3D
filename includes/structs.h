@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 16:06:03 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/12 19:52:48 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ typedef struct s_point
 
 typedef struct s_vec2
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 }	t_vec2;
 
 typedef struct s_mat4
 {
-	float	m[4][4];
+	double	m[4][4];
 }	t_mat4;
 
 typedef enum e_direction
@@ -89,7 +89,7 @@ typedef struct s_spriterender
 	double		angle;
 	double		dist;
 	t_vec2		screen_pos;
-	float		max_size;
+	double		max_size;
 	t_point		half_size;
 	t_point		start;
 	t_point		size;
@@ -101,8 +101,8 @@ typedef struct s_anim
 {
 	mlx_texture_t	*frames[8];
 	size_t			n_frames;
-	float			anim_timer;
-	float			frame_duration;
+	double			anim_timer;
+	double			frame_duration;
 	size_t			curr_frame;
 }	t_anim;
 
@@ -110,7 +110,7 @@ struct s_sprite
 {
 	mlx_texture_t	*texture;
 	char			*path;
-	float			bottom_offset;
+	double			bottom_offset;
 	t_vec2			pos;
 	t_spriterender	sp;
 	bool			animated;
@@ -132,10 +132,10 @@ typedef struct s_ai
 	t_ai_state		state;
 	t_vec2			start_pos;
 	t_vec2			target_pos;
-	float			lerp_speed;
-	float			lerp_progress;
-	float			speed;
-	float			timer;
+	double			lerp_speed;
+	double			lerp_progress;
+	double			speed;
+	double			timer;
 	t_direction		facing;
 }	t_ai;
 
@@ -145,7 +145,7 @@ typedef struct s_char
 	t_sprite		sprite;
 	t_ai			ai;
 	bool			alive;
-	float			dps;
+	double			dps;
 }	t_char;
 
 typedef struct s_door
@@ -153,7 +153,7 @@ typedef struct s_door
 	t_point		idx;
 	int			is_switch;
 	int			is_opening;
-	float		dt;
+	double		dt;
 	t_sprite	sprite;
 	bool		closed;
 	bool		key_needed;
@@ -182,25 +182,25 @@ typedef struct s_textures
 typedef struct s_render
 {
 	int			projection_plane_dist;
-	float		*depth;
-	float		bg_proportion;
+	double		*depth;
+	double		bg_proportion;
 	uint32_t	top_color;
 	uint32_t	bottom_color;
 }	t_render;
 
 typedef struct s_player
 {
-	float	hp;
+	double	hp;
 	t_vec2	pos;
 	t_vec2	lookdir;
 	t_point	mov_control;
 	t_vec2	mouse_pos;
 	t_vec2	mouse_diff;
-	float	lookupdown;
+	double	lookupdown;
 	t_point	rot_control;
 	bool	is_jumping;
-	float	jump_height;
-	float	jump_impuls;
+	double	jump_height;
+	double	jump_impuls;
 	t_list	*pocket;
 	bool	is_shaking;
 	double	shaking_start;
@@ -239,8 +239,8 @@ typedef struct s_minimap
 	t_point		minimap_pos_hide;
 	t_point		miniplayer_pos_show;
 	t_point		miniplayer_pos_hide;
-	float		lerp_progress;
-	float		lerp_speed;
+	double		lerp_progress;
+	double		lerp_speed;
 }	t_minimap;
 
 typedef struct s_gs
@@ -279,7 +279,7 @@ typedef struct s_gs
 	t_door			*inter_walls;
 	int				inter_wall_count;
 	int				max_doors;
-	float			dt;
+	double			dt;
 }	t_gs;
 
 #endif

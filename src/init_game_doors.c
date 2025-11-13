@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game_doors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 17:47:56 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	ft_set_door_check(int i, int j, int *inter_wall_index)
 		game->inter_walls[iwi].idx.v = i;
 		game->inter_walls[iwi].closed = true;
 		game->inter_walls[iwi].is_opening = false;
-		game->inter_walls[iwi].dt = 0.0f;
-		game->inter_walls[iwi].sprite.pos = (t_vec2){(float)j, (float)i};
+		game->inter_walls[iwi].dt = 0.0;
+		game->inter_walls[iwi].sprite.pos = (t_vec2){(double)j, (double)i};
 		if (ft_strchar(SPEC_WALL_SWITCH, game->map.tile[i][j]) != NULL)
 			game->inter_walls[iwi].is_switch = true;
 		else
