@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:25 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/13 21:17:31 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,26 @@ bool	allocate_depth_buffer(t_gs *game, int32_t width)
 
 void	setup_minimap_positions(t_gs *game, int32_t width, int32_t height)
 {
+	t_point			mmap_pos;
+	mlx_texture_t	*tex;
+	mlx_image_t		*image;
+
+	mmap_pos.u = round(width / 16.0);
+	mmap_pos.v = round(height / 2.0);
+	tex = game->textures.ui_minimap;
+	image = game->minimap;
 	game->mmap.miniplayer_pos_show = (t_point){
-		(width / 16) + round((double)height * 0.11),
-		(height / 2) + round((double)height * 0.025)};
+		mmap_pos.u + round((double)image->width
+			* (MM_XSTART / (double)tex->width)),
+		mmap_pos.v + round((double)image->height
+			* (MM_YSTART / (double)tex->height))};
 	game->mmap.miniplayer_pos_hide = (t_point){
-		game->mmap.miniplayer_pos_show.u + width / 16,
-		game->mmap.miniplayer_pos_show.v + height / 2};
-	game->mmap.minimap_pos_show = (t_point){width / 16, height / 2};
+		game->mmap.miniplayer_pos_show.u + mmap_pos.u,
+		game->mmap.miniplayer_pos_show.v + mmap_pos.v};
+	game->mmap.minimap_pos_show = mmap_pos;
 	game->mmap.minimap_pos_hide = (t_point){
-		game->mmap.minimap_pos_show.u + width / 16,
-		game->mmap.minimap_pos_show.v + height / 2};
+		game->mmap.minimap_pos_show.u + mmap_pos.u,
+		game->mmap.minimap_pos_show.v + mmap_pos.v};
 }
 
 void	ft_fill_split_bg(mlx_image_t *bg)

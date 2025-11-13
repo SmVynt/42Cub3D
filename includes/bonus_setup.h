@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:25 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/13 20:17:58 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@
 # define MAX_VERT_SHAKING	0.8
 # define SHAKING_TIME		0.6
 
-# define MM_SIZE			150
-# define MM_XSTART			10
-# define MM_YSTART			10
-# define MM_SCALE			12.0
+# define MM_SIZE			81.0
+# define MM_XSTART			38
+# define MM_YSTART			7
+# define MM_SCALE			15.0
 # define MM_ANIM_SPEED		10.0
 # define MM_COLOR_WALLS		0xFF00A9FF
 # define MM_COLOR_DOORS		0xFF253ED4
