@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 20:31:18 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/13 20:32:26 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void		ft_calculate_sprite(mlx_image_t *image, t_sprite *sprite);
 
 t_door		*ft_get_door(int x, int y);
 void		interact(t_gs *game);
+bool		can_interact(t_door wall, int *side);
 void		print_interact_msg(t_gs *game);
 void		open_door(int i);
 
