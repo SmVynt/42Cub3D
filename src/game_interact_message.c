@@ -6,12 +6,11 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/13 16:55:06 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/13 20:44:06 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 static bool	hit_spec_wall(t_vec2 start, t_vec2 dir, int *side)
 {
@@ -37,22 +36,22 @@ bool	can_interact(t_door wall, int *side)
 
 	player = ft_game()->player;
 	wall_vec = (t_vec2){wall.sprite.pos.x - player->pos.x,
-			wall.sprite.pos.y - player->pos.y};
+		wall.sprite.pos.y - player->pos.y};
 	wall_angle = fabs(ft_angle_between_vec2(wall_vec, player->lookdir));
 	return (ft_vec2_length(wall_vec) < INTERACT_DIST
-			&& wall_angle < INTERACT_ANGLE
-			&& hit_spec_wall(player->pos, player->lookdir, side)
-			&& (wall.is_switch || !wall.is_opening));
+		&& wall_angle < INTERACT_ANGLE
+		&& hit_spec_wall(player->pos, player->lookdir, side)
+		&& (wall.is_switch || !wall.is_opening));
 }
 
-static void update_switch_coord(t_sprite *sprite, int side)
+static void	update_switch_coord(t_sprite *sprite, int side)
 {
 	t_vec2		wall_vec;
 	t_player	*player;
 
 	player = ft_game()->player;
 	wall_vec = (t_vec2){sprite->pos.x - player->pos.x,
-			sprite->pos.y - player->pos.y};
+		sprite->pos.y - player->pos.y};
 	if (!side)
 		sprite->pos.x -= ft_signd(wall_vec.x) * 0.5f;
 	else
@@ -80,7 +79,6 @@ static void	print_message_sub(t_gs *game, int i, int side)
 			+ game->player->lookupdown + 0.5 * game->player->jump_height
 			* game->inter_walls[i].sprite.sp.max_size);
 }
-
 
 void	print_interact_msg(t_gs *game)
 {
