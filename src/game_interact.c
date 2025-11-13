@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 19:53:47 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/13 20:31:44 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,21 +94,13 @@ static void	interact_sub(t_gs *game, int i)
 
 void	interact(t_gs *game)
 {
-	t_player	*player;
-	t_vec2		vec_door;
-	double		door_angle;
+	int			side;
 	int			i;
 
-	player = game->player;
 	i = 0;
 	while (i < game->inter_wall_count)
 	{
-		vec_door = (t_vec2){game->inter_walls[i].sprite.pos.x - player->pos.x,
-			game->inter_walls[i].sprite.pos.y - player->pos.y};
-		door_angle = fabs(ft_angle_between_vec2(vec_door,
-					(t_vec2){player->lookdir.x, player->lookdir.y}));
-		if (ft_vec2_length(vec_door) <= INTERACT_DIST
-			&& door_angle < INTERACT_ANGLE)
+		if (can_interact(game->inter_walls[i], &side))
 			interact_sub(game, i);
 		i++;
 	}
