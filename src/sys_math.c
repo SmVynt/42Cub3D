@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/13 15:11:10 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ double	ft_angle_between_vec2(t_vec2 a, t_vec2 b)
 {
 	double	angle;
 
-	angle = atan2f(b.y, b.x) - atan2f(a.y, a.x);
+	angle = atan2(b.y, b.x) - atan2(a.y, a.x);
 	if (angle < -M_PI)
 		angle += 2.0 * M_PI;
 	if (angle > M_PI)
