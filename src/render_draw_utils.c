@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/13 20:18:23 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/13 21:17:31 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ void	setup_minimap_positions(t_gs *game, int32_t width, int32_t height)
 	tex = game->textures.ui_minimap;
 	image = game->minimap;
 	game->mmap.miniplayer_pos_show = (t_point){
-		mmap_pos.u + round((double)image->width * (MM_XSTART / (double)tex->width)),
-		mmap_pos.v + round((double)image->height * (MM_YSTART / (double)tex->height))};
+		mmap_pos.u + round((double)image->width
+			* (MM_XSTART / (double)tex->width)),
+		mmap_pos.v + round((double)image->height
+			* (MM_YSTART / (double)tex->height))};
 	game->mmap.miniplayer_pos_hide = (t_point){
 		game->mmap.miniplayer_pos_show.u + mmap_pos.u,
 		game->mmap.miniplayer_pos_show.v + mmap_pos.v};

@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:56:11 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/13 20:17:23 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/13 21:18:12 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,18 @@ static bool	create_images(t_gs *game, int32_t width, int32_t height)
 {
 	t_vec2	mmap_ui_size;
 
-	mmap_ui_size.y =  height / 2.0;
+	mmap_ui_size.y = height / 2.0;
 	mmap_ui_size.x = mmap_ui_size.y * game->textures.ui_minimap->width
 		/ (double)game->textures.ui_minimap->height;
 	game->view3d_bg = mlx_new_image(game->mlx, width, height);
 	ft_fill_split_bg(game->view3d_bg);
 	game->view3d = mlx_new_image(game->mlx, width, height);
 	game->hud = mlx_new_image(game->mlx, 64, height);
-	game->minimap = mlx_new_image(game->mlx, round(mmap_ui_size.x), round(mmap_ui_size.y));
-	game->miniplayer = mlx_new_image(game->mlx, round(mmap_ui_size.y * MM_SIZE / 180.0),
-			 round(mmap_ui_size.y * MM_SIZE / 180.0));
+	game->minimap = mlx_new_image(game->mlx, round(mmap_ui_size.x),
+			round(mmap_ui_size.y));
+	game->miniplayer = mlx_new_image(game->mlx,
+			round(mmap_ui_size.y * MM_SIZE / 180.0),
+			round(mmap_ui_size.y * MM_SIZE / 180.0));
 	game->health = mlx_new_image(game->mlx, height / 4, height / 18);
 	game->health_bar = mlx_new_image(game->mlx, height / 4, height / 18);
 	if (!game->minimap || !game->miniplayer || !game->view3d
