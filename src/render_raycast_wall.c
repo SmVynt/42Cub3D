@@ -89,8 +89,6 @@ void	draw_wall_part(t_rayrender ray, int x, double wall_start, int *y)
 	image = ft_game()->view3d;
 	init_colrender(&cr, wall_start, ray.wall_height);
 	pixel.u = ft_find_texture_u(&cr.texture, ray);
-	if (!ft_game()->is_bonus)
-		*y = cr.wall_start - cr.wall_start % PIXEL_SIZE;
 	while (*y <= cr.wall_start + cr.wall_height)
 	{
 		if (*y >= (int)image->height + PIXEL_SIZE)
