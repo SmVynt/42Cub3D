@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_minimap_draw.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 16:10:54 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 11:26:23 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 20:51:25 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_vec2	screen_to_world_coords(int x, int y, t_player *player,
 	double	rotation_angle;
 
 	coords = (t_vec2){(double)x / zoom, (double)y / zoom};
-	rotation_angle = atan2(player->lookdir.y, player->lookdir.x) + HALF_PI;
+	rotation_angle = player->lookdir_angle + HALF_PI;
 	coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(rotation_angle), coords);
 	coords.x += player->pos.x;
 	coords.y += player->pos.y;

@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 20:29:55 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 20:50:32 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,13 @@ void	ft_fill_split_bg(mlx_image_t *bg)
 void	draw_walls(mlx_image_t *image)
 {
 	uint32_t	x;
+	t_player	*player;
 
-	ft_game()->render.bg_start_offset = ft_game()->player->lookdir_angle
-		* (double)ft_game()->textures.bg->width / (2.0 * M_PI);
+	player = ft_game()->player;
+	if (player->lookdir_angle < 0)
+		player->lookdir_angle += 2.0 * M_PI;
+	ft_game()->render.bg_start_offset = player->lookdir_angle
+	* (double)ft_game()->textures.bg->width / (2.0 * M_PI);
 	x = 0;
 	while (x < ft_game()->view3d->width)
 	{

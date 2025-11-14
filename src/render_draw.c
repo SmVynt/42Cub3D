@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:56:11 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 19:13:51 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 20:46:08 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	draw(int32_t width, int32_t height, void *param)
 		return ;
 	draw_ui();
 	ft_game()->render.bg_scale = FOV_RAD * ((double)game->textures.bg->width
-			/ (2.0 * M_PI) / (double)game->view3d->width);
+		/ (2.0 * M_PI) / (double)game->view3d->width);
 	setup_minimap_positions(game, width, height);
 	display_images(game, width, height);
 	printf("Draw completed: %dx%d\n", width, height);
