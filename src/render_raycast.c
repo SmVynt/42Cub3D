@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 21:31:30 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 22:11:05 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static void	draw_vertical_slice(int x, t_rayrender ray)
 	if (ft_game()->is_bonus)
 		draw_ceil_part(ray, x, wall_start, &y);
 	else
-{
+	{
 		y = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
 		y = ft_clamp(y, 0, image->height);
-}
+	}
 	draw_wall_part(ray, x, wall_start, &y);
 	if (ft_game()->is_bonus)
 		draw_floor_part(ray, x, wall_start + ray.wall_height, &y);
