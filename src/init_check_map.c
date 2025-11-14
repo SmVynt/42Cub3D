@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 13:31:37 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 15:24:47 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	ft_checkdigits(void)
 static void	ft_check_neighbours(t_map *map, int h, int w)
 {
 	map->tile[h][w] -= 128;
-	if (w <= 0 || w >= map->w || h <= 0 || h >= map->h)
+	if (w <= 0 || w >= map->w - 1 || h <= 0 || h >= map->h - 1)
 		return ;
 	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h + 1][w]) == NULL
 		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h + 1][w]) != NULL)
@@ -111,6 +111,7 @@ void	ft_checkmap(void)
 	if (ft_game()->map.start.u == -1 || ft_game()->map.start.v == -1)
 		ft_exit_error("Map is missing a starting position\n");
 	printf(COLOR_G"Map digits check passed!\n"COLOR_X);
+	ft_printmap(&ft_game()->map);
 	ft_checkwalls();
 	printf(COLOR_G"Map walls check passed!\n"COLOR_X);
 	ft_printmap(&ft_game()->map);

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 23:57:43 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 15:23:41 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	ft_checkarguments(int argc, char **argv)
 void	ft_printmap(t_map *map)
 {
 	int	i;
+	int	j;
 
 	printf(COLOR_G"Map width: %d, height: %d\n"COLOR_X, map->w, map->h);
 	printf("NO: %s\n", map->no);
@@ -64,7 +65,18 @@ void	ft_printmap(t_map *map)
 	printf(COLOR_G"Map:\n"COLOR_X);
 	i = -1;
 	while (map->tile && map->tile[++i])
-		printf("%s\n", map->tile[i]);
+	{
+		j = 0;
+		while (j < map->w)
+		{
+			if (ft_strchar(MAP_WALL_CHARS, map->tile[i][j]) != NULL)
+				printf(COLOR_Y"%c"COLOR_X, map->tile[i][j]);
+			else
+				printf("%c", map->tile[i][j]);
+			j++;
+		}
+		printf("\n");
+	}
 }
 
 void	ft_checkinput(int argc, char **argv)
