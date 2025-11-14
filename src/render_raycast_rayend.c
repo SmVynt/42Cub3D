@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 14:34:33 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 23:42:44 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/15 00:32:56 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,5 @@ t_vec2	get_ray_end(t_rayrender *ray)
 			return (curr);
 		}
 	}
-	return ((t_vec2){ray->end.x, ray->end.y});
+	return (ray->end);
 }
