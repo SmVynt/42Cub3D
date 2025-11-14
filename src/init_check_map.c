@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 15:24:47 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 16:29:45 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,23 @@ static void	ft_check_neighbours(t_map *map, int h, int w)
 	if (w <= 0 || w >= map->w - 1 || h <= 0 || h >= map->h - 1)
 		return ;
 	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h + 1][w]) == NULL
-		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h + 1][w]) != NULL)
+		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h + 1][w]) != NULL
+		|| ft_strchar(SPEC_WALL_FADE, map->tile[h + 1][w]) != NULL)
 		&& map->tile[h + 1][w] >= 0)
 		ft_check_neighbours(map, h + 1, w);
 	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h - 1][w]) == NULL
-		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h - 1][w]) != NULL)
+		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h - 1][w]) != NULL
+		|| ft_strchar(SPEC_WALL_FADE, map->tile[h - 1][w]) != NULL)
 		&& map->tile[h - 1][w] >= 0)
 		ft_check_neighbours(map, h - 1, w);
 	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h][w + 1]) == NULL
-		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h][w + 1]) != NULL)
+		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h][w + 1]) != NULL
+		|| ft_strchar(SPEC_WALL_FADE, map->tile[h][w + 1]) != NULL)
 		&& map->tile[h][w + 1] >= 0)
 		ft_check_neighbours(map, h, w + 1);
 	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h][w - 1]) == NULL
-		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h][w - 1]) != NULL)
+		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h][w - 1]) != NULL
+		|| ft_strchar(SPEC_WALL_FADE, map->tile[h][w - 1]) != NULL)
 		&& map->tile[h][w - 1] >= 0)
 		ft_check_neighbours(map, h, w - 1);
 }
