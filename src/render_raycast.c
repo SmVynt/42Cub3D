@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 22:11:05 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 23:31:25 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static void	draw_vertical_slice(int x, t_rayrender ray)
 		draw_ceil_part(ray, x, wall_start, &y);
 	else
 	{
-		y = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
-		y = ft_clamp(y, 0, image->height);
+		y = (int)wall_start / PIXEL_SIZE * PIXEL_SIZE;
+		y = ft_clamp(y, 0, image->height) + PIXEL_SIZE / 2;
 	}
 	draw_wall_part(ray, x, wall_start, &y);
 	if (ft_game()->is_bonus)
