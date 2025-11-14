@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast_rayend.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 14:34:33 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 15:32:53 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 00:32:56 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ static void	init_ray_state(t_rayrender *ray, t_vec2 start)
 	ray->is_door = false;
 	ray->door = NULL;
 	ray->is_doorway = ft_is_door((t_vec2){start.x - 0.5, start.y - 0.5});
+	ray->wall_type = '2';
+	ray->wall_height = (double)PIXEL_SIZE;
+	ray->dist = RAYCAST_MAX_DIST;
+	ray->wall_dir = DIR_EA;
+	ray->end.x = ray->start.x + RAYCAST_MAX_DIST * ray->dir.x;
+	ray->end.y = ray->start.y + RAYCAST_MAX_DIST * ray->dir.y;
 }
 
 static bool	is_tile_out_of_bounds(t_point tile)
@@ -89,5 +95,5 @@ t_vec2	get_ray_end(t_rayrender *ray)
 			return (curr);
 		}
 	}
-	return ((t_vec2){0.0, 0.0});
+	return (ray->end);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:56:11 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 20:46:08 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 00:01:22 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,11 @@ static bool	create_images(t_gs *game, int32_t width, int32_t height)
 
 static void	display_images(t_gs *game, int32_t width, int32_t height)
 {
-	mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
+	if (!game->is_bonus)
+		mlx_image_to_window(game->mlx, game->view3d_bg, 0, 0);
 	mlx_image_to_window(game->mlx, game->view3d, 0, 0);
+	if (!game->is_bonus)
+		return ;
 	mlx_image_to_window(game->mlx, game->miniplayer,
 		game->mmap.miniplayer_pos_show.u,
 		game->mmap.miniplayer_pos_show.v);
