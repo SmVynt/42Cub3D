@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
 /*   Updated: 2025/11/14 19:28:48 by nmikuka          ###   ########.fr       */
@@ -20,7 +20,8 @@ static void	ft_set_player(void)
 
 	game = ft_game();
 	player = game->player;
-	player->pos = (t_vec2){(double)game->map.start.u, (double)game->map.start.v};
+	player->pos = (t_vec2){(double)game->map.start.u,
+		(double)game->map.start.v};
 	start_char = game->map.tile[game->map.start.v][game->map.start.u];
 	if (start_char == 'N')
 		player->lookdir = (t_vec2){0.0, -1.0};

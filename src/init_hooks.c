@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_hooks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:16:51 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/13 13:31:55 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 11:26:00 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_key_hook(mlx_key_data_t keydata, void *param)
 	}
 }
 
- void	ft_mouse_move_1(double x, double y, void *param)
+void	ft_mouse_move_1(double x, double y, void *param)
 {
 	t_player	*player;
 	t_gs		*game;
@@ -65,7 +65,7 @@ void	ft_mouse_move(double x, double y, void *param)
 	t_gs		*game;
 	t_vec2		raw_diff;
 	t_vec2		sens;
-	
+
 	sens.x = 0.3;
 	sens.y = 0.5;
 	game = (t_gs *)param;
@@ -80,8 +80,10 @@ void	ft_mouse_move(double x, double y, void *param)
 	}
 	raw_diff.x = player->mouse_pos.x - x;
 	raw_diff.y = player->mouse_pos.y - y;
-	player->mouse_diff.x = player->mouse_diff.x * (1 - sens.x) + raw_diff.x * sens.x;
-	player->mouse_diff.y = player->mouse_diff.y * (1 - sens.y) + raw_diff.y * sens.y;
+	player->mouse_diff.x = player->mouse_diff.x * (1 - sens.x)
+		+ raw_diff.x * sens.x;
+	player->mouse_diff.y = player->mouse_diff.y * (1 - sens.y)
+		+ raw_diff.y * sens.y;
 	player->mouse_pos.x = x;
 	player->mouse_pos.y = y;
 }

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/10/15 11:17:25 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 15:17:41 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_initial_map_read(const char *src)
 		else
 			ft_game()->map.h++;
 		if (map_start[1] && (int)ft_strlen(line) > ft_game()->map.w)
-			ft_game()->map.w = (int)ft_strlen(line);
+			ft_game()->map.w = (int)ft_strlen(line) - 1;
 		free(line);
 		line = get_next_line(fd);
 	}

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop_player.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
 /*   Updated: 2025/11/14 19:28:37 by nmikuka          ###   ########.fr       */
@@ -56,7 +56,8 @@ static void	ft_update_player_rotation_keys(t_player *player)
 	{
 		player->lookupdown += player->rot_control.v
 			* ROTATIONSPEED * 500 * ft_game()->dt;
-		player->lookupdown = ft_clamp(player->lookupdown, -maxlookupdown, maxlookupdown);
+		player->lookupdown = ft_clamp(player->lookupdown,
+				-maxlookupdown, maxlookupdown);
 		player->rot_control.v = 0.0;
 	}
 }

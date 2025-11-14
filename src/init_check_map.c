@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 15:05:14 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 16:29:45 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,26 @@ static void	ft_checkdigits(void)
 static void	ft_check_neighbours(t_map *map, int h, int w)
 {
 	map->tile[h][w] -= 128;
-	if (w <= 0 || w >= map->w || h <= 0 || h >= map->h)
+	if (w <= 0 || w >= map->w - 1 || h <= 0 || h >= map->h - 1)
 		return ;
 	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h + 1][w]) == NULL
-		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h + 1][w]) != NULL)
+		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h + 1][w]) != NULL
+		|| ft_strchar(SPEC_WALL_FADE, map->tile[h + 1][w]) != NULL)
 		&& map->tile[h + 1][w] >= 0)
 		ft_check_neighbours(map, h + 1, w);
 	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h - 1][w]) == NULL
-		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h - 1][w]) != NULL)
+		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h - 1][w]) != NULL
+		|| ft_strchar(SPEC_WALL_FADE, map->tile[h - 1][w]) != NULL)
 		&& map->tile[h - 1][w] >= 0)
 		ft_check_neighbours(map, h - 1, w);
 	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h][w + 1]) == NULL
-		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h][w + 1]) != NULL)
+		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h][w + 1]) != NULL
+		|| ft_strchar(SPEC_WALL_FADE, map->tile[h][w + 1]) != NULL)
 		&& map->tile[h][w + 1] >= 0)
 		ft_check_neighbours(map, h, w + 1);
 	if ((ft_strchar(MAP_WALL_CHARS, map->tile[h][w - 1]) == NULL
-		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h][w - 1]) != NULL)
+		|| ft_strchar(MAP_DOOR_CHARS, map->tile[h][w - 1]) != NULL
+		|| ft_strchar(SPEC_WALL_FADE, map->tile[h][w - 1]) != NULL)
 		&& map->tile[h][w - 1] >= 0)
 		ft_check_neighbours(map, h, w - 1);
 }
@@ -90,7 +94,6 @@ static void	ft_checkwalls(void)
 	map = &ft_game()->map;
 	printf("Checking walls...\n");
 	ft_check_neighbours(map, map->start.v, map->start.u);
-	ft_printmap(map);
 	h = -1;
 	while (++h < map->h)
 	{
@@ -112,6 +115,7 @@ void	ft_checkmap(void)
 	if (ft_game()->map.start.u == -1 || ft_game()->map.start.v == -1)
 		ft_exit_error("Map is missing a starting position\n");
 	printf(COLOR_G"Map digits check passed!\n"COLOR_X);
+	ft_printmap(&ft_game()->map);
 	ft_checkwalls();
 	printf(COLOR_G"Map walls check passed!\n"COLOR_X);
 	ft_printmap(&ft_game()->map);

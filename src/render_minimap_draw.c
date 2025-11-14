@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_minimap_draw.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 16:10:54 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 11:26:23 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static t_vec2	screen_to_world_coords(int x, int y, t_player *player,
 	return (coords);
 }
 
-static void	draw_map_tiles(mlx_image_t *image, t_point image_center, double zoom)
+static void	draw_map_tiles(mlx_image_t *image, t_point image_center,
+		double zoom)
 {
 	int			x;
 	int			y;

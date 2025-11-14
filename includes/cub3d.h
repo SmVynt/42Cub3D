@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
 /*   Updated: 2025/11/14 20:30:02 by nmikuka          ###   ########.fr       */
@@ -225,5 +225,6 @@ void		ft_free_render(void);
 void		ft_free_mlx_envirtex(t_gs *game);
 void		ft_free_mlx_prefabs_chars(t_gs *game);
 void		ft_free_mlx_prefabs_items(t_gs *game);
+void		ft_free_mlx_prefabs_specials(t_gs *game);
 
 #endif
