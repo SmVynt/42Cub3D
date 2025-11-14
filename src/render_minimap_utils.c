@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 21:15:01 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	draw_entity_on_minimap(t_vec2 entity_pos, t_point image_center,
 	if ((int)coords.x < -image_center.u || (int)coords.x > image_center.u
 		|| (int)coords.y < -image_center.v || (int)coords.y > image_center.v)
 		return (false);
-	rotation_angle = -atan2(player->lookdir.y, player->lookdir.x) - HALF_PI;
+	rotation_angle = -player->lookdir_angle - HALF_PI;
 	coords = ft_mat4_transform_vec2(ft_mat4_rotation_z(rotation_angle), coords);
 	draw_circle(image, (t_point){(int)(coords.x) + image_center.u,
 		(int)(coords.y) + image_center.v}, 3, color);

@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:00:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 20:20:43 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 21:23:09 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,16 @@ static mlx_texture_t	*get_texture_ceil_floor(t_vec2 p,
 	return (tex_array[3]);
 }
 
-void	draw_ceil_part(t_rayrender ray, int x, double wall_start)
+void	draw_ceil_part(t_rayrender ray, int x, double wall_start, int *y)
 {
 	t_vec2			world_pos;
 	t_point			tex_coord;
 	double			dist;
 	uint32_t		color;
-	int				y;
 
-	y = 0;
-	while (y < wall_start)
+	while (*y < wall_start)
 	{
-		dist = get_dist_to_screen_point(y, ray);
+		dist = get_dist_to_screen_point(*y, ray);
 		world_pos.x = ray.start.x - ray.dir.x * dist;
 		world_pos.y = ray.start.y - ray.dir.y * dist;
 		tex_coord.u = ft_get_tex_coord(world_pos.x, STANDARD_SPRITE_SIZE);
@@ -70,25 +68,24 @@ void	draw_ceil_part(t_rayrender ray, int x, double wall_start)
 		color = ft_get_pixel_color(get_texture_ceil_floor(world_pos,
 					ft_game()->textures.ceiling), tex_coord);
 		if (color != 0)
-			draw_square(ft_game()->view3d, PIXEL_SIZE, (t_point){x, y}, color);
+			draw_square(ft_game()->view3d, PIXEL_SIZE, (t_point){x, *y}, color);
 		else
-			draw_cubemap(ft_game()->view3d, (t_point){x, y});
-		y += PIXEL_SIZE;
+			draw_cubemap(ft_game()->view3d, (t_point){x, *y});
+		*y += PIXEL_SIZE;
 	}
 }
 
-void	draw_floor_part(t_rayrender ray, int x, int wall_end)
+void	draw_floor_part(t_rayrender ray, int x, double wall_end, int *y)
 {
 	t_vec2			world_pos;
 	t_point			tex_coord;
 	double			dist;
 	uint32_t		color;
-	int				y;
 
-	y = wall_end / PIXEL_SIZE * PIXEL_SIZE;
-	while (y < (int)ft_game()->view3d->height + PIXEL_SIZE / 2)
+	(void) wall_end;
+	while (*y < (int)ft_game()->view3d->height + PIXEL_SIZE / 2)
 	{
-		dist = get_dist_to_screen_point(y, ray);
+		dist = get_dist_to_screen_point(*y, ray);
 		world_pos.x = ray.start.x + ray.dir.x * dist;
 		world_pos.y = ray.start.y + ray.dir.y * dist;
 		tex_coord.u = ft_get_tex_coord(world_pos.x, STANDARD_SPRITE_SIZE);
@@ -96,9 +93,9 @@ void	draw_floor_part(t_rayrender ray, int x, int wall_end)
 		color = ft_get_pixel_color(get_texture_ceil_floor(world_pos,
 					ft_game()->textures.floor), tex_coord);
 		if (color != 0)
-			draw_square(ft_game()->view3d, PIXEL_SIZE, (t_point){x, y}, color);
+			draw_square(ft_game()->view3d, PIXEL_SIZE, (t_point){x, *y}, color);
 		else
-			draw_cubemap(ft_game()->view3d, (t_point){x, y});
-		y += PIXEL_SIZE;
+			draw_cubemap(ft_game()->view3d, (t_point){x, *y});
+		*y += PIXEL_SIZE;
 	}
 }

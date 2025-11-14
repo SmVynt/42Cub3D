@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 20:30:02 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 21:21:37 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,9 +140,9 @@ void		draw_items_on_minimap(mlx_image_t *img, double zoom,
 
 void		draw_walls(mlx_image_t *image);
 void		draw_cubemap(mlx_image_t *image, t_point screen_coords);
-void		draw_floor_part(t_rayrender ray, int x, int wall_end);
-void		draw_ceil_part(t_rayrender ray, int x, double wall_start);
-void		draw_wall_part(t_rayrender ray, int x, double wall_start);
+void		draw_floor_part(t_rayrender ray, int x, double wall_end, int *y);
+void		draw_ceil_part(t_rayrender ray, int x, double wall_start, int *y);
+void		draw_wall_part(t_rayrender ray, int x, double wall_start, int *y);
 void		draw_sprites(mlx_image_t *image);
 void		draw_square(mlx_image_t *image, int size, t_point pos,
 				uint32_t color);
