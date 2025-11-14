@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 19:52:48 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 19:37:54 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,8 @@ typedef struct s_render
 {
 	int			projection_plane_dist;
 	double		*depth;
-	double		bg_proportion;
+	double		bg_scale;
+	double		bg_start_offset;
 	uint32_t	top_color;
 	uint32_t	bottom_color;
 }	t_render;
@@ -193,6 +194,7 @@ typedef struct s_player
 	double	hp;
 	t_vec2	pos;
 	t_vec2	lookdir;
+	double	lookdir_angle;
 	t_point	mov_control;
 	t_vec2	mouse_pos;
 	t_vec2	mouse_diff;
@@ -219,7 +221,6 @@ typedef struct s_rayrender
 	t_vec2		start;
 	t_vec2		end;
 	t_vec2		dir;
-	int			bgx;
 	double		angle;
 	double		dist;
 	t_direction	wall_dir;

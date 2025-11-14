@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:14 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 19:28:48 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ static void	ft_set_player(void)
 		player->lookdir = (t_vec2){0.0, 1.0};
 	if (start_char == 'W')
 		player->lookdir = (t_vec2){-1.0, 0.0};
+	player->lookdir_angle = atan2(player->lookdir.y, player->lookdir.x);
+	if (player->lookdir_angle < 0)
+		player->lookdir_angle += 2.0 * M_PI;
 	player->jump_height = 0.1;
 	player->jump_impuls = 0.0;
 	player->is_jumping = false;

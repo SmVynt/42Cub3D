@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 00:00:12 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 14:04:59 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 19:17:57 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	draw_wall_part(t_rayrender ray, int x, double wall_start)
 		if (color != 0)
 			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
 		else
-			draw_cubemap(image, &ray, (t_point){x, y});
+			draw_cubemap(image, (t_point){x, y});
 		y += PIXEL_SIZE;
 	}
 }
