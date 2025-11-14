@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 23:20:07 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 23:31:25 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	draw_vertical_slice(int x, t_rayrender ray)
 	jump_offset = ray.wall_height * (1.0 - player->jump_height);
 	wall_start = ((double)image->height - jump_offset) / 2.0
 		+ player->lookupdown;
-	y =  PIXEL_SIZE / 2;
+	y = PIXEL_SIZE / 2;
 	if (ft_game()->is_bonus)
 		draw_ceil_part(ray, x, wall_start, &y);
 	else
