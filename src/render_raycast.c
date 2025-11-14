@@ -29,7 +29,10 @@ static void	draw_vertical_slice(int x, t_rayrender ray)
 	if (ft_game()->is_bonus)
 		draw_ceil_part(ray, x, wall_start, &y);
 	else
+{
 		y = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
+		y = ft_clamp(y, 0, image->height);
+}
 	draw_wall_part(ray, x, wall_start, &y);
 	if (ft_game()->is_bonus)
 		draw_floor_part(ray, x, wall_start + ray.wall_height, &y);
