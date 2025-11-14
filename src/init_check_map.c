@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:46 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 15:05:14 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 13:31:37 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ static void	ft_checkwalls(void)
 	map = &ft_game()->map;
 	printf("Checking walls...\n");
 	ft_check_neighbours(map, map->start.v, map->start.u);
-	ft_printmap(map);
 	h = -1;
 	while (++h < map->h)
 	{
