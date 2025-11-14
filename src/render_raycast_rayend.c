@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 14:34:33 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 23:22:38 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 23:42:44 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	init_ray_state(t_rayrender *ray, t_vec2 start)
 	ray->wall_type = '2';
 	ray->wall_height = (double)PIXEL_SIZE;
 	ray->dist = RAYCAST_MAX_DIST;
-	ray->wall_dir = DIR_NO;
+	ray->wall_dir = DIR_EA;
 	ray->end.x = ray->start.x + RAYCAST_MAX_DIST * ray->dir.x;
 	ray->end.y = ray->start.y + RAYCAST_MAX_DIST * ray->dir.y;
 }

@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 23:25:04 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 23:34:57 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@
 # define ROTATIONSPEED			2.0
 # define MOUSE_XSENS			2.0
 # define MOUSE_YSENS			100.0
-# define RAYCAST_MAX_ITER		100
+# define RAYCAST_MAX_ITER		200
 # define RAYCAST_MAX_DIST		200.0
 
 // initialization
