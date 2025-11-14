@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 11:24:28 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 20:30:02 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ void		open_door(int i);
 bool		allocate_depth_buffer(t_gs *game, int32_t width);
 void		setup_minimap_positions(t_gs *game, int32_t width, int32_t height);
 void		ft_fill_split_bg(mlx_image_t *bg);
-void		fill_background(mlx_image_t *image, uint32_t color);
 
 void		draw(int32_t width, int32_t height, void *param);
 void		draw_ui(void);
@@ -140,8 +139,7 @@ void		draw_items_on_minimap(mlx_image_t *img, double zoom,
 				t_point img_center);
 
 void		draw_walls(mlx_image_t *image);
-void		draw_cubemap(mlx_image_t *image, t_rayrender *ray,
-				t_point screen_coords);
+void		draw_cubemap(mlx_image_t *image, t_point screen_coords);
 void		draw_floor_part(t_rayrender ray, int x, int wall_end);
 void		draw_ceil_part(t_rayrender ray, int x, double wall_start);
 void		draw_wall_part(t_rayrender ray, int x, double wall_start);

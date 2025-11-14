@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 19:17:16 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	init_ray(t_rayrender *ray, t_player *player, mlx_image_t *image,
 	ray->angle = -FOV_RAD / 2.0 + x * (FOV_RAD / (double)(image->width - 1));
 	ray->dir = ft_mat4_transform_vec2(ft_mat4_rotation_z(ray->angle),
 			player->lookdir);
-	ray->bgx = -1;
 	ray->start.x = player->pos.x + 0.5;
 	ray->start.y = player->pos.y + 0.5;
 	ray->wall_dir = DIR_NO;

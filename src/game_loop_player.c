@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop_player.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 11:27:02 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 20:44:49 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	ft_update_player(void)
 	player = ft_game()->player;
 	ft_update_player_rotation_keys(player);
 	ft_update_player_rotation_mouse(player);
+	player->lookdir_angle = atan2(player->lookdir.y, player->lookdir.x);
 	if (ft_game()->game_over == 0)
 	{
 		ft_update_player_movement(player);

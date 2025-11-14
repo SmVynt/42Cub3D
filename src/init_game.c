@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 11:54:39 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 20:59:53 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	ft_set_player(void)
 		player->lookdir = (t_vec2){0.0, 1.0};
 	if (start_char == 'W')
 		player->lookdir = (t_vec2){-1.0, 0.0};
+	player->lookdir_angle = atan2(player->lookdir.y, player->lookdir.x);
 	player->jump_height = 0.1;
 	player->jump_impuls = 0.0;
 	player->is_jumping = false;

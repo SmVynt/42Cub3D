@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:00:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 19:59:13 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 20:20:43 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	draw_ceil_part(t_rayrender ray, int x, double wall_start)
 		if (color != 0)
 			draw_square(ft_game()->view3d, PIXEL_SIZE, (t_point){x, y}, color);
 		else
-			draw_cubemap(ft_game()->view3d, &ray, (t_point){x, y});
+			draw_cubemap(ft_game()->view3d, (t_point){x, y});
 		y += PIXEL_SIZE;
 	}
 }
@@ -98,35 +98,7 @@ void	draw_floor_part(t_rayrender ray, int x, int wall_end)
 		if (color != 0)
 			draw_square(ft_game()->view3d, PIXEL_SIZE, (t_point){x, y}, color);
 		else
-			draw_cubemap(ft_game()->view3d, &ray, (t_point){x, y});
+			draw_cubemap(ft_game()->view3d, (t_point){x, y});
 		y += PIXEL_SIZE;
 	}
-}
-
-void	draw_cubemap(mlx_image_t *image, t_rayrender *ray,
-		t_point screen_coords)
-{
-	mlx_texture_t	*bg;
-	t_point			pixel;
-	double			angle;
-	double			scale_correction;
-	double			screen_center_offset;
-
-	bg = ft_game()->textures.bg;
-	if (ray->bgx == -1)
-	{
-		angle = atan2(ray->dir.y, ray->dir.x);
-		if (angle < 0)
-			angle += 2.0 * M_PI;
-		ray->bgx = (int)((angle / (2.0 * M_PI)) * (double)bg->width);
-	}
-	pixel.u = ray->bgx;
-	scale_correction = ft_game()->render.bg_proportion * (double)bg->height
-		/ (double)image->height;
-	screen_center_offset = (double)screen_coords.v - (double)image->height / 2;
-	pixel.v = (int)(screen_center_offset * scale_correction
-			+ (double)bg->height / 2
-			- ft_game()->player->lookupdown * scale_correction);
-	draw_square(image, PIXEL_SIZE, screen_coords,
-		ft_get_pixel_color(bg, pixel));
 }
