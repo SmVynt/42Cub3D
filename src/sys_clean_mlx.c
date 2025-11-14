@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 11:16:15 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 11:55:16 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static void	ft_free_mlx_textures_images(t_gs *game)
 		ft_free_image(&game->hud);
 		ft_free_image(&game->health);
 		ft_free_image(&game->health_bar);
+		ft_free_image(&game->end_screen);
+		mlx_close_window(game->mlx);
 		mlx_terminate(game->mlx);
 	}
 }
