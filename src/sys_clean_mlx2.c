@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 15:59:15 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 11:24:37 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,17 @@ void	ft_free_mlx_prefabs_items(t_gs *game)
 		}
 		else
 			ft_free_texture(&game->item_prefabs[i].sprite.texture);
+	}
+}
+
+void	ft_free_mlx_prefabs_specials(t_gs *game)
+{
+	int	i;
+
+	printf(COLOR_C"Freeing door prefab textures...\n"COLOR_X);
+	i = -1;
+	while (++i < SPEC_TYPES_COUNT)
+	{
+		ft_free_texture(&game->door_prefabs[i].sprite.texture);
 	}
 }

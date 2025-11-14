@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 16:04:14 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/14 12:53:30 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static void	ft_free_mlx_textures_images(t_gs *game)
 	ft_free_texture(&game->textures.wall_atlas);
 	ft_free_texture(&game->textures.ui_minimap);
 	ft_free_texture(&game->textures.ui_health);
+	ft_free_texture(&game->textures.screen_defeat);
+	ft_free_texture(&game->textures.screen_victory);
 	if (game->mlx)
 	{
 		printf(COLOR_C"Freeing images...\n"COLOR_X);
@@ -49,7 +51,7 @@ static void	ft_free_mlx_textures_images(t_gs *game)
 		ft_free_image(&game->hud);
 		ft_free_image(&game->health);
 		ft_free_image(&game->health_bar);
-		mlx_terminate(game->mlx);
+		ft_free_image(&game->end_screen);
 	}
 }
 
@@ -61,5 +63,13 @@ void	ft_free_mlx(void)
 	ft_free_mlx_envirtex(game);
 	ft_free_mlx_prefabs_chars(game);
 	ft_free_mlx_prefabs_items(game);
+	ft_free_mlx_prefabs_specials(game);
 	ft_free_mlx_textures_images(game);
+	if (game->mlx)
+	{
+		printf(COLOR_C"Terminating MLX...\n"COLOR_X);
+		mlx_close_window(game->mlx);
+		mlx_terminate(game->mlx);
+		game->mlx = NULL;
+	}
 }

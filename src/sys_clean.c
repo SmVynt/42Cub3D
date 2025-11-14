@@ -78,4 +78,6 @@ void	ft_clean(void)
 	ft_free_and_null((void **)&game->items);
 	printf(COLOR_C"Freeing chars...\n"COLOR_X);
 	ft_free_and_null((void **)&game->chars);
+	printf(COLOR_C"Freeing doors...\n"COLOR_X);
+	ft_free_and_null((void **)&game->inter_walls);
 }

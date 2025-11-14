@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_prefabs_items.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:14 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 18:07:55 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	ft_init_prefab_hp_chand(t_gs *game)
 		.sprite.texture = NULL,
 		.sprite.animated = false,
 		.sprite.path = TEX_CHANDELIER,
-		.sprite.bottom_offset = -0.1
+		.sprite.bottom_offset = -0.05
 	};
 }
 
@@ -56,7 +56,7 @@ static void	ft_init_prefab_key_barrel(t_gs *game)
 		.sprite.texture = NULL,
 		.sprite.animated = false,
 		.sprite.path = TEX_BARREL,
-		.sprite.bottom_offset = 0.0
+		.sprite.bottom_offset = -0.05
 	};
 }
 

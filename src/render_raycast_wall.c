@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast_wall.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 00:00:12 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 14:04:59 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 12:36:56 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	draw_wall_part(t_rayrender ray, int x, double wall_start)
 	image = ft_game()->view3d;
 	init_colrender(&cr, wall_start, ray.wall_height);
 	pixel.u = ft_find_texture_u(&cr.texture, ray);
-	y = cr.wall_start + PIXEL_SIZE - cr.wall_start % PIXEL_SIZE;
+	y = cr.wall_start - cr.wall_start % PIXEL_SIZE;
 	y = ft_clamp(y, 0, image->height);
 	while (y <= cr.wall_start + cr.wall_height)
 	{
