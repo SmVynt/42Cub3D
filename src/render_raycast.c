@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:43:38 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 19:17:16 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 21:31:30 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,21 @@ static void	draw_vertical_slice(int x, t_rayrender ray)
 	t_player	*player;
 	double		wall_start;
 	double		jump_offset;
+	int			y;
 
 	image = ft_game()->view3d;
 	player = ft_game()->player;
 	jump_offset = ray.wall_height * (1.0 - player->jump_height);
 	wall_start = ((double)image->height - jump_offset) / 2.0
 		+ player->lookupdown;
+	y = PIXEL_SIZE / 2;
 	if (ft_game()->is_bonus)
-	{
-		draw_ceil_part(ray, x, wall_start);
-		draw_floor_part(ray, x, wall_start + ray.wall_height);
-	}
-	draw_wall_part(ray, x, wall_start);
+		draw_ceil_part(ray, x, wall_start, &y);
+	else
+		y = wall_start / PIXEL_SIZE * PIXEL_SIZE + PIXEL_SIZE / 2;
+	draw_wall_part(ray, x, wall_start, &y);
+	if (ft_game()->is_bonus)
+		draw_floor_part(ray, x, wall_start + ray.wall_height, &y);
 }
 
 static void	init_ray(t_rayrender *ray, t_player *player, mlx_image_t *image,

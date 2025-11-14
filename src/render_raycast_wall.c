@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast_wall.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 00:00:12 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 19:17:57 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/14 21:28:19 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,29 +79,28 @@ static void	init_colrender(t_colrender *cr, double wall_start,
 	cr->wall_height = cr->wall_end - cr->wall_start;
 }
 
-void	draw_wall_part(t_rayrender ray, int x, double wall_start)
+void	draw_wall_part(t_rayrender ray, int x, double wall_start, int *y)
 {
 	mlx_image_t		*image;
 	t_point			pixel;
 	uint32_t		color;
-	int				y;
 	t_colrender		cr;
 
 	image = ft_game()->view3d;
 	init_colrender(&cr, wall_start, ray.wall_height);
 	pixel.u = ft_find_texture_u(&cr.texture, ray);
-	y = cr.wall_start - cr.wall_start % PIXEL_SIZE;
-	y = ft_clamp(y, 0, image->height);
-	while (y <= cr.wall_start + cr.wall_height)
+	if (!ft_game()->is_bonus)
+		*y = cr.wall_start - cr.wall_start % PIXEL_SIZE;
+	while (*y <= cr.wall_start + cr.wall_height)
 	{
-		if (y >= (int)image->height + PIXEL_SIZE)
+		if (*y >= (int)image->height + PIXEL_SIZE)
 			break ;
-		pixel.v = (y - wall_start) * cr.texture->height / ray.wall_height;
+		pixel.v = (*y - wall_start) * cr.texture->height / ray.wall_height;
 		color = ft_get_pixel_color(cr.texture, pixel);
 		if (color != 0)
-			draw_square(image, PIXEL_SIZE, (t_point){x, y}, color);
+			draw_square(image, PIXEL_SIZE, (t_point){x, *y}, color);
 		else
-			draw_cubemap(image, (t_point){x, y});
-		y += PIXEL_SIZE;
+			draw_cubemap(image, (t_point){x, *y});
+		*y += PIXEL_SIZE;
 	}
 }
