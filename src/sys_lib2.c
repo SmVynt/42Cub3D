@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sys_lib2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 16:28:33 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/15 17:39:28 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ t_list	*ft_lstinsert_sorted(t_list **head, void *content,
 	new_node->next = curr->next;
 	curr->next = new_node;
 	return (new_node);
+}
+
+void	ft_dummy_delete(void *content)
+{
+	(void)content;
 }
 
 void	clear_image(mlx_image_t *image)

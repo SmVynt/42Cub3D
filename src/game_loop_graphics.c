@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 14:31:52 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 17:41:59 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_update_view3d(void *param)
 		return ;
 	image = (mlx_image_t *)param;
 	print_debug("clearing memory...");
-	memset(image->pixels, 0, image->width * image->height * sizeof(int32_t));
+	clear_image(image);
 	print_debug("memory cleared");
 	draw_walls(ft_game()->view3d);
 	print_debug("walls drawn");
