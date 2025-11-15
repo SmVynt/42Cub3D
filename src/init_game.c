@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 21:04:17 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 16:24:19 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static void	ft_calculate_max_entities(void)
 	int		j;
 
 	game = ft_game();
-	game->max_items = 0;
-	game->max_chars = 0;
-	game->max_doors = 0;
+	game->item_count = 0;
+	game->char_count = 0;
+	game->inter_wall_count = 0;
 	i = -1;
 	while (++i < game->map.h)
 	{
@@ -55,15 +55,15 @@ static void	ft_calculate_max_entities(void)
 		while (++j < game->map.w)
 		{
 			if (ft_strchar(MAP_ITEM_CHARS, game->map.tile[i][j]) != NULL)
-				game->max_items++;
+				game->item_count++;
 			if (ft_strchar(MAP_CHAR_CHARS, game->map.tile[i][j]) != NULL)
-				game->max_chars++;
+				game->char_count++;
 			if (ft_strchar(SPEC_WALL_CHARS, game->map.tile[i][j]) != NULL)
-				game->max_doors++;
+				game->inter_wall_count++;
 		}
 	}
 	printf("Max items: %d, max chars: %d, max doors: %d\n",
-		game->max_items, game->max_chars, game->max_doors);
+		game->item_count, game->char_count, game->inter_wall_count);
 }
 
 void	ft_setgame(void)

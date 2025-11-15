@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sys_clean_mlx2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 11:24:37 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/15 16:38:11 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	ft_free_mlx_prefabs_chars(t_gs *game)
 	i = -1;
 	while (++i < CHARS_TYPES_COUNT)
 	{
-		if (game->char_prefabs[i].sprite.animated)
+		if (game->prefabs.chars[i].sprite.animated)
 		{
 			j = -1;
-			while (++j < (int)game->char_prefabs[i].sprite.anim.n_frames)
-				ft_free_texture(&game->char_prefabs[i].sprite.anim.frames[j]);
+			while (++j < (int)game->prefabs.chars[i].sprite.anim.n_frames)
+				ft_free_texture(&game->prefabs.chars[i].sprite.anim.frames[j]);
 		}
 		else
-			ft_free_texture(&game->char_prefabs[i].sprite.texture);
+			ft_free_texture(&game->prefabs.chars[i].sprite.texture);
 	}
 }
 
@@ -66,14 +66,14 @@ void	ft_free_mlx_prefabs_items(t_gs *game)
 	i = -1;
 	while (++i < ITEMS_TYPES_COUNT)
 	{
-		if (game->item_prefabs[i].sprite.animated)
+		if (game->prefabs.items[i].sprite.animated)
 		{
 			j = -1;
-			while (++j < (int)game->item_prefabs[i].sprite.anim.n_frames)
-				ft_free_texture(&game->item_prefabs[i].sprite.anim.frames[j]);
+			while (++j < (int)game->prefabs.items[i].sprite.anim.n_frames)
+				ft_free_texture(&game->prefabs.items[i].sprite.anim.frames[j]);
 		}
 		else
-			ft_free_texture(&game->item_prefabs[i].sprite.texture);
+			ft_free_texture(&game->prefabs.items[i].sprite.texture);
 	}
 }
 
@@ -85,6 +85,6 @@ void	ft_free_mlx_prefabs_specials(t_gs *game)
 	i = -1;
 	while (++i < SPEC_TYPES_COUNT)
 	{
-		ft_free_texture(&game->door_prefabs[i].sprite.texture);
+		ft_free_texture(&game->prefabs.doors[i].sprite.texture);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_prefabs_items.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 18:07:55 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/15 16:33:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_init_prefab_hp_chand(t_gs *game)
 {
-	game->item_prefabs[IT_HEALTH] = (t_item){
+	game->prefabs.items[IT_HEALTH] = (t_item){
 		.type = IT_HEALTH,
 		.pickupable = true,
 		.active = true,
@@ -24,7 +24,7 @@ static void	ft_init_prefab_hp_chand(t_gs *game)
 		.sprite.path = TEX_HEALTH,
 		.sprite.bottom_offset = 0.0
 	};
-	game->item_prefabs[IT_CHANDELIER] = (t_item){
+	game->prefabs.items[IT_CHANDELIER] = (t_item){
 		.type = IT_CHANDELIER,
 		.pickupable = false,
 		.active = true,
@@ -38,7 +38,7 @@ static void	ft_init_prefab_hp_chand(t_gs *game)
 
 static void	ft_init_prefab_key_barrel(t_gs *game)
 {
-	game->item_prefabs[IT_KEY] = (t_item){
+	game->prefabs.items[IT_KEY] = (t_item){
 		.type = IT_KEY,
 		.pickupable = true,
 		.active = true,
@@ -48,7 +48,7 @@ static void	ft_init_prefab_key_barrel(t_gs *game)
 		.sprite.path = TEX_KEY,
 		.sprite.bottom_offset = 0.0
 	};
-	game->item_prefabs[IT_BARREL] = (t_item){
+	game->prefabs.items[IT_BARREL] = (t_item){
 		.type = IT_BARREL,
 		.pickupable = false,
 		.active = true,
@@ -62,7 +62,7 @@ static void	ft_init_prefab_key_barrel(t_gs *game)
 
 static void	ft_init_prefab_map(t_gs *game)
 {
-	game->item_prefabs[IT_MAP] = (t_item){
+	game->prefabs.items[IT_MAP] = (t_item){
 		.type = IT_MAP,
 		.pickupable = true,
 		.active = true,
@@ -76,7 +76,7 @@ static void	ft_init_prefab_map(t_gs *game)
 
 static void	ft_init_prefab_fire(t_gs *game)
 {
-	game->item_prefabs[IT_FIRE] = (t_item){
+	game->prefabs.items[IT_FIRE] = (t_item){
 		.type = IT_FIRE,
 		.pickupable = false,
 		.active = true,
