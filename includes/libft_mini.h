@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_mini.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/11 21:42:28 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/15 17:40:16 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ t_list		*ft_lstinsert_sorted(t_list **head, void *content,
 				int (*cmp)(void *, void *));
 void		ft_lstdelone(t_list *lst, void (*del)(void	*));
 void		ft_lstclear(t_list **lst, void (*del)(void	*));
+void		ft_dummy_delete(void *content);
 
 #endif

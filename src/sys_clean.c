@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sys_clean.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 23:19:27 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/09 15:11:50 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/15 17:40:20 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	ft_clean(void)
 
 	game = ft_game();
 	printf(COLOR_C"Cleaning up resources...\n"COLOR_X);
+	ft_lstclear(&game->player->pocket, ft_dummy_delete);
 	ft_free_and_null((void **)&game->player);
 	ft_freemap();
 	ft_free_mlx();
