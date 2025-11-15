@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 16:33:54 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	ft_set_door_check(int i, int j, int *inter_wall_index)
 	door_num = ft_strchar_index(SPEC_WALL_CHARS, game->map.tile[i][j]);
 	if (door_num != -1 && door_num < SPEC_TYPES_COUNT)
 	{
-		if (iwi >= game->max_doors)
+		if (iwi >= game->inter_wall_count)
 			ft_exit_error("Item index out of bounds\n");
-		game->inter_walls[iwi] = game->door_prefabs[door_num];
+		game->inter_walls[iwi] = game->prefabs.doors[door_num];
 		game->inter_walls[iwi].idx.u = j;
 		game->inter_walls[iwi].idx.v = i;
 		game->inter_walls[iwi].closed = true;
@@ -48,9 +48,9 @@ void	ft_set_doors(void)
 	int		inter_wall_index;
 
 	game = ft_game();
-	if (game->max_doors == 0)
+	if (game->inter_wall_count == 0)
 		return ;
-	game->inter_walls = malloc(sizeof(t_door) * game->max_doors);
+	game->inter_walls = malloc(sizeof(t_door) * game->inter_wall_count);
 	if (!game->inter_walls)
 		ft_exit_perror("Could not allocate memory for doors\n");
 	inter_wall_index = 0;

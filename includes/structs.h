@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 19:37:54 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 16:32:09 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,13 @@ typedef struct s_minimap
 	double		lerp_speed;
 }	t_minimap;
 
+typedef struct s_prefabs
+{
+	t_item	items[ITEMS_TYPES_COUNT];
+	t_char	chars[CHARS_TYPES_COUNT];
+	t_door	doors[SPEC_TYPES_COUNT];
+}	t_prefabs;
+
 typedef struct s_gs
 {
 	bool			is_bonus;
@@ -268,19 +275,14 @@ typedef struct s_gs
 	bool			playing;
 	int				game_over;
 	t_sprite		*sh;
-	t_item			item_prefabs[ITEMS_TYPES_COUNT];
 	t_item			*items;
 	int				item_count;
-	int				max_items;
-	t_char			char_prefabs[CHARS_TYPES_COUNT];
 	t_char			*chars;
 	int				char_count;
-	int				max_chars;
-	t_door			door_prefabs[SPEC_TYPES_COUNT];
 	t_door			*inter_walls;
 	int				inter_wall_count;
-	int				max_doors;
 	double			dt;
+	t_prefabs		prefabs;
 }	t_gs;
 
 #endif

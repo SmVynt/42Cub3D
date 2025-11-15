@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game_sprites.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/10 21:06:51 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/15 16:37:18 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ static void	ft_init_sprites_items(void)
 	i = 0;
 	while (i < ITEMS_TYPES_COUNT)
 	{
-		if (game->item_prefabs[i].sprite.path == NULL)
+		if (game->prefabs.items[i].sprite.path == NULL)
 			ft_exit_error("Item prefab texture path is NULL\n");
-		if (!game->item_prefabs[i].sprite.animated)
-			ft_load_texture(game->item_prefabs[i].sprite.path,
-				&game->item_prefabs[i].sprite.texture);
+		if (!game->prefabs.items[i].sprite.animated)
+			ft_load_texture(game->prefabs.items[i].sprite.path,
+				&game->prefabs.items[i].sprite.texture);
 		else
 		{
-			ft_load_anim_texture(game->item_prefabs[i].sprite.path,
-				game->item_prefabs[i].sprite.anim.frames,
-				game->item_prefabs[i].sprite.anim.n_frames);
-			game->item_prefabs[i].sprite.texture
-				= game->item_prefabs[i].sprite.anim.frames[0];
+			ft_load_anim_texture(game->prefabs.items[i].sprite.path,
+				game->prefabs.items[i].sprite.anim.frames,
+				game->prefabs.items[i].sprite.anim.n_frames);
+			game->prefabs.items[i].sprite.texture
+				= game->prefabs.items[i].sprite.anim.frames[0];
 		}
 		i++;
 	}
@@ -47,18 +47,18 @@ static void	ft_init_sprites_chars(void)
 	i = 0;
 	while (i < CHARS_TYPES_COUNT)
 	{
-		if (game->char_prefabs[i].sprite.path == NULL)
+		if (game->prefabs.chars[i].sprite.path == NULL)
 			ft_exit_error("Char prefab texture path is NULL\n");
-		if (!game->char_prefabs[i].sprite.animated)
-			ft_load_texture(game->char_prefabs[i].sprite.path,
-				&game->char_prefabs[i].sprite.texture);
+		if (!game->prefabs.chars[i].sprite.animated)
+			ft_load_texture(game->prefabs.chars[i].sprite.path,
+				&game->prefabs.chars[i].sprite.texture);
 		else
 		{
-			ft_load_anim_texture(game->char_prefabs[i].sprite.path,
-				game->char_prefabs[i].sprite.anim.frames,
-				game->char_prefabs[i].sprite.anim.n_frames);
-			game->char_prefabs[i].sprite.texture
-				= game->char_prefabs[i].sprite.anim.frames[0];
+			ft_load_anim_texture(game->prefabs.chars[i].sprite.path,
+				game->prefabs.chars[i].sprite.anim.frames,
+				game->prefabs.chars[i].sprite.anim.n_frames);
+			game->prefabs.chars[i].sprite.texture
+				= game->prefabs.chars[i].sprite.anim.frames[0];
 		}
 		i++;
 	}
@@ -73,10 +73,10 @@ static void	ft_init_sprites_specials(void)
 	i = 0;
 	while (i < SPEC_TYPES_COUNT)
 	{
-		if (game->door_prefabs[i].sprite.path == NULL)
+		if (game->prefabs.doors[i].sprite.path == NULL)
 			ft_exit_error("Door prefab texture path is NULL\n");
-		ft_load_texture(game->door_prefabs[i].sprite.path,
-			&game->door_prefabs[i].sprite.texture);
+		ft_load_texture(game->prefabs.doors[i].sprite.path,
+			&game->prefabs.doors[i].sprite.texture);
 		i++;
 	}
 }

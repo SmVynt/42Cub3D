@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:45:35 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 16:32:39 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_init_prefab_alien(t_gs *game)
 {
-	game->char_prefabs[CH_ALIEN] = (t_char){
+	game->prefabs.chars[CH_ALIEN] = (t_char){
 		.type = CH_ALIEN,
 		.alive = true,
 		.dps = AI_ALIEN_DMG_PS,
@@ -35,7 +35,7 @@ static void	ft_init_prefab_alien(t_gs *game)
 
 static void	ft_init_prefab_slime(t_gs *game)
 {
-	game->char_prefabs[CH_SLIME] = (t_char){
+	game->prefabs.chars[CH_SLIME] = (t_char){
 		.type = CH_SLIME,
 		.alive = true,
 		.dps = AI_SLIME_DMG_PS,

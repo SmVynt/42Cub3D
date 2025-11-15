@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 20:14:20 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 16:24:01 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_door	*ft_get_door(int x, int y)
 
 	game = ft_game();
 	i = 0;
-	while (i < game->max_doors)
+	while (i < game->inter_wall_count)
 	{
 		if (game->inter_walls[i].idx.u == y && game->inter_walls[i].idx.v == x)
 			return (&game->inter_walls[i]);
