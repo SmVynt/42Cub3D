@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/14 20:44:49 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 20:49:43 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	ft_update_player(void)
 			}
 		}
 		else if (ft_is_lava(player->pos))
-			ft_player_try_damage(LAV_DAMAGE_PER_SEC * ft_game()->dt);
+			ft_player_try_damage(LAV_DAMAGE_PER_SEC);
 	}
 	player->mov_control = (t_point){0, 0};
 	player->rot_control = (t_point){0, 0};

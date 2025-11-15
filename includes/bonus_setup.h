@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_setup.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 15:08:18 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/15 20:51:15 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@
 # define AI_SPEED_SLIME		1.0
 # define AI_TIMER			0.1
 # define AI_CONTACT_DIST	0.3f
-# define AI_SLIME_DMG_PS	600.0
-# define AI_ALIEN_DMG_PS	400.0
+# define AI_SLIME_DMG_PS	60.0
+# define AI_ALIEN_DMG_PS	40.0
 
-# define LAV_DAMAGE_PER_SEC	300.0
+# define LAV_DAMAGE_PER_SEC	30.0
 
 # define DOORS_TYPES_COUNT	2
 # define MAP_DOOR_CHARS		"dD"

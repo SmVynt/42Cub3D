@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 23:28:13 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:02 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 20:53:41 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	update_char(t_char *ch)
 	if (ft_vec2_length((t_vec2){
 			ft_game()->player->pos.x - ch->sprite.pos.x,
 			ft_game()->player->pos.y - ch->sprite.pos.y}) < AI_CONTACT_DIST)
-		ft_player_try_damage(ch->dps * ft_game()->dt);
+		ft_player_try_damage(ch->dps);
 	return ;
 }
 
