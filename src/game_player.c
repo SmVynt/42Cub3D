@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 00:08:47 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/15 20:22:43 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 21:35:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	ft_player_try_damage(double damage)
 {
-	t_player	*player;
-	static double time;
+	t_player		*player;
+	static double	time;
 
 	if (damage <= 0.0)
 		return (false);
