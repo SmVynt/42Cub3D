@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/15 17:42:16 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/15 23:43:18 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	ft_update_hp_bar(void)
 	offset.u = round((double)image->width * (1 - UI_HP_BAR_XSCALE)) / 2;
 	offset.v = round((double)image->height * (1 - UI_HP_BAR_YSCALE)) / 2;
 	i = offset.u;
-	while (i < round((double)((image->width - offset.u) * ft_game()->player->hp)
-		/ MAX_HP))
+	while (i < round(((image->width - 2 * offset.u) * ft_game()->player->hp)
+			/ MAX_HP) + offset.u)
 	{
 		j = offset.v;
 		while (j < round(image->height - offset.v))
