@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:57:05 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/15 23:43:18 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/16 14:08:34 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,22 @@ void	draw_ui_item(mlx_image_t *image, int size, t_point pos,
 	size_t	y;
 	t_point	screen_pos;
 	int		color;
+	int		scale;
 
+	(void)size;
+	if (!image || !tex)
+		return ;
+	scale = 4;
 	x = 0;
 	while (x < tex->width)
 	{
 		y = 0;
 		while (y < tex->height)
 		{
-			screen_pos.u = pos.u + (2 * x) + size / 2;
-			screen_pos.v = pos.v + (2 * y) + size / 2;
+			screen_pos.u = pos.u + (scale * x);
+			screen_pos.v = pos.v + (scale * y) + size / 2;
 			color = ft_get_pixel_color(tex, (t_point){x, y});
-			draw_square(image, 2, screen_pos, color);
+			draw_square(image, scale, screen_pos, color);
 			y++;
 		}
 		x++;
