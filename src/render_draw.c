@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:56:11 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/15 00:01:22 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/16 15:43:12 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static bool	validate_window_size(t_gs *game, int32_t width, int32_t height)
 {
-	if (width < MIN_WIDTH || height < MIN_HEIGHT)
+	if (width < 20 || height < 20)
+		ft_exit_error("Rescale dimensions too small\n");
+	if (false && (width < MIN_WIDTH || height < MIN_HEIGHT))
 	{
 		mlx_set_window_size(game->mlx, ft_clamp(width, MIN_WIDTH, width),
 			ft_clamp(height, MIN_HEIGHT, height));

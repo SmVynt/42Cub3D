@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/16 14:12:28 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/16 15:41:57 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 # include "structs.h"
 # include "ft_mat4.h"
 
-# define DEBUG_MODE				false
+# define DEBUG_MODE				0
 
-# define MIN_WIDTH				640
-# define MIN_HEIGHT				360
+# define MIN_WIDTH				128
+# define MIN_HEIGHT				64
 # define WIDTH					1280
 # define HEIGHT					720
 
