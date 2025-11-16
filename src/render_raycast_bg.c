@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_raycast_bg.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 20:20:02 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/14 20:22:50 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/16 13:07:04 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_point	calculate_bg_tex_coord(t_point pixel_pos, mlx_image_t *image,
 	return (tex_coord);
 }
 
-void	draw_cubemap(mlx_image_t *image, t_point screen_coords)
+void	draw_cubemap_1(mlx_image_t *image, t_point screen_coords)
 {
 	t_point			tex_coord;
 	mlx_texture_t	*texture;
@@ -52,7 +52,7 @@ void	draw_cubemap(mlx_image_t *image, t_point screen_coords)
 	}
 }
 
-void	draw_cubemap_pixel_size(mlx_image_t *image, t_point screen_coords)
+void	draw_cubemap(mlx_image_t *image, t_point screen_coords)
 {
 	t_point			tex_coord;
 	mlx_texture_t	*texture;
