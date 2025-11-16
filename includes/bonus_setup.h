@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_setup.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/15 20:51:15 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/16 10:21:10 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 # define AI_SPEED_ALIEN		1.5
 # define AI_SPEED_SLIME		1.0
 # define AI_TIMER			0.1
-# define AI_CONTACT_DIST	0.3f
+# define AI_SLIME_ATK_DIST	0.7
+# define AI_ALIEN_ATK_DIST	0.4
 # define AI_SLIME_DMG_PS	60.0
 # define AI_ALIEN_DMG_PS	40.0
 
@@ -47,7 +48,7 @@
 
 # define SPEC_TYPES_COUNT	4
 # define SPEC_WALL_CHARS	"dD67"
-# define SPEC_WALL_FADE		"8:"
+# define SPEC_WALL_FADE		"8#"
 # define SPEC_WALL_SWITCH	"67"
 
 # define FLOOR_TYPE_COUNT	4
