@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:56:11 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/16 15:43:12 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/16 15:48:43 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ void	draw(int32_t width, int32_t height, void *param)
 		/ (2.0 * M_PI) / (double)game->view3d->width);
 	setup_minimap_positions(game, width, height);
 	display_images(game, width, height);
-	printf("Draw completed: %dx%d\n", width, height);
 	show_end_screen();
-	printf("End screen shown\n");
 	ft_update_graphics();
 }
