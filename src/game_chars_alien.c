@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_chars_alien.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 23:28:13 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:25 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/16 09:57:57 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,8 @@ void	ft_ai_alien(t_char *ch)
 		}
 	}
 	ft_ai_alien_moving(ch);
+	if (ft_vec2_length((t_vec2){
+			ft_game()->player->pos.x - ch->sprite.pos.x,
+			ft_game()->player->pos.y - ch->sprite.pos.y}) < AI_ALIEN_ATK_DIST)
+		ft_player_try_damage(ch->dps);
 }

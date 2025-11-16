@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_chars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 23:28:13 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/15 20:53:41 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/16 09:57:20 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ static void	ft_ai_slime(t_char *ch)
 		ch->sprite.pos = ft_lerpvec2(ch->ai.start_pos, ch->ai.target_pos,
 				ch->ai.lerp_progress);
 	}
+	if (ft_vec2_length((t_vec2){
+			ft_game()->player->pos.x - ch->sprite.pos.x,
+			ft_game()->player->pos.y - ch->sprite.pos.y}) < AI_SLIME_ATK_DIST)
+		ft_player_try_damage(ch->dps);
 }
 
 static void	update_char(t_char *ch)
@@ -69,10 +73,6 @@ static void	update_char(t_char *ch)
 		ft_ai_alien(ch);
 	if (ch->type == CH_SLIME)
 		ft_ai_slime(ch);
-	if (ft_vec2_length((t_vec2){
-			ft_game()->player->pos.x - ch->sprite.pos.x,
-			ft_game()->player->pos.y - ch->sprite.pos.y}) < AI_CONTACT_DIST)
-		ft_player_try_damage(ch->dps);
 	return ;
 }
 
