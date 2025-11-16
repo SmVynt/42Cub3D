@@ -6,7 +6,7 @@
 #    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/15 18:07:44 by psmolin          ###   ########.fr        #
+#    Updated: 2025/11/16 13:42:12 by psmolin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ MLX42_REPO := https://github.com/codam-coding-college/MLX42.git
 
 # Compiler and flags
 CC := @cc
-CFLAGS := -Wall -Wextra -Werror -I$(INCLUDES)  -I$(MLX42_DIR)/include  -I/opt/homebrew/include -fsanitize=address
+CFLAGS := -Wall -Wextra -Werror -I$(INCLUDES)  -I$(MLX42_DIR)/include  -I/opt/homebrew/include
 
 UNAME_S := $(shell uname -s)
 
