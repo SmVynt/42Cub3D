@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:21:04 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 17:19:25 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:51:40 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 # define AUDIO_FOOTSTEP		"audio/run.wav"
 # define AUDIO_DOOR_OPEN	"audio/metal-door.wav"
-# define AUDIO_PICKUP		"audio/pickup.wav"
+# define AUDIO_PICKUP		"audio/pickup_map.wav"
+# define AUDIO_PICKUP_HP	"audio/pickup.wav"
 # define AUDIO_HIT			"audio/lightning-spell.wav"
 # define AUDIO_HIT_LAVA		"audio/hit-lava.wav"
 # define AUDIO_SHAKING		"audio/shaky.wav"
@@ -34,6 +35,7 @@ typedef struct s_audio
 	void	*hit_sound;
 	void	*hit_lava_sound;
 	void	*pickup_sound;
+	void	*hp_sound;
 	void	*victory;
 	void	*absorbtion;
 	void	*bg_music;

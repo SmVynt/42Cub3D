@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:34:21 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 17:03:00 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:39:55 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	audio_stop_all(t_audio *audio)
 		audio_stop(audio->footstep_sound);
 	if (audio->door_sound)
 		audio_stop(audio->door_sound);
+	if (audio->hp_sound)
+		audio_stop(audio->hp_sound);
 	if (audio->pickup_sound)
 		audio_stop(audio->pickup_sound);
 	if (audio->hit_sound)

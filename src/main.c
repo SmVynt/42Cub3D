@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:52:39 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 17:14:18 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:40:14 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void setup_audio(t_gs *game)
 			&game->audio.door_sound);
 		audio_load_sound(&game->audio, AUDIO_PICKUP,
 			&game->audio.pickup_sound);
+		audio_load_sound(&game->audio, AUDIO_PICKUP_HP,
+			&game->audio.hp_sound);
 		audio_load_sound(&game->audio, AUDIO_HIT,
 			&game->audio.hit_sound);
 		audio_load_sound(&game->audio, AUDIO_HIT_LAVA,

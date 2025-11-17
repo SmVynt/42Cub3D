@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 12:40:39 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:40:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	check_pick_up_health(t_item *item)
 		if (ft_player_try_heal(item->pickup_value))
 		{
 			item->active = false;
-			audio_play(ft_game()->audio.pickup_sound);
+			audio_play(ft_game()->audio.hp_sound);
 			printf(COLOR_G"Picked up health!\n"COLOR_X);
 		}
 	}
