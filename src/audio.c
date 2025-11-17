@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:34:21 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 15:22:29 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 16:08:15 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ void	audio_cleanup(t_audio *audio)
 		ma_sound_uninit(audio->door_sound);
 	if (audio->pickup_sound)
 		ma_sound_uninit(audio->pickup_sound);
+	if (audio->hit_sound)
+		ma_sound_uninit(audio->hit_sound);
+	if (audio->hit_lava_sound)
+		ma_sound_uninit(audio->hit_lava_sound);
 	if (audio->shaky_sound)
 		ma_sound_uninit(audio->shaky_sound);
 	if (audio->bg_music)

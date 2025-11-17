@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:21:04 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 15:22:07 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 16:09:21 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ typedef struct s_audio
 	void	*footstep_sound;
 	void	*door_sound;
 	void	*shaky_sound;
+	void	*hit_sound;
+	void	*hit_lava_sound;
 	void	*pickup_sound;
 	void	*bg_music;
 	bool	initialized;

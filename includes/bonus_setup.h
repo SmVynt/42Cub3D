@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 15:23:06 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 16:09:32 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define AUDIO_FOOTSTEP		"audio/run.wav"
 # define AUDIO_DOOR_OPEN	"audio/metal-door.wav"
 # define AUDIO_PICKUP		"audio/pickup.mp3"
+# define AUDIO_HIT			"audio/lightning-spell.mp3"
+# define AUDIO_HIT_LAVA		"audio/hit-lava.mp3"
 # define AUDIO_SHAKING		"audio/shaky.mp3"
 # define AUDIO_BG_MUSIC		"audio/bg_music.mp3"
 
