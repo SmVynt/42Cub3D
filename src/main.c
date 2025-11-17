@@ -15,28 +15,21 @@
 void setup_audio(t_gs *game)
 {
 	if (!audio_init(&game->audio))
-	{
 		printf("Warning: Audio initialization failed\n");
-		// Continue without audio
-	}
 	else
 	{
-		// Load sounds
-		audio_load_sound(&game->audio, "audio/walk.mp3", 
+		audio_load_sound(&game->audio, AUDIO_FOOTSTEP,
 			&game->audio.footstep_sound);
-		audio_load_sound(&game->audio, "audio/walk.mp3", 
+		audio_load_sound(&game->audio, AUDIO_FOOTSTEP,
 			&game->audio.door_sound);
-		audio_load_sound(&game->audio, "audio/pickup.mp3", 
+		audio_load_sound(&game->audio, AUDIO_PICKUP,
 			&game->audio.pickup_sound);
-		audio_load_sound(&game->audio, "audio/bg_music.mp3", 
+		audio_load_sound(&game->audio, AUDIO_BG_MUSIC,
 			&game->audio.bg_music);
-		
-		// Start background music
+
 		audio_set_volume(game->audio.footstep_sound, 0.3);
 		audio_set_volume(game->audio.bg_music, 0.3);
 		audio_play_music(game->audio.bg_music, true);
-		// audio_stop(game->audio.bg_music);
-		// audio_play_music(game->audio.bg_music, false);
 	}
 }
 
@@ -54,9 +47,7 @@ int	main(int argc, char **argv)
 	ft_createhooks();
 	ft_setgame();
 	draw(WIDTH, HEIGHT, game);
-	setup_audio(game);
 	mlx_loop(game->mlx);
-	audio_cleanup(&game->audio);
 	ft_exit();
 	return (0);
 }

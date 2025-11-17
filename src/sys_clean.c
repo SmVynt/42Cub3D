@@ -69,6 +69,7 @@ void	ft_clean(void)
 	t_gs	*game;
 
 	game = ft_game();
+	audio_cleanup(&game->audio);
 	printf(COLOR_C"Cleaning up resources...\n"COLOR_X);
 	ft_lstclear(&game->player->pocket, ft_dummy_delete);
 	ft_free_and_null((void **)&game->player);
