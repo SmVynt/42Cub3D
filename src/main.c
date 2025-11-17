@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:52:39 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 16:08:55 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:08:31 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ void setup_audio(t_gs *game)
 			&game->audio.hit_lava_sound);
 		audio_load_sound(&game->audio, AUDIO_SHAKING,
 			&game->audio.shaky_sound);
+		audio_load_sound(&game->audio, AUDIO_VICTORY,
+			&game->audio.victory);
+		audio_load_sound(&game->audio, AUDIO_ABSORBTION,
+			&game->audio.absorbtion);
 		audio_load_sound(&game->audio, AUDIO_BG_MUSIC,
 			&game->audio.bg_music);
 

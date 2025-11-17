@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:05:47 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,15 @@ static void	ft_update_player_general(t_player *player)
 	{
 		ft_game()->game_over = -1;
 		show_end_screen();
+		audio_stop_all(&ft_game()->audio);
+		audio_play(ft_game()->audio.absorbtion);
 	}
 	if (!ft_game()->game_over && ft_is_pod(player->pos))
 	{
 		ft_game()->game_over = 1;
 		show_end_screen();
+		audio_stop_all(&ft_game()->audio);
+		audio_play(ft_game()->audio.victory);
 	}
 	print_debug("updating graphics...");
 }
