@@ -94,9 +94,18 @@ static void	ft_update_player_movement(t_player *player)
 	t_vec2		new_pos;
 	static bool	footsteps_playing = false;
 
+	if (player->is_jumping)
+	{
+		if (footsteps_playing)
+		{
+			printf("Stopping footsteps\n");
+			audio_stop(ft_game()->audio.footstep_sound);
+			footsteps_playing = false;
+		}
+	}
 	if (player->mov_control.v != 0 || player->mov_control.u != 0)
 	{
-		if (!footsteps_playing)
+		if (!footsteps_playing && !player->is_jumping)
 		{
 			printf("Starting footsteps\n");
 			audio_play(ft_game()->audio.footstep_sound);
