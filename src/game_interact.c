@@ -80,7 +80,10 @@ static void	interact_sub(t_gs *game, int i)
 		game->player->shaking_start = mlx_get_time();
 	}
 	else if (!game->inter_walls[i].key_needed || has_key(player))
+	{
+		audio_play(ft_game()->audio.door_sound);
 		game->inter_walls[i].is_opening = 1;
+	}
 	else
 	{
 		if (game->msg)

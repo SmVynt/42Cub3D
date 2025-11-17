@@ -40,13 +40,15 @@ void	open_door(int i)
 		return ;
 	door->dt += door->is_opening * ft_game()->dt;
 	if (door->closed && door->dt >= DOOR_OPEN_TIME)
-	{
 		door->closed = false;
-	}
 	if (door->dt >= 2 * DOOR_OPEN_TIME)
 		door->is_opening = -1;
 	if (door->is_opening == -1 && door->dt <= DOOR_OPEN_TIME)
+	{
+		if (!door->closed)
+			audio_play(ft_game()->audio.door_sound);
 		door->closed = true;
+	}
 	if (door->dt <= 0.0)
 	{
 		door->is_opening = 0;

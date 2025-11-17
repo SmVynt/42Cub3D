@@ -37,7 +37,7 @@
 # define AI_ALIEN_DMG_PS	40.0
 
 # define AUDIO_FOOTSTEP		"audio/run.wav"
-# define AUDIO_DOOR_OPEN	"audio/door_open.mp3"
+# define AUDIO_DOOR_OPEN	"audio/metal-door.wav"
 # define AUDIO_PICKUP		"audio/pickup.mp3"
 # define AUDIO_BG_MUSIC		"audio/bg_music.mp3"
 

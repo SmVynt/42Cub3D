@@ -108,7 +108,7 @@ static void	ft_update_player_movement(t_player *player)
 		if (!footsteps_playing && !player->is_jumping)
 		{
 			printf("Starting footsteps\n");
-			audio_play(ft_game()->audio.footstep_sound);
+			audio_play_music(ft_game()->audio.footstep_sound, true);
 			footsteps_playing = true;
 		}
 		move_step = ft_normalize_vec2(

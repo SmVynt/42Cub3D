@@ -20,16 +20,18 @@ void setup_audio(t_gs *game)
 	{
 		audio_load_sound(&game->audio, AUDIO_FOOTSTEP,
 			&game->audio.footstep_sound);
-		audio_load_sound(&game->audio, AUDIO_FOOTSTEP,
+		audio_load_sound(&game->audio, AUDIO_DOOR_OPEN,
 			&game->audio.door_sound);
 		audio_load_sound(&game->audio, AUDIO_PICKUP,
 			&game->audio.pickup_sound);
 		audio_load_sound(&game->audio, AUDIO_BG_MUSIC,
 			&game->audio.bg_music);
+
 		if (!game->audio.footstep_sound || !game->audio.door_sound
 			|| !game->audio.pickup_sound || !game->audio.bg_music)
 			printf(COLOR_R"Warning: Audio loading failed\n" COLOR_X);
 		audio_set_volume(game->audio.footstep_sound, 0.1);
+		audio_set_volume(game->audio.door_sound, 0.6);
 		audio_set_volume(game->audio.bg_music, 0.3);
 		audio_play_music(game->audio.bg_music, true);
 	}
