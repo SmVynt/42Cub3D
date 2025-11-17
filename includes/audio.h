@@ -17,13 +17,14 @@
 
 # define AUDIO_FOOTSTEP		"audio/run.wav"
 # define AUDIO_DOOR_OPEN	"audio/metal-door.wav"
-# define AUDIO_PICKUP		"audio/pickup_map.wav"
+# define AUDIO_PICKUP		"audio/key-176034.wav"
 # define AUDIO_PICKUP_HP	"audio/pickup.wav"
 # define AUDIO_HIT			"audio/lightning-spell.wav"
-# define AUDIO_HIT_LAVA		"audio/hit-lava.wav"
-# define AUDIO_SHAKING		"audio/shaky.wav"
-# define AUDIO_VICTORY		"audio/victory.wav"
-# define AUDIO_ABSORBTION	"audio/absorbtion.wav"
+# define AUDIO_HIT_LAVA		"audio/lava.wav"
+# define AUDIO_SHAKING		"audio/shaky2.wav"
+// # define AUDIO_VICTORY		"audio/victory.wav"
+# define AUDIO_VICTORY		"audio/success-423626.wav"
+# define AUDIO_ABSORBTION	"audio/absorbtion3.wav"
 # define AUDIO_BG_MUSIC		"audio/bg_music.wav"
 
 typedef struct s_audio

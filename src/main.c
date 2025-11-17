@@ -12,38 +12,49 @@
 
 #include "cub3d.h"
 
-void setup_audio(t_gs *game)
+static void	load_audio(t_gs *game)
+{
+	audio_load_sound(&game->audio, AUDIO_FOOTSTEP,
+		&game->audio.footstep_sound);
+	audio_load_sound(&game->audio, AUDIO_DOOR_OPEN,
+		&game->audio.door_sound);
+	audio_load_sound(&game->audio, AUDIO_PICKUP,
+		&game->audio.pickup_sound);
+	audio_load_sound(&game->audio, AUDIO_PICKUP_HP,
+		&game->audio.hp_sound);
+	audio_load_sound(&game->audio, AUDIO_HIT,
+		&game->audio.hit_sound);
+	audio_load_sound(&game->audio, AUDIO_HIT_LAVA,
+		&game->audio.hit_lava_sound);
+	audio_load_sound(&game->audio, AUDIO_SHAKING,
+		&game->audio.shaky_sound);
+	audio_load_sound(&game->audio, AUDIO_VICTORY,
+		&game->audio.victory);
+	audio_load_sound(&game->audio, AUDIO_ABSORBTION,
+		&game->audio.absorbtion);
+	audio_load_sound(&game->audio, AUDIO_BG_MUSIC,
+			&game->audio.bg_music);
+}
+
+static void	setup_audio(t_gs *game)
 {
 	if (!audio_init(&game->audio))
 		printf("Warning: Audio initialization failed\n");
 	else
 	{
-		audio_load_sound(&game->audio, AUDIO_FOOTSTEP,
-			&game->audio.footstep_sound);
-		audio_load_sound(&game->audio, AUDIO_DOOR_OPEN,
-			&game->audio.door_sound);
-		audio_load_sound(&game->audio, AUDIO_PICKUP,
-			&game->audio.pickup_sound);
-		audio_load_sound(&game->audio, AUDIO_PICKUP_HP,
-			&game->audio.hp_sound);
-		audio_load_sound(&game->audio, AUDIO_HIT,
-			&game->audio.hit_sound);
-		audio_load_sound(&game->audio, AUDIO_HIT_LAVA,
-			&game->audio.hit_lava_sound);
-		audio_load_sound(&game->audio, AUDIO_SHAKING,
-			&game->audio.shaky_sound);
-		audio_load_sound(&game->audio, AUDIO_VICTORY,
-			&game->audio.victory);
-		audio_load_sound(&game->audio, AUDIO_ABSORBTION,
-			&game->audio.absorbtion);
-		audio_load_sound(&game->audio, AUDIO_BG_MUSIC,
-			&game->audio.bg_music);
+		load_audio(game);
 		if (!game->audio.footstep_sound || !game->audio.door_sound
 			|| !game->audio.pickup_sound || !game->audio.bg_music)
 			printf(COLOR_R"Warning: Audio loading failed\n" COLOR_X);
 		audio_set_volume(game->audio.footstep_sound, 0.1);
-		audio_set_volume(game->audio.door_sound, 0.6);
-		audio_set_volume(game->audio.bg_music, 0.3);
+		audio_set_volume(game->audio.door_sound, 0.8);
+		audio_set_volume(game->audio.bg_music, 0.4);
+		audio_set_volume(game->audio.hp_sound, 0.5);
+		audio_set_volume(game->audio.shaky_sound, 1.5);
+		audio_set_volume(game->audio.hit_sound, 0.9);
+		audio_set_volume(game->audio.hit_lava_sound, 0.8);
+		audio_set_volume(game->audio.absorbtion, 0.6);
+
 		audio_play_music(game->audio.bg_music, true);
 	}
 }

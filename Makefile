@@ -114,6 +114,7 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 # Headers
 HEADERS = $(INCLUDES)/cub3d.h \
+			$(INCLUDES)/audio.h \
 			$(INCLUDES)/structs.h \
 			$(INCLUDES)/ft_mat4.h \
 			$(INCLUDES)/bonus_setup.h \
