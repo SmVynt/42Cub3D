@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:52:39 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 17:08:31 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:14:18 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void setup_audio(t_gs *game)
 			&game->audio.absorbtion);
 		audio_load_sound(&game->audio, AUDIO_BG_MUSIC,
 			&game->audio.bg_music);
-
 		if (!game->audio.footstep_sound || !game->audio.door_sound
 			|| !game->audio.pickup_sound || !game->audio.bg_music)
 			printf(COLOR_R"Warning: Audio loading failed\n" COLOR_X);

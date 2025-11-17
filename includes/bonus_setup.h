@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 16:09:32 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:19:40 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,6 @@
 # define AI_ALIEN_ATK_DIST	0.4
 # define AI_SLIME_DMG_PS	60.0
 # define AI_ALIEN_DMG_PS	40.0
-
-# define AUDIO_FOOTSTEP		"audio/run.wav"
-# define AUDIO_DOOR_OPEN	"audio/metal-door.wav"
-# define AUDIO_PICKUP		"audio/pickup.mp3"
-# define AUDIO_HIT			"audio/lightning-spell.mp3"
-# define AUDIO_HIT_LAVA		"audio/hit-lava.mp3"
-# define AUDIO_SHAKING		"audio/shaky.mp3"
-# define AUDIO_BG_MUSIC		"audio/bg_music.mp3"
 
 # define LAV_DAMAGE_PER_SEC	30.0
 
