@@ -39,22 +39,14 @@ static void	ft_update_player_general(t_player *player)
 	{
 		ft_game()->game_over = -1;
 		show_end_screen();
-		// audio_stop_all(&ft_game()->audio);
-		// if (ft_game()->audio.bg_music)
-		// 	audio_stop(ft_game()->audio.bg_music);
-		if (ft_game()->audio.bg_music)
-			audio_stop(ft_game()->audio.footstep_sound);
+		audio_stop_all(&ft_game()->audio);
 		audio_play(ft_game()->audio.absorbtion);
 	}
 	if (!ft_game()->game_over && ft_is_pod(player->pos))
 	{
 		ft_game()->game_over = 1;
 		show_end_screen();
-		// audio_stop_all(&ft_game()->audio);
-		// if (ft_game()->audio.bg_music)
-		// 	audio_stop(ft_game()->audio.bg_music);
-		if (ft_game()->audio.bg_music)
-			audio_stop(ft_game()->audio.footstep_sound);
+		audio_stop_all(&ft_game()->audio);
 		audio_play(ft_game()->audio.victory);
 	}
 	print_debug("updating graphics...");

@@ -113,12 +113,12 @@ void	audio_stop_all(t_audio *audio)
 		audio_stop(audio->pickup_sound);
 	if (audio->hit_sound)
 		audio_stop(audio->hit_sound);
-	if (audio->hit_lava_sound)
-		audio_stop(audio->hit_lava_sound);
+	// if (audio->hit_lava_sound)
+	// 	audio_stop(audio->hit_lava_sound);
 	if (audio->shaky_sound)
 		audio_stop(audio->shaky_sound);
-	if (audio->bg_music)
-		audio_stop(audio->bg_music);
+	// if (audio->bg_music)
+	// 	audio_stop(audio->bg_music);
 	if (audio->victory)
 		audio_stop(audio->victory);
 	if (audio->absorbtion)
