@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/26 13:11:09 by psmolin           #+#    #+#              #
-#    Updated: 2025/11/16 14:14:11 by psmolin          ###   ########.fr        #
+#    Updated: 2025/11/17 10:38:47 by nmikuka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ ifeq ($(UNAME_S),Linux)
 	MLXFLAGS := -L$(MLX42_DIR) -lmlx42 -lglfw -ldl -lGL -lm -pthread
 endif
 ifeq ($(UNAME_S),Darwin)
-	MLXFLAGS := -L$(MLX42_DIR) -lmlx42 -L/opt/homebrew/lib -lglfw -framework OpenGL -framework AppKit
+	MLXFLAGS := -L$(MLX42_DIR) -lmlx42 -L/opt/homebrew/lib -lglfw -framework OpenGL -framework AppKit \
+		-framework AudioToolbox -framework CoreAudio -framework CoreFoundation
 endif
 
 # Colors
@@ -106,7 +107,8 @@ SRC_FILES	= \
 				sys_utils.c \
 				ft_mat4.c \
 				ft_mat4_transform.c \
-				ft_list.c
+				ft_list.c \
+				audio.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 

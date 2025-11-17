@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:52:39 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/11 15:05:45 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/17 10:54:38 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	main(int argc, char **argv)
 	ft_createhooks();
 	ft_setgame();
 	draw(WIDTH, HEIGHT, game);
+	audio_init(&game->audio);
+	audio_load_music(&game->audio, "audio/bg_music.mp3");
 	mlx_loop(game->mlx);
+	audio_cleanup(&game->audio);
 	ft_exit();
 	return (0);
 }

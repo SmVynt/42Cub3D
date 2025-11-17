@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/15 16:32:09 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 10:39:51 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "MLX42/MLX42.h"
 # include "libft_mini.h"
 # include "bonus_setup.h"
+# include "audio.h"
 
 typedef struct s_point
 {
@@ -283,6 +284,7 @@ typedef struct s_gs
 	int				inter_wall_count;
 	double			dt;
 	t_prefabs		prefabs;
+	t_audio			audio;
 }	t_gs;
 
 #endif
