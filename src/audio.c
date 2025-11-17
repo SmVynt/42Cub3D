@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:34:21 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/17 10:40:34 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 12:33:18 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,80 @@
 
 bool	audio_init(t_audio *audio)
 {
-	void	*engine;
+	ma_engine	*engine;
 
 	engine = malloc(sizeof(ma_engine));
-	if (!engine || ma_engine_init(NULL, engine) != MA_SUCCESS)
-		return (free(engine), false);
+	if (!engine)
+		return (false);
+	if (ma_engine_init(NULL, engine) != MA_SUCCESS)
+	{
+		free(engine);
+		return (false);
+	}
 	audio->engine = engine;
-	audio->music = NULL;
 	audio->initialized = true;
 	return (true);
 }
 
 void	audio_cleanup(t_audio *audio)
 {
-	if (!audio || !audio->initialized)
+	if (!audio->initialized)
 		return ;
-	if (audio->music)
-		ma_sound_uninit(audio->music);
+	if (audio->footstep_sound)
+		ma_sound_uninit(audio->footstep_sound);
+	if (audio->door_sound)
+		ma_sound_uninit(audio->door_sound);
+	if (audio->pickup_sound)
+		ma_sound_uninit(audio->pickup_sound);
+	if (audio->bg_music)
+		ma_sound_uninit(audio->bg_music);
 	ma_engine_uninit(audio->engine);
 	free(audio->engine);
-	free(audio->music);
+	audio->initialized = false;
 }
 
-bool	audio_load_music(t_audio *audio, const char *file)
+bool	audio_load_sound(t_audio *audio, const char *file, void **sound_ptr)
 {
-	void	*music;
+	ma_sound	*sound;
 
-	music = malloc(sizeof(ma_sound));
-	if (!music)
+	sound = malloc(sizeof(ma_sound));
+	if (!sound)
 		return (false);
-	if (ma_sound_init_from_file(audio->engine, file, 0, NULL, NULL, music) != MA_SUCCESS)
-		return (free(music), false);
-	ma_sound_set_looping(music, 1);
-	ma_sound_set_volume(music, 0.3);
-	ma_sound_start(music);
-	audio->music = music;
+	if (ma_sound_init_from_file(audio->engine, file, 0, NULL, NULL, sound) != MA_SUCCESS)
+	{
+		free(sound);
+		return (false);
+	}
+	*sound_ptr = sound;
 	return (true);
+}
+
+void	audio_play(void *sound)
+{
+	if (sound)
+	{
+		ma_sound_seek_to_pcm_frame(sound, 0);
+		ma_sound_start(sound);
+	}
+}
+
+void	audio_play_music(void *sound, bool loop)
+{
+	if (sound)
+	{
+		ma_sound_set_looping(sound, loop);
+		ma_sound_start(sound);
+	}
+}
+
+void	audio_stop(void *sound)
+{
+	if (sound)
+		ma_sound_stop(sound);
+}
+
+void	audio_set_volume(void *sound, float volume)
+{
+	if (sound)
+		ma_sound_set_volume(sound, volume);
 }

@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/15 20:49:43 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 12:17:21 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,16 @@ static void	ft_update_player_movement(t_player *player)
 {
 	t_vec2		move_step;
 	t_vec2		new_pos;
+	static bool	footsteps_playing = false;
 
 	if (player->mov_control.v != 0 || player->mov_control.u != 0)
 	{
+		if (!footsteps_playing)
+		{
+			printf("Starting footsteps\n");
+			audio_play(ft_game()->audio.footstep_sound);
+			footsteps_playing = true;
+		}
 		move_step = ft_normalize_vec2(
 				(t_vec2){player->mov_control.u, player->mov_control.v});
 		move_step.x *= PLAYERSPEED * ft_game()->dt;
@@ -104,6 +111,12 @@ static void	ft_update_player_movement(t_player *player)
 		new_pos.x -= player->lookdir.y * move_step.x;
 		new_pos.y += player->lookdir.x * move_step.x;
 		ft_clamp_new_position(&player->pos, new_pos);
+	}
+	else if (footsteps_playing)
+	{
+		printf("Stopping footsteps\n");
+		audio_stop(ft_game()->audio.footstep_sound);
+		footsteps_playing = false;
 	}
 }
 
