@@ -101,7 +101,7 @@ C 235,206,235
 The game complies with 42 school's norminette coding standard with an exceptopn of audio (which is not allowed by the project's subject).
 
 ## 👥 Authors
-Natalia Mikula  [@NatimiDev](https://github.com/NatimiDev)
+Natalia Mikula  [@NatimiDev](https://github.com/NatimiDev)  
 Pavel Smolin    [@SmVynt](https://github.com/SmVynt)
 
 ## 📄 License
