@@ -21,8 +21,8 @@ Navigate through corridors, interact with doors, collect items, avoid hazards, a
 - **Minimap**: Real-time minimap showing player position and surroundings
 - **Sprites**: Animated characters and objects
 - **Audio System**: Background music and sound effects for footsteps, doors, pickups, and hits
-- **End Screens**: Victory and defeat screens with audio cues
 - **Screen Shake**: Visual feedback when taking damage
+- **End Screens**: Victory and defeat screens with audio cues
 
 ## 🛠️ Technical Stack
 
