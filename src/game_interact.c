@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/13 20:31:44 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 15:25:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,13 @@ static void	interact_sub(t_gs *game, int i)
 		swap_chars('8', '#');
 		game->player->is_shaking = true;
 		game->player->shaking_start = mlx_get_time();
+		audio_play(ft_game()->audio.shaky_sound);
 	}
 	else if (!game->inter_walls[i].key_needed || has_key(player))
+	{
+		audio_play(ft_game()->audio.door_sound);
 		game->inter_walls[i].is_opening = 1;
+	}
 	else
 	{
 		if (game->msg)

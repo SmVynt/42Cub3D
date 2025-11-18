@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:29 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/15 21:39:13 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:40:35 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	check_pick_up_map(t_item *item)
 				"Press [M] to hide/show the map", game->view3d->height
 				- 200, game->view3d->height - 100);
 		game->msg_time = mlx_get_time();
+		audio_play(ft_game()->audio.pickup_sound);
 		printf(COLOR_G"Picked up the map!\n"COLOR_X);
 	}
 }
@@ -47,6 +48,7 @@ static void	check_pick_up_health(t_item *item)
 		if (ft_player_try_heal(item->pickup_value))
 		{
 			item->active = false;
+			audio_play(ft_game()->audio.hp_sound);
 			printf(COLOR_G"Picked up health!\n"COLOR_X);
 		}
 	}
@@ -63,6 +65,7 @@ static void	check_pick_up_key(t_item *item)
 			ft_exit_error("Could not allocate memory for picked up item\n");
 		ft_lstadd_back(&ft_game()->player->pocket, new_item);
 		item->active = false;
+		audio_play(ft_game()->audio.pickup_sound);
 		printf(COLOR_G"Picked up a key!\n"COLOR_X);
 	}
 }

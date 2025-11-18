@@ -23,6 +23,8 @@
 # include <string.h>
 # include "structs.h"
 # include "ft_mat4.h"
+# include "../lib/miniaudio.h"
+# include "audio.h"
 
 # define DEBUG_MODE				0
 
@@ -203,6 +205,7 @@ void		ft_update_minimap(void);
 void		ft_update_hp_bar(void);
 void		ft_update_chars(void);
 void		ft_update_player(void);
+void		ft_update_player_movement(t_player *player);
 void		ft_update_graphics(void);
 void		clear_image(mlx_image_t *image);
 void		shaky_shaky(void);

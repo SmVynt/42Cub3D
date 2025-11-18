@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 00:08:47 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/15 21:35:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 16:10:44 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ bool	ft_player_try_damage(double damage)
 	if (player->hp <= 0.0)
 		return (false);
 	player->hp -= damage;
+	if (damage == LAV_DAMAGE_PER_SEC)
+		audio_play(ft_game()->audio.hit_lava_sound);
+	else
+		audio_play(ft_game()->audio.hit_sound);
 	player->is_shaking = true;
 	player->shaking_start = mlx_get_time();
 	if (player->hp < 0.0)

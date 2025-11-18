@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_setup.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 14:22:45 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/16 10:21:10 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:19:40 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

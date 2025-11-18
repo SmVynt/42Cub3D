@@ -6,7 +6,7 @@
 /*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:50:42 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/12 19:52:35 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/17 17:05:47 by nmikuka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,18 @@ static void	ft_update_player_general(t_player *player)
 	if (!ft_game()->game_over && player->hp <= 0)
 	{
 		ft_game()->game_over = -1;
+		printf(COLOR_R"Player has died! Game Over!\n"COLOR_X);
 		show_end_screen();
+		audio_stop_all(&ft_game()->audio);
+		audio_play(ft_game()->audio.absorbtion);
 	}
 	if (!ft_game()->game_over && ft_is_pod(player->pos))
 	{
 		ft_game()->game_over = 1;
+		printf(COLOR_G"Player reached the pod! Victory!\n"COLOR_X);
 		show_end_screen();
+		audio_stop_all(&ft_game()->audio);
+		audio_play(ft_game()->audio.victory);
 	}
 	print_debug("updating graphics...");
 }
@@ -55,7 +61,7 @@ void	ft_update(void *param)
 	int			i;
 
 	game = ft_game();
-	if (game->game_over == -1)
+	if (game->game_over)
 		return ;
 	if (game->view3d->height == 0 || game->view3d->width == 0)
 		return ;

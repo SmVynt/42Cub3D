@@ -4,3 +4,4 @@ cub3D
 MLX42
 valgrind_full_log.txt
 .gitignore
+.vscode
