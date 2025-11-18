@@ -98,7 +98,7 @@ static void	ft_update_player_movement(t_player *player)
 	{
 		if (footsteps_playing)
 		{
-			printf("Stopping footsteps\n");
+			// printf("Stopping footsteps\n");
 			audio_stop(ft_game()->audio.footstep_sound);
 			footsteps_playing = false;
 		}
@@ -107,7 +107,7 @@ static void	ft_update_player_movement(t_player *player)
 	{
 		if (!footsteps_playing && !player->is_jumping)
 		{
-			printf("Starting footsteps\n");
+			// printf("Starting footsteps\n");
 			audio_play_music(ft_game()->audio.footstep_sound, true);
 			footsteps_playing = true;
 		}
@@ -123,7 +123,7 @@ static void	ft_update_player_movement(t_player *player)
 	}
 	else if (footsteps_playing)
 	{
-		printf("Stopping footsteps\n");
+		// printf("Stopping footsteps\n");
 		audio_stop(ft_game()->audio.footstep_sound);
 		footsteps_playing = false;
 	}
