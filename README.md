@@ -101,8 +101,8 @@ C 235,206,235
 The game complies with 42 school's norminette coding standard with an exceptopn of audio (which is not allowed by the project's subject).
 
 ## 👥 Authors
-Natalia Mikula  @NatimiDev  
-Pavel Smolin    @SmVynt
+Natalia Mikula  [@NatimiDev](https://github.com/NatimiDev)
+Pavel Smolin    [@SmVynt](https://github.com/SmVynt)
 
 ## 📄 License
 This project is part of the 42 school curriculum.
@@ -118,6 +118,7 @@ Sound effects obtained from [Pixabay](https://pixabay.com/)
 - [Lightning Spell] by [DRAGON-STUDIO]
 - [Key] by [Musheran]
 - [Metal Sliding Door – Texture] by [KRNBEATZ]
+  
 Sound effects obtained from [OpenGameArt](https://opengameart.org/)
 - [Lava splash] by [Michel Baradari]
 - [Inventory Sound Effects] by [artisticdude]
