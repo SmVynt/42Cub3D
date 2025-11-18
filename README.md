@@ -122,7 +122,12 @@ MLX42 - Graphics library
 miniaudio - Audio library
 
 ## 🎵 Audio Credits
-Sound effect obtained from [Pixabay](https://pixabay.com/)
+Sound effects obtained from [Pixabay](https://pixabay.com/)
 - [Dark Cinematic Space Pads Loop] by [Ido Berg]
 - [Spaceship Whoosh, Video Game Sound] by [DRAGON-STUDIO]
+- [Lightning Spell] by [DRAGON-STUDIO]
 - [Key] by [Musheran]
+- [Metal Sliding Door – Texture] by [KRNBEATZ]
+Sound effects obtained from [OpenGameArt](https://opengameart.org/)
+- [Lava splash] by [Michel Baradari]
+- [Inventory Sound Effects] by [artisticdude]
