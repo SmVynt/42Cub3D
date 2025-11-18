@@ -109,8 +109,7 @@ SRC_FILES	= \
 				ft_mat4.c \
 				ft_mat4_transform.c \
 				ft_list.c \
-				audio.c \
-				audio_2.c
+				audio.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
