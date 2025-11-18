@@ -1,39 +1,28 @@
 # cub3D
 
-A 3D maze game inspired by Wolfenstein 3D, built with raycasting technology as part of the 42 school curriculum.
-
 ## 🎮 Description
 
-cub3D is a first-person 3D maze game that implements raycasting to render a 3D perspective from a 2D map. Navigate through corridors, interact with doors, collect items, avoid hazards, and reach the extraction pod to win!
+cub3D is a first-person 3D maze game that implements raycasting to render a 3D perspective from a 2D map.  
+Navigate through corridors, interact with doors, collect items, avoid hazards, and reach the extraction pod to win!
 
 ## ✨ Features
 
 ### Core Features
 - **Raycasting Engine**: Real-time 3D rendering using raycasting algorithms
 - **Textured Walls**: Different textures for North, South, East, and West walls
-- **Floor & Ceiling**: Customizable colors for floor and ceiling
 - **Smooth Movement**: WASD controls with mouse look (arrow keys supported)
 
 ### Bonus Features
+- **Floor & Ceiling**: Customizable colors for floor and ceiling
 - **Interactive Doors**: Open and close doors with animations
 - **Enemies (Aliens)**: Hostile characters that chase and attack the player
 - **Items & Pickups**: Collect health packs and key items
 - **Health System**: Take damage from enemies and lava tiles
 - **Minimap**: Real-time minimap showing player position and surroundings
 - **Sprites**: Animated characters and objects
-- **Audio System**: Background music and sound effects for footsteps, doors, pickups, and combat
+- **Audio System**: Background music and sound effects for footsteps, doors, pickups, and hits
 - **End Screens**: Victory and defeat screens with audio cues
 - **Screen Shake**: Visual feedback when taking damage
-
-## 🎵 Audio
-
-Powered by **miniaudio** library for cross-platform audio:
-- Background music
-- Footstep sounds
-- Door opening sounds
-- Item pickup sounds
-- Hit/damage effects
-- Victory/defeat themes
 
 ## 🛠️ Technical Stack
 
@@ -69,10 +58,10 @@ make
 ```
 The Makefile will automatically:
 
-Clone MLX42 if not present
-Build MLX42
-Compile all source files
-Link everything into the cub3D executable
+Clone MLX42 if not present  
+Build MLX42  
+Compile all source files  
+Link everything into the cub3D executable  
 
 ## Usage
 ```bash
@@ -86,13 +75,14 @@ Example:
 ```
 
 Controls:
-**W/A/S/D**: Move forward/left/backward/right
-**Arrow Keys**: Look left/right (or use mouse)
-**E**: Interact with doors
-**ESC**: Exit game
-**M**: Toggle minimap (if available)
+**W/A/S/D**: Move forward/left/backward/right  
+**Arrow Keys**: Look left/right (or use mouse)  
+**E**: Interact with doors  
+**ESC**: Exit game  
+**M**: Toggle minimap (if available)  
 
-Map Format (.cub)
+Map Format (.cub)  
+
 Map files define the game environment with the following structure:
 ```bash
 NO ./textures/north_wall.png
@@ -108,17 +98,17 @@ C 235,206,235
 111111
 ```
 ## 📝 Notes
-The game complies with 42 school's norminette coding standard with an exceptopn of audio (which is not allowed by the project's subject)
+The game complies with 42 school's norminette coding standard with an exceptopn of audio (which is not allowed by the project's subject).
 
 ## 👥 Authors
-Natalia Mikula  @NatimiDev
+Natalia Mikula  @NatimiDev  
 Pavel Smolin    @SmVynt
 
 ## 📄 License
 This project is part of the 42 school curriculum.
 
 ## 🙏 Libraries
-MLX42 - Graphics library
+MLX42 - Graphics library  
 miniaudio - Audio library
 
 ## 🎵 Audio Credits
