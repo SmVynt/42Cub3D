@@ -33,7 +33,7 @@ static void	load_audio(t_gs *game)
 	audio_load_sound(&game->audio, AUDIO_ABSORBTION,
 		&game->audio.absorbtion);
 	audio_load_sound(&game->audio, AUDIO_BG_MUSIC,
-			&game->audio.bg_music);
+		&game->audio.bg_music);
 }
 
 static void	setup_audio(t_gs *game)
@@ -54,7 +54,6 @@ static void	setup_audio(t_gs *game)
 		audio_set_volume(game->audio.hit_sound, 0.9);
 		audio_set_volume(game->audio.hit_lava_sound, 0.8);
 		audio_set_volume(game->audio.absorbtion, 0.6);
-
 		audio_play_music(game->audio.bg_music, true);
 	}
 }

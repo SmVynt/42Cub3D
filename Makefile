@@ -47,6 +47,7 @@ COL_C		= \033[1;36m
 SRC_FILES	= \
 				game_loop_graphics.c \
 				game_loop_player.c \
+				game_loop_player_move.c \
 				game_loop_tile_check.c \
 				game_loop.c \
 				game_doors.c \
@@ -108,7 +109,8 @@ SRC_FILES	= \
 				ft_mat4.c \
 				ft_mat4_transform.c \
 				ft_list.c \
-				audio.c
+				audio.c \
+				audio_2.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
