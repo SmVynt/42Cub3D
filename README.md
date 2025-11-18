@@ -35,15 +35,15 @@ Navigate through corridors, interact with doors, collect items, avoid hazards, a
 ## 📋 Requirements
 
 ### Linux
-- GCC compiler
-- GLFW library: `sudo apt-get install libglfw3-dev`
-- OpenGL libraries: `sudo apt-get install libgl1-mesa-dev`
-- Make
+- GCC compiler (should have, but in case: `sudo apt install build-essential`)
+- CMake `sudo apt install cmake` 
+- GLFW library `sudo apt-get install libglfw3-dev`
+- X11 development headers `sudo apt install libx11-dev xorg-dev`
 
 ### macOS
-- Clang compiler (comes with Xcode Command Line Tools)
-- GLFW via Homebrew: `brew install glfw`
-- Make
+- Xcode Command Line Tools `xcode-select --install`
+- CMake `brew install cmake`
+- GLFW `brew install glfw`
 
 ## 🚀 Installation
 
