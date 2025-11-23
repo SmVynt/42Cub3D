@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_sprites_calc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:09:35 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 20:02:25 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/23 19:10:07 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	is_sprite_visible(double dist, double angle)
 {
 	if (dist < 0.2f)
 		return (false);
-	if (fabs(angle) > FOV_RAD / 2 + M_PI / 20)
+	if (fabs(angle) > FOV_RAD / 2 + M_PI / 10)
 		return (false);
 	return (true);
 }
