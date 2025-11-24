@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 13:36:11 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/17 10:39:51 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/23 19:20:18 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ typedef struct s_spriterender
 	double		dist;
 	t_vec2		screen_pos;
 	double		max_size;
-	t_point		half_size;
+	t_vec2		size;
 	t_point		start;
-	t_point		size;
+	t_point		end;
 	t_point		screen;
 	bool		visible;
 }	t_spriterender;

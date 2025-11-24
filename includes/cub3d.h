@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 00:05:05 by psmolin           #+#    #+#             */
-/*   Updated: 2025/11/23 19:07:26 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/24 17:11:52 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@
 # define INTERACT_DIST			2.0
 # define INTERACT_ANGLE			1.04719755119659774615
 # define PLAYERSPEED			6.0
-# define ROTATIONSPEED			0.3
-# define MOUSE_XSENS			2.0
+# define ROTATIONSPEED			1.5
+# define MOUSE_XSENS			0.5
 # define MOUSE_YSENS			100.0
 # define RAYCAST_MAX_ITER		200
 # define RAYCAST_MAX_DIST		200.0

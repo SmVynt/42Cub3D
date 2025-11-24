@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_sprites_draw.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmikuka <nmikuka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:11:42 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/12 15:52:12 by nmikuka          ###   ########.fr       */
+/*   Updated: 2025/11/23 19:18:51 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static t_point	calculate_texture_coord(int x, int y, t_spriterender *sp,
 {
 	t_point	tex_coord;
 
-	tex_coord.u = (int)((double)x / (double)sp->size.u
+	tex_coord.u = (int)((double)x / (double)sp->size.x
 			* (double)texture->width);
-	tex_coord.v = (int)((double)y / (double)sp->size.v
+	tex_coord.v = (int)((double)y / (double)sp->size.y
 			* (double)texture->height);
 	return (tex_coord);
 }
@@ -47,8 +47,8 @@ static void	draw_sprite_column(mlx_image_t *image, t_sprite *sprite,
 	int		y;
 	t_point	tex_coord;
 
-	y = (PIXEL_SIZE - sp->start.v % PIXEL_SIZE) % PIXEL_SIZE;
-	while (y < sp->size.v)
+	y = (PIXEL_SIZE - sp->start.u % PIXEL_SIZE) % PIXEL_SIZE;
+	while (y < sp->size.y)
 	{
 		sp->screen.v = sp->start.v + y;
 		if (sp->screen.v >= 0 && sp->screen.v < (int)image->height)
@@ -75,7 +75,7 @@ void	draw_sprite(mlx_image_t *image, t_sprite *sprite)
 		return ;
 	sp = &sprite->sp;
 	x = (PIXEL_SIZE - sp->start.u % PIXEL_SIZE) % PIXEL_SIZE;
-	while (x < sp->size.u)
+	while (x < (int)sp->size.x)
 	{
 		sp->screen.u = sp->start.u + x + PIXEL_SIZE / 2;
 		if (sp->screen.u >= 0 && sp->screen.u < (int)image->width)

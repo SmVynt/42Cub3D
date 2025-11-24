@@ -6,7 +6,7 @@
 /*   By: psmolin <psmolin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:09:35 by nmikuka           #+#    #+#             */
-/*   Updated: 2025/11/23 19:10:07 by psmolin          ###   ########.fr       */
+/*   Updated: 2025/11/23 19:19:28 by psmolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static void	calculate_sprite_size(t_sprite *sprite, t_spriterender *sp)
 {
 	sp->max_size = (1.0 / sp->dist)
 		* ft_game()->render.projection_plane_dist;
-	sp->size.u = (int)(sprite->texture->width * sp->max_size
+	sp->size.x = (sprite->texture->width * sp->max_size
 			/ STANDARD_SPRITE_SIZE);
-	sp->size.v = (int)(sprite->texture->height * sp->max_size
+	sp->size.y = (sprite->texture->height * sp->max_size
 			/ STANDARD_SPRITE_SIZE);
 }
 
@@ -44,8 +44,8 @@ static void	calculate_sprite_offset(t_sprite *sprite, t_spriterender *sp,
 {
 	double	vertical_offset;
 
-	sp->start.u = (int)(sp->screen_pos.x) - sp->size.u / 2;
-	sp->start.v = (int)(sp->screen_pos.y) - sp->size.v;
+	sp->start.u = (sp->screen_pos.x) - sp->size.x / 2;
+	sp->start.v = (sp->screen_pos.y) - sp->size.y;
 	vertical_offset = sp->max_size * (0.5 - sprite->bottom_offset / 2);
 	sp->start.v += vertical_offset;
 	sp->start.v += sp->max_size * 0.5 * player->jump_height
